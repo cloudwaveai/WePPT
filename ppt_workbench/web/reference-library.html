@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>WePPT · 原始 POTX 参考库</title>
+  <link rel="stylesheet" href="/reference-library.css">
+  <script src="/reference-library.js" defer></script>
+</head>
+<body>
+  <header class="topbar"><a class="brand" id="home-link" href="/">WePPT <small>REFERENCE LIBRARY</small></a><nav aria-label="返回导航"><a id="guide-link" href="/guide.html">内容引导</a><a id="workbench-link" href="/">返回工作台</a></nav></header>
+  <main>
+    <section class="intro"><p class="eyebrow">你的真实本地模板 · 2026-10-24</p><h1>原始 POTX 参考库</h1><p class="lead">查看原页版式、内容容量和使用约束，找到你想参考的表达。</p><p class="boundary"><strong>原始 POTX 参考，不可直接套用到工作台场景。</strong>这里展示源模板的真实预览，保留原示例内容。工作台内可直接使用的页面模板，请返回主界面的模板选择器。</p></section>
+    <section class="filters" aria-label="参考库筛选"><label>原目录分类<select id="category"><option value="">全部分类</option></select></label><label>原始模板文件<select id="source-file"><option value="">全部文件</option></select></label><label class="search">搜索<input id="search" type="search" placeholder="名称、用途、编号或原文件" maxlength="200"></label><button id="reset" type="button">清除筛选</button></section>
+    <p class="filter-note">分类直接沿用源目录（含封面、目录、章节、结束等），不推断应用场景角色。</p>
+    <p id="library-status" role="status" aria-live="polite">正在读取真实模板预览…</p><button id="retry" type="button" hidden>重新加载</button>
+    <section id="reference-grid" class="reference-grid" aria-label="原始模板预览"></section>
+    <section class="provenance" aria-labelledby="provenance-title"><p class="eyebrow">SOURCE / PROVENANCE</p><h2 id="provenance-title">原始文件与本地来源</h2><p id="download-note">正在读取原文件信息…</p><p>本地源目录：<code id="source-directory"></code></p><p>路径用于在拥有源文件的本机查找；部署到其他电脑后，需自行复制原始 POTX。网页不读取任意本地路径。</p><div id="source-files" class="source-files"></div><p id="source-note"></p></section>
+  </main>
+  <dialog id="reference-detail" aria-labelledby="detail-title"><div class="detail-heading"><h2 id="detail-title"></h2><button id="close-detail" type="button" aria-label="关闭详情">关闭</button></div><img id="detail-image" alt=""><p class="boundary">原始 POTX 参考 · 不可直接套用到工作台场景</p><dl id="detail-fields"></dl></dialog>
+  <noscript><p>请启用 JavaScript 查看 44 页真实模板预览与筛选。原始预览和元数据需要当前工作台登录会话。</p></noscript>
+</body>
+</html>

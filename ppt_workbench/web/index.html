@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light">
+  <title>WePPT · 对话与预览</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-paperclip" viewBox="0 0 24 24"><path d="m9 12 6-6a3 3 0 0 1 4.2 4.2l-8 8a5 5 0 1 1-7-7l9-9"/><path d="m7 14 8-8"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M5 16v5h14v-5"/></symbol>
+    <symbol id="i-expand" viewBox="0 0 24 24"><path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="m8 5-5 5 5 5M3 10h11a6 6 0 0 1 0 12"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11a8 8 0 0 1-8 8H6l-4 3V9a8 8 0 0 1 8-8h3a8 8 0 0 1 8 8Z"/></symbol>
+    <symbol id="i-slide" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M12 17v4m-4 0h8"/></symbol>
+    <symbol id="i-cursor" viewBox="0 0 24 24"><path d="m5 3 14 10-7 1-3 7Z"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M13 3H5v18h14V9Zm0 0v6h6M8 13h8m-8 4h6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="13" rx="2"/><path d="M16 8V3H3v13h5"/></symbol>
+    <symbol id="i-terminal" viewBox="0 0 24 24"><path d="m4 6 6 6-6 6m9 0h7"/></symbol>
+    <symbol id="i-retry" viewBox="0 0 24 24"><path d="M20 7V2m0 5h-5M4 17v5m0-5h5M20 7a9 9 0 0 0-15-3M4 17a9 9 0 0 0 15 3"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6m0-10h.01"/></symbol>
+  </defs></svg>
+
+  <header class="app-header">
+    <a class="brand" href="/" aria-label="WePPT 首页"><span class="brand-mark" aria-hidden="true"><i></i><b></b></span><span>WePPT<small>STUDIO</small></span></a>
+    <div class="project-label"><span id="project-title">新的演示稿</span><span id="demo-badge" class="demo-badge" hidden>示例</span></div>
+    <div class="header-actions">
+      <a id="guide-link" class="button quiet compact" href="/guide.html" target="_blank" rel="noopener">内容引导</a>
+      <button id="templates-button" class="button quiet compact" type="button" aria-haspopup="dialog"><svg class="icon"><use href="#i-slide"/></svg><span>模板</span></button>
+      <button id="projects-button" class="button quiet compact" type="button" aria-haspopup="dialog"><svg class="icon"><use href="#i-file"/></svg><span>项目</span></button>
+      <button id="connection-button" class="connection-button" type="button" aria-haspopup="dialog"><span id="agent-dot" class="status-dot waiting"></span><span id="agent-status">连接中</span><svg class="icon small"><use href="#i-down"/></svg></button>
+      <button id="demo-button" class="button quiet demo-entry" type="button">打开演示项目</button>
+      <div class="export-wrap"><button id="export-button" class="button primary compact" type="button" aria-expanded="false" aria-controls="export-menu" disabled><svg class="icon"><use href="#i-download"/></svg><span>导出</span><svg class="icon small"><use href="#i-down"/></svg></button>
+        <div id="export-menu" class="menu" hidden><p id="export-status-text" class="export-status-text">当前可导出草稿</p><div id="export-release-options"><button id="export-release-pptx" type="button" data-export="pptx" data-export-mode="release" disabled><svg class="icon"><use href="#i-slide"/></svg><span>正式 PowerPoint<small>已通过当前交付条件 · .pptx</small></span></button><button id="export-release-html" type="button" data-export="html" data-export-mode="release" disabled><svg class="icon"><use href="#i-file"/></svg><span>正式网页演示稿<small>已通过当前交付条件 · .html</small></span></button></div><div class="export-draft-options"><button type="button" data-export="pptx" data-export-mode="draft"><svg class="icon"><use href="#i-slide"/></svg><span>PowerPoint 草稿<small>未视为正式交付 · .pptx</small></span></button><button type="button" data-export="html" data-export-mode="draft"><svg class="icon"><use href="#i-file"/></svg><span>网页演示稿草稿<small>未视为正式交付 · .html</small></span></button></div></div>
+      </div>
+    </div>
+  </header>
+
+  <div id="network-banner" class="network-banner" role="status" hidden><span id="network-message">暂时无法连接工作台，已显示的内容仍保留。</span><button id="retry-button" type="button">重新连接</button></div>
+
+  <nav class="mobile-tabs" aria-label="工作区域"><button class="active" type="button" data-mobile-tab="chat"><svg class="icon"><use href="#i-chat"/></svg>对话</button><button type="button" data-mobile-tab="preview"><svg class="icon"><use href="#i-slide"/></svg>页面预览<span id="mobile-page-count"></span></button></nav>
+
+  <main class="workspace" data-mobile-view="chat">
+    <section class="chat-panel" aria-labelledby="chat-heading">
+      <div class="panel-heading"><div><p class="eyebrow">从你的想法开始</p><h1 id="chat-heading">把内容放进来，一起改好</h1></div><span class="conversation-mark" aria-hidden="true">“</span></div>
+      <div id="chat-feed" class="chat-feed" role="log" aria-label="制作对话" aria-live="polite" aria-relevant="additions text">
+        <section id="delivery-panel" class="delivery-panel" aria-labelledby="delivery-title">
+          <div class="delivery-heading"><h2 id="delivery-title">从第一次输入开始</h2><span id="delivery-round-count">0 / 3 轮</span></div>
+          <ol id="delivery-stages" class="delivery-stages" aria-label="三轮交付目标"><li data-round-stage="1"><b>01</b><span>想法与初稿</span></li><li data-round-stage="2"><b>02</b><span>集中反馈</span></li><li data-round-stage="3"><b>03</b><span>调整与交付</span></li></ol>
+          <p id="delivery-status" class="delivery-status" role="status">用途、逐页想法和资料可以一起提交。</p>
+          <p id="delivery-budget-note" class="delivery-budget-note">首次需求、补充回答和修改反馈都计入轮次；后台制作和检查不计。</p>
+          <details id="delivery-history" class="delivery-history" hidden><summary id="delivery-history-title">查看每轮结果</summary><ol id="delivery-history-list"></ol></details>
+        </section>
+        <section id="quality-panel" class="quality-panel" aria-labelledby="quality-title" hidden>
+          <div class="quality-heading"><h2 id="quality-title">整稿版式检查</h2><span id="quality-state-label">等待页面</span></div>
+          <p id="quality-summary" class="quality-summary" role="status"></p>
+          <div class="quality-actions"><span id="quality-measure-progress"></span><button id="quality-check" type="button">重新检查</button></div>
+          <p id="quality-local-error" class="quality-local-error" role="status" hidden></p>
+          <details id="quality-details" class="quality-details"><summary id="quality-details-title">检查明细</summary><ul id="quality-issues"></ul></details>
+          <p class="quality-note">版式检查不代替事实核验和审美判断。请查看完整预览。</p>
+          <div class="deck-confirm-row"><button id="deck-review-button" type="button" disabled>确认整稿</button><span id="deck-review-note">看完全部页面后，可一次确认整稿。</span></div>
+          <details id="release-details" class="release-details" hidden><summary id="release-details-title">正式交付待办</summary><ul id="release-issues"></ul></details>
+        </section>
+      <section id="deck-progress" class="deck-progress" aria-labelledby="deck-progress-title" hidden>
+        <div class="deck-progress-top"><h2 id="deck-progress-title">整稿制作</h2><span id="deck-page-progress"></span></div>
+        <progress id="deck-progress-bar" max="1" value="0" aria-label="整稿生成进度"></progress>
+        <p id="deck-status-text" class="deck-status-text" role="status"></p>
+        <p id="deck-error" class="deck-error" hidden></p>
+        <div class="deck-progress-actions"><button id="deck-pause" type="button" data-deck-action="pause">暂停</button><button id="deck-resume" type="button" data-deck-action="resume" hidden>继续生成</button><button id="deck-retry" type="button" data-deck-action="retry" hidden>重试当前页</button><button id="deck-follow" type="button" hidden>跟随生成</button><button id="deck-cancel" type="button" data-deck-action="cancel" title="停止生成，保留已完成页面">停止生成</button></div>
+        <details id="deck-plan" class="deck-plan"><summary>逐页计划</summary><ol id="deck-plan-pages"></ol></details>
+        <div id="revision-budget" class="revision-budget" hidden><span id="revision-count"></span><small id="revision-budget-note"></small><details id="revision-history" class="revision-history" hidden><summary>查看修改记录</summary><ol id="revision-history-list"></ol></details></div>
+      </section>
+      <div id="mode-notice" class="mode-notice" role="status" hidden><p id="mode-notice-text"></p><button id="mode-notice-action" type="button">选择执行方式</button></div>
+        <div id="chat-welcome" class="welcome-card"><div class="welcome-symbol"><svg class="icon"><use href="#i-chat"/></svg></div><h2>这份 PPT，<br>你希望读者记住什么？</h2><p>把用途、逐页想法和真实资料一起发来。系统逐页制作，你可以在一条消息里集中反馈多页。</p><div class="starter-prompts"><button type="button" data-starter="我想先梳理整套 PPT 的逐页大纲。用途是："><span>先讨论内容与大纲</span><svg class="icon"><use href="#i-chevron"/></svg></button><button id="outline-starter" type="button"><span>按已有大纲直接排版<small>使用你提供的文字，不调用模型</small></span><svg class="icon"><use href="#i-chevron"/></svg></button></div><p class="welcome-note">观点由你提供，缺少资料时明确留待补充。</p></div>
+        <div id="messages"></div>
+      </div>
+      <button id="new-messages-button" class="new-messages" type="button" hidden>有新回复 ↓</button>
+      <div id="job-status" class="job-status" role="status" hidden></div>
+      <div id="demo-controls" class="demo-controls" hidden><span id="local-controls-label">本地演示 · 这些指令可直接运行</span><div><button type="button" data-demo-command="标题放大一点">标题放大一点</button><button type="button" data-demo-command="背景换成深蓝色">背景换成深蓝色</button><button type="button" data-demo-command="背景换成白色">换回白色背景</button></div></div>
+      <div id="guide-draft-notice" class="mode-notice" hidden><p id="guide-draft-note">有一份内容引导简报待接收，载入后仍需手动发送。</p><button id="load-guide-draft" type="button">载入草稿</button><a id="review-guide-draft" href="/guide.html" target="_blank" rel="noopener">查看</a></div>
+      <form id="composer" class="composer" autocomplete="off">
+        <div class="scope-switch" role="group" aria-label="本次反馈范围"><button id="scope-deck" type="button" aria-pressed="true">整稿反馈</button><button id="scope-page" type="button" aria-pressed="false">当前页</button><span id="scope-switch-note">一条消息可涉及多页</span></div>
+        <div id="scope-line" class="scope-line"><span id="page-scope">整份演示稿</span><span id="object-scope" class="object-scope" hidden><svg class="icon small"><use href="#i-cursor"/></svg><span id="object-scope-label"></span><button id="clear-object" type="button" aria-label="取消对象选择"><svg class="icon small"><use href="#i-close"/></svg></button></span><button id="reply-question" type="button" class="reply-question" hidden>回答待生成页的问题</button></div>
+        <p id="question-scope-note" class="question-scope-note" role="status" hidden></p>
+        <div id="attachments" class="attachments" hidden></div>
+        <label for="message-input" class="sr-only">输入你的想法或修改要求</label><textarea id="message-input" placeholder="一起说清你的想法，或集中写下需要修改的页面…" rows="3" maxlength="20000"></textarea>
+        <div class="composer-bottom"><div class="composer-tools"><button id="attach-button" class="icon-button" type="button" aria-label="添加图片或参考资料" title="添加图片或参考资料"><svg class="icon"><use href="#i-paperclip"/></svg></button><span class="composer-hint">Enter 发送</span></div><button id="send-button" class="send-button" type="submit" aria-label="发送消息" disabled><svg class="icon"><use href="#i-arrow"/></svg></button></div>
+      </form>
+      <div class="chat-footnote" id="chat-footnote">可直接拖入图片和资料。Shift + Enter 换行。</div>
+      <input id="file-input" type="file" accept="image/png,image/jpeg,text/plain,text/markdown,.md,.txt,application/pdf" multiple hidden>
+    </section>
+
+    <section id="preview-panel" class="preview-panel" aria-labelledby="preview-heading">
+      <div class="preview-heading"><div class="preview-title"><p class="eyebrow" id="preview-kicker">把想法变成看得见的一页</p><h2 id="preview-heading">页面预览</h2><p id="preview-deck-status" class="preview-deck-status" hidden></p></div><div class="preview-actions"><button id="undo-button" class="icon-button" type="button" aria-label="撤回本页上一版" title="撤销本页上一版，计为一轮输入" disabled><svg class="icon"><use href="#i-undo"/></svg></button><button id="fullscreen-button" class="icon-button" type="button" aria-label="放大页面预览" title="放大页面预览"><svg class="icon"><use href="#i-expand"/></svg></button></div></div>
+      <div class="template-suggestion"><div><span class="eyebrow">页面样式</span><span id="template-suggestion-text">先选一个喜欢的样子，再放入你的内容。</span></div><button id="recommended-templates" class="button quiet compact" type="button">查看推荐 <span aria-hidden="true">↗</span></button></div>
+      <div id="text-editor" class="text-editor" hidden><div class="text-editor-heading"><strong>编辑文字</strong><span id="text-editor-note">双击页面文字，也可以直接修改</span><button id="close-text-editor" class="icon-button" type="button" aria-label="关闭文字编辑">×</button></div><textarea id="object-text" rows="3" aria-label="选中对象的文字"></textarea><div class="text-editor-actions"><span id="text-save-status" role="status"></span><button id="save-object-text" class="button primary compact" type="button">保存修改</button></div></div>
+      <div class="preview-center"><div class="canvas-wrap" id="canvas-wrap"><div id="page-canvas" class="page-canvas"><div id="empty-preview" class="empty-preview"><div class="empty-page-mark" aria-hidden="true"><span></span><span></span><span></span></div><h3>这一页，等你的第一个想法</h3><p>在对话里讲内容，预览会在这里更新。<br>选中页面里的对象，再说出你想改的地方。</p><button id="empty-demo-button" class="button quiet" type="button">先体验演示项目 <span aria-hidden="true">↗</span></button></div></div><div id="preview-update" class="preview-update" role="status" hidden><span class="loading-dot"></span><span id="preview-update-text">正在更新这一页</span></div></div><div class="preview-caption"><span id="preview-instruction"><svg class="icon small"><use href="#i-cursor"/></svg>点击文字或图形，把修改范围说清楚</span><span id="preview-version"></span></div></div>
+      <div class="page-review-row" id="page-review-row" hidden><div class="page-position"><button id="previous-page" class="icon-button" type="button" aria-label="上一页"><svg class="icon rotate"><use href="#i-chevron"/></svg></button><span id="page-position-label"></span><button id="next-page" class="icon-button" type="button" aria-label="下一页"><svg class="icon"><use href="#i-chevron"/></svg></button></div><button id="review-button" class="button quiet review-button" type="button" title="认可这一页会计为一轮输入；也可在检查面板一次确认整稿"><svg class="icon"><use href="#i-check"/></svg><span>认可这一版</span></button></div>
+      <div class="filmstrip-wrap"><div class="filmstrip-topline"><span>页面</span><span id="slide-count">0 页</span></div><nav id="filmstrip" class="filmstrip" aria-label="切换页面"><div class="filmstrip-empty">逐页大纲确认后，页面会出现在这里。</div></nav></div>
+    </section>
+  </main>
+
+  <div id="quality-measure-host" class="quality-measure-host" aria-hidden="true" inert></div>
+  <div id="drop-overlay" class="drop-overlay" hidden><div><svg class="icon"><use href="#i-paperclip"/></svg><h2>把资料放到这里</h2><p>PNG / JPG ≤ 8 MB，PDF ≤ 20 MB</p><p>TXT / Markdown 需 UTF-8，50,000 字以内</p></div></div>
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <dialog id="connection-dialog" class="connection-dialog"><div class="dialog-heading"><span class="terminal-symbol"><svg class="icon"><use href="#i-terminal"/></svg></span><button id="close-connection" class="icon-button" type="button" aria-label="关闭执行方式"><svg class="icon"><use href="#i-close"/></svg></button></div><p class="eyebrow">选择这一项目的执行方式</p><h2 id="connection-title">对话与页面制作</h2><p id="connection-description"></p><div class="agent-options" role="group" aria-label="执行方式"><button type="button" data-agent-mode="manual" aria-pressed="false"><span>Coding Agent 协作</span><small>在 Claude Code / Codex 中对话，通过 MCP 继续</small></button><button type="button" data-agent-mode="claude" aria-pressed="false"><span>网页调用 Claude Code</span><small>使用本机已安装、已登录的客户端</small></button><button type="button" data-agent-mode="codex" aria-pressed="false"><span>网页调用 Codex</span><small>使用本机已安装、已登录的客户端</small></button><button type="button" data-agent-mode="outline" aria-pressed="false"><span>按大纲本地排版</span><small>使用你提供的逐页文字，不调用模型</small></button></div><div id="connection-detail" class="connection-detail" role="status"></div><p id="connection-error" class="connection-error" role="alert" hidden></p><button id="connection-outline-starter" class="button quiet" type="button" hidden>填写逐页大纲</button><div id="handoff-card" class="handoff-card"><span>可以发给 Coding Agent</span><p id="handoff-text"></p><button id="copy-handoff" class="button quiet" type="button"><svg class="icon"><use href="#i-copy"/></svg>复制这段指令</button></div><p class="dialog-note">选择模式不会安装或登录客户端。每次页面生成后，预览会自动更新。</p></dialog>
+  <dialog id="deck-review-dialog" class="deck-review-dialog"><div class="dialog-heading"><h2>确认当前整稿</h2><button id="close-deck-review" class="icon-button" type="button" aria-label="关闭整稿确认"><svg class="icon"><use href="#i-close"/></svg></button></div><p id="deck-review-snapshot" class="deck-review-snapshot"></p><blockquote id="deck-review-statement"></blockquote><p id="deck-review-round-note" class="deck-review-round-note"></p><p id="deck-review-error" class="deck-review-error" role="alert" hidden></p><p id="deck-review-boundary" class="deck-review-boundary">这项确认只记录你对内容表达和视觉呈现的认可。资料核验、缺失项等正式交付条件仍单独检查。</p><div class="deck-review-dialog-actions"><button id="cancel-deck-review" class="button quiet" type="button">返回查看</button><button id="submit-deck-review" class="button primary" type="button">我已查看并确认</button></div></dialog>
+  <dialog id="templates-dialog" class="templates-dialog" aria-labelledby="templates-title"><div class="dialog-heading"><div><p class="eyebrow">选一个适合内容的样子</p><h2 id="templates-title">页面模板</h2></div><button id="close-templates" class="icon-button" type="button" aria-label="关闭模板">×</button></div><p id="template-target">选定后用于接下来生成的页面。</p><p class="dialog-note"><a id="reference-library-link" href="/reference-library.html" target="_blank" rel="noopener">浏览 44 页原始 POTX 参考库 ↗</a> · 真实原页预览与来源，不可直接套用到工作台场景。</p><div id="template-roles" class="template-roles" role="group" aria-label="页面位置"></div><div class="template-search"><input id="template-search" type="search" placeholder="搜索模板，例如：三项并列、友商对比、时间线" aria-label="搜索模板"><select id="template-family" aria-label="正文表达任务"><option value="all">全部表达任务</option></select></div><div class="template-filters" role="group" aria-label="模板筛选"><button type="button" data-template-filter="recommended" aria-pressed="true">为你推荐</button><button type="button" data-template-filter="all" aria-pressed="false">全部样式</button></div><div id="template-grid" class="template-grid" aria-live="polite"></div><p id="template-error" role="alert" hidden></p></dialog>
+  <dialog id="projects-dialog" class="connection-dialog projects-dialog" aria-labelledby="projects-title">
+    <div class="dialog-heading"><h2 id="projects-title">我的项目</h2><button id="close-projects" class="icon-button" type="button" aria-label="关闭项目管理"><svg class="icon"><use href="#i-close"/></svg></button></div>
+    <p>在当前工作目录中创建和切换演示稿。</p>
+    <div id="projects-list" class="projects-list" aria-live="polite"></div>
+    <form id="create-project-form" class="create-project-form"><label for="new-project-title">新建项目</label><div><input id="new-project-title" name="title" placeholder="输入项目名称" maxlength="120" required><button id="create-project-button" class="button primary" type="submit">创建并打开</button></div></form>
+    <p id="projects-error" role="alert" hidden></p>
+  </dialog>
+  <script src="/app.js" defer></script>
+</body>
+</html>

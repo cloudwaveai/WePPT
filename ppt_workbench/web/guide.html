@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>WePPT · 内容引导</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/guide.css">
+  <script src="/guide.js" defer></script>
+</head>
+<body class="guide-page">
+  <header class="app-header">
+    <a id="guide-home" class="brand" href="/"><span class="brand-mark" aria-hidden="true"><i></i><b></b></span><span>WePPT<small>CONTENT GUIDE</small></span></a>
+    <span id="guide-project" class="project-label">正在确认项目…</span>
+    <a id="back-workbench" class="button quiet compact" href="/">返回工作台 ↗</a>
+  </header>
+  <main class="guide-shell">
+    <div class="guide-intro"><p class="eyebrow">经验引导 · 由你填入真实内容</p><h1>先把内容想清楚，再找适合的表达。</h1><p>从听众和目的出发，用几个问题整理观点，选一种结构，把资料填进内容槽位。</p></div>
+    <p id="guide-status" class="guide-status" role="status">正在读取项目与草稿…</p>
+    <div id="save-panel" class="guide-save-panel"><span id="draft-save" role="status">草稿：正在读取…</span><span id="experience-save" role="status">个人经验：正在读取…</span><button id="retry-save" class="button quiet compact" type="button">重试保存</button></div>
+    <div id="save-conflict" class="guide-conflict" hidden><p>服务器有更新版本，已停止覆盖。当前输入仍有浏览器备份；请先下载备份，再明确选择重新载入服务器版本。</p><button id="download-backup" class="button quiet" type="button">下载当前备份</button><button id="reload-server" class="button quiet" type="button">重新载入服务器版本</button></div>
+    <div class="guide-layout">
+      <aside class="guide-sidebar">
+        <nav aria-label="内容引导步骤"><ol><li><a href="#context">01 用途与听众</a></li><li><a href="#expression">02 选择表达任务</a></li><li><a href="#content">03 填写内容槽位</a></li><li><a href="#library">04 选择页面模板</a></li><li><a href="#outline">05 组装整套大纲</a></li><li><a href="#personal">06 个人经验与精选</a></li><li><a href="#output">07 检查整套简报</a></li></ol></nav>
+        <div class="guide-source"><h2>经验库</h2><p>内置规则帮助组织材料；你的原始问答、提炼规则和精选理由单独记录在“个人经验”中，来源由你注明。</p><h2>精选模板库</h2><p>使用已导入的模板目录与本地补充样式，展示实际页面预览。经验负责引导内容，模板负责承载表达。</p><h2>原始 POTX 参考库</h2><p><a href="/reference-library.html" target="_blank" rel="noopener">浏览 4 个原文件、44 页真实预览 ↗</a>。查看原页、来源与使用约束；这些参考不可直接套用到工作台场景。</p></div>
+      </aside>
+      <div class="guide-sections">
+        <section id="context" class="guide-card"><p class="eyebrow">01 / CONTEXT</p><h2>这次，你希望推动什么？</h2><div class="guide-fields">
+          <label>演示主题<input id="topic" maxlength="200" placeholder="例如：下一季度的客户增长方案" data-field></label>
+          <label>使用场景<select id="purpose" data-field><option value="方案决策">方案决策</option><option value="工作汇报">工作汇报</option><option value="产品介绍">产品介绍</option><option value="培训分享">培训分享</option><option value="其他">其他</option></select></label>
+          <label>听众是谁？<input id="audience" maxlength="300" placeholder="职位、背景，以及他们已经知道什么" data-field></label>
+          <label>希望听众做什么？<input id="action" maxlength="500" placeholder="例如：批准试点预算，并确定负责人" data-field></label>
+        <label>手头有哪些材料？<select id="materials" data-field><option value="partial">部分材料，仍需补充</option><option value="ready">已有可核验材料</option><option value="none">暂时没有材料</option></select></label></div><p id="purpose-tip" class="guide-tip"></p></section>
+        <section id="expression" class="guide-card"><p class="eyebrow">02 / EXPRESSION</p><h2>这一页，主要讲清哪一种关系？</h2><p>先完成当前页，再加入大纲。切换表达任务会保留各分支回答；模板不匹配时需重新选择。</p><div id="task-options" class="guide-task-options" role="group" aria-label="表达任务"></div><p id="task-tip" class="guide-tip"></p></section>
+        <section id="content" class="guide-card"><p class="eyebrow">03 / YOUR CONTENT</p><h2>填入你的观点与依据</h2><label>一句话结论<textarea id="conclusion" rows="2" maxlength="2000" placeholder="先写你真正想让听众记住的判断" data-field></textarea></label><div id="content-slots" class="guide-fields"></div><div id="followup-slots" class="guide-fields" aria-label="根据回答追加的问题"></div><label>资料来源与待补信息<textarea id="sources" rows="3" maxlength="6000" placeholder="注明来源、日期、口径；缺失资料直接写“待补”，不需要编造。" data-field></textarea></label></section>
+        <section id="library" class="guide-card"><p class="eyebrow">04 / CURATED TEMPLATES</p><h2>让内容找到合适的位置</h2><p>以下为已导入目录中的实际模板预览。选择只记录在简报中，不会修改已有幻灯片。</p><div class="guide-filters"><label>页面位置<select id="role"><option value="content">正文内容页</option><option value="cover">封面</option><option value="toc">目录</option><option value="chapter">章节页</option><option value="ending">结束页</option><option value="appendix">附录页</option></select></label><label>表达分类<select id="family"><option value="all">全部表达任务</option></select></label><label>搜索<input id="catalog-search" type="search" placeholder="模板名称或用途"></label></div><p id="catalog-status" role="status"></p><button id="catalog-retry" class="button quiet" type="button" hidden>重新加载模板</button><label>来源与视觉风格组<select id="style-group"><option value="all">全部来源与风格</option></select></label><label class="guide-check"><input id="curated-only" type="checkbox">只看我精选的模板</label><p id="selected-template" class="guide-tip">尚未选择模板，可先完成内容。</p><button id="clear-template" class="button quiet" type="button" hidden>清除当前模板选择</button><p id="template-warning" class="guide-warning" role="status" hidden></p><div id="guide-template-grid" class="template-grid"></div><button id="catalog-more" class="button quiet" type="button" hidden>显示更多模板</button></section>
+        <section id="outline" class="guide-card"><p class="eyebrow">05 / DECK ASSEMBLY</p><h2>逐页组装，让整套内容连起来</h2><p>保存当前页会记录该页的表达分支、内容、页面位置和模板。整套简报会补入尚未添加的封面、目录与结束页，并明确标记待补。</p><label>当前页标题<input id="page-title" maxlength="200" placeholder="例如：比较两个试点方案"></label><p id="page-edit-note" class="guide-tip">正在填写新页面</p><div class="guide-actions"><button id="add-page" class="button primary" type="button">将当前页加入大纲</button><button id="new-page" class="button quiet" type="button">开始新页面</button><button id="restore-editor" class="button quiet" type="button" hidden>恢复上次切换前的填写</button><button id="restore-page" class="button quiet" type="button" hidden>恢复刚移除的页面</button></div><ol id="deck-outline" class="guide-outline"></ol></section>
+        <section id="personal" class="guide-card"><p class="eyebrow">06 / PERSONAL EXPERIENCE</p><h2>把你自己的问答，留下来复用</h2><p>这里仅保存你亲自输入的记录，不生成访谈。内置提示与个人经验分别标明来源；可按当前任务和模板找到相关经验。</p><form id="qa-form"><div class="guide-fields"><label>原始问题<textarea id="qa-question" rows="2" maxlength="3000" required></textarea></label><label>你的原始回答<textarea id="qa-answer" rows="3" maxlength="6000" required></textarea></label><label>提炼成可复用规则<textarea id="qa-rule" rows="2" maxlength="3000" required></textarea></label><label>来源与背景<input id="qa-source" maxlength="1000" required placeholder="例如：我的项目复盘，日期；勿填写虚构访谈"></label><label>关联表达任务<select id="qa-task"></select></label><label>关联模板<select id="qa-template"><option value="">不关联模板</option></select></label></div><p id="qa-edit-note" role="status">新增个人记录</p><div class="guide-actions"><button id="save-qa" class="button quiet" type="submit">保存个人问答</button><button id="cancel-qa" class="button quiet" type="button" hidden>取消编辑</button></div></form><label class="guide-check"><input id="related-only" type="checkbox">只看当前任务或模板的记录</label><div id="qa-records" class="guide-records"></div><h3>我的精选模板</h3><p>浏览模板时点击“加入精选”，填写你认为值得复用的原因。理由可继续编辑。</p><div id="favorite-records" class="guide-records"></div><details class="guide-feedback"><summary>跨项目复用个人经验</summary><p>导出问答与精选理由；在其他项目导入时先预览数量，再手动追加。已有记录不会被覆盖。</p><button id="export-experience" class="button quiet" type="button">导出个人经验 JSON</button><label>选择经验文件<input id="import-experience" type="file" accept="application/json,.json"></label><p id="import-preview" role="status">尚未选择文件</p><button id="confirm-import" class="button quiet" type="button" disabled>确认追加导入</button></details></section>
+        <section id="output" class="guide-card"><p class="eyebrow">07 / EDITABLE BRIEF</p><h2>检查整套简报，再带回工作台</h2><p>生成的简报可直接修改。修改问答后，可点击重新整理；手动编辑稿会保留为上一版，方便找回。</p><div class="guide-actions"><button id="build-brief" class="button quiet" type="button">根据大纲整理整套简报</button><button id="restore-brief" class="button quiet" type="button" hidden>恢复上一版编辑稿</button></div><p id="brief-note" class="guide-tip" role="status"></p><label>内容简报（可编辑）<textarea id="brief" rows="18" maxlength="20000" placeholder="填写内容后，点击上方按钮整理简报。"></textarea></label><div class="guide-actions"><button id="copy-brief" class="button quiet" type="button">复制简报</button><button id="download-brief" class="button quiet" type="button">下载 .md</button><button id="handoff-brief" class="button primary" type="button" disabled>带回工作台草稿 ↗</button></div><p class="guide-footnote">仅填入工作台输入框，不自动发送或生成页面。草稿与个人经验按项目保存到服务器，并保留当前浏览器备份。</p></section>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

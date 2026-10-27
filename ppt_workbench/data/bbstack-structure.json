@@ -1,0 +1,290 @@
+{
+  "version": "3.0",
+  "title": "PPT 页面结构与模板目录",
+  "goldenRoles": [
+    "cover",
+    "toc",
+    "chapter"
+  ],
+  "roles": [
+    {
+      "id": "cover",
+      "title": "封面",
+      "purpose": "交代主题、材料身份和使用场合",
+      "templateIds": [
+        "cover",
+        "cover-photo"
+      ],
+      "summary": "文字主导封面、图片主导封面"
+    },
+    {
+      "id": "toc",
+      "title": "目录",
+      "purpose": "展示整份材料的结构",
+      "templateIds": [
+        "toc",
+        "toc-grouped"
+      ],
+      "summary": "简短目录、分组目录"
+    },
+    {
+      "id": "chapter",
+      "title": "章节页／转场页",
+      "purpose": "标记进入新的部分，说明本章范围",
+      "templateIds": [
+        "chapter",
+        "chapter-image"
+      ],
+      "summary": "标准章节页、图像章节页；对应口语中的“小标题页”"
+    },
+    {
+      "id": "content",
+      "title": "正文内容页",
+      "purpose": "解释、比较、展示或论证具体内容",
+      "templateIds": [],
+      "summary": "按表达任务展开七类正文，再选择具体模板"
+    },
+    {
+      "id": "ending",
+      "title": "结束页",
+      "purpose": "收束重点，明确决定或下一步",
+      "templateIds": [
+        "ending"
+      ],
+      "summary": "总结、行动安排、待决策事项、联系方式"
+    },
+    {
+      "id": "appendix",
+      "title": "附录页",
+      "purpose": "承接需要查阅的补充材料",
+      "templateIds": [],
+      "summary": "详细参数、完整数据、补充案例、来源说明"
+    }
+  ],
+  "contentCategories": [
+    {
+      "id": "argument",
+      "title": "观点与论证",
+      "templateIds": [
+        "claim-proof",
+        "problem",
+        "cause",
+        "executive",
+        "faq"
+      ]
+    },
+    {
+      "id": "compare",
+      "title": "并列与对比",
+      "templateIds": [
+        "parallel",
+        "compare",
+        "change",
+        "decision-matrix",
+        "tradeoff",
+        "uneven-images"
+      ]
+    },
+    {
+      "id": "process",
+      "title": "流程与计划",
+      "templateIds": [
+        "process",
+        "swimlane",
+        "timeline",
+        "gantt",
+        "branch",
+        "roadmap",
+        "loop"
+      ]
+    },
+    {
+      "id": "structure",
+      "title": "架构与关系",
+      "templateIds": [
+        "hierarchy",
+        "organization",
+        "hub",
+        "mapping",
+        "boundary",
+        "zoom"
+      ]
+    },
+    {
+      "id": "data",
+      "title": "数据与分析",
+      "templateIds": [
+        "bar",
+        "line",
+        "composition",
+        "table",
+        "kpi",
+        "waterfall",
+        "funnel",
+        "scatter"
+      ]
+    },
+    {
+      "id": "product",
+      "title": "产品与素材展示",
+      "templateIds": [
+        "focus",
+        "multidevice",
+        "user-journey",
+        "before-after",
+        "photo-story",
+        "demo",
+        "feature-map"
+      ]
+    },
+    {
+      "id": "proof",
+      "title": "人物与案例",
+      "templateIds": [
+        "team-two",
+        "team-grid",
+        "roles",
+        "case",
+        "case-compare",
+        "grid",
+        "evidence-wall",
+        "quote"
+      ]
+    }
+  ],
+  "variants": {
+    "parallel": [
+      {
+        "id": "parallel-two",
+        "title": "两项并列／双栏图文",
+        "when": "两个同级对象，字段和说明深度接近",
+        "rule": "两栏共享图片容器、标题基线和字段顺序；保留共同留白。",
+        "targetTemplate": "parallel",
+        "visual": "parallel-two"
+      },
+      {
+        "id": "parallel-three",
+        "title": "三项并列／三栏图文",
+        "when": "三个同级对象，横向一排可以读清",
+        "rule": "三栏等宽；图片区高度相同；文案按同一字段逐项填入。",
+        "targetTemplate": "parallel",
+        "visual": "parallel-three"
+      },
+      {
+        "id": "parallel-four",
+        "title": "四项排列／四栏或 2×2",
+        "when": "四个同级对象，需要在单页完整浏览",
+        "rule": "短标签可试四栏，图文较多时改为 2×2；优先保持可读字号。",
+        "targetTemplate": "parallel",
+        "visual": "parallel-four"
+      },
+      {
+        "id": "parallel-aspect",
+        "title": "图片比例不同",
+        "when": "横图、竖图或截图同时出现",
+        "rule": "统一外部窗口，内部按原比例放置；照片可合理裁切，截图和标识优先保留全貌。",
+        "targetTemplate": "uneven-images",
+        "visual": "parallel-aspect"
+      },
+      {
+        "id": "parallel-priority",
+        "title": "同级对象中的重点强调",
+        "when": "对象仍然同级，但其中一项需要更醒目",
+        "rule": "保留共同字段和比较结构，通过强调色、边框或推荐标记突出一项；若内容已是一个主体加若干补充，切换主次分区。",
+        "targetTemplate": "parallel",
+        "visual": "parallel-priority"
+      },
+      {
+        "id": "parallel-long",
+        "title": "说明过长／分组或拆页",
+        "when": "各项说明较多，原网格开始挤压文字和图片",
+        "rule": "先统一信息颗粒度并压缩重复，再按组拆页；同类续页保持组件规格。",
+        "targetTemplate": "parallel",
+        "visual": "parallel-long"
+      },
+      {
+        "id": "parallel-missing",
+        "title": "部分图片缺失",
+        "when": "部分对象缺图，已有图片与文字仍需先排版",
+        "rule": "统一改为文字版，或在同规格图片框标明所需素材；保留名称与说明的共同基线。",
+        "targetTemplate": "parallel",
+        "visual": "parallel-missing"
+      }
+    ]
+  },
+  "appendixSections": [
+    {
+      "id": "parameters",
+      "title": "详细参数",
+      "description": "把需要逐项查阅的规格、条件和口径放进附录。",
+      "templateIds": [
+        "table"
+      ],
+      "rules": [
+        "参数分组与字段单位明确。",
+        "保留参数版本、适用范围与必要来源。",
+        "正文只引用核心差异，完整明细在这里查阅。"
+      ]
+    },
+    {
+      "id": "data",
+      "title": "完整数据",
+      "description": "补充正文图表背后的数据、定义和统计范围。",
+      "templateIds": [
+        "table",
+        "bar",
+        "line"
+      ],
+      "rules": [
+        "沿用正文指标名称、时间范围与单位。",
+        "区分原始值、汇总值和计算结果。",
+        "通过编号或标题对应正文图表。"
+      ]
+    },
+    {
+      "id": "cases",
+      "title": "补充案例",
+      "description": "为需要深入了解的读者提供完整案例资料。",
+      "templateIds": [
+        "case",
+        "case-compare"
+      ],
+      "rules": [
+        "延续正文案例的字段顺序与命名。",
+        "附上必要的背景、过程、产物与当前状态。",
+        "长案例分组呈现，不压缩成无法阅读的缩略图。"
+      ]
+    },
+    {
+      "id": "sources",
+      "title": "来源说明",
+      "description": "集中保存资料出处、版本和引用位置。",
+      "templateIds": [
+        "table"
+      ],
+      "rules": [
+        "记录资料名称、提供方或作者以及日期或版本。",
+        "引用编号与正文就近短注一致。",
+        "网址、文件名或定位信息足以帮助后续查找。"
+      ],
+      "fields": [
+        "资料名称",
+        "作者或提供方",
+        "日期或版本",
+        "正文引用位置",
+        "URL、文件名或定位信息"
+      ]
+    }
+  ],
+  "globalRules": [
+    "Logo 与品牌标识",
+    "字体、字号与字重",
+    "色板与强调规则",
+    "网格、对齐与内容边界",
+    "组内与组间间距",
+    "标题、图注、编号与页码组件"
+  ],
+  "templateCount": 54,
+  "contentTemplateCount": 47,
+  "scopeNote": "页面类型、正文分类、具体模板与条件变体分层组织；全局设计规范由所有页面共同引用。附录按用途复用现有表达模板，不计作新增场景。"
+}

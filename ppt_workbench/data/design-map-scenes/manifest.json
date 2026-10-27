@@ -1,0 +1,391 @@
+{
+  "source": {
+    "filename": "PPT设计地图_交互版 (1).html",
+    "sha256": "e2a8a97c2db7c1511cca74cddf72bdcf7c012a69c0a833eaf34014e4ecc1cb54",
+    "renderers": {
+      "slidePreview": [
+        2396,
+        2634
+      ],
+      "scenarioPreview": [
+        2656,
+        2972
+      ],
+      "structurePreview": [
+        2994,
+        3261
+      ]
+    },
+    "method": "Static Acorn AST parsing; constrained drawing DSL translated to trusted geometry. Downloaded JavaScript and HTML never executed.",
+    "coverage": "54 original website scenarios and 7 parallel structure variants; each original drawing case translated with no generic fallback.",
+    "limitations": "Text uses editable bounding boxes around original SVG baselines and system font metrics may differ. Circles are editable rounded rectangles. SVG path and polyline decorations and negative-slope lines are isolated transparent PNGs. Source dashed strokes become solid strokes. Applying templates omits example text, placeholder text rules, and illustrative quantitative marks; excess user blocks subdivide source slots. Actual supplied images remain images and are fitted to source image windows when available."
+  },
+  "templates": {
+    "cover": {
+      "renderer": "slide",
+      "objects": 10,
+      "editableText": 7,
+      "imageSlots": 0
+    },
+    "cover-photo": {
+      "renderer": "scenario",
+      "objects": 10,
+      "editableText": 6,
+      "imageSlots": 1
+    },
+    "toc": {
+      "renderer": "slide",
+      "objects": 15,
+      "editableText": 12,
+      "imageSlots": 0
+    },
+    "toc-grouped": {
+      "renderer": "scenario",
+      "objects": 27,
+      "editableText": 18,
+      "imageSlots": 0
+    },
+    "chapter": {
+      "renderer": "slide",
+      "objects": 8,
+      "editableText": 6,
+      "imageSlots": 0
+    },
+    "chapter-image": {
+      "renderer": "scenario",
+      "objects": 8,
+      "editableText": 6,
+      "imageSlots": 1
+    },
+    "ending": {
+      "renderer": "slide",
+      "objects": 14,
+      "editableText": 7,
+      "imageSlots": 0
+    },
+    "claim-proof": {
+      "renderer": "scenario",
+      "objects": 20,
+      "editableText": 9,
+      "imageSlots": 0
+    },
+    "problem": {
+      "renderer": "scenario",
+      "objects": 23,
+      "editableText": 10,
+      "imageSlots": 0
+    },
+    "cause": {
+      "renderer": "slide",
+      "objects": 17,
+      "editableText": 7,
+      "imageSlots": 0
+    },
+    "executive": {
+      "renderer": "scenario",
+      "objects": 18,
+      "editableText": 12,
+      "imageSlots": 0
+    },
+    "faq": {
+      "renderer": "scenario",
+      "objects": 18,
+      "editableText": 11,
+      "imageSlots": 0
+    },
+    "parallel": {
+      "renderer": "slide",
+      "objects": 21,
+      "editableText": 8,
+      "imageSlots": 0
+    },
+    "compare": {
+      "renderer": "slide",
+      "objects": 22,
+      "editableText": 13,
+      "imageSlots": 0
+    },
+    "change": {
+      "renderer": "slide",
+      "objects": 18,
+      "editableText": 7,
+      "imageSlots": 0
+    },
+    "decision-matrix": {
+      "renderer": "scenario",
+      "objects": 23,
+      "editableText": 18,
+      "imageSlots": 0
+    },
+    "tradeoff": {
+      "renderer": "scenario",
+      "objects": 17,
+      "editableText": 9,
+      "imageSlots": 0
+    },
+    "uneven-images": {
+      "renderer": "scenario",
+      "objects": 15,
+      "editableText": 8,
+      "imageSlots": 3
+    },
+    "process": {
+      "renderer": "slide",
+      "objects": 19,
+      "editableText": 11,
+      "imageSlots": 0
+    },
+    "swimlane": {
+      "renderer": "slide",
+      "objects": 21,
+      "editableText": 8,
+      "imageSlots": 0
+    },
+    "timeline": {
+      "renderer": "slide",
+      "objects": 20,
+      "editableText": 14,
+      "imageSlots": 0
+    },
+    "gantt": {
+      "renderer": "scenario",
+      "objects": 20,
+      "editableText": 10,
+      "imageSlots": 0
+    },
+    "branch": {
+      "renderer": "scenario",
+      "objects": 21,
+      "editableText": 8,
+      "imageSlots": 0
+    },
+    "roadmap": {
+      "renderer": "scenario",
+      "objects": 28,
+      "editableText": 14,
+      "imageSlots": 0
+    },
+    "loop": {
+      "renderer": "scenario",
+      "objects": 21,
+      "editableText": 7,
+      "imageSlots": 0
+    },
+    "hierarchy": {
+      "renderer": "slide",
+      "objects": 13,
+      "editableText": 5,
+      "imageSlots": 0
+    },
+    "organization": {
+      "renderer": "scenario",
+      "objects": 36,
+      "editableText": 12,
+      "imageSlots": 0
+    },
+    "hub": {
+      "renderer": "scenario",
+      "objects": 17,
+      "editableText": 7,
+      "imageSlots": 0
+    },
+    "mapping": {
+      "renderer": "slide",
+      "objects": 21,
+      "editableText": 8,
+      "imageSlots": 0
+    },
+    "boundary": {
+      "renderer": "scenario",
+      "objects": 17,
+      "editableText": 8,
+      "imageSlots": 0
+    },
+    "zoom": {
+      "renderer": "scenario",
+      "objects": 21,
+      "editableText": 9,
+      "imageSlots": 0
+    },
+    "bar": {
+      "renderer": "slide",
+      "objects": 13,
+      "editableText": 7,
+      "imageSlots": 0
+    },
+    "line": {
+      "renderer": "slide",
+      "objects": 19,
+      "editableText": 6,
+      "imageSlots": 0
+    },
+    "composition": {
+      "renderer": "slide",
+      "objects": 14,
+      "editableText": 7,
+      "imageSlots": 0
+    },
+    "table": {
+      "renderer": "slide",
+      "objects": 19,
+      "editableText": 14,
+      "imageSlots": 0
+    },
+    "kpi": {
+      "renderer": "scenario",
+      "objects": 18,
+      "editableText": 12,
+      "imageSlots": 0
+    },
+    "waterfall": {
+      "renderer": "scenario",
+      "objects": 18,
+      "editableText": 7,
+      "imageSlots": 0
+    },
+    "funnel": {
+      "renderer": "scenario",
+      "objects": 11,
+      "editableText": 6,
+      "imageSlots": 0
+    },
+    "scatter": {
+      "renderer": "scenario",
+      "objects": 21,
+      "editableText": 5,
+      "imageSlots": 0
+    },
+    "focus": {
+      "renderer": "slide",
+      "objects": 20,
+      "editableText": 5,
+      "imageSlots": 0
+    },
+    "multidevice": {
+      "renderer": "scenario",
+      "objects": 18,
+      "editableText": 5,
+      "imageSlots": 0
+    },
+    "user-journey": {
+      "renderer": "scenario",
+      "objects": 37,
+      "editableText": 10,
+      "imageSlots": 0
+    },
+    "before-after": {
+      "renderer": "scenario",
+      "objects": 17,
+      "editableText": 8,
+      "imageSlots": 0
+    },
+    "photo-story": {
+      "renderer": "scenario",
+      "objects": 12,
+      "editableText": 8,
+      "imageSlots": 3
+    },
+    "demo": {
+      "renderer": "scenario",
+      "objects": 17,
+      "editableText": 9,
+      "imageSlots": 0
+    },
+    "feature-map": {
+      "renderer": "scenario",
+      "objects": 21,
+      "editableText": 8,
+      "imageSlots": 0
+    },
+    "team-two": {
+      "renderer": "scenario",
+      "objects": 19,
+      "editableText": 12,
+      "imageSlots": 0
+    },
+    "team-grid": {
+      "renderer": "scenario",
+      "objects": 39,
+      "editableText": 26,
+      "imageSlots": 0
+    },
+    "roles": {
+      "renderer": "scenario",
+      "objects": 27,
+      "editableText": 14,
+      "imageSlots": 0
+    },
+    "case": {
+      "renderer": "scenario",
+      "objects": 17,
+      "editableText": 9,
+      "imageSlots": 1
+    },
+    "case-compare": {
+      "renderer": "scenario",
+      "objects": 30,
+      "editableText": 17,
+      "imageSlots": 3
+    },
+    "grid": {
+      "renderer": "slide",
+      "objects": 33,
+      "editableText": 8,
+      "imageSlots": 0
+    },
+    "evidence-wall": {
+      "renderer": "scenario",
+      "objects": 18,
+      "editableText": 12,
+      "imageSlots": 5
+    },
+    "quote": {
+      "renderer": "scenario",
+      "objects": 9,
+      "editableText": 7,
+      "imageSlots": 0
+    },
+    "parallel-two": {
+      "renderer": "structure",
+      "objects": 13,
+      "editableText": 8,
+      "imageSlots": 2
+    },
+    "parallel-three": {
+      "renderer": "structure",
+      "objects": 18,
+      "editableText": 11,
+      "imageSlots": 3
+    },
+    "parallel-four": {
+      "renderer": "structure",
+      "objects": 27,
+      "editableText": 14,
+      "imageSlots": 4
+    },
+    "parallel-aspect": {
+      "renderer": "structure",
+      "objects": 18,
+      "editableText": 11,
+      "imageSlots": 3
+    },
+    "parallel-priority": {
+      "renderer": "structure",
+      "objects": 23,
+      "editableText": 12,
+      "imageSlots": 3
+    },
+    "parallel-long": {
+      "renderer": "structure",
+      "objects": 28,
+      "editableText": 21,
+      "imageSlots": 4
+    },
+    "parallel-missing": {
+      "renderer": "structure",
+      "objects": 31,
+      "editableText": 21,
+      "imageSlots": 0
+    }
+  }
+}

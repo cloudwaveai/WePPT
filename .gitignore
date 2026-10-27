@@ -1,0 +1,39 @@
+# Local environments and dependencies
+.venv/
+venv/
+node_modules/
+
+# Build outputs and Python caches
+build/
+dist/
+*.egg-info/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local projects, conversations, and exports
+/work/
+/weppt-work/
+*.sqlite
+*.sqlite3
+*.db
+*.db-wal
+*.db-shm
+
+# Credentials and machine-specific configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.claude/
+.codex/
+
+# Operating system and editor files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.log

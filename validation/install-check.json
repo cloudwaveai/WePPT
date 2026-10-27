@@ -1,0 +1,15 @@
+{
+  "wheel": "ppt_workbench-0.4.0-py3-none-any.whl",
+  "required_resources": 12,
+  "cli_installed": true,
+  "smoke": {
+    "version": "0.4.0",
+    "installed_outside_source": true,
+    "pages": 2,
+    "inputs": 1,
+    "outputs": 1,
+    "quality_status": "awaiting_browser",
+    "html_exported": 2,
+    "ui_acceptance": false
+  }
+}

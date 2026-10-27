@@ -1,0 +1,10 @@
+*
+!Dockerfile
+!pyproject.toml
+!README.md
+!package.json
+!package-lock.json
+!ppt_workbench/
+!ppt_workbench/**
+ppt_workbench/**/__pycache__/
+ppt_workbench/**/*.pyc

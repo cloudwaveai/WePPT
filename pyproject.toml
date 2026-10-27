@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ppt-workbench"
+version = "0.4.0"
+description = "Chat-driven page-by-page presentations with live preview, editable PPTX, CLI and MCP"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+mcp = ["mcp==2.3.0"]
+
+[project.scripts]
+pptctl = "ppt_workbench.cli:main"
+ppt-mcp = "ppt_workbench.mcp_server:main"
+
+[tool.setuptools.packages.find]
+include = ["ppt_workbench*"]
+
+[tool.setuptools.package-data]
+ppt_workbench = ["data/*.json", "data/opening-templates/*.json", "data/opening-templates/scenes/*.json", "data/opening-templates/assets/*", "data/design-map-scenes/*.json", "*.mjs", "web/*", "web/reference-library/*.json", "web/reference-library/previews/*.png"]

@@ -1,0 +1,31 @@
+services:
+  weppt:
+    build: .
+    image: weppt:0.4.0
+    restart: unless-stopped
+    # Linux host networking retains the application's loopback-only listener.
+    # Verify rootless Docker host-network reachability before deployment.
+    network_mode: host
+    init: true
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 128
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,size=256m,mode=1777
+    volumes:
+      - weppt-data:/data
+      - weppt-codex:/home/weppt/.codex
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+volumes:
+  weppt-data:
+  # Provision only authorized server-side model configuration into this volume.
+  # Never bake credentials into the image or mount all of the host home directory.
+  weppt-codex:

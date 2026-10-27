@@ -1,0 +1,12 @@
+{
+  "name": "ppt-workbench-export",
+  "version": "0.4.0",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "description": "Local editable PowerPoint export adapter",
+  "dependencies": {
+    "pptxgenjs": "4.0.1"
+  }
+}

@@ -1,0 +1,1252 @@
+{
+  "schema": "ppt-opening-templates",
+  "schemaVersion": 1,
+  "inspectionScope": "first three slides only",
+  "fidelityNotes": [
+    "Editable text, rectangles, lines and source pictures; no slide screenshots",
+    "Source font names retained; fonts are not bundled and host substitution can change glyph metrics",
+    "Picture crops, source stretch and alpha baked into individual image assets; untouched originals retained",
+    "Explicit multiline text fits its original content box where browser clipping would occur; adjustments listed per object",
+    "Reflections and character tracking unsupported; see per-template limitations"
+  ],
+  "templates": [
+    {
+      "id": "opening-01-01-cover",
+      "role": "cover",
+      "sourceFile": "0710网梯分享.pptx",
+      "sourcePage": 1,
+      "sourceSha256": "e26c2aee9f66896f6c64dc19b77398c63f2894f49fef5d32f419f3678da7503a",
+      "scene": "opening-01-01-cover.json",
+      "fidelity": "editable-source-geometry-with-listed-limitations",
+      "objects": [
+        {
+          "objectId": "o6-shape",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "6",
+          "sourceBox": [
+            0.0,
+            0.0,
+            1280.0,
+            720.0
+          ]
+        },
+        {
+          "objectId": "o5",
+          "sourcePart": "ppt/media/image1.jpeg",
+          "sourceShapeId": "5",
+          "sourceBox": [
+            97.42855643044619,
+            126.6061942257218,
+            1085.1428871391076,
+            383.14288713910764
+          ],
+          "sourceAsset": "assets/96c6a28d23c4412d020c.jpeg",
+          "sceneAsset": "assets/447cb1876a7eb2bc7a01.png",
+          "sourceSha256": "96c6a28d23c4412d020c922143905524bd4806e82332cbbe64f446222af737d1"
+        },
+        {
+          "objectId": "o7",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "7",
+          "sourceBox": [
+            97.42855643044619,
+            218.53994750656167,
+            1104.9592650918635,
+            145.06666666666666
+          ],
+          "role": "title",
+          "binding": "title",
+          "placeholder": "{{title}}"
+        },
+        {
+          "objectId": "o9",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "9",
+          "sourceBox": [
+            386.0120734908137,
+            556.153595800525,
+            582.2366404199475,
+            102.117375328084
+          ],
+          "role": "subtitle",
+          "binding": "takeaway",
+          "placeholder": "{{takeaway}}"
+        },
+        {
+          "objectId": "o12-shape",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "12",
+          "sourceBox": [
+            0.13333333333333333,
+            685.3139107611548,
+            1278.1333333333334,
+            34.75275590551181
+          ]
+        },
+        {
+          "objectId": "o13-shape",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "13",
+          "sourceBox": [
+            0.0,
+            3.428556430446194,
+            1278.1333333333334,
+            34.75275590551181
+          ]
+        },
+        {
+          "objectId": "o4",
+          "sourcePart": "ppt/media/image2.png",
+          "sourceShapeId": "4",
+          "sourceBox": [
+            29.95233595800525,
+            17.995485564304463,
+            189.39695538057742,
+            47.228766404199476
+          ],
+          "sourceAsset": "assets/0a81cf78e266e7b93c70.png",
+          "sceneAsset": "assets/e0eedf2abffb576ddbdd.png",
+          "sourceSha256": "0a81cf78e266e7b93c706e02826fd5ff6b6523de7ac7f271466854a740622286"
+        }
+      ],
+      "limitations": [
+        {
+          "code": "unsupported-reflection",
+          "objectId": "o5",
+          "detail": "Source reflection effect is not represented"
+        },
+        {
+          "code": "text-fit-adjusted",
+          "objectId": "o7",
+          "detail": "Browser clipping avoided within original text box; source fontSize=80.0, scene fontSize=67.73333499999998, lineHeight=1"
+        },
+        {
+          "code": "canvas-clipped",
+          "objectId": "o12",
+          "detail": "Source geometry extends beyond slide; clipped to scene bounds"
+        }
+      ]
+    },
+    {
+      "id": "opening-02-01-cover",
+      "role": "cover",
+      "sourceFile": "0828云涌世纪公司介绍.pptx",
+      "sourcePage": 1,
+      "sourceSha256": "933f1daee4200a26519b6838c0914121b9c5e8e7c87ce3eee4e3992753e70804",
+      "scene": "opening-02-01-cover.json",
+      "fidelity": "editable-source-geometry-with-listed-limitations",
+      "objects": [
+        {
+          "objectId": "o6-shape",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "6",
+          "sourceBox": [
+            0.0,
+            0.0,
+            1280.0,
+            720.0
+          ]
+        },
+        {
+          "objectId": "o5",
+          "sourcePart": "ppt/media/image1.jpeg",
+          "sourceShapeId": "5",
+          "sourceBox": [
+            97.42855643044619,
+            126.6061942257218,
+            1085.1428871391076,
+            383.14288713910764
+          ],
+          "sourceAsset": "assets/96c6a28d23c4412d020c.jpeg",
+          "sceneAsset": "assets/447cb1876a7eb2bc7a01.png",
+          "sourceSha256": "96c6a28d23c4412d020c922143905524bd4806e82332cbbe64f446222af737d1"
+        },
+        {
+          "objectId": "o7",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "7",
+          "sourceBox": [
+            111.36409448818898,
+            265.48241469816276,
+            1104.9592650918635,
+            145.06666666666666
+          ],
+          "role": "title",
+          "binding": "title",
+          "placeholder": "{{title}}"
+        },
+        {
+          "objectId": "o9",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "9",
+          "sourceBox": [
+            386.01228346456696,
+            567.2911286089239,
+            582.2366404199475,
+            53.333333333333336
+          ],
+          "role": "subtitle",
+          "binding": "takeaway",
+          "placeholder": "{{takeaway}}"
+        },
+        {
+          "objectId": "o12-shape",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "12",
+          "sourceBox": [
+            0.13333333333333333,
+            685.3139107611548,
+            1278.1333333333334,
+            34.75275590551181
+          ]
+        },
+        {
+          "objectId": "o13-shape",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "13",
+          "sourceBox": [
+            0.0,
+            3.428556430446194,
+            1278.1333333333334,
+            34.75275590551181
+          ]
+        },
+        {
+          "objectId": "o2",
+          "sourcePart": "ppt/media/image2.png",
+          "sourceShapeId": "2",
+          "sourceBox": [
+            20.213333333333335,
+            14.136062992125984,
+            193.12010498687664,
+            48.15727034120735
+          ],
+          "sourceAsset": "assets/0a81cf78e266e7b93c70.png",
+          "sceneAsset": "assets/e0eedf2abffb576ddbdd.png",
+          "sourceSha256": "0a81cf78e266e7b93c706e02826fd5ff6b6523de7ac7f271466854a740622286"
+        }
+      ],
+      "limitations": [
+        {
+          "code": "unsupported-reflection",
+          "objectId": "o5",
+          "detail": "Source reflection effect is not represented"
+        },
+        {
+          "code": "text-fit-adjusted",
+          "objectId": "o7",
+          "detail": "Browser clipping avoided within original text box; source fontSize=80.0, scene fontSize=67.73333499999998, lineHeight=1"
+        },
+        {
+          "code": "canvas-clipped",
+          "objectId": "o12",
+          "detail": "Source geometry extends beyond slide; clipped to scene bounds"
+        }
+      ]
+    },
+    {
+      "id": "opening-03-01-cover",
+      "role": "cover",
+      "sourceFile": "420云涌世纪公司介绍.pptx",
+      "sourcePage": 1,
+      "sourceSha256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+      "scene": "opening-03-01-cover.json",
+      "fidelity": "editable-source-geometry-with-listed-limitations",
+      "objects": [
+        {
+          "objectId": "o6-shape",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "6",
+          "sourceBox": [
+            0.0,
+            0.0,
+            1280.0,
+            720.0
+          ]
+        },
+        {
+          "objectId": "o5",
+          "sourcePart": "ppt/media/image1.jpeg",
+          "sourceShapeId": "5",
+          "sourceBox": [
+            97.42855643044619,
+            126.6061942257218,
+            1085.1428871391076,
+            383.14288713910764
+          ],
+          "sourceAsset": "assets/96c6a28d23c4412d020c.jpeg",
+          "sceneAsset": "assets/447cb1876a7eb2bc7a01.png",
+          "sourceSha256": "96c6a28d23c4412d020c922143905524bd4806e82332cbbe64f446222af737d1"
+        },
+        {
+          "objectId": "o7",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "7",
+          "sourceBox": [
+            111.36409448818898,
+            265.48241469816276,
+            1104.9592650918635,
+            145.06666666666666
+          ],
+          "role": "title",
+          "binding": "title",
+          "placeholder": "{{title}}"
+        },
+        {
+          "objectId": "o9",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "9",
+          "sourceBox": [
+            386.01228346456696,
+            567.2911286089239,
+            582.2366404199475,
+            53.333333333333336
+          ],
+          "role": "subtitle",
+          "binding": "takeaway",
+          "placeholder": "{{takeaway}}"
+        },
+        {
+          "objectId": "o12-shape",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "12",
+          "sourceBox": [
+            0.13333333333333333,
+            685.3139107611548,
+            1278.1333333333334,
+            34.75275590551181
+          ]
+        },
+        {
+          "objectId": "o13-shape",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "13",
+          "sourceBox": [
+            0.0,
+            3.428556430446194,
+            1278.1333333333334,
+            34.75275590551181
+          ]
+        },
+        {
+          "objectId": "o14",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "14",
+          "sourceBox": [
+            1028.7047769028873,
+            678.1666141732284,
+            232.47170603674542,
+            42.00629921259843
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        },
+        {
+          "objectId": "o2",
+          "sourcePart": "ppt/media/image2.png",
+          "sourceShapeId": "2",
+          "sourceBox": [
+            20.213333333333335,
+            14.136062992125984,
+            193.12010498687664,
+            48.15727034120735
+          ],
+          "sourceAsset": "assets/0a81cf78e266e7b93c70.png",
+          "sceneAsset": "assets/e0eedf2abffb576ddbdd.png",
+          "sourceSha256": "0a81cf78e266e7b93c706e02826fd5ff6b6523de7ac7f271466854a740622286"
+        }
+      ],
+      "limitations": [
+        {
+          "code": "unsupported-reflection",
+          "objectId": "o5",
+          "detail": "Source reflection effect is not represented"
+        },
+        {
+          "code": "canvas-clipped",
+          "objectId": "o12",
+          "detail": "Source geometry extends beyond slide; clipped to scene bounds"
+        },
+        {
+          "code": "canvas-clipped",
+          "objectId": "o14",
+          "detail": "Source geometry extends beyond slide; clipped to scene bounds"
+        },
+        {
+          "code": "text-fit-adjusted",
+          "objectId": "o14",
+          "detail": "Source footer extends beyond canvas; fontSize 26.666666666666668 fitted to 23.69685666666667"
+        }
+      ]
+    },
+    {
+      "id": "opening-04-01-cover",
+      "role": "cover",
+      "sourceFile": "v3FDE宣讲世纪互联.pptx",
+      "sourcePage": 1,
+      "sourceSha256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+      "scene": "opening-04-01-cover.json",
+      "fidelity": "editable-source-geometry-with-listed-limitations",
+      "objects": [
+        {
+          "objectId": "o8",
+          "sourcePart": "ppt/media/image1.jpeg",
+          "sourceShapeId": "8",
+          "sourceBox": [
+            -0.0001399825021872266,
+            0.0,
+            1280.000139982502,
+            419.1085914260717
+          ],
+          "sourceAsset": "assets/96c6a28d23c4412d020c.jpeg",
+          "sceneAsset": "assets/c762e7d4629192369e34.png",
+          "sourceSha256": "96c6a28d23c4412d020c922143905524bd4806e82332cbbe64f446222af737d1"
+        },
+        {
+          "objectId": "o4",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "4",
+          "sourceBox": [
+            63.99986001749781,
+            238.4,
+            1152.0,
+            121.6
+          ],
+          "role": "title",
+          "binding": "title",
+          "placeholder": "{{title}}"
+        },
+        {
+          "objectId": "o6",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "6",
+          "sourceBox": [
+            63.99986001749781,
+            338.3316885389326,
+            1152.0,
+            79.36
+          ],
+          "role": "subtitle",
+          "binding": "takeaway",
+          "placeholder": "{{takeaway}}"
+        },
+        {
+          "objectId": "o10",
+          "sourcePart": "ppt/media/image2.png",
+          "sourceShapeId": "10",
+          "sourceBox": [
+            0.0,
+            13.937917760279964,
+            257.77777777777777,
+            64.0
+          ],
+          "sourceAsset": "assets/550142241e8f77499ae6.png",
+          "sceneAsset": "assets/9724ebb8cf1824b8b920.png",
+          "sourceSha256": "550142241e8f77499ae65cf8cb7b0415954919b390868bf5fe770c3888ef252c"
+        },
+        {
+          "objectId": "o12",
+          "sourcePart": "ppt/media/image3.png",
+          "sourceShapeId": "12",
+          "sourceBox": [
+            1084.2353105861766,
+            650.6565879265091,
+            175.05875765529308,
+            43.959405074365705
+          ],
+          "sourceAsset": "assets/55a71b74876682cfc9b6.png",
+          "sceneAsset": "assets/7bd55a962cfbbe9aba2e.png",
+          "sourceSha256": "55a71b74876682cfc9b6c5a99db8c38e3e9dd1d1fcfdd5328006df5b95807cfe"
+        },
+        {
+          "objectId": "o13",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "13",
+          "sourceBox": [
+            257.77777777777777,
+            544.0151181102362,
+            776.31552055993,
+            71.11111111111111
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        }
+      ],
+      "limitations": [
+        {
+          "code": "canvas-clipped",
+          "objectId": "o8",
+          "detail": "Source geometry extends beyond slide; clipped to scene bounds"
+        },
+        {
+          "code": "unsupported-reflection",
+          "objectId": "o8",
+          "detail": "Source reflection effect is not represented"
+        }
+      ]
+    },
+    {
+      "id": "opening-04-02-toc",
+      "role": "toc",
+      "sourceFile": "v3FDE宣讲世纪互联.pptx",
+      "sourcePage": 2,
+      "sourceSha256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+      "scene": "opening-04-02-toc.json",
+      "fidelity": "editable-source-geometry-with-listed-limitations",
+      "objects": [
+        {
+          "objectId": "o4-shape",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "4",
+          "sourceBox": [
+            76.8,
+            56.32,
+            30.72,
+            4.4799999999999995
+          ]
+        },
+        {
+          "objectId": "o5",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "5",
+          "sourceBox": [
+            76.8,
+            66.56,
+            640.0,
+            33.28
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        },
+        {
+          "objectId": "o6",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "6",
+          "sourceBox": [
+            74.24,
+            99.84,
+            512.0,
+            70.39999999999999
+          ],
+          "role": "title",
+          "binding": "title",
+          "placeholder": "{{title}}"
+        },
+        {
+          "objectId": "o7",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "7",
+          "sourceBox": [
+            806.4,
+            121.6,
+            396.8,
+            35.839999999999996
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        },
+        {
+          "objectId": "o8",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "8",
+          "sourceBox": [
+            76.8,
+            168.96,
+            1126.3999999999999,
+            0.0
+          ]
+        },
+        {
+          "objectId": "o9",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "9",
+          "sourceBox": [
+            76.8,
+            185.6,
+            89.6,
+            64.0
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        },
+        {
+          "objectId": "o10",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "10",
+          "sourceBox": [
+            179.2,
+            192.0,
+            844.8,
+            53.76
+          ],
+          "role": "toc-item",
+          "binding": "keyPoints:0",
+          "placeholder": "{{keyPoints:0}}"
+        },
+        {
+          "objectId": "o11",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "11",
+          "sourceBox": [
+            1139.2,
+            192.0,
+            64.0,
+            53.76
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        },
+        {
+          "objectId": "o12",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "12",
+          "sourceBox": [
+            76.8,
+            266.24,
+            1126.3999999999999,
+            0.0
+          ]
+        },
+        {
+          "objectId": "o13",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "13",
+          "sourceBox": [
+            76.8,
+            282.88,
+            89.6,
+            64.0
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        },
+        {
+          "objectId": "o14",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "14",
+          "sourceBox": [
+            179.2,
+            289.28,
+            844.8,
+            53.76
+          ],
+          "role": "toc-item",
+          "binding": "keyPoints:1",
+          "placeholder": "{{keyPoints:1}}"
+        },
+        {
+          "objectId": "o15",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "15",
+          "sourceBox": [
+            1139.2,
+            289.28,
+            64.0,
+            53.76
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        },
+        {
+          "objectId": "o16",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "16",
+          "sourceBox": [
+            76.8,
+            363.52,
+            1126.3999999999999,
+            0.0
+          ]
+        },
+        {
+          "objectId": "o17",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "17",
+          "sourceBox": [
+            76.8,
+            380.15999999999997,
+            89.6,
+            64.0
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        },
+        {
+          "objectId": "o18",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "18",
+          "sourceBox": [
+            179.2,
+            386.56,
+            844.8,
+            53.76
+          ],
+          "role": "toc-item",
+          "binding": "keyPoints:2",
+          "placeholder": "{{keyPoints:2}}"
+        },
+        {
+          "objectId": "o19",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "19",
+          "sourceBox": [
+            1139.2,
+            386.56,
+            64.0,
+            53.76
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        },
+        {
+          "objectId": "o20",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "20",
+          "sourceBox": [
+            76.8,
+            460.8,
+            1126.3999999999999,
+            0.0
+          ]
+        },
+        {
+          "objectId": "o22",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "22",
+          "sourceBox": [
+            179.2,
+            483.84,
+            844.8,
+            53.76
+          ],
+          "role": "toc-item",
+          "binding": "keyPoints:3",
+          "placeholder": "{{keyPoints:3}}"
+        },
+        {
+          "objectId": "o23",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "23",
+          "sourceBox": [
+            1139.2,
+            483.84,
+            64.0,
+            53.76
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        },
+        {
+          "objectId": "o24",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "24",
+          "sourceBox": [
+            76.8,
+            558.08,
+            1126.3999999999999,
+            0.0
+          ]
+        },
+        {
+          "objectId": "o26",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "26",
+          "sourceBox": [
+            179.2,
+            581.12,
+            844.8,
+            53.76
+          ],
+          "role": "toc-item",
+          "binding": "keyPoints:4",
+          "placeholder": "{{keyPoints:4}}"
+        },
+        {
+          "objectId": "o27",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "27",
+          "sourceBox": [
+            1139.2,
+            581.12,
+            64.0,
+            53.76
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        },
+        {
+          "objectId": "o28",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "28",
+          "sourceBox": [
+            76.8,
+            655.36,
+            1126.3999999999999,
+            0.0
+          ]
+        },
+        {
+          "objectId": "o29",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "29",
+          "sourceBox": [
+            76.8,
+            578.5601399825022,
+            89.6,
+            64.0
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        },
+        {
+          "objectId": "o30",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "30",
+          "sourceBox": [
+            76.8,
+            481.80717410323706,
+            89.6,
+            64.0
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        },
+        {
+          "objectId": "o2",
+          "sourcePart": "ppt/media/image2.png",
+          "sourceShapeId": "2",
+          "sourceBox": [
+            1139.2,
+            16.83779527559055,
+            159.0255818022747,
+            39.48220472440945
+          ],
+          "sourceAsset": "assets/550142241e8f77499ae6.png",
+          "sceneAsset": "assets/c475795df5af23863c42.png",
+          "sourceSha256": "550142241e8f77499ae65cf8cb7b0415954919b390868bf5fe770c3888ef252c"
+        },
+        {
+          "objectId": "o25",
+          "sourcePart": "ppt/media/image4.png",
+          "sourceShapeId": "25",
+          "sourceBox": [
+            1139.2,
+            675.8401399825021,
+            115.28552930883639,
+            29.260262467191602
+          ],
+          "sourceAsset": "assets/47e5fe0aa2f356e7d6c9.png",
+          "sceneAsset": "assets/9eefd17627f255f27b69.png",
+          "sourceSha256": "47e5fe0aa2f356e7d6c97a26bc7771e4d7b4170c23d2b09eea82660a989af4c4"
+        }
+      ],
+      "limitations": [
+        {
+          "code": "unsupported-tracking",
+          "objectId": "o5",
+          "detail": "OOXML character spacing is not supported by scene text"
+        },
+        {
+          "code": "unsupported-tracking",
+          "objectId": "o7",
+          "detail": "OOXML character spacing is not supported by scene text"
+        },
+        {
+          "code": "canvas-clipped",
+          "objectId": "o2",
+          "detail": "Source geometry extends beyond slide; clipped to scene bounds"
+        }
+      ]
+    },
+    {
+      "id": "opening-05-01-cover",
+      "role": "cover",
+      "sourceFile": "【FESCO】云涌世纪公司介绍.pptx",
+      "sourcePage": 1,
+      "sourceSha256": "78aa8b4d3690ddb14124f00dd89f3e43e6b325e8d436bb1318b6859d121f8113",
+      "scene": "opening-05-01-cover.json",
+      "fidelity": "editable-source-geometry-with-listed-limitations",
+      "objects": [
+        {
+          "objectId": "o6-shape",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "6",
+          "sourceBox": [
+            0.0,
+            0.0,
+            1280.0,
+            720.0
+          ]
+        },
+        {
+          "objectId": "o5",
+          "sourcePart": "ppt/media/image1.jpeg",
+          "sourceShapeId": "5",
+          "sourceBox": [
+            97.42855643044619,
+            126.6061942257218,
+            1085.1428871391076,
+            383.14288713910764
+          ],
+          "sourceAsset": "assets/96c6a28d23c4412d020c.jpeg",
+          "sceneAsset": "assets/447cb1876a7eb2bc7a01.png",
+          "sourceSha256": "96c6a28d23c4412d020c922143905524bd4806e82332cbbe64f446222af737d1"
+        },
+        {
+          "objectId": "o7",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "7",
+          "sourceBox": [
+            97.42855643044619,
+            236.3415223097113,
+            1104.9592650918635,
+            145.06666666666666
+          ],
+          "role": "title",
+          "binding": "title",
+          "placeholder": "{{title}}"
+        },
+        {
+          "objectId": "o12-shape",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "12",
+          "sourceBox": [
+            0.13333333333333333,
+            685.3139107611548,
+            1278.1333333333334,
+            34.75275590551181
+          ]
+        },
+        {
+          "objectId": "o13-shape",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "13",
+          "sourceBox": [
+            0.0,
+            3.428556430446194,
+            1278.1333333333334,
+            34.75275590551181
+          ]
+        },
+        {
+          "objectId": "o14",
+          "sourcePart": "ppt/slides/slide1.xml",
+          "sourceShapeId": "14",
+          "sourceBox": [
+            1028.7047769028873,
+            678.1666141732284,
+            232.47170603674542,
+            42.00629921259843
+          ],
+          "role": "subtitle",
+          "binding": "takeaway",
+          "placeholder": "{{takeaway}}"
+        },
+        {
+          "objectId": "o10",
+          "sourcePart": "ppt/media/image2.png",
+          "sourceShapeId": "10",
+          "sourceBox": [
+            20.213333333333335,
+            14.136062992125984,
+            193.12010498687664,
+            48.15727034120735
+          ],
+          "sourceAsset": "assets/0a81cf78e266e7b93c70.png",
+          "sceneAsset": "assets/e0eedf2abffb576ddbdd.png",
+          "sourceSha256": "0a81cf78e266e7b93c706e02826fd5ff6b6523de7ac7f271466854a740622286"
+        }
+      ],
+      "limitations": [
+        {
+          "code": "unsupported-reflection",
+          "objectId": "o5",
+          "detail": "Source reflection effect is not represented"
+        },
+        {
+          "code": "text-fit-adjusted",
+          "objectId": "o7",
+          "detail": "Browser clipping avoided within original text box; source fontSize=80.0, scene fontSize=67.73333499999998, lineHeight=1"
+        },
+        {
+          "code": "canvas-clipped",
+          "objectId": "o12",
+          "detail": "Source geometry extends beyond slide; clipped to scene bounds"
+        },
+        {
+          "code": "canvas-clipped",
+          "objectId": "o14",
+          "detail": "Source geometry extends beyond slide; clipped to scene bounds"
+        },
+        {
+          "code": "text-fit-adjusted",
+          "objectId": "o14",
+          "detail": "Source footer extends beyond canvas; fontSize 26.666666666666668 fitted to 23.69685666666667"
+        }
+      ]
+    },
+    {
+      "id": "opening-05-02-chapter",
+      "role": "chapter",
+      "sourceFile": "【FESCO】云涌世纪公司介绍.pptx",
+      "sourcePage": 2,
+      "sourceSha256": "78aa8b4d3690ddb14124f00dd89f3e43e6b325e8d436bb1318b6859d121f8113",
+      "scene": "opening-05-02-chapter.json",
+      "fidelity": "editable-source-geometry-with-listed-limitations",
+      "objects": [
+        {
+          "objectId": "o6-shape",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "6",
+          "sourceBox": [
+            0.0,
+            0.0,
+            1280.0,
+            720.0
+          ]
+        },
+        {
+          "objectId": "o5",
+          "sourcePart": "ppt/media/image1.jpeg",
+          "sourceShapeId": "5",
+          "sourceBox": [
+            97.42855643044619,
+            126.6061942257218,
+            1085.1428871391076,
+            383.14288713910764
+          ],
+          "sourceAsset": "assets/96c6a28d23c4412d020c.jpeg",
+          "sceneAsset": "assets/447cb1876a7eb2bc7a01.png",
+          "sourceSha256": "96c6a28d23c4412d020c922143905524bd4806e82332cbbe64f446222af737d1"
+        },
+        {
+          "objectId": "o7",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "7",
+          "sourceBox": [
+            111.36409448818898,
+            265.48241469816276,
+            1104.9592650918635,
+            145.06666666666666
+          ],
+          "role": "title",
+          "binding": "title",
+          "placeholder": "{{title}}"
+        },
+        {
+          "objectId": "o9",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "9",
+          "sourceBox": [
+            386.01228346456696,
+            567.2911286089239,
+            582.2366404199475,
+            53.333333333333336
+          ],
+          "role": "subtitle",
+          "binding": "takeaway",
+          "placeholder": "{{takeaway}}"
+        },
+        {
+          "objectId": "o12-shape",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "12",
+          "sourceBox": [
+            0.13333333333333333,
+            685.3139107611548,
+            1278.1333333333334,
+            34.75275590551181
+          ]
+        },
+        {
+          "objectId": "o13-shape",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "13",
+          "sourceBox": [
+            0.0,
+            3.428556430446194,
+            1278.1333333333334,
+            34.75275590551181
+          ]
+        },
+        {
+          "objectId": "o14",
+          "sourcePart": "ppt/slides/slide2.xml",
+          "sourceShapeId": "14",
+          "sourceBox": [
+            1028.7047769028873,
+            678.1666141732284,
+            232.47170603674542,
+            42.00629921259843
+          ],
+          "role": "decorative",
+          "binding": null,
+          "placeholder": null
+        },
+        {
+          "objectId": "o2",
+          "sourcePart": "ppt/media/image2.png",
+          "sourceShapeId": "2",
+          "sourceBox": [
+            20.213333333333335,
+            14.136062992125984,
+            193.12010498687664,
+            48.15727034120735
+          ],
+          "sourceAsset": "assets/0a81cf78e266e7b93c70.png",
+          "sceneAsset": "assets/e0eedf2abffb576ddbdd.png",
+          "sourceSha256": "0a81cf78e266e7b93c706e02826fd5ff6b6523de7ac7f271466854a740622286"
+        }
+      ],
+      "limitations": [
+        {
+          "code": "unsupported-reflection",
+          "objectId": "o5",
+          "detail": "Source reflection effect is not represented"
+        },
+        {
+          "code": "canvas-clipped",
+          "objectId": "o12",
+          "detail": "Source geometry extends beyond slide; clipped to scene bounds"
+        },
+        {
+          "code": "canvas-clipped",
+          "objectId": "o14",
+          "detail": "Source geometry extends beyond slide; clipped to scene bounds"
+        },
+        {
+          "code": "text-fit-adjusted",
+          "objectId": "o14",
+          "detail": "Source footer extends beyond canvas; fontSize 26.666666666666668 fitted to 23.69685666666667"
+        }
+      ]
+    }
+  ],
+  "inspectedPages": [
+    {
+      "sourceFile": "0710网梯分享.pptx",
+      "sourcePage": 1,
+      "role": "cover",
+      "included": true,
+      "reason": "Reviewed opening page"
+    },
+    {
+      "sourceFile": "0710网梯分享.pptx",
+      "sourcePage": 2,
+      "role": "body",
+      "included": false,
+      "reason": "Body content; screenshot/product evidence or explanatory content"
+    },
+    {
+      "sourceFile": "0710网梯分享.pptx",
+      "sourcePage": 3,
+      "role": "body",
+      "included": false,
+      "reason": "Body content; screenshot/product evidence or explanatory content"
+    },
+    {
+      "sourceFile": "0828云涌世纪公司介绍.pptx",
+      "sourcePage": 1,
+      "role": "cover",
+      "included": true,
+      "reason": "Reviewed opening page"
+    },
+    {
+      "sourceFile": "0828云涌世纪公司介绍.pptx",
+      "sourcePage": 2,
+      "role": "body",
+      "included": false,
+      "reason": "Body content; screenshot/product evidence or explanatory content"
+    },
+    {
+      "sourceFile": "0828云涌世纪公司介绍.pptx",
+      "sourcePage": 3,
+      "role": "body",
+      "included": false,
+      "reason": "Body content; screenshot/product evidence or explanatory content"
+    },
+    {
+      "sourceFile": "420云涌世纪公司介绍.pptx",
+      "sourcePage": 1,
+      "role": "cover",
+      "included": true,
+      "reason": "Reviewed opening page"
+    },
+    {
+      "sourceFile": "420云涌世纪公司介绍.pptx",
+      "sourcePage": 2,
+      "role": "body",
+      "included": false,
+      "reason": "Body content; screenshot/product evidence or explanatory content"
+    },
+    {
+      "sourceFile": "420云涌世纪公司介绍.pptx",
+      "sourcePage": 3,
+      "role": "body",
+      "included": false,
+      "reason": "Body content; screenshot/product evidence or explanatory content"
+    },
+    {
+      "sourceFile": "v3FDE宣讲世纪互联.pptx",
+      "sourcePage": 1,
+      "role": "cover",
+      "included": true,
+      "reason": "Reviewed opening page"
+    },
+    {
+      "sourceFile": "v3FDE宣讲世纪互联.pptx",
+      "sourcePage": 2,
+      "role": "toc",
+      "included": true,
+      "reason": "Reviewed opening page"
+    },
+    {
+      "sourceFile": "v3FDE宣讲世纪互联.pptx",
+      "sourcePage": 3,
+      "role": "body",
+      "included": false,
+      "reason": "Body content; screenshot/product evidence or explanatory content"
+    },
+    {
+      "sourceFile": "【FESCO】云涌世纪公司介绍.pptx",
+      "sourcePage": 1,
+      "role": "cover",
+      "included": true,
+      "reason": "Reviewed opening page"
+    },
+    {
+      "sourceFile": "【FESCO】云涌世纪公司介绍.pptx",
+      "sourcePage": 2,
+      "role": "chapter",
+      "included": true,
+      "reason": "Reviewed opening page"
+    },
+    {
+      "sourceFile": "【FESCO】云涌世纪公司介绍.pptx",
+      "sourcePage": 3,
+      "role": "body",
+      "included": false,
+      "reason": "Body content; screenshot/product evidence or explanatory content"
+    }
+  ],
+  "excludedFiles": [
+    {
+      "file": "*.pdf",
+      "reason": "PDF excluded; exact PPTX sources authoritative"
+    }
+  ]
+}
