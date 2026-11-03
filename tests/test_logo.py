@@ -194,6 +194,34 @@ class ChromeProcessTests(unittest.TestCase):
         self.assertEqual(logo["tone"], "dark")
         self.assertLess(logo["width"], 200)
         self.assertGreater(logo["width"], 80)
+        # The saved image itself must be transparent outside the mark, not just flagged as cleaned.
+        w, h, pixels = self.decode(self.s.wb.project_dir(self.s.project_id) / "brand" / "logo-original.png")
+        self.assertEqual(pixels[0][0][3], 0)
+        self.assertEqual(pixels[h // 2][w // 2][3], 255)
+
+    @staticmethod
+    def decode(path):
+        """Minimal 8-bit RGBA PNG reader (Chrome output) for pixel assertions."""
+        data, pos, idat = path.read_bytes(), 8, b""
+        while pos < len(data):
+            size, tag = struct.unpack(">I4s", data[pos:pos + 8])
+            body = data[pos + 8:pos + 8 + size]
+            if tag == b"IHDR":
+                w, h, depth, colour = struct.unpack(">IIBB", body[:10])
+                assert (depth, colour) == (8, 6)
+            elif tag == b"IDAT":
+                idat += body
+            pos += size + 12
+        raw, stride, rows, prev = zlib.decompress(idat), w * 4, [], bytearray(w * 4)
+        for y in range(h):
+            kind, line = raw[y * (stride + 1)], bytearray(raw[y * (stride + 1) + 1:(y + 1) * (stride + 1)])
+            for i in range(stride):
+                a, b, c = line[i - 4] if i >= 4 else 0, prev[i], prev[i - 4] if i >= 4 else 0
+                p = a + b - c
+                pred = [0, a, b, (a + b) // 2, a if abs(p - a) <= abs(p - b) and abs(p - a) <= abs(p - c) else b if abs(p - b) <= abs(p - c) else c][kind]
+                line[i] = (line[i] + pred) & 0xFF
+            rows.append([tuple(line[x * 4:x * 4 + 4]) for x in range(w)]); prev = line
+        return w, h, rows
 
     def test_transparent_png_kept(self):
         data = self.png(200, 100, (255, 255, 255, 0), (60, 25, 140, 75, 200, 30, 30, 255))

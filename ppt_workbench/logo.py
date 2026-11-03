@@ -56,6 +56,7 @@ if(!hasAlpha&&near/border.length>=0.9){
       if(!seen[j]&&dist(j)<=40){seen[j]=1;q.push(j);}}}
   for(let i=0;i<W*H;i++)if(seen[i]){const d=dist(i);
     p[i*4+3]=d<=40?0:Math.round(255*Math.min(1,Math.max(0,(d-40)/30)));}
+  cx.putImageData(data,0,0);  // Write the cleared background back; the variants are drawn from the canvas.
   removedBackground=true;
 }
 // Trim to alpha > 16, pad 2% of the larger side.
