@@ -25,6 +25,7 @@ from .templates import catalog, sample_scene
 from .rendering import render_html
 from . import guide_store
 from . import editor
+from . import owners
 
 
 # Exact bundled paths only; no user-controlled filesystem path or local POTX access.
@@ -217,6 +218,10 @@ class StudioHandler(BaseHTTPRequestHandler):
         for key, value in (headers or {}).items():
             if key != "Cache-Control":
                 self.send_header(key, value)
+        if getattr(self, "_owner_cookie", None):
+            self.send_header("Set-Cookie", f"{owners.COOKIE}={self._owner_cookie}; HttpOnly; SameSite=Lax; Path=/; Max-Age=63072000"
+                             + ("; Secure" if self.server.public_origin else ""))
+            self._owner_cookie = None
         self.end_headers()
         self.wfile.write(data)
 
@@ -238,13 +243,44 @@ class StudioHandler(BaseHTTPRequestHandler):
 
     def _error(self, exc):
         if isinstance(exc, EngineError):
-            status = 409 if exc.code in {"STALE_REVISION", "SCENE_STALE", "PROJECT_NOT_EMPTY", "JOB_CLOSED"} else 400
+            status = (409 if exc.code in {"STALE_REVISION", "SCENE_STALE", "PROJECT_NOT_EMPTY", "JOB_CLOSED"}
+                      else 404 if exc.code in {"PROJECT_NOT_FOUND", "TEMPLATE_NOT_FOUND"} else 400)
             self._json({"error": exc.to_dict()}, status)
         else:
             self._json({"error": {"code": "INTERNAL_ERROR", "message": "操作未完成，请检查本地服务输出。"}}, 500)
             print(f"PPT Studio error: {exc!r}", file=sys.stderr)
 
+    def _with_owner(self, handler):
+        """Open-access deployments scope projects to an anonymous owner cookie."""
+        self._owner_cookie = None
+        token = None
+        if self.server.open_access:
+            try:
+                cookies = SimpleCookie(self.headers.get("Cookie", ""))
+                token = cookies[owners.COOKIE].value if owners.COOKIE in cookies else None
+            except Exception:
+                token = None
+            if not owners.valid(token):
+                token = self._owner_cookie = owners.new_token()
+        self._owner_token = token
+        marker = owners.set_current(token)
+        try:
+            handler()
+        finally:
+            owners.reset(marker)
+
+    def _project_studio(self, project_id, path=""):
+        if project_id and path != "/api/scene-image" and not owners.project_visible(self.server.studio.wb, project_id):
+            raise EngineError("PROJECT_NOT_FOUND", "没有找到这个项目，或它属于其他人的空间。")
+        return self.server.open_project(project_id) if project_id else self.server.studio
+
     def do_GET(self):
+        self._with_owner(self._do_get)
+
+    def do_POST(self):
+        self._with_owner(self._do_post)
+
+    def _do_get(self):
         if not self._host_ok():
             self._json({"error": {"code": "HOST_REJECTED", "message": "只接受本机工作台地址。"}}, 403)
             return
@@ -267,9 +303,12 @@ class StudioHandler(BaseHTTPRequestHandler):
             return
         try:
             project_id = self.headers.get("X-WePPT-Project") or query.get("project", [None])[0]
-            studio = self.server.open_project(project_id) if project_id else self.server.studio
+            studio = self._project_studio(project_id, path)
             if path == "/api/projects":
-                self._json({"projects": studio.wb.list_projects(), "activeProjectId": studio.project_id})
+                self._json({"projects": owners.list_projects(studio.wb), "activeProjectId": studio.project_id,
+                            "personalSpace": owners.current() is not None})
+            elif path == "/api/me":
+                self._json({"personalSpace": owners.current() is not None, "code": self._owner_token})
             elif path == "/api/state":
                 state = studio.state()
                 if (query.get("sinceProject", [None])[0] == studio.project_id
@@ -375,7 +414,7 @@ class StudioHandler(BaseHTTPRequestHandler):
         except Exception as exc:
             self._error(exc)
 
-    def do_POST(self):
+    def _do_post(self):
         origin = self.headers.get("Origin")
         origins = {f"http://127.0.0.1:{self.server.server_port}", f"http://localhost:{self.server.server_port}"}
         if self.server.public_origin:
@@ -395,7 +434,7 @@ class StudioHandler(BaseHTTPRequestHandler):
             parsed = urlparse(self.path)
             query = parse_qs(parsed.query)
             project_id = self.headers.get("X-WePPT-Project") or query.get("project", [None])[0]
-            studio = self.server.open_project(project_id) if project_id else self.server.studio
+            studio = self._project_studio(project_id)
             path = parsed.path
             if path == "/api/projects":
                 title = body.get("title")
@@ -403,6 +442,7 @@ class StudioHandler(BaseHTTPRequestHandler):
                     raise EngineError("INVALID_REQUEST", "请输入 1–120 字的项目名称。")
                 project_id = "project-" + secrets.token_hex(8)
                 studio.wb.create_project(project_id, {"title": title.strip()})
+                owners.claim_project(studio.wb, project_id)
                 opened = self.server.open_project(project_id)
                 from .model_profiles import selected, select
                 chosen = selected(studio)
@@ -411,6 +451,12 @@ class StudioHandler(BaseHTTPRequestHandler):
                 else:
                     opened.set_agent_mode(studio.agent_mode)
                 result = {"projectId": project_id}
+            elif path == "/api/me/adopt":
+                code = body.get("code")
+                if not owners.current() or not owners.valid(code):
+                    raise EngineError("INVALID_SPACE_CODE", "空间码无效。")
+                self._owner_cookie = code
+                result = {"adopted": True}
             elif path == "/api/chat":
                 result = studio.enqueue(body.get("message"), body.get("slideId"), body.get("objectId"), body.get("clientMessageId"),
                                         body.get("attachments"), body.get("choiceMessageId"), body.get("replyToDeckPage", False),
@@ -493,6 +539,7 @@ class StudioHandler(BaseHTTPRequestHandler):
                 from .derived import derive
                 result = derive(studio, body.get("mode"), body.get("audience"),
                                 body.get("note"), body.get("styleId"))
+                owners.claim_project(studio.wb, result["projectId"])
                 self.server.open_project(result["projectId"])
             elif path == "/api/logo":
                 from .logo import process_logo

@@ -282,7 +282,7 @@ class HTTPTests(unittest.TestCase):
         listing = json.loads(self.request("GET", "/api/projects")[2])["projects"]
         self.assertEqual({p["projectId"] for p in listing}, {"web", project_id})
         self.assertEqual(self.request("POST", "/api/projects", {"title": " "})[0], 400)
-        self.assertEqual(self.request("GET", "/api/state?project=missing")[0], 400)
+        self.assertEqual(self.request("GET", "/api/state?project=missing")[0], 404)
         self.assertEqual(self.request("GET", "/api/projects", authorized=False)[0], 401)
 
     def test_missing_logo_template_request_after_server_restart(self):

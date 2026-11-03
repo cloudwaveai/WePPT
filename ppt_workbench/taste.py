@@ -34,17 +34,20 @@ def taste_profile(studio):
     entries = {t["id"]: t for t in catalog()}
     votes = {}
     signals = 0
+    from .owners import owned_project_ids
+    mine = owned_project_ids(studio.wb)  # In personal spaces only the visitor's own projects count.
+    def rows(sql):
+        return [r for r in db.execute(sql).fetchall() if mine is None or r["project_id"] in mine]
     with studio.wb._connection() as db:
-        for row in db.execute("SELECT template_id FROM studio_template_proposals WHERE applied_revision IS NOT NULL").fetchall():
-            if row[0] in entries:
-                votes[row[0]] = votes.get(row[0], 0) + 3
+        for row in rows("SELECT project_id,template_id FROM studio_template_proposals WHERE applied_revision IS NOT NULL"):
+            if row["template_id"] in entries:
+                votes[row["template_id"]] = votes.get(row["template_id"], 0) + 3
                 signals += 3
-        for row in db.execute("SELECT template_id FROM studio_template_preferences").fetchall():
-            if row[0] in entries:
-                votes[row[0]] = votes.get(row[0], 0) + 2
+        for row in rows("SELECT project_id,template_id FROM studio_template_preferences"):
+            if row["template_id"] in entries:
+                votes[row["template_id"]] = votes.get(row["template_id"], 0) + 2
                 signals += 2
-        scenes = db.execute("SELECT project_id,slide_id,revision,body FROM studio_scenes "
-                            "ORDER BY rowid DESC LIMIT 300").fetchall()
+        scenes = rows("SELECT project_id,slide_id,revision,body FROM studio_scenes ORDER BY rowid DESC LIMIT 300")
         latest = {}
         for row in scenes:
             latest.setdefault((row["project_id"], row["slide_id"]), row)
@@ -53,10 +56,10 @@ def taste_profile(studio):
             if tid in entries:
                 votes[tid] = votes.get(tid, 0) + 1
                 signals += 1
-        palettes = [json.loads(r[0]) for r in db.execute("SELECT body FROM studio_palette_preferences").fetchall()]
-        decks = [json.loads(r[0]) for r in db.execute("SELECT plan FROM studio_decks").fetchall()]
-        style_rows = db.execute("""SELECT t.body FROM studio_style_preferences s
-            JOIN studio_user_templates t ON t.id=s.template_id""").fetchall()
+        palettes = [json.loads(r["body"]) for r in rows("SELECT project_id,body FROM studio_palette_preferences")]
+        decks = [json.loads(r["plan"]) for r in rows("SELECT project_id,plan FROM studio_decks")]
+        style_rows = rows("""SELECT s.project_id,t.body FROM studio_style_preferences s
+            JOIN studio_user_templates t ON t.id=s.template_id""")
     signals += sum(1 for p in palettes if p.get("primary")) \
         + sum(1 for d in decks if isinstance(d, dict) and d.get("design")) + len(style_rows)
     weights = {}
@@ -90,7 +93,7 @@ def taste_profile(studio):
     dark_share = dark / briefs if briefs else 0
     keywords = []
     for row in style_rows:
-        keywords += (json.loads(row[0]).get("profile") or {}).get("designStyle", {}).get("keywords", [])
+        keywords += (json.loads(row["body"]).get("profile") or {}).get("designStyle", {}).get("keywords", [])
     normalized = {feature: {v: n / max(bucket.values()) for v, n in bucket.items()}
                   for feature, bucket in weights.items()}
     parts = []

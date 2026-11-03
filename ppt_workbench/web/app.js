@@ -1719,7 +1719,13 @@ Logo：[本次不使用，或注明已提供的素材]
     $('projects-error').hidden=true;$('projects-list').textContent='正在读取项目…';$('projects-dialog').showModal();
     try {
       const result=await api('/api/projects');$('projects-list').replaceChildren();
-      result.projects.forEach(project=>{
+      $('space-panel').hidden=!result.personalSpace;
+      if(result.personalSpace){const me=await api('/api/me');$('space-code').value=me.code||'';}
+      const sorted=result.personalSpace?[...result.projects.filter(p=>!p.shared),...result.projects.filter(p=>p.shared)]:result.projects;
+      let section=null;
+      sorted.forEach(project=>{
+        const group=!result.personalSpace?null:project.shared?'共享的旧项目（所有访客可见）':'我的项目';
+        if(group&&group!==section){section=group;$('projects-list').append(node('p','projects-section',group));}
         const button=node('button','project-item');button.type='button';
         const current=project.projectId===ui.state?.projectId;button.setAttribute('aria-current',String(current));
         const label=node('span','',project.title);label.append(node('small','',`${project.slideCount} 页 · ${new Date(project.updatedAt).toLocaleDateString('zh-CN')}`));
@@ -1728,6 +1734,13 @@ Logo：[本次不使用，或注明已提供的素材]
     } catch(error){$('projects-list').textContent='';$('projects-error').textContent=error.message;$('projects-error').hidden=false;}
   }
 
+  $('space-copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('space-code').value);toast('空间码已复制。');}catch{$('space-code').select();}});
+  $('space-adopt').addEventListener('click',async()=>{
+    const code=$('space-adopt-code').value.trim();if(!code)return;
+    if(!confirm('切换后，这个浏览器将进入该空间；当前空间的项目可用当前空间码找回。继续吗？'))return;
+    try{await api('/api/me/adopt','POST',{code});const url=new URL(location.href);url.searchParams.delete('project');location.assign(url);}
+    catch(error){$('projects-error').textContent=error.message;$('projects-error').hidden=false;}
+  });
   async function createProject(event) {
     event.preventDefault();if(hasComposerDraft()){ $('projects-error').textContent='请先发送或保存输入框中的内容，再新建项目。';$('projects-error').hidden=false;return; }
     $('create-project-button').disabled=true;$('projects-error').hidden=true;

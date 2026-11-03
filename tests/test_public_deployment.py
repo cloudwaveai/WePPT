@@ -92,6 +92,33 @@ class PublicDeploymentTests(unittest.TestCase):
         self.assertEqual(self.request(server, 'POST', '/api/demo', {}, Origin='https://evil.example')[0], 403)
         self.assertEqual(self.request(server, 'GET', '/api/state', Host='evil.example')[0], 403)
 
+    def test_open_access_scopes_projects_to_anonymous_personal_spaces(self):
+        self.config.update(WEPPT_PUBLIC_ACCESS='open', WEPPT_TOKEN_FILE='')
+        server = self.start()
+        post = {'Origin': 'https://ppt.bbstack.date'}
+        _, headers, _ = self.request(server, 'GET', '/api/projects')
+        cookie = headers['Set-Cookie']
+        self.assertIn('HttpOnly', cookie); self.assertIn('Secure', cookie); self.assertIn('SameSite=Lax', cookie)
+        alice = {'Cookie': cookie.split(';')[0]}
+        bob = {'Cookie': 'weppt_owner=' + 'b' * 43}
+        status, _, data = self.request(server, 'POST', '/api/projects', {'title': 'Alice 的稿子'}, **post, **alice)
+        self.assertEqual(status, 200)
+        mine = json.loads(data)['projectId']
+        listing = lambda who: {p['projectId']: p for p in json.loads(self.request(server, 'GET', '/api/projects', **who)[2])['projects']}
+        self.assertIn(mine, listing(alice))
+        self.assertTrue(listing(alice)['dev']['shared'])  # Projects from before personal spaces stay shared.
+        self.assertNotIn(mine, listing(bob))
+        self.assertIn('dev', listing(bob))
+        self.assertEqual(self.request(server, 'GET', f'/api/state?project={mine}', **bob)[0], 404)
+        self.assertEqual(self.request(server, 'POST', '/api/chat', {'message': 'x'}, **post, **bob, **{'X-WePPT-Project': mine})[0], 404)
+        self.assertEqual(self.request(server, 'GET', f'/api/state?project={mine}', **alice)[0], 200)
+        # A space code moves the space to another browser.
+        code = json.loads(self.request(server, 'GET', '/api/me', **alice)[2])['code']
+        self.assertEqual(self.request(server, 'POST', '/api/me/adopt', {'code': 'short'}, **post, **bob)[0], 400)
+        status, headers, _ = self.request(server, 'POST', '/api/me/adopt', {'code': code}, **post, **bob)
+        self.assertEqual(status, 200)
+        self.assertIn(mine, listing({'Cookie': headers['Set-Cookie'].split(';')[0]}))
+
     def test_open_access_requires_explicit_origin(self):
         with patch.dict(os.environ, {**self.config, 'WEPPT_PUBLIC_ACCESS': 'open', 'WEPPT_PUBLIC_ORIGIN': ''}), self.assertRaises(EngineError):
             create_http_server(Path(self.tmp.name) / 'bad', 'dev', 0)

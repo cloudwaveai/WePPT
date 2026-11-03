@@ -263,6 +263,11 @@
     <p>在当前工作目录中创建和切换演示稿。</p>
     <div id="projects-list" class="projects-list" aria-live="polite"></div>
     <form id="create-project-form" class="create-project-form"><label for="new-project-title">新建项目</label><div><input id="new-project-title" name="title" placeholder="输入项目名称" maxlength="120" required><button id="create-project-button" class="button primary" type="submit">创建并打开</button></div></form>
+    <details id="space-panel" class="space-panel" hidden><summary>我的空间码 · 在其他设备打开同一空间</summary>
+      <p>本站免登录：你的项目只在这个浏览器的个人空间里可见。把空间码填到其他浏览器，即可看到同样的项目。空间码等同于钥匙，请勿分享给他人。</p>
+      <div class="space-row"><input id="space-code" readonly aria-label="我的空间码"><button id="space-copy" class="button quiet compact" type="button">复制</button></div>
+      <div class="space-row"><input id="space-adopt-code" placeholder="粘贴其他设备的空间码" aria-label="其他设备的空间码"><button id="space-adopt" class="button quiet compact" type="button">切换到该空间</button></div>
+    </details>
     <p id="projects-error" role="alert" hidden></p>
   </dialog>
   <script src="/preview-loader.js" defer></script>

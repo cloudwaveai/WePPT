@@ -77,6 +77,30 @@ class UploadTests(unittest.TestCase):
         self.assertNotIn("preview_png", calls[0][1])
         self.assertEqual(proposal["scene"]["templateId"], "custom")
 
+    def test_templates_are_private_to_their_personal_space(self):
+        from ppt_workbench import owners
+        legacy = None
+        with patch("ppt_workbench.design_review.render_candidate", side_effect=EngineError("DESIGN_RENDER_UNAVAILABLE", "no")):
+            legacy = ut.upload(self.s, "page", [file("旧.png")])["templates"][0]["id"]
+            marker = owners.set_current("a" * 43)
+            try:
+                mine = ut.upload(self.s, "page", [file("甲.png")])["templates"][0]["id"]
+            finally:
+                owners.reset(marker)
+        def visible(token):
+            marker = owners.set_current(token)
+            try:
+                return {t["id"] for t in ut.list_templates(self.s)}
+            finally:
+                owners.reset(marker)
+        self.assertEqual(visible("a" * 43), {legacy, mine})
+        self.assertEqual(visible("b" * 43), {legacy})
+        marker = owners.set_current("b" * 43)
+        try:
+            self.error("TEMPLATE_NOT_FOUND", ut.rename, self.s, mine, "改名")
+        finally:
+            owners.reset(marker)
+
     def test_upload_validation(self):
         self.error("INVALID_UPLOAD", ut.upload, self.s, "page", [])
         self.error("INVALID_UPLOAD", ut.upload, self.s, "page", [file()] * 6)

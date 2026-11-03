@@ -143,14 +143,16 @@ def list_templates(studio, kind=None):
             id TEXT PRIMARY KEY, kind TEXT NOT NULL, name TEXT NOT NULL,
             body TEXT NOT NULL, created_at TEXT NOT NULL)""")
         rows = db.execute("SELECT * FROM studio_user_templates ORDER BY created_at,id").fetchall()
-    items = [_row(r) for r in rows]
+    from .owners import template_visible
+    items = [_row(r) for r in rows if template_visible(studio.wb, r["id"])]
     return [t for t in items if kind is None or t["kind"] == kind]
 
 
 def _get(studio, template_id, kind=None):
     with studio.wb._connection() as db:
         row = db.execute("SELECT * FROM studio_user_templates WHERE id=?", (template_id,)).fetchone()
-    if not row or (kind and row["kind"] != kind):
+    from .owners import template_visible
+    if not row or (kind and row["kind"] != kind) or not template_visible(studio.wb, template_id):
         fail("TEMPLATE_NOT_FOUND", "没有找到这个用户模板。")
     return row
 
@@ -158,6 +160,14 @@ def _get(studio, template_id, kind=None):
 PPTX_MIME = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
 MAX_PPTX_BYTES = 20 * 1024 * 1024
 MAX_PPTX_PAGES = 10
+
+
+def _insert_template(db, values):
+    from .owners import current
+    db.execute("INSERT INTO studio_user_templates VALUES (?,?,?,?,?)", values)
+    if current():
+        db.execute("CREATE TABLE IF NOT EXISTS studio_template_owners (template_id TEXT PRIMARY KEY, owner TEXT NOT NULL, created_at TEXT NOT NULL)")
+        db.execute("INSERT OR IGNORE INTO studio_template_owners VALUES (?,?,?)", (values[0], current(), _now()))
 
 
 def _decode_pptx(file):
@@ -214,7 +224,7 @@ def _import_pptx(studio, filename, data):
                 body = {"sha256": sha, "sourceMime": PPTX_MIME, "sourcePage": page, "hasLayout": True,
                         "pages": [{"sha": sha}]}
                 with studio.wb.atomic() as db:
-                    db.execute("INSERT INTO studio_user_templates VALUES (?,?,?,?,?)",
+                    _insert_template(db,
                                (tid, "page", f"{stem} · 第{page}页"[:60], _json(body), _now()))
                 created.append(tid)
         finally:
@@ -300,7 +310,7 @@ def upload(studio, kind, files):
                     "pages": [{"sha": hashlib.sha256(png).hexdigest()}]}
             name = Path(filename).stem.strip()[:60] or "我的模板页"
             with studio.wb.atomic() as db:
-                db.execute("INSERT INTO studio_user_templates VALUES (?,?,?,?,?)",
+                _insert_template(db,
                            (tid, "page", name, _json(body), _now()))
             created.append(tid)
     else:
@@ -330,7 +340,7 @@ def upload(studio, kind, files):
         name = "对标风格 " + "、".join(Path(f[0]).stem for f in decoded)[:40]
         body = {"pages": pages, "contactSha": contact_sha, "names": [f[0] for f in decoded]}
         with studio.wb.atomic() as db:
-            db.execute("INSERT INTO studio_user_templates VALUES (?,?,?,?,?)",
+            _insert_template(db,
                        (tid, "style", name[:60], _json(body), _now()))
         created.append(tid)
     return {"templates": [t for t in list_templates(studio) if t["id"] in created]}
