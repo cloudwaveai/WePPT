@@ -261,6 +261,35 @@ def place_logo(scene, logo, settings, page_role):
                 break
         if box:
             break
+    nudged = []
+    if box is None:
+        # Last resort: nudge only-text blockers away from a corner by <=24px.
+        for corner in corners:
+            candidate = box_for(corner, width * 0.75, height * 0.75)
+            hits = [o for o in blockers if _overlaps(candidate, o)]
+            if hits and all(o["type"] == "text" for o in hits):
+                direction = -1 if "bottom" in corner else 1
+                moves = []
+                for o in hits:
+                    if direction > 0:
+                        dy = candidate["y"] + candidate["h"] - o["y"]
+                        ny = o["y"] + min(24, dy)
+                        ok = (ny + o["h"] <= scene.get("height", H) - 24
+                              and not _overlaps({"x": o["x"], "y": ny, "w": o["w"], "h": o["h"]}, candidate))
+                    else:
+                        dy = o["y"] + o["h"] - candidate["y"]
+                        ny = o["y"] - min(24, dy)
+                        ok = ny >= 24 and not _overlaps({"x": o["x"], "y": ny, "w": o["w"], "h": o["h"]}, candidate)
+                    if not ok:
+                        break
+                    moves.append((o, ny - o["y"]))
+                else:
+                    others = [o for o in blockers if o not in hits]
+                    if all(not _overlaps({"x": o["x"], "y": o["y"] + dy, "w": o["w"], "h": o["h"]}, other)
+                           for o, dy in moves for other in others if other is not o):
+                        box = candidate
+                        nudged = moves
+                        break
     if box is None:
         return {"scene": _strip_logo(scene), "skipped": "no-space"}
     variant = "original"
@@ -287,9 +316,17 @@ def place_logo(scene, logo, settings, page_role):
     if not png:
         return {"scene": _strip_logo(scene), "skipped": "no-variant"}
     result = _strip_logo(scene)
+    if nudged:
+        moved = {o["id"]: dy for o, dy in nudged}
+        for o in result["objects"]:
+            if o.get("id") in moved:
+                o["y"] = round(o["y"] + moved[o["id"]], 2)
     result["objects"] = result["objects"] + [{
         "id": LOGO_ID, "type": "image", **box, "src": png, "fit": "contain", "alt": "Logo"}]
-    return {"scene": result}
+    out = {"scene": result}
+    if nudged:
+        out["nudged"] = [{"objectId": o["id"], "dy": round(dy, 2)} for o, dy in nudged]
+    return out
 
 
 def _strip_logo(scene):
@@ -347,6 +384,42 @@ def apply_logo(studio):
         studio._touch(db)
     return {"changedSlides": changed, "skipped": skipped, "logo": project_logo(studio),
             "state": studio.state()}
+
+
+def place_forced(studio, slide_id, scene_revision):
+    """Force-place at top-right regardless of overlap; user drags it after."""
+    logo = project_logo(studio)
+    if not logo:
+        _fail("LOGO_MISSING", "请先上传 Logo。")
+    logo = _logo_with_data(studio, logo)
+    with studio.wb.atomic() as db:
+        current = studio.get_scene(slide_id)
+        studio.wb._revision(current["sceneRevision"], scene_revision)
+        if current["stale"]:
+            _fail("SCENE_STALE", "页面内容已变化，请更新预览后再放 Logo。")
+        scene = _strip_logo(current["scene"])
+        settings = dict(logo["settings"])
+        settings["position"] = "top-right"
+        placed = place_logo(scene, logo, settings,
+                            next((s.get("role", "content") for s in
+                                  studio.wb.get_project(studio.project_id)["workspace"]["slides"]
+                                  if s["id"] == slide_id), "content"))
+        target = placed["scene"]
+        if placed.get("skipped"):
+            size_h = HEIGHTS[settings["size"]]
+            width = min(240, size_h * (logo.get("width") or 1) / (logo.get("height") or 1))
+            box = {"x": round(1280 - width - 40, 2), "y": 40, "w": round(width, 2), "h": size_h}
+            target = _strip_logo(scene)
+            target["objects"] = target["objects"] + [{"id": LOGO_ID, "type": "image", **box,
+                "src": logo["dataUrls"].get("original") or logo["preview"],
+                "fit": "contain", "alt": "Logo"}]
+        from .editor import _history, _save_history
+        undo, _ = _history(studio, db, slide_id, current["sceneRevision"])
+        result = studio.put_scene(slide_id, current["contentRevision"], target, "放置 Logo")
+        undo.append({"before": current["scene"], "after": result["scene"]})
+        _save_history(studio, db, slide_id, result["sceneRevision"], undo, [])
+        studio._touch(db)
+    return {"slideId": slide_id, "sceneRevision": result["sceneRevision"], "state": studio.state()}
 
 
 def remove_logo(studio):

@@ -334,3 +334,7 @@ html,body{overscroll-behavior-x:none}
 .logo-settings .palette-field{min-width:120px}
 #logo-status{font-size:10px;color:var(--muted)}
 #logo-error,#audience-error,#style-error{color:#a66a43;font-size:12px;margin:8px 0}
+.derived-line button{margin-left:6px;border:0;background:none;color:var(--accent);font-size:10px;padding:0;cursor:pointer}
+.logo-nospace{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:6px;font-size:12px}.logo-nospace li{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mapping-list{list-style:none;margin:8px 0;padding:0;display:grid;gap:6px;font-size:12px}.mapping-list li{display:flex;align-items:center;gap:8px}.mapping-page{flex:1;min-width:0;overflow-wrap:anywhere}
+.mapping-chip{font-size:10px;font-weight:550;padding:2px 8px;border-radius:10px;background:#eef0f6;color:#4d5568;white-space:nowrap}.mapping-chip.保留{background:#e6f4ee;color:#2f6b55}.mapping-chip.改写,.mapping-chip.合并{background:#eef0ff;color:#3c46b3}.mapping-chip.删除{background:#fbeee8;color:#a3532f}.mapping-chip.新增{background:#fff6dd;color:#8a6a12}.mapping-chip.待补充{background:#fde8e8;color:#a33}

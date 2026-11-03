@@ -1633,7 +1633,33 @@ Logo：[本次不使用，或注明已提供的素材]
   }
   function renderDerivedLine(){
     const d=ui.state?.derivedFrom,el=$('derived-line');
-    el.hidden=!d;if(d)el.textContent=`由《${d.title}》生成 · ${d.audienceLabel||''}`;
+    el.hidden=!d;if(d)$('derived-text').textContent=`由《${d.title}》生成 · ${d.audienceLabel||''}`;
+  }
+  async function openMapping(){
+    const status=$('mapping-status'),source=$('mapping-source'),added=$('mapping-added');
+    source.replaceChildren();added.replaceChildren();status.textContent='正在比对…';$('mapping-dialog').showModal();
+    try{
+      const m=await api('/api/derive/mapping');
+      if(m.status==='pending'){status.textContent='生成计划完成后可查看对照。';return;}
+      status.textContent='按文字相似度比对原稿与新版本，结果仅供核对。';
+      for(const e of m.source){const li=node('li');li.append(node('span','mapping-page',`原第 ${e.index} 页 · ${e.title}`),node('b',`mapping-chip ${e.status}`,e.targetIndex?`${e.status} → 第 ${e.targetIndex} 页`:e.status));source.append(li);}
+      for(const e of m.added){const li=node('li');li.append(node('span','mapping-page',`新第 ${e.index} 页 · ${e.title}`),node('b','mapping-chip 新增','新增'));if(e.placeholder)li.append(node('b','mapping-chip 待补充','待补充'));added.append(li);}
+    }catch(error){status.textContent=error.message;}
+  }
+  $('derived-mapping').addEventListener('click',openMapping);
+  $('mapping-close').addEventListener('click',()=>$('mapping-dialog').close());
+  function renderNoSpace(skipped){
+    const list=$('logo-nospace'),pages=ui.state?.slides||[];list.replaceChildren();
+    const blocked=(skipped||[]).filter(s=>s.reason==='no-space');list.hidden=!blocked.length;
+    for(const item of blocked){
+      const index=pages.findIndex(s=>s.id===item.slideId),li=node('li','',`第 ${index+1} 页没有空位`),button=node('button','button quiet compact','仍然放置，稍后手动拖动');button.type='button';
+      button.addEventListener('click',async()=>{
+        const slide=(ui.state?.slides||[]).find(s=>s.id===item.slideId);if(!slide)return;button.disabled=true;
+        try{const result=await api('/api/logo/place','POST',{slideId:slide.id,sceneRevision:slide.sceneRevision});if(result.state)applyState(result.state);else await refreshState(true);li.remove();list.hidden=!list.children.length;toast(`已在第 ${index+1} 页放置 Logo，可在画布中拖动调整，可撤销。`);}
+        catch(error){button.disabled=false;toast(error.message);}
+      });
+      li.append(button);list.append(li);
+    }
   }
   function renderLogoPanel(){
     const logo=ui.state?.logo;const has=!!logo;
@@ -1795,7 +1821,7 @@ Logo：[本次不使用，或注明已提供的素材]
   ['logo-position','logo-size','logo-pages'].forEach(id=>$(id).addEventListener('change',logoSettings));
   $('logo-apply').addEventListener('click',async()=>{
     try{const result=await api('/api/logo/apply','POST',{});
-      applyState(result.state);renderLogoPanel();
+      applyState(result.state);renderLogoPanel();renderNoSpace(result.skipped);
       const skipped=(result.skipped||[]).filter(s=>s.reason!=='unchanged');
       toast(`已为 ${result.changedSlides.length} 页添加 Logo，可撤销${skipped.length?'，跳过 '+skipped.length+' 页':''}`);
     }catch(e){$('logo-error').textContent=e.message;$('logo-error').hidden=false;}

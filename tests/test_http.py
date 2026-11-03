@@ -36,6 +36,27 @@ class HTTPTests(unittest.TestCase):
         conn.close()
         return answer
 
+    def test_mapping_is_get_only_and_force_logo_placement(self):
+        import base64
+        from ppt_workbench import logo
+        status, _, data = self.request("GET", "/api/derive/mapping")
+        self.assertEqual((status, json.loads(data)["error"]["code"]), (400, "NOT_DERIVED"))
+        status, _, data = self.request("POST", "/api/derive/mapping", {})
+        self.assertEqual((status, json.loads(data)["error"]["code"]), (404, "NOT_FOUND"))
+        studio = self.server.studio
+        studio.demo()
+        folder = studio.wb.project_dir(studio.project_id) / "brand"
+        folder.mkdir(parents=True, exist_ok=True)
+        (folder / "logo-original.png").write_bytes(b"\x89PNG\r\n\x1a\n1234")
+        logo.save_logo_record(studio, {"width": 120, "height": 60, "hasAlpha": True, "removedBackground": True,
+            "tone": "dark", "meanColor": "#1F2329", "variants": {"original": "logo-original.png"},
+            "preview": "data:image/png;base64," + base64.b64encode(b"\x89PNG\r\n\x1a\n1").decode()},
+            {"position": "auto", "size": "medium", "pages": "all"})
+        sid = studio.state()["slides"][0]["id"]
+        status, _, data = self.request("POST", "/api/logo/place", {"slideId": sid, "sceneRevision": studio.get_scene(sid)["sceneRevision"]})
+        self.assertEqual(status, 200, data)
+        self.assertTrue(any(o["id"] == "brand-logo" for o in studio.get_scene(sid)["scene"]["objects"]))
+
     def test_diagram_fallback_http_scope_revision_and_idempotency(self):
         from test_diagram_design import SPEC
         studio = self.server.studio

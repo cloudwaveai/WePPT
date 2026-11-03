@@ -117,3 +117,72 @@ class DeriveTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class MappingTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.s = Studio(self.temp.name, "srcmap")
+        self.s.demo()
+        self.s.set_agent_mode("codex")
+
+    def error(self, code, func, *a, **kw):
+        with self.assertRaises(EngineError) as e:
+            func(*a, **kw)
+        self.assertEqual(e.exception.code, code)
+
+    def target(self):
+        result = mod.derive(self.s, "audience", audience="customer")
+        return Studio(self.temp.name, result["projectId"])
+
+    def test_pending_without_deck(self):
+        t = self.target()
+        m = mod.mapping(t)
+        self.assertEqual(m["status"], "pending")
+        self.assertTrue(all(e["status"] == "pending" for e in m["source"]))
+        self.assertEqual(m["added"], [])
+        self.error("NOT_DERIVED", mod.mapping, self.s)
+
+    def test_statuses(self):
+        t = self.target()
+        source_pages = mod._source_pages(self.s)
+        keep_text = "\n".join(source_pages[0]["texts"]) or source_pages[0]["title"]
+        plan = {"title": "变体", "execution": "agent", "design": {},
+                "pages": [
+                    {"title": source_pages[0]["title"], "role": "cover",
+                     "composition": {"blocks": [{"body": keep_text}]}},
+                    {"title": "报价方案", "role": "content",
+                     "composition": {"blocks": [{"body": "报价待补充，请联系销售"}]}}]}
+        with t.wb.atomic() as db:
+            db.execute("INSERT INTO studio_decks VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                       ("dk1", t.project_id, "变体", "running", "agent", "m", "m1",
+                        json.dumps(plan, ensure_ascii=False), "fp", None, None, "n", "n"))
+        m = mod.mapping(t)
+        self.assertEqual(m["status"], "mapped")
+        statuses = {e["index"]: e for e in m["source"]}
+        self.assertEqual(statuses[source_pages[0]["index"]]["status"], "保留")
+        self.assertEqual(statuses[source_pages[0]["index"]]["targetIndex"], 1)
+        added = m["added"]
+        self.assertEqual(len(added), 1)
+        self.assertTrue(added[0]["placeholder"])
+        # A source page whose best match is <0.25 → 删除.
+        far = [e for i, e in statuses.items() if i != source_pages[0]["index"]]
+        self.assertTrue(all(e["status"] in {"删除", "改写", "合并", "保留"} for e in far))
+
+    def test_merge(self):
+        t = self.target()
+        source_pages = mod._source_pages(self.s)
+        shared = "\n".join(source_pages[0]["texts"] + source_pages[1]["texts"])
+        plan = {"title": "变体", "execution": "agent", "design": {},
+                "pages": [{"title": "合并页", "role": "content",
+                           "composition": {"blocks": [{"body": shared}]}}]}
+        with t.wb.atomic() as db:
+            db.execute("INSERT INTO studio_decks VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                       ("dk1", t.project_id, "变体", "running", "agent", "m", "m1",
+                        json.dumps(plan, ensure_ascii=False), "fp", None, None, "n", "n"))
+        m = mod.mapping(t)
+        merged = [e for e in m["source"] if e["status"] == "合并"]
+        # All source pages matching the single new page at >=0.25 collapse to one target.
+        self.assertGreaterEqual(len(merged), 2)
+        self.assertTrue(all(e["targetIndex"] == 1 for e in merged))

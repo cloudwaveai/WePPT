@@ -229,3 +229,68 @@ class ExportTests(unittest.TestCase):
                 media = [n for n in z.namelist() if n.startswith("ppt/media/") and not n.endswith("/")]
                 self.assertTrue(media, "exported pptx must embed the logo picture")
                 self.assertIn(z.read(media[0])[:8], (b"\x89PNG\r\n\x1a\n", png[:8]))
+
+
+class NudgeAndForceTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+        self.s = Studio(self.temp.name, "nudge")
+        self.s.demo()
+        body = {"width": 120, "height": 60, "hasAlpha": True, "removedBackground": True,
+                "tone": "dark", "meanColor": "#1F2329", "preview": "data:image/png;base64," + base64.b64encode(b"\x89PNG\r\n\x1a\n1").decode(),
+                "variants": {"original": "logo-original.png"}}
+        folder = self.s.wb.project_dir(self.s.project_id) / "brand"
+        folder.mkdir(parents=True, exist_ok=True)
+        (folder / "logo-original.png").write_bytes(b"\x89PNG\r\n\x1a\n1234")
+        mod.save_logo_record(self.s, body, {"position": "auto", "size": "medium", "pages": "all"})
+
+    def logo(self):
+        return mod._logo_with_data(self.s, mod.project_logo(self.s))
+
+    def test_nudge_moves_text_and_places(self):
+        # Two top corners blocked by text at the exact logo band (y 40..88),
+        # bottom corners blocked by images so only nudged-text corners qualify.
+        s = scene([text("ta", 1150, 50, 120, 30, "顶右"),
+                   text("tb", 40, 50, 120, 30, "顶左"),
+                   {"id": "i1", "type": "image", "x": 1150, "y": 640, "w": 100, "h": 60,
+                    "src": "data:image/png;base64," + base64.b64encode(b"\x89PNG\r\n\x1a\n1234").decode()},
+                   {"id": "i2", "type": "image", "x": 40, "y": 640, "w": 100, "h": 60,
+                    "src": "data:image/png;base64," + base64.b64encode(b"\x89PNG\r\n\x1a\n1234").decode()}])
+        logo = self.logo(); logo["width"], logo["height"] = 180, 60
+        result = mod.place_logo(s, logo, {"position": "auto", "size": "medium", "pages": "all"}, "content")
+        obj = next((o for o in result["scene"]["objects"] if o["id"] == "brand-logo"), None)
+        self.assertIsNotNone(obj)
+        self.assertTrue(result.get("nudged"))
+        moved = {o["objectId"]: o["dy"] for o in result["nudged"]}
+        self.assertTrue(all(0 < dy <= 24 for dy in moved.values()))
+        for o in result["scene"]["objects"]:
+            if o["type"] in ("text", "image") and o["id"] != "brand-logo":
+                self.assertFalse(obj["x"] < o["x"] + o["w"] and o["x"] < obj["x"] + obj["w"]
+                                 and obj["y"] < o["y"] + o["h"] and o["y"] < obj["y"] + obj["h"])
+
+    def test_nudge_refused_at_edge_and_other_object(self):
+        # Text already at the bottom edge — moving down would leave the canvas.
+        s = scene([text("t1", 1150, 620, 120, 60, "边"),
+                   {"id": "i1", "type": "image", "x": 40, "y": 620, "w": 120, "h": 60,
+                    "src": "data:image/png;base64," + base64.b64encode(b"\x89PNG\r\n\x1a\n1234").decode()},
+                   {"id": "i2", "type": "image", "x": 1150, "y": 40, "w": 60, "h": 30,
+                    "src": "data:image/png;base64," + base64.b64encode(b"\x89PNG\r\n\x1a\n1234").decode()},
+                   text("t2", 40, 40, 120, 60, "堵"),
+                   text("t3", 1000, 640, 260, 70, "满")])
+        logo = self.logo(); logo["width"], logo["height"] = 240, 60
+        result = mod.place_logo(s, logo, {"position": "auto", "size": "medium", "pages": "all"}, "content")
+        self.assertEqual(result.get("skipped"), "no-space")
+
+    def test_force_place_endpoint(self):
+        s = self.s
+        sid = s.state()["slides"][0]["id"]
+        cur = s.get_scene(sid)
+        result = mod.place_forced(s, sid, cur["sceneRevision"])
+        scene = s.get_scene(sid)["scene"]
+        logo_obj = next(o for o in scene["objects"] if o["id"] == "brand-logo")
+        self.assertEqual(logo_obj["y"], 40)
+        self.assertGreater(logo_obj["x"], 800)
+        from ppt_workbench.editor import travel
+        undone = travel(s, sid, result["sceneRevision"], "undo")
+        self.assertFalse(any(o["id"] == "brand-logo" for o in undone["scene"]["objects"]))

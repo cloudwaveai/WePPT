@@ -229,3 +229,72 @@ def provenance(studio):
         source_title = row["source_project_id"]
     return {"projectId": row["source_project_id"], "title": source_title,
             "mode": row["mode"], "audienceLabel": label}
+
+
+def _bigrams(text):
+    chars = "".join((text or "").split())
+    return {chars[i:i + 2] for i in range(max(0, len(chars) - 1))} or set(chars)
+
+
+def _score(a, b):
+    if not a or not b:
+        return 0.0
+    return len(a & b) / len(a | b)
+
+
+def _deck_page_texts(studio):
+    with studio.wb._connection() as db:
+        deck = studio._deck_row(db)
+    if not deck:
+        return None
+    plan = json.loads(deck["plan"])
+    out = []
+    for index, page in enumerate(plan.get("pages", []), start=1):
+        parts = [page.get("title", "")]
+        for block in (page.get("composition") or {}).get("blocks") or []:
+            parts += [str(block.get(k, "")) for k in ("heading", "body", "kicker", "metric")]
+        texts = [t.strip() for t in " ".join(parts).split("\n") if t.strip()]
+        out.append({"index": index, "title": page.get("title", ""), "texts": texts or [page.get("title", "")]})
+    return out
+
+
+def mapping(studio):
+    """Source → variant page mapping for a derived project."""
+    with studio.wb._connection() as db:
+        row = db.execute("SELECT * FROM studio_derived_projects WHERE project_id=?",
+                         (studio.project_id,)).fetchone()
+    if not row:
+        raise EngineError("NOT_DERIVED", "这个项目不是由源稿生成的。")
+    from .studio import Studio as _Studio
+    source_studio = _Studio(studio.wb.root, row["source_project_id"])
+    source_pages = _source_pages(source_studio)
+    new_pages = _deck_page_texts(studio)
+    if new_pages is None:
+        return {"status": "pending", "source": [
+            {"index": p["index"], "title": p["title"], "status": "pending",
+             "targetIndex": None, "score": 0} for p in source_pages], "added": []}
+    grams = [set(_bigrams(p["title"]) | set().union(*(_bigrams(t) for t in p["texts"])))
+             for p in new_pages]
+    source_out, chosen = [], {}
+    for page in source_pages:
+        sg = set(_bigrams(page["title"])) | set().union(*(_bigrams(t) for t in page["texts"]))
+        best, score = 0, 0.0
+        for i, ng in enumerate(grams):
+            s = _score(sg, ng)
+            if s > score:
+                best, score = i, s
+        status = "保留" if score >= 0.6 else "改写" if score >= 0.25 else "删除"
+        source_out.append({"index": page["index"], "title": page["title"], "status": status,
+                           "targetIndex": new_pages[best]["index"] if score >= 0.25 else None,
+                           "score": round(score, 3)})
+        if score >= 0.25:
+            chosen.setdefault(best, []).append(len(source_out) - 1)
+    for best, idxs in chosen.items():
+        if len(idxs) >= 2:
+            for i in idxs:
+                source_out[i]["status"] = "合并"
+    used = set(chosen)
+    added = [{"index": p["index"], "title": p["title"],
+              "placeholder": any("待补充" in t for t in p["texts"])}
+             for i, p in enumerate(new_pages) if i not in used]
+    return {"status": "mapped", "source": source_out, "added": added}

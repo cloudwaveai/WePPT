@@ -72,7 +72,7 @@
       <button id="ribbon-style" class="ribbon-more" type="button" aria-haspopup="dialog">对标风格<span id="style-badge" class="style-badge" hidden></span></button>
       <button id="ribbon-audience" class="ribbon-more" type="button" aria-haspopup="dialog">受众版本</button>
       <button id="ribbon-logo" class="ribbon-more" type="button" aria-haspopup="dialog">Logo</button>
-      <p id="derived-line" class="derived-line" hidden></p>
+      <p id="derived-line" class="derived-line" hidden><span id="derived-text"></span><button id="derived-mapping" type="button">原稿对照</button></p>
       <button id="ribbon-styles" class="ribbon-more" type="button" aria-haspopup="dialog">更多样式与筛选</button>
     </div>
   </section>
@@ -206,6 +206,13 @@
     <p id="audience-error" role="alert" hidden></p>
   </dialog>
 
+  <dialog id="mapping-dialog" class="palette-dialog" aria-labelledby="mapping-title">
+    <div class="dialog-heading"><h2 id="mapping-title">原稿对照</h2><button id="mapping-close" class="icon-button" type="button" aria-label="关闭原稿对照">×</button></div>
+    <p id="mapping-status" class="palette-note"></p>
+    <ul id="mapping-source" class="mapping-list"></ul>
+    <ul id="mapping-added" class="mapping-list"></ul>
+  </dialog>
+
   <dialog id="logo-dialog" class="palette-dialog" aria-labelledby="logo-title">
     <div class="dialog-heading"><h2 id="logo-title">Logo</h2><button id="logo-close" class="icon-button" type="button" aria-label="关闭 Logo">×</button></div>
     <p class="palette-note">透明底或非透明底都可以，系统会自动去底并按页面深浅选择配色。</p>
@@ -219,6 +226,7 @@
         <label class="palette-field"><span>页面</span><select id="logo-pages"><option value="all">全部</option><option value="cover">仅封面</option><option value="except-cover">除封面外</option></select></label>
       </div>
       <div class="palette-actions"><button id="logo-apply" class="button primary" type="button">应用到所有页面</button><button id="logo-remove" class="button quiet" type="button">移除 Logo</button></div>
+      <ul id="logo-nospace" class="logo-nospace" hidden></ul>
     </div>
     <p id="logo-error" role="alert" hidden></p>
   </dialog>

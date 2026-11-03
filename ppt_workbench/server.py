@@ -303,6 +303,9 @@ class StudioHandler(BaseHTTPRequestHandler):
                 self._json(editor.history_status(studio, query.get("slide", [None])[0]))
             elif path in {"/api/guide/draft", "/api/guide/experience"}:
                 self._json(guide_store.load(studio, path.rsplit("/", 1)[-1]))
+            elif path == "/api/derive/mapping":
+                from .derived import mapping
+                self._json(mapping(studio))
             elif path == "/api/user-templates":
                 from .user_templates import list_templates
                 self._json({"templates": list_templates(studio)})
@@ -497,6 +500,9 @@ class StudioHandler(BaseHTTPRequestHandler):
             elif path == "/api/logo/settings":
                 from .logo import save_settings
                 result = save_settings(studio, body)
+            elif path == "/api/logo/place":
+                from .logo import place_forced
+                result = place_forced(studio, body.get("slideId"), body.get("sceneRevision"))
             elif path == "/api/logo/apply":
                 from .logo import apply_logo
                 result = apply_logo(studio)
