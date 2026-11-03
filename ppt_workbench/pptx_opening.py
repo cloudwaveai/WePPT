@@ -57,6 +57,9 @@ class OpeningImporter:
     def close(self):
         self.zip.close()
 
+    def slide_count(self):
+        return len(self.xml("ppt/presentation.xml").findall("p:sldIdLst/p:sldId", NS))
+
     def xml(self, part):
         return ET.fromstring(self.zip.read(part))
 
@@ -124,7 +127,12 @@ class OpeningImporter:
         # OOXML stretch may intentionally distort a source image. Scene fit only
         # supports contain/cover, so bake the stretch into the extracted picture.
         if crop is not None or alpha is not None or clip or flip_h or flip_v or aspect or suffix not in {".png", ".jpeg"}:
-            from PIL import Image, ImageOps
+            try:
+                from PIL import Image, ImageOps
+            except ImportError:
+                # Without Pillow the picture becomes a neutral placeholder of the same box.
+                self.warn("image-placeholder", oid, "Picture needs conversion; kept as a placeholder box")
+                return {"placeholder": True}, {"sourcePart": target}
             im = Image.open(io.BytesIO(raw)).convert("RGBA")
             if crop is not None:
                 l, t, r, b = [int(crop.get(k, 0)) / 100000 for k in ("l", "t", "r", "b")]
@@ -147,11 +155,13 @@ class OpeningImporter:
                 "sceneAsset": "assets/" + asset, "sourceSha256": digest}
 
     def extract(self, page, role):
-        if page not in (1, 2, 3) or role not in {"cover", "toc", "chapter"}:
-            raise ValueError("Only reviewed opening roles on the first three slides are supported")
+        if page < 1 or role not in {"cover", "toc", "chapter", "body"}:
+            raise ValueError("Unsupported page or role")
         self.warnings = []
         presentation = self.xml("ppt/presentation.xml")
         slides = presentation.findall("p:sldIdLst/p:sldId", NS)
+        if page > len(slides):
+            raise ValueError("Page out of range")
         rid = slides[page-1].get(f"{{{NS['r']}}}id")
         part = self.rels("ppt/presentation.xml")[rid][1]
         root = self.xml(part)
@@ -247,7 +257,10 @@ class OpeningImporter:
                 if shape.findall(".//a:reflection", NS): self.warn("unsupported-reflection", oid, "Source reflection effect is not represented")
                 if kind == "pic":
                     result = self.picture(shape, owner, oid, clip, box["w"]/box["h"] if box["h"] else None)
-                    if result:
+                    if result and result[0].get("placeholder"):
+                        scene["objects"].append(dict(id=oid, type="rect", **box, fill="#D9DDE3", stroke="none", strokeWidth=0, radius=0))
+                        provenance.append(dict(meta, **result[1]))
+                    elif result:
                         props, asset_meta = result
                         scene["objects"].append(dict(id=oid, type="image", **box, **props))
                         provenance.append(dict(meta, **asset_meta))

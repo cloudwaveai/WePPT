@@ -13,6 +13,7 @@ import shutil
 import uuid
 
 from pathlib import Path
+from xml.etree.ElementTree import ParseError as ET_ERRORS
 
 from .core import EngineError, _json, _now
 
@@ -154,6 +155,77 @@ def _get(studio, template_id, kind=None):
     return row
 
 
+PPTX_MIME = "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+MAX_PPTX_BYTES = 20 * 1024 * 1024
+MAX_PPTX_PAGES = 10
+
+
+def _decode_pptx(file):
+    encoded = file.get("base64")
+    if not isinstance(encoded, str) or len(encoded) > MAX_PPTX_BYTES * 4 // 3 + 8:
+        fail("UPLOAD_TOO_LARGE", "PPTX 模板上限为 20 MB。")
+    try:
+        data = base64.b64decode(encoded, validate=True)
+    except (ValueError, TypeError):
+        fail("INVALID_UPLOAD", "文件编码无效。")
+    if not data.startswith(b"PK\x03\x04") or len(data) > MAX_PPTX_BYTES:
+        fail("INVALID_UPLOAD", "文件不是有效的 PPTX，或超过 20 MB。")
+    return data
+
+
+def _import_pptx(studio, filename, data):
+    """Each of the first 10 slides becomes a page template with an editable layout."""
+    import io, zipfile
+    from .pptx_opening import OpeningImporter
+    from .design_review import render_candidate
+    work = studio.wb.root / "user-templates" / ("import-" + uuid.uuid4().hex[:12])
+    work.mkdir(parents=True)
+    try:
+        source = work / "source.pptx"
+        source.write_bytes(data)
+        try:
+            importer = OpeningImporter(source)
+            count = importer.slide_count()
+        except (zipfile.BadZipFile, KeyError, ET_ERRORS):
+            fail("INVALID_UPLOAD", "无法读取这个 PPTX 文件。")
+        created, skipped = [], []
+        stem = Path(filename).stem.strip()[:40] or "PPTX 模板"
+        try:
+            for page in range(1, min(count, MAX_PPTX_PAGES) + 1):
+                try:
+                    scene, _ = importer.extract(page, "body")
+                except Exception:  # Unsupported geometry or a non-16:9 deck: skip that slide.
+                    skipped.append(page)
+                    continue
+                tid = "u" + uuid.uuid4().hex[:12]
+                folder = _directory(studio, tid)
+                folder.mkdir(parents=True)
+                try:
+                    png, _ = render_candidate(scene, folder / "page-render")
+                except EngineError as exc:
+                    shutil.rmtree(folder, ignore_errors=True)
+                    if exc.code == "DESIGN_RENDER_UNAVAILABLE":
+                        fail("RENDER_UNAVAILABLE", "导入 PPTX 需要页面渲染器，请改用图片上传。")
+                    skipped.append(page)
+                    continue
+                (folder / "page.png").write_bytes(png.read_bytes())
+                (folder / "layout.json").write_text(json.dumps(scene, ensure_ascii=False))
+                sha = hashlib.sha256((folder / "page.png").read_bytes()).hexdigest()
+                body = {"sha256": sha, "sourceMime": PPTX_MIME, "sourcePage": page, "hasLayout": True,
+                        "pages": [{"sha": sha}]}
+                with studio.wb.atomic() as db:
+                    db.execute("INSERT INTO studio_user_templates VALUES (?,?,?,?,?)",
+                               (tid, "page", f"{stem} · 第{page}页"[:60], _json(body), _now()))
+                created.append(tid)
+        finally:
+            importer.close()
+        if not created:
+            fail("INVALID_UPLOAD", "这个 PPTX 没有可导入的 16:9 页面。")
+        return created, skipped, count
+    finally:
+        shutil.rmtree(work, ignore_errors=True)
+
+
 def _decode_file(file):
     if not isinstance(file, dict):
         fail("INVALID_UPLOAD", "请提供图片文件。")
@@ -209,6 +281,12 @@ def upload(studio, kind, files):
         fail("INVALID_UPLOAD", "一次上传 1–5 张图片，每张成为一页模板。")
     if kind == "style" and len(files) != 3:
         fail("INVALID_UPLOAD", "对标风格需要恰好 3 页 PNG 或 JPEG。")
+    if kind == "page" and any(isinstance(f, dict) and f.get("mime") == PPTX_MIME for f in files):
+        if len(files) != 1:
+            fail("INVALID_UPLOAD", "PPTX 模板请单独上传，一次一个文件。")
+        created, skipped, count = _import_pptx(studio, str(files[0].get("filename") or "模板.pptx"), _decode_pptx(files[0]))
+        return {"templates": [t for t in list_templates(studio) if t["id"] in created],
+                "skippedPages": skipped, "slideCount": count, "importedLimit": MAX_PPTX_PAGES}
     decoded = [_decode_file(f) for f in files]
     created = []
     if kind == "page":
@@ -294,10 +372,17 @@ def image(studio, template_id, index=0):
 def template_card(studio, template_id):
     row = _get(studio, template_id, "page")
     path, _ = image(studio, template_id, 0)
-    return ({"id": "user-" + row["id"], "name": row["name"], "role": "content",
-             "use": "用户上传的模板页",
-             "fitRule": "只模仿版式与视觉语言，不复制模板页上的文字、数据、Logo 或人物。",
-             "userTemplate": True}, path)
+    card = {"id": "user-" + row["id"], "name": row["name"], "role": "content",
+            "use": "用户上传的模板页",
+            "fitRule": "只模仿版式与视觉语言，不复制模板页上的文字、数据、Logo 或人物。",
+            "userTemplate": True}
+    return card, path
+
+
+def template_layout(studio, template_id):
+    """The editable layout of a page imported from PPTX, or None for image templates."""
+    path = _directory(studio, template_id) / "layout.json"
+    return json.loads(path.read_text()) if path.is_file() else None
 
 
 def style_reference(name, profile):

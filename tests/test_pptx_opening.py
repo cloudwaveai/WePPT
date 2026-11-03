@@ -66,8 +66,11 @@ class BundledOpeningTests(unittest.TestCase):
                 self.assertEqual(text["color"], "#123456")
                 self.assertEqual(text["binding"], "title")
                 self.assertFalse(meta["limitations"])
-                with self.assertRaises(ValueError): importer.extract(4, "cover")
-                with self.assertRaises(ValueError): importer.extract(1, "body")
+                with self.assertRaises(ValueError): importer.extract(4, "cover")  # Beyond the deck.
+                with self.assertRaises(ValueError): importer.extract(1, "quote")
+                self.assertEqual(importer.slide_count(), 1)
+                body, _ = importer.extract(1, "body")  # Any page can be read as a generic body layout.
+                self.assertEqual(next(o for o in body["objects"] if o["type"] == "text")["binding"], "title")
             finally:
                 importer.close()
 

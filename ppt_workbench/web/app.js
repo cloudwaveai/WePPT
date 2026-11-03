@@ -1286,7 +1286,7 @@ Logo：[本次不使用，或注明已提供的素材]
     if(isUser){
       const uploadCard=node('button','template-card template-upload-card');uploadCard.type='button';
       const up=node('div','template-card-preview');up.append(node('span','upload-plus','＋'));
-      uploadCard.append(up,node('p','','上传模板页 · PNG/JPG，一张图一页'));
+      uploadCard.append(up,node('p','','上传模板页 · PNG/JPG 一张图一页，或 PPTX（前 10 页）'));
       uploadCard.addEventListener('click',()=>$('user-template-input').click());grid.append(uploadCard);
     }
     if(!templates.length)grid.append(node('p','',isUser?'还没有上传的模板页。':'没有匹配的模板，试试其他用途、关键词或页面位置。'));
@@ -1381,14 +1381,20 @@ Logo：[本次不使用，或注明已提供的素材]
   }
   async function uploadUserTemplates(files,kind='page'){
     const items=[];
-    for(const file of [...files].slice(0,kind==='style'?3:5)){
-      if(!['image/png','image/jpeg'].includes(file.type)){toast('只接受 PNG 或 JPEG。');continue;}
-      if(file.size>8*1024*1024){toast(`${file.name} 超过 8 MB。`);continue;}
+    const PPTX='application/vnd.openxmlformats-officedocument.presentationml.presentation';
+    const pptx=kind==='page'?[...files].find(f=>f.type===PPTX||/\.pptx$/i.test(f.name)):null;
+    for(const file of pptx?[pptx]:[...files].slice(0,kind==='style'?3:5)){
+      const mime=file===pptx?PPTX:file.type;
+      if(file!==pptx&&!['image/png','image/jpeg'].includes(mime)){toast(kind==='page'?'只接受 PNG、JPEG 或 PPTX。':'只接受 PNG 或 JPEG。');continue;}
+      if(file.size>(file===pptx?20:8)*1024*1024){toast(`${file.name} 超过 ${file===pptx?20:8} MB。`);continue;}
       const base64=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result).split(',')[1]);reader.onerror=()=>reject(new Error('无法读取文件。'));reader.readAsDataURL(file);});
-      items.push({filename:file.name,mime:file.type,base64});
+      items.push({filename:file.name,mime,base64});
     }
     if(!items.length)return;
-    try{await api('/api/user-templates','POST',{kind,files:items});await refreshUserTemplates();if(kind==='page')toast('已保存我的模板页。');}
+    if(pptx)toast('正在导入 PPTX 页面，请稍候…');
+    try{const result=await api('/api/user-templates','POST',{kind,files:items});await refreshUserTemplates();
+      if(pptx)toast(`已导入 ${result.templates.length} 页模板${result.slideCount>result.importedLimit?`（共 ${result.slideCount} 页，只导入前 ${result.importedLimit} 页）`:''}${result.skippedPages?.length?`；第 ${result.skippedPages.join('、')} 页无法导入`:''}。`,6000);
+      else if(kind==='page')toast('已保存我的模板页。');}
     catch(error){toast(error.message);throw error;}
   }
   let templateProposal=null,templatePreviewSequence=0;

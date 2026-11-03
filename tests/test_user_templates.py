@@ -30,6 +30,53 @@ class UploadTests(unittest.TestCase):
             func(*a, **kw)
         self.assertEqual(e.exception.code, code)
 
+    def test_pptx_pages_become_editable_layout_templates(self):
+        import shutil
+        if not shutil.which("node"):
+            self.skipTest("Node.js not installed")
+        self.s.demo()
+        try:
+            exported = Path(self.s.export("pptx")["path"])
+        except EngineError as exc:
+            if exc.code == "PPTX_DEPENDENCY_MISSING":
+                self.skipTest("pptxgenjs not installed")
+            raise
+        pptx = {"filename": "我的模板.pptx", "mime": ut.PPTX_MIME, "base64": base64.b64encode(exported.read_bytes()).decode()}
+        self.error("INVALID_UPLOAD", ut.upload, self.s, "page", [pptx, file()])
+        self.error("INVALID_UPLOAD", ut.upload, self.s, "page", [dict(pptx, base64=PNG)])
+        png = Path(self.temp.name) / "r.png"; png.write_bytes(b"\x89PNG\r\n\x1a\n")
+        with patch("ppt_workbench.design_review.render_candidate", return_value=(png, {"overflow": []})):
+            result = ut.upload(self.s, "page", [pptx])
+        self.assertEqual(result["slideCount"], 3)
+        self.assertEqual([t["name"] for t in result["templates"]], [f"我的模板 · 第{n}页" for n in (1, 2, 3)])
+        tid = result["templates"][0]["id"]
+        layout = ut.template_layout(self.s, tid)
+        self.assertIn("让想法成为看得见的页面", [o.get("text") for o in layout["objects"]])
+        # Non-vision models adapt from the editable layout; the template's own text is example-only.
+        before = self.s.get_scene("S002")
+        self.s.set_agent_mode("api")
+        moved = json.loads(json.dumps(before["scene"]))
+        moved["objects"] = [dict(o, x=20 + (i * 137) % 600, y=20 + (i * 89) % 400, w=max(40, o["w"] // 2), h=max(20, o["h"] // 2))
+                            for i, o in enumerate(moved["objects"])]
+        calls = []
+        def run(*a, **kw):
+            calls.append((a, kw))
+            if a[2].get("generationTask", {}).get("kind") == "design_loop_review":
+                return {"reply": "PASS\nok", "actions": []}
+            return {"reply": "done", "actions": [{"type": "scene_replace", "slide_id": "S002",
+                    "base_revision": before["contentRevision"], "scene": moved}]}
+        binding = {"id": "x", "label": "L", "mode": "api", "model": "m"}
+        with patch("ppt_workbench.model_profiles.selected", return_value=binding), \
+             patch("ppt_workbench.model_profiles.resolve", return_value={**binding, "vision": False}), \
+             patch("ppt_workbench.agent_bridge.run_turn", side_effect=run), \
+             patch("ppt_workbench.design_review.render_candidate", return_value=(png, {"fontsReady": True, "overflow": []})):
+            proposal = adaptation.propose(self.s, "user-" + tid, "S002", before["sceneRevision"])
+        context = calls[0][0][2]
+        self.assertTrue(context["referenceLayout"]["exampleOnly"])
+        self.assertEqual(context["referenceReadMode"], "layout-only")
+        self.assertNotIn("preview_png", calls[0][1])
+        self.assertEqual(proposal["scene"]["templateId"], "custom")
+
     def test_upload_validation(self):
         self.error("INVALID_UPLOAD", ut.upload, self.s, "page", [])
         self.error("INVALID_UPLOAD", ut.upload, self.s, "page", [file()] * 6)

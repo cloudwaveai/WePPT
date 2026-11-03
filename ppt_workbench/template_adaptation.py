@@ -96,14 +96,15 @@ def propose(studio, template_id, sid, revision, approach='creative'):
     from .design_review import render_candidate
     if approach not in ('faithful','content','creative'):
         raise EngineError('INVALID_REQUEST','请选择贴近模板或按内容适配。')
-    user_template=style=None
+    user_template=style=layout=None
     if isinstance(template_id,str) and template_id.startswith('style-'):
         from .user_templates import style_card
         card,user_image,style=style_card(studio,template_id[6:])
         user_template=True
     elif isinstance(template_id,str) and template_id.startswith('user-'):
-        from .user_templates import template_card
+        from .user_templates import template_card, template_layout
         card,user_image=template_card(studio,template_id[5:])
+        layout=template_layout(studio,template_id[5:])
         user_template=True
     else:
         card=next((t for t in catalog() if t['id']==template_id),None)
@@ -137,7 +138,7 @@ def propose(studio, template_id, sid, revision, approach='creative'):
         folder=studio.wb.project_dir(studio.project_id)/'template-proposals'/proposal_id
         folder.mkdir(parents=True,exist_ok=False)
         visual=mode=='codex' or (mode=='api' and bool(profile and profile.get('vision')))
-        if user_template and not style and not visual:
+        if user_template and not style and not layout and not visual:
             raise EngineError('TEMPLATE_NEEDS_VISION','这个模板是图片，需要支持看图的模型；请在右上角切换模型后重试。')
         context.update(proposalOnly=True,generationTask={'kind':'template_adaptation'},
             previewPurpose='选中模板的原页设计参考。只模仿设计，不复制示例事实、人物、Logo、数据或截图。',
@@ -149,6 +150,12 @@ def propose(studio, template_id, sid, revision, approach='creative'):
             # The written profile carries the style; the 3-page contact sheet helps vision models.
             if visual and user_image:image=folder/'reference.png';shutil.copyfile(user_image,image)
             context['referenceReadMode']='image-and-profile' if image else 'profile-only'
+        elif layout:
+            # Imported from PPTX: the editable geometry works for every model; vision also sees the render.
+            context['referenceLayout']={'scene':copy.deepcopy(layout),'exampleOnly':True}
+            for o in context['referenceLayout']['scene']['objects']:
+                if o['type']=='image':o['src']='template-example-image-not-for-reuse'
+            if visual:image=folder/'reference.png';shutil.copyfile(user_image,image)
         elif user_template:
             image=folder/'reference.png';shutil.copyfile(user_image,image)
             context['referenceReadMode']='image-only'
