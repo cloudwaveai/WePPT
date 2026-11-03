@@ -7,6 +7,7 @@ const out=process.env.PPT_BROWSER_OUTPUT||'/tmp/weppt-template-adaptation';fs.mk
  const page=await b.newPage({viewport:{width:1440,height:900}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto(url,{waitUntil:'domcontentloaded'});await page.locator('.page-frame.active').waitFor({timeout:30000});
  const state=await(await page.request.get(origin+'/api/state?project='+pid)).json(),sid=state.selectedSlideId;
+ if(!['codex','claude','api'].includes(state.agent?.mode)||!state.agent?.available){console.log('SKIP template adaptation needs a configured model (set one for this project)');return;}
  const read=async()=>await(await page.request.get(origin+'/api/scene?project='+pid+'&slide='+sid)).json();const before=await read();
  const geometry=await page.evaluate(()=>{const box=s=>{const r=document.querySelector(s).getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,height:r.height}};return {header:box('.app-header'),ribbon:box('.ribbon'),assistant:box('.chat-panel'),feed:box('.chat-feed'),composer:box('.composer')}});
  assert.equal(geometry.assistant.y,52);assert(geometry.ribbon.right<=geometry.assistant.x+1);assert(geometry.feed.height>=350,JSON.stringify(geometry));assert(geometry.composer.height<190);

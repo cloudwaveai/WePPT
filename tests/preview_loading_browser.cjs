@@ -7,8 +7,6 @@ if(!url)throw Error('Set PPT_STUDIO_TEST_URL to an isolated workspace.');
  const browser=await chromium.launch({headless:true,executablePath:process.env.WEPPT_CHROMIUM||(process.platform==='darwin'?'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome':'chromium')});
  try{
   const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[],requests=[],active=new Set();let max=0;
-  const originalBodies=new Map();
-  page.on('response',r=>{if(r.url().includes('/reference-library/previews/'))originalBodies.set(r.url(),r.body().catch(()=>null));});
   page.on('pageerror',e=>errors.push(e.message));
   page.on('request',r=>{if(r.resourceType()==='fetch'&&/\/(?:reference-library\/previews|api\/templates\/preview|api\/preview\/)/.test(r.url())){requests.push(r.url());active.add(r);max=Math.max(max,active.size);}});
   page.on('requestfinished',r=>active.delete(r));page.on('requestfailed',r=>active.delete(r));
@@ -23,8 +21,9 @@ if(!url)throw Error('Set PPT_STUDIO_TEST_URL to an isolated workspace.');
   assert(await page.evaluate(()=>window.savedRibbon===document.querySelector('#template-strip .ribbon-template')),'Filtering must keep ribbon DOM');
   const originalUrls=await page.locator('#template-grid img').evaluateAll(images=>images.map(img=>img.dataset.previewResource));
   for(const originalUrl of originalUrls){
-   const bytes=await originalBodies.get(originalUrl);
-   assert(bytes,'Original network response must be captured');
+   // System Chrome does not keep consumed fetch bodies for Playwright; re-read the same URL with the page's session.
+   const bytes=await (await page.request.get(originalUrl)).body();
+   assert(bytes.length,'Original image must be served');
    assert.equal(createHash('sha256').update(bytes).digest('hex'),new URL(originalUrl).searchParams.get('v'),'Loaded original bytes must match bundled version');
   }
   const dataRequests=()=>requests.filter(u=>/\/04-0[45]\.png/.test(u)).length;
@@ -36,8 +35,9 @@ if(!url)throw Error('Set PPT_STUDIO_TEST_URL to an isolated workspace.');
   const references=requests.filter(u=>u.includes('/reference-library/previews/'));
   assert(references.length<=7,`Unexpected hidden reference downloads: ${references.length}`);
   await page.locator('#template-grid .template-card').first().click();
-  await page.waitForFunction(()=>!document.querySelector('#template-preview-apply').disabled);
+  // With a current page, applying needs an AI adaptation preview first; the dialog must be ready to generate one.
   await page.frameLocator('#template-after').locator('#slide').waitFor();
+  await page.waitForFunction(()=>!document.querySelector('#template-generate').disabled&&document.querySelector('#template-preview-apply').disabled);
   await page.locator('#template-preview-cancel').click();
   const out=process.env.PPT_BROWSER_OUTPUT || '/tmp/weppt-preview-loading';
   await require('node:fs/promises').mkdir(out,{recursive:true});

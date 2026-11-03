@@ -5,8 +5,11 @@ const out=process.env.PPT_BROWSER_OUTPUT||'/tmp/weppt-template-matching';fs.mkdi
 (async()=>{const b=await chromium.launch({headless:true,executablePath:process.env.WEPPT_CHROMIUM||(process.platform==='darwin'?'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome':'chromium')});try{
  const page=await b.newPage({viewport:{width:1440,height:900}}),errors=[],posts=[];
  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(r.method()==='POST')posts.push(new URL(r.url()).pathname)});
- await page.goto(url);await page.locator('.page-frame.active').waitFor();await page.waitForFunction(()=>document.querySelector('#preview-update').hidden);
+ await page.goto(url);await page.locator('.page-frame.active').waitFor();
  const origin=new URL(url).origin,pid=new URL(url).searchParams.get('project');
+ // Matching depends on the page: use the demo's comparison content page, whatever earlier tests selected.
+ await page.request.post(origin+'/api/select',{headers:{Origin:origin},data:{slideId:'S003'}});
+ await page.reload();await page.locator('.page-frame.active').waitFor();await page.waitForFunction(()=>document.querySelector('#preview-update').hidden);
  const state=await(await page.request.get(origin+'/api/state'+(pid?'?project='+pid:''))).json(),sid=state.selectedSlideId;
  const read=async()=>await(await page.request.get(origin+'/api/scene?'+new URLSearchParams({slide:sid,project:state.projectId}))).json();const before=await read();
  await page.locator('#ai-instruction').fill('问题与解决方案对照');await page.locator('#ai-custom').click();

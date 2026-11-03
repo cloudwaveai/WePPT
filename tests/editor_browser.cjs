@@ -13,6 +13,9 @@ const output=process.env.PPT_BROWSER_OUTPUT || '/tmp/weppt-editor-browser';
     page.setDefaultTimeout(15000);
     page.on('pageerror',e=>errors.push(e.message));
     await page.goto(url);await page.locator('.page-frame.active').waitFor();
+    // These checks target the demo cover's title, whatever page earlier tests left selected.
+    await page.request.post(new URL(url).origin+'/api/select',{headers:{Origin:new URL(url).origin},data:{slideId:'S001'}});
+    await page.reload();await page.locator('.page-frame.active').waitFor();
     const state=()=>page.request.get('/api/state').then(r=>r.json());
     const initial=await state(),sid=initial.selectedSlideId;
     const scene=()=>page.request.get(`/api/scene?slide=${sid}`).then(r=>r.json());
@@ -57,6 +60,7 @@ const output=process.env.PPT_BROWSER_OUTPUT || '/tmp/weppt-editor-browser';
     await page.locator('#toggle-assistant').click();assert.equal(await page.locator('.chat-panel').isVisible(),true);
     await page.locator('#zoom-in').click();assert.equal(await page.locator('#zoom-label').textContent(),'110%');await page.locator('#zoom-fit').click();
     console.log('PASS assistant collapse and canvas zoom');
+    await page.locator('.quick-text-tools summary').click();  // Text tools now live in a collapsed group.
     await page.locator('[data-ai-action="polish"]').click();await page.locator('#connection-dialog').waitFor({state:'visible'});await page.locator('#close-connection').click();
     assert.match(await page.locator('#ai-status').textContent(),/连接/);
     console.log('PASS missing model is shown without a fake recommendation');

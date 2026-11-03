@@ -14,6 +14,8 @@ if(!url)throw Error('Set PPT_STUDIO_TEST_URL. Clicking smart selection calls the
   const state=await(await page.request.get(origin+'/api/state')).json(),sid=state.selectedSlideId;
   const read=async()=>await(await page.request.get(origin+'/api/scene?slide='+sid+'&metadata=1')).json();
   const before=await read();
+  const smart=await(await page.request.get(origin+'/api/templates/recommendations?slideId='+sid)).json();
+  if(!smart.smartAvailable){console.log('SKIP smart selection needs WEPPT_JEV_API_KEY on the server');return;}
   await page.locator('#ribbon-design-tab').click();await page.locator('#ribbon-styles').click();
   await page.waitForFunction(()=>!document.querySelector('#template-smart').disabled);
   assert.equal(posts.length,0,'Opening templates must not call the decision model');

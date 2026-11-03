@@ -4,10 +4,10 @@ const fs = require('node:fs');
 const assert = require('node:assert/strict');
 const { chromium } = require(process.env.PPT_PLAYWRIGHT_MODULE || 'playwright-core');
 (async () => {
-  const log = fs.readFileSync(process.env.GUIDE_STARTUP_LOG, 'utf8');
-  const authURL = log.match(/http:\/\/127\.0\.0\.1:\d+\/\?token=[^\s"\\]+/)[0];
+  const authURL = process.env.PPT_STUDIO_TEST_URL ||
+    fs.readFileSync(process.env.GUIDE_STARTUP_LOG, 'utf8').match(/http:\/\/127\.0\.0\.1:\d+\/\?token=[^\s"\\]+/)[0];
   const origin = new URL(authURL).origin;
-  const browser = await chromium.launch({ channel: 'chrome', headless: true });
+  const browser = await chromium.launch({ headless: true, executablePath: process.env.WEPPT_CHROMIUM || (process.platform === 'darwin' ? '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' : 'chromium') });
   const context = await browser.newContext({ viewport: { width: 1400, height: 1000 } });
   const page = await context.newPage(); const errors = [];
   page.on('pageerror', e => errors.push(e.message)); page.on('dialog', d => d.accept());
