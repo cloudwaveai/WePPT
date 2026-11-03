@@ -604,7 +604,7 @@ class Workbench:
                     materials.append({"kind": kind, "id": material_id, "reference": filename,
                                       "file": self._file_record(project_id, filename)})
                 except EngineError as exc:
-                    material_issues.append({"code": "MATERIAL_UNAVAILABLE", "message": f"{kind} {material_id} 在产物登记时缺少可读取素材：{exc.message}"})
+                    material_issues.append({"code": "MATERIAL_UNAVAILABLE", "kind": kind, "id": material_id, "message": f"{kind} {material_id} 在产物登记时缺少可读取素材：{exc.message}"})
             record["materials"], record["materialIssues"] = materials, material_issues
             if manifest_path:
                 obj_record = self._file_record(project_id, manifest_path)
@@ -812,6 +812,12 @@ class Workbench:
                 payload = json.loads(self.templates_path.read_text(encoding="utf-8"))
                 entries = payload["templates"] if isinstance(payload, dict) else payload
                 self._templates_cache = {t["id"]: t for t in entries}
+                # Studio exposes additional local, opening and variant templates.
+                # Keep explicitly supplied rule files isolated from that catalog.
+                if self.templates_path == Path(__file__).parent / "data" / "template-rules.json":
+                    from .templates import catalog
+                    for entry in catalog():
+                        self._templates_cache.setdefault(entry["id"], entry)
                 self._template_structure = payload.get("structure", {}) if isinstance(payload, dict) else {}
             except (OSError, ValueError, KeyError, TypeError) as exc:
                 _fail("TEMPLATE_DATA_MISSING", "缺少有效的内置模板数据。", str(exc))

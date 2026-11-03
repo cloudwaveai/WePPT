@@ -1,0 +1,1774 @@
+{
+  "schema": "ppt-design-exemplars",
+  "version": 1,
+  "instruction": "示例只展示比例、层级、留白与色块关系：学习结构，不照抄坐标、颜色或文字。textRef 中的 A/B/C/D 换成本页真实的 block ID；颜色按 colorRoles 换成 deckDesign 对应角色。",
+  "colorRoles": {
+    "#F6F3EE": "background/paper",
+    "#1D2A35": "ink",
+    "#5B6670": "ink-muted",
+    "#C8553D": "accent",
+    "#2F6F73": "secondary",
+    "#EAE3D8": "surface",
+    "#14202B": "inverse",
+    "#AEB8C2": "inverse-muted",
+    "#FFFFFF": "card"
+  },
+  "exemplars": [
+    {
+      "archetype": "hero-statement",
+      "principle": "一句主张占据画面主体（88–120px），其余信息退为小字；深色底、强调色短条和局部大圆制造张力与留白。",
+      "fits": {
+        "roles": [
+          "cover",
+          "chapter",
+          "ending"
+        ],
+        "relationships": [
+          "hero",
+          "summary"
+        ]
+      },
+      "sample": {
+        "title": "一句话说清这份演示的核心主张",
+        "blocks": [
+          {
+            "id": "A",
+            "heading": "副标题",
+            "body": "一句补充说明，交代范围与场合。",
+            "kicker": "主题标签"
+          }
+        ]
+      },
+      "scene": {
+        "schema": "ppt-scene",
+        "schemaVersion": 1,
+        "slideId": "S001",
+        "width": 1280,
+        "height": 720,
+        "background": "#14202B",
+        "objects": [
+          {
+            "id": "orb",
+            "type": "ellipse",
+            "x": 900,
+            "y": 330,
+            "w": 360,
+            "h": 360,
+            "fill": "#C8553D",
+            "opacity": 0.92
+          },
+          {
+            "id": "bar",
+            "type": "rect",
+            "x": 96,
+            "y": 132,
+            "w": 88,
+            "h": 8,
+            "fill": "#C8553D"
+          },
+          {
+            "id": "kicker",
+            "type": "text",
+            "textRef": "block.A.kicker",
+            "x": 96,
+            "y": 158,
+            "w": 600,
+            "h": 30,
+            "fontSize": 16,
+            "color": "#C8553D",
+            "bold": true,
+            "letterSpacing": 4
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "textRef": "title",
+            "binding": "title",
+            "x": 96,
+            "y": 206,
+            "w": 980,
+            "h": 270,
+            "fontSize": 96,
+            "color": "#F6F3EE",
+            "bold": true,
+            "lineHeight": 1.12
+          },
+          {
+            "id": "sub",
+            "type": "text",
+            "textRef": "block.A.heading",
+            "x": 96,
+            "y": 520,
+            "w": 760,
+            "h": 40,
+            "fontSize": 26,
+            "color": "#F6F3EE",
+            "bold": true
+          },
+          {
+            "id": "note",
+            "type": "text",
+            "textRef": "block.A.body",
+            "x": 96,
+            "y": 570,
+            "w": 760,
+            "h": 70,
+            "fontSize": 20,
+            "color": "#AEB8C2",
+            "lineHeight": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "archetype": "big-number",
+      "principle": "一个原文数字（120–160px）放在深色侧栏成为唯一焦点；右侧宽栏只放两条解释，主次一眼可分。",
+      "fits": {
+        "roles": [
+          "content"
+        ],
+        "relationships": [
+          "evidence",
+          "summary"
+        ]
+      },
+      "sample": {
+        "title": "关键数字背后的含义",
+        "blocks": [
+          {
+            "id": "A",
+            "heading": "数字的口径",
+            "body": "说明数字来源与统计范围。",
+            "metric": "3"
+          },
+          {
+            "id": "B",
+            "heading": "意味着什么",
+            "body": "一句话解释这个数字带来的变化。"
+          },
+          {
+            "id": "C",
+            "heading": "下一步",
+            "body": "一句话说明据此要做的决定。"
+          }
+        ]
+      },
+      "scene": {
+        "schema": "ppt-scene",
+        "schemaVersion": 1,
+        "slideId": "S001",
+        "width": 1280,
+        "height": 720,
+        "background": "#F6F3EE",
+        "objects": [
+          {
+            "id": "panel",
+            "type": "rect",
+            "x": 0,
+            "y": 0,
+            "w": 500,
+            "h": 720,
+            "fill": "#14202B"
+          },
+          {
+            "id": "metric",
+            "type": "text",
+            "textRef": "block.A.metric",
+            "x": 64,
+            "y": 170,
+            "w": 400,
+            "h": 190,
+            "fontSize": 150,
+            "color": "#C8553D",
+            "bold": true,
+            "lineHeight": 1
+          },
+          {
+            "id": "a-head",
+            "type": "text",
+            "textRef": "block.A.heading",
+            "x": 64,
+            "y": 392,
+            "w": 380,
+            "h": 44,
+            "fontSize": 28,
+            "color": "#F6F3EE",
+            "bold": true
+          },
+          {
+            "id": "a-body",
+            "type": "text",
+            "textRef": "block.A.body",
+            "x": 64,
+            "y": 446,
+            "w": 380,
+            "h": 96,
+            "fontSize": 20,
+            "color": "#AEB8C2",
+            "lineHeight": 1.5
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "textRef": "title",
+            "binding": "title",
+            "x": 580,
+            "y": 84,
+            "w": 636,
+            "h": 120,
+            "fontSize": 44,
+            "color": "#1D2A35",
+            "bold": true,
+            "lineHeight": 1.2
+          },
+          {
+            "id": "b-mark",
+            "type": "rect",
+            "x": 580,
+            "y": 266,
+            "w": 48,
+            "h": 6,
+            "fill": "#C8553D"
+          },
+          {
+            "id": "b-head",
+            "type": "text",
+            "textRef": "block.B.heading",
+            "x": 580,
+            "y": 288,
+            "w": 620,
+            "h": 40,
+            "fontSize": 26,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "b-body",
+            "type": "text",
+            "textRef": "block.B.body",
+            "x": 580,
+            "y": 336,
+            "w": 620,
+            "h": 70,
+            "fontSize": 20,
+            "color": "#5B6670",
+            "lineHeight": 1.5
+          },
+          {
+            "id": "c-mark",
+            "type": "rect",
+            "x": 580,
+            "y": 456,
+            "w": 48,
+            "h": 6,
+            "fill": "#2F6F73"
+          },
+          {
+            "id": "c-head",
+            "type": "text",
+            "textRef": "block.C.heading",
+            "x": 580,
+            "y": 478,
+            "w": 620,
+            "h": 40,
+            "fontSize": 26,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "c-body",
+            "type": "text",
+            "textRef": "block.C.body",
+            "x": 580,
+            "y": 526,
+            "w": 620,
+            "h": 70,
+            "fontSize": 20,
+            "color": "#5B6670",
+            "lineHeight": 1.5
+          }
+        ]
+      }
+    },
+    {
+      "archetype": "split-asymmetric",
+      "principle": "2/3 主区讲主张与机制，1/3 色块侧栏放补充或结论；侧栏用色块而不是细线分隔，主区标题带强调词。",
+      "fits": {
+        "roles": [
+          "content"
+        ],
+        "relationships": [
+          "evidence",
+          "summary",
+          "hero"
+        ]
+      },
+      "sample": {
+        "title": "主区讲清机制，侧栏给出结论",
+        "blocks": [
+          {
+            "id": "A",
+            "heading": "核心机制",
+            "body": "用两三句话解释机制如何运作，以及它解决的具体问题。"
+          },
+          {
+            "id": "B",
+            "heading": "结论",
+            "body": "一句话写清读者应该记住的判断。",
+            "kicker": "要点"
+          }
+        ]
+      },
+      "scene": {
+        "schema": "ppt-scene",
+        "schemaVersion": 1,
+        "slideId": "S001",
+        "width": 1280,
+        "height": 720,
+        "background": "#F6F3EE",
+        "objects": [
+          {
+            "id": "side",
+            "type": "rect",
+            "x": 860,
+            "y": 0,
+            "w": 420,
+            "h": 720,
+            "fill": "#EAE3D8"
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "textRef": "title",
+            "binding": "title",
+            "x": 80,
+            "y": 88,
+            "w": 720,
+            "h": 150,
+            "fontSize": 52,
+            "color": "#1D2A35",
+            "bold": true,
+            "lineHeight": 1.18
+          },
+          {
+            "id": "rule",
+            "type": "rect",
+            "x": 80,
+            "y": 262,
+            "w": 72,
+            "h": 6,
+            "fill": "#C8553D"
+          },
+          {
+            "id": "a-head",
+            "type": "text",
+            "textRef": "block.A.heading",
+            "x": 80,
+            "y": 300,
+            "w": 700,
+            "h": 44,
+            "fontSize": 28,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "a-body",
+            "type": "text",
+            "textRef": "block.A.body",
+            "x": 80,
+            "y": 356,
+            "w": 700,
+            "h": 200,
+            "fontSize": 20,
+            "color": "#5B6670",
+            "lineHeight": 1.6
+          },
+          {
+            "id": "b-kicker",
+            "type": "text",
+            "textRef": "block.B.kicker",
+            "x": 912,
+            "y": 300,
+            "w": 320,
+            "h": 28,
+            "fontSize": 15,
+            "color": "#C8553D",
+            "bold": true,
+            "letterSpacing": 3
+          },
+          {
+            "id": "b-head",
+            "type": "text",
+            "textRef": "block.B.heading",
+            "x": 912,
+            "y": 338,
+            "w": 320,
+            "h": 50,
+            "fontSize": 30,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "b-body",
+            "type": "text",
+            "textRef": "block.B.body",
+            "x": 912,
+            "y": 400,
+            "w": 320,
+            "h": 160,
+            "fontSize": 20,
+            "color": "#1D2A35",
+            "lineHeight": 1.6
+          }
+        ]
+      }
+    },
+    {
+      "archetype": "full-bleed-band",
+      "principle": "一条贯穿全宽的强调色带承载本页最重要的一句话（48–56px 白字），色带上下各放少量支撑信息。",
+      "fits": {
+        "roles": [
+          "content",
+          "chapter"
+        ],
+        "relationships": [
+          "hero",
+          "summary",
+          "layers"
+        ]
+      },
+      "sample": {
+        "title": "一句关键判断贯穿全页",
+        "blocks": [
+          {
+            "id": "A",
+            "heading": "最重要的一句判断写在色带里",
+            "body": "色带中的判断依据。"
+          },
+          {
+            "id": "B",
+            "heading": "支撑一",
+            "body": "一句具体事实或例子。"
+          },
+          {
+            "id": "C",
+            "heading": "支撑二",
+            "body": "另一句具体事实或例子。"
+          }
+        ]
+      },
+      "scene": {
+        "schema": "ppt-scene",
+        "schemaVersion": 1,
+        "slideId": "S001",
+        "width": 1280,
+        "height": 720,
+        "background": "#F6F3EE",
+        "objects": [
+          {
+            "id": "title",
+            "type": "text",
+            "textRef": "title",
+            "binding": "title",
+            "x": 80,
+            "y": 64,
+            "w": 1120,
+            "h": 70,
+            "fontSize": 40,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "band",
+            "type": "rect",
+            "x": 0,
+            "y": 200,
+            "w": 1280,
+            "h": 250,
+            "fill": "#C8553D"
+          },
+          {
+            "id": "a-head",
+            "type": "text",
+            "textRef": "block.A.heading",
+            "x": 80,
+            "y": 236,
+            "w": 1120,
+            "h": 136,
+            "fontSize": 54,
+            "color": "#FFFFFF",
+            "bold": true,
+            "lineHeight": 1.2
+          },
+          {
+            "id": "a-body",
+            "type": "text",
+            "textRef": "block.A.body",
+            "x": 80,
+            "y": 384,
+            "w": 1120,
+            "h": 36,
+            "fontSize": 20,
+            "color": "#FFFFFF"
+          },
+          {
+            "id": "b-head",
+            "type": "text",
+            "textRef": "block.B.heading",
+            "x": 80,
+            "y": 500,
+            "w": 520,
+            "h": 40,
+            "fontSize": 26,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "b-body",
+            "type": "text",
+            "textRef": "block.B.body",
+            "x": 80,
+            "y": 548,
+            "w": 520,
+            "h": 100,
+            "fontSize": 20,
+            "color": "#5B6670",
+            "lineHeight": 1.55
+          },
+          {
+            "id": "c-head",
+            "type": "text",
+            "textRef": "block.C.heading",
+            "x": 680,
+            "y": 500,
+            "w": 520,
+            "h": 40,
+            "fontSize": 26,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "c-body",
+            "type": "text",
+            "textRef": "block.C.body",
+            "x": 680,
+            "y": 548,
+            "w": 520,
+            "h": 100,
+            "fontSize": 20,
+            "color": "#5B6670",
+            "lineHeight": 1.55
+          }
+        ]
+      }
+    },
+    {
+      "archetype": "grid-cards",
+      "principle": "并列卡片带阴影浮起，但用一张反色卡突出最关键的一项，打破等权重；序号做大做亮作为图形。",
+      "fits": {
+        "roles": [
+          "content"
+        ],
+        "relationships": [
+          "parallel",
+          "comparison"
+        ]
+      },
+      "sample": {
+        "title": "三项能力，一项最关键",
+        "blocks": [
+          {
+            "id": "A",
+            "heading": "能力一",
+            "body": "一句话说明它做什么。",
+            "kicker": "01"
+          },
+          {
+            "id": "B",
+            "heading": "能力二（关键）",
+            "body": "一句话说明它为何最关键。",
+            "kicker": "02"
+          },
+          {
+            "id": "C",
+            "heading": "能力三",
+            "body": "一句话说明它做什么。",
+            "kicker": "03"
+          }
+        ]
+      },
+      "scene": {
+        "schema": "ppt-scene",
+        "schemaVersion": 1,
+        "slideId": "S001",
+        "width": 1280,
+        "height": 720,
+        "background": "#F6F3EE",
+        "objects": [
+          {
+            "id": "title",
+            "type": "text",
+            "textRef": "title",
+            "binding": "title",
+            "x": 80,
+            "y": 64,
+            "w": 1120,
+            "h": 76,
+            "fontSize": 44,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "card-a",
+            "type": "rect",
+            "x": 80,
+            "y": 200,
+            "w": 340,
+            "h": 440,
+            "fill": "#FFFFFF",
+            "radius": 18,
+            "shadow": "soft"
+          },
+          {
+            "id": "card-b",
+            "type": "rect",
+            "x": 470,
+            "y": 176,
+            "w": 340,
+            "h": 488,
+            "fill": "#14202B",
+            "radius": 18,
+            "shadow": "lift"
+          },
+          {
+            "id": "card-c",
+            "type": "rect",
+            "x": 860,
+            "y": 200,
+            "w": 340,
+            "h": 440,
+            "fill": "#FFFFFF",
+            "radius": 18,
+            "shadow": "soft"
+          },
+          {
+            "id": "a-num",
+            "type": "text",
+            "textRef": "block.A.kicker",
+            "x": 116,
+            "y": 236,
+            "w": 200,
+            "h": 90,
+            "fontSize": 72,
+            "color": "#C8553D",
+            "bold": true,
+            "lineHeight": 1
+          },
+          {
+            "id": "a-head",
+            "type": "text",
+            "textRef": "block.A.heading",
+            "x": 116,
+            "y": 344,
+            "w": 270,
+            "h": 44,
+            "fontSize": 26,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "a-body",
+            "type": "text",
+            "textRef": "block.A.body",
+            "x": 116,
+            "y": 398,
+            "w": 270,
+            "h": 186,
+            "fontSize": 20,
+            "color": "#5B6670",
+            "lineHeight": 1.55
+          },
+          {
+            "id": "b-num",
+            "type": "text",
+            "textRef": "block.B.kicker",
+            "x": 506,
+            "y": 212,
+            "w": 200,
+            "h": 90,
+            "fontSize": 72,
+            "color": "#C8553D",
+            "bold": true,
+            "lineHeight": 1
+          },
+          {
+            "id": "b-head",
+            "type": "text",
+            "textRef": "block.B.heading",
+            "x": 506,
+            "y": 320,
+            "w": 270,
+            "h": 44,
+            "fontSize": 26,
+            "color": "#F6F3EE",
+            "bold": true
+          },
+          {
+            "id": "b-body",
+            "type": "text",
+            "textRef": "block.B.body",
+            "x": 506,
+            "y": 374,
+            "w": 270,
+            "h": 206,
+            "fontSize": 20,
+            "color": "#AEB8C2",
+            "lineHeight": 1.55
+          },
+          {
+            "id": "c-num",
+            "type": "text",
+            "textRef": "block.C.kicker",
+            "x": 896,
+            "y": 236,
+            "w": 200,
+            "h": 90,
+            "fontSize": 72,
+            "color": "#C8553D",
+            "bold": true,
+            "lineHeight": 1
+          },
+          {
+            "id": "c-head",
+            "type": "text",
+            "textRef": "block.C.heading",
+            "x": 896,
+            "y": 344,
+            "w": 270,
+            "h": 44,
+            "fontSize": 26,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "c-body",
+            "type": "text",
+            "textRef": "block.C.body",
+            "x": 896,
+            "y": 398,
+            "w": 270,
+            "h": 186,
+            "fontSize": 20,
+            "color": "#5B6670",
+            "lineHeight": 1.55
+          }
+        ]
+      }
+    },
+    {
+      "archetype": "ordered-rows",
+      "principle": "有序长说明放成宽行：左侧深色栏承载标题制造分割底，右侧每行一个大号淡色序号 + 小标题 + 宽正文。",
+      "fits": {
+        "roles": [
+          "content",
+          "toc",
+          "appendix"
+        ],
+        "relationships": [
+          "process",
+          "layers",
+          "parallel"
+        ]
+      },
+      "sample": {
+        "title": "四个要点，按顺序读",
+        "blocks": [
+          {
+            "id": "A",
+            "heading": "要点一",
+            "body": "一句宽正文说明。",
+            "kicker": "01"
+          },
+          {
+            "id": "B",
+            "heading": "要点二",
+            "body": "一句宽正文说明。",
+            "kicker": "02"
+          },
+          {
+            "id": "C",
+            "heading": "要点三",
+            "body": "一句宽正文说明。",
+            "kicker": "03"
+          },
+          {
+            "id": "D",
+            "heading": "要点四",
+            "body": "一句宽正文说明。",
+            "kicker": "04"
+          }
+        ]
+      },
+      "scene": {
+        "schema": "ppt-scene",
+        "schemaVersion": 1,
+        "slideId": "S001",
+        "width": 1280,
+        "height": 720,
+        "background": "#F6F3EE",
+        "objects": [
+          {
+            "id": "panel",
+            "type": "rect",
+            "x": 0,
+            "y": 0,
+            "w": 440,
+            "h": 720,
+            "fill": "#14202B"
+          },
+          {
+            "id": "bar",
+            "type": "rect",
+            "x": 64,
+            "y": 150,
+            "w": 64,
+            "h": 6,
+            "fill": "#C8553D"
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "textRef": "title",
+            "binding": "title",
+            "x": 64,
+            "y": 180,
+            "w": 330,
+            "h": 260,
+            "fontSize": 48,
+            "color": "#F6F3EE",
+            "bold": true,
+            "lineHeight": 1.2
+          },
+          {
+            "id": "a-num",
+            "type": "text",
+            "textRef": "block.A.kicker",
+            "x": 500,
+            "y": 70,
+            "w": 120,
+            "h": 88,
+            "fontSize": 72,
+            "color": "#C8553D",
+            "bold": true,
+            "lineHeight": 1,
+            "opacity": 0.85
+          },
+          {
+            "id": "a-head",
+            "type": "text",
+            "textRef": "block.A.heading",
+            "x": 630,
+            "y": 70,
+            "w": 580,
+            "h": 36,
+            "fontSize": 24,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "a-body",
+            "type": "text",
+            "textRef": "block.A.body",
+            "x": 630,
+            "y": 110,
+            "w": 580,
+            "h": 56,
+            "fontSize": 20,
+            "color": "#5B6670",
+            "lineHeight": 1.45
+          },
+          {
+            "id": "sep-1",
+            "type": "line",
+            "x": 500,
+            "y": 196,
+            "w": 710,
+            "h": 0,
+            "stroke": "#D8D0C3",
+            "strokeWidth": 1
+          },
+          {
+            "id": "b-num",
+            "type": "text",
+            "textRef": "block.B.kicker",
+            "x": 500,
+            "y": 226,
+            "w": 120,
+            "h": 88,
+            "fontSize": 72,
+            "color": "#C8553D",
+            "bold": true,
+            "lineHeight": 1,
+            "opacity": 0.85
+          },
+          {
+            "id": "b-head",
+            "type": "text",
+            "textRef": "block.B.heading",
+            "x": 630,
+            "y": 226,
+            "w": 580,
+            "h": 36,
+            "fontSize": 24,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "b-body",
+            "type": "text",
+            "textRef": "block.B.body",
+            "x": 630,
+            "y": 266,
+            "w": 580,
+            "h": 56,
+            "fontSize": 20,
+            "color": "#5B6670",
+            "lineHeight": 1.45
+          },
+          {
+            "id": "sep-2",
+            "type": "line",
+            "x": 500,
+            "y": 352,
+            "w": 710,
+            "h": 0,
+            "stroke": "#D8D0C3",
+            "strokeWidth": 1
+          },
+          {
+            "id": "c-num",
+            "type": "text",
+            "textRef": "block.C.kicker",
+            "x": 500,
+            "y": 382,
+            "w": 120,
+            "h": 88,
+            "fontSize": 72,
+            "color": "#C8553D",
+            "bold": true,
+            "lineHeight": 1,
+            "opacity": 0.85
+          },
+          {
+            "id": "c-head",
+            "type": "text",
+            "textRef": "block.C.heading",
+            "x": 630,
+            "y": 382,
+            "w": 580,
+            "h": 36,
+            "fontSize": 24,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "c-body",
+            "type": "text",
+            "textRef": "block.C.body",
+            "x": 630,
+            "y": 422,
+            "w": 580,
+            "h": 56,
+            "fontSize": 20,
+            "color": "#5B6670",
+            "lineHeight": 1.45
+          },
+          {
+            "id": "sep-3",
+            "type": "line",
+            "x": 500,
+            "y": 508,
+            "w": 710,
+            "h": 0,
+            "stroke": "#D8D0C3",
+            "strokeWidth": 1
+          },
+          {
+            "id": "d-num",
+            "type": "text",
+            "textRef": "block.D.kicker",
+            "x": 500,
+            "y": 538,
+            "w": 120,
+            "h": 88,
+            "fontSize": 72,
+            "color": "#C8553D",
+            "bold": true,
+            "lineHeight": 1,
+            "opacity": 0.85
+          },
+          {
+            "id": "d-head",
+            "type": "text",
+            "textRef": "block.D.heading",
+            "x": 630,
+            "y": 538,
+            "w": 580,
+            "h": 36,
+            "fontSize": 24,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "d-body",
+            "type": "text",
+            "textRef": "block.D.body",
+            "x": 630,
+            "y": 578,
+            "w": 580,
+            "h": 56,
+            "fontSize": 20,
+            "color": "#5B6670",
+            "lineHeight": 1.45
+          }
+        ]
+      }
+    },
+    {
+      "archetype": "timeline",
+      "principle": "深色横带承载主线与圆形节点，最后一个节点放大并描边表示落点；阶段名在带内反白，说明在带下方的亮底上。",
+      "fits": {
+        "roles": [
+          "content"
+        ],
+        "relationships": [
+          "process"
+        ]
+      },
+      "sample": {
+        "title": "从需求到交付的四步",
+        "blocks": [
+          {
+            "id": "A",
+            "heading": "第一步",
+            "body": "一句话说明这一步。",
+            "kicker": "输入"
+          },
+          {
+            "id": "B",
+            "heading": "第二步",
+            "body": "一句话说明这一步。",
+            "kicker": "规划"
+          },
+          {
+            "id": "C",
+            "heading": "第三步",
+            "body": "一句话说明这一步。",
+            "kicker": "生成"
+          },
+          {
+            "id": "D",
+            "heading": "第四步",
+            "body": "一句话说明这一步。",
+            "kicker": "交付"
+          }
+        ]
+      },
+      "scene": {
+        "schema": "ppt-scene",
+        "schemaVersion": 1,
+        "slideId": "S001",
+        "width": 1280,
+        "height": 720,
+        "background": "#F6F3EE",
+        "objects": [
+          {
+            "id": "title",
+            "type": "text",
+            "textRef": "title",
+            "binding": "title",
+            "x": 80,
+            "y": 64,
+            "w": 1120,
+            "h": 80,
+            "fontSize": 52,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "band",
+            "type": "rect",
+            "x": 0,
+            "y": 196,
+            "w": 1280,
+            "h": 252,
+            "fill": "#14202B"
+          },
+          {
+            "id": "track",
+            "type": "line",
+            "x": 130,
+            "y": 330,
+            "w": 1000,
+            "h": 0,
+            "stroke": "#F6F3EE",
+            "strokeWidth": 4,
+            "endArrow": true
+          },
+          {
+            "id": "a-dot",
+            "type": "ellipse",
+            "x": 112,
+            "y": 312,
+            "w": 36,
+            "h": 36,
+            "fill": "#C8553D"
+          },
+          {
+            "id": "b-dot",
+            "type": "ellipse",
+            "x": 412,
+            "y": 312,
+            "w": 36,
+            "h": 36,
+            "fill": "#C8553D"
+          },
+          {
+            "id": "c-dot",
+            "type": "ellipse",
+            "x": 712,
+            "y": 312,
+            "w": 36,
+            "h": 36,
+            "fill": "#C8553D"
+          },
+          {
+            "id": "d-dot",
+            "type": "ellipse",
+            "x": 990,
+            "y": 290,
+            "w": 80,
+            "h": 80,
+            "fill": "#C8553D",
+            "stroke": "#F6F3EE",
+            "strokeWidth": 6
+          },
+          {
+            "id": "a-kicker",
+            "type": "text",
+            "textRef": "block.A.kicker",
+            "x": 96,
+            "y": 236,
+            "w": 260,
+            "h": 44,
+            "fontSize": 30,
+            "color": "#F6F3EE",
+            "bold": true
+          },
+          {
+            "id": "b-kicker",
+            "type": "text",
+            "textRef": "block.B.kicker",
+            "x": 396,
+            "y": 236,
+            "w": 260,
+            "h": 44,
+            "fontSize": 30,
+            "color": "#F6F3EE",
+            "bold": true
+          },
+          {
+            "id": "c-kicker",
+            "type": "text",
+            "textRef": "block.C.kicker",
+            "x": 696,
+            "y": 236,
+            "w": 260,
+            "h": 44,
+            "fontSize": 30,
+            "color": "#F6F3EE",
+            "bold": true
+          },
+          {
+            "id": "d-kicker",
+            "type": "text",
+            "textRef": "block.D.kicker",
+            "x": 960,
+            "y": 214,
+            "w": 260,
+            "h": 44,
+            "fontSize": 30,
+            "color": "#C8553D",
+            "bold": true
+          },
+          {
+            "id": "a-head",
+            "type": "text",
+            "textRef": "block.A.heading",
+            "x": 96,
+            "y": 488,
+            "w": 260,
+            "h": 36,
+            "fontSize": 22,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "a-body",
+            "type": "text",
+            "textRef": "block.A.body",
+            "x": 96,
+            "y": 530,
+            "w": 260,
+            "h": 130,
+            "fontSize": 19,
+            "color": "#5B6670",
+            "lineHeight": 1.55
+          },
+          {
+            "id": "b-head",
+            "type": "text",
+            "textRef": "block.B.heading",
+            "x": 396,
+            "y": 488,
+            "w": 260,
+            "h": 36,
+            "fontSize": 22,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "b-body",
+            "type": "text",
+            "textRef": "block.B.body",
+            "x": 396,
+            "y": 530,
+            "w": 260,
+            "h": 130,
+            "fontSize": 19,
+            "color": "#5B6670",
+            "lineHeight": 1.55
+          },
+          {
+            "id": "c-head",
+            "type": "text",
+            "textRef": "block.C.heading",
+            "x": 696,
+            "y": 488,
+            "w": 260,
+            "h": 36,
+            "fontSize": 22,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "c-body",
+            "type": "text",
+            "textRef": "block.C.body",
+            "x": 696,
+            "y": 530,
+            "w": 260,
+            "h": 130,
+            "fontSize": 19,
+            "color": "#5B6670",
+            "lineHeight": 1.55
+          },
+          {
+            "id": "d-head",
+            "type": "text",
+            "textRef": "block.D.heading",
+            "x": 960,
+            "y": 488,
+            "w": 260,
+            "h": 36,
+            "fontSize": 22,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "d-body",
+            "type": "text",
+            "textRef": "block.D.body",
+            "x": 960,
+            "y": 530,
+            "w": 260,
+            "h": 130,
+            "fontSize": 19,
+            "color": "#5B6670",
+            "lineHeight": 1.55
+          }
+        ]
+      }
+    },
+    {
+      "archetype": "diagram",
+      "principle": "中心实体用深色大圆，周边要素用浅色卡片，正交连线只连真实关系；图解本身就是焦点，标题压短。",
+      "fits": {
+        "roles": [
+          "content"
+        ],
+        "relationships": [
+          "hub",
+          "layers",
+          "process"
+        ]
+      },
+      "sample": {
+        "title": "一个中心，三个协作方",
+        "blocks": [
+          {
+            "id": "A",
+            "heading": "中心实体",
+            "body": "它保存什么、对谁负责。"
+          },
+          {
+            "id": "B",
+            "heading": "协作方一",
+            "body": "一句话说明它与中心的关系。"
+          },
+          {
+            "id": "C",
+            "heading": "协作方二",
+            "body": "一句话说明它与中心的关系。"
+          },
+          {
+            "id": "D",
+            "heading": "协作方三",
+            "body": "一句话说明它与中心的关系。"
+          }
+        ]
+      },
+      "scene": {
+        "schema": "ppt-scene",
+        "schemaVersion": 1,
+        "slideId": "S001",
+        "width": 1280,
+        "height": 720,
+        "background": "#F6F3EE",
+        "objects": [
+          {
+            "id": "title",
+            "type": "text",
+            "textRef": "title",
+            "binding": "title",
+            "x": 80,
+            "y": 52,
+            "w": 1120,
+            "h": 74,
+            "fontSize": 50,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "link-b",
+            "type": "line",
+            "x": 400,
+            "y": 340,
+            "w": 110,
+            "h": 0,
+            "stroke": "#1D2A35",
+            "strokeWidth": 3
+          },
+          {
+            "id": "link-c",
+            "type": "line",
+            "x": 770,
+            "y": 340,
+            "w": 110,
+            "h": 0,
+            "stroke": "#1D2A35",
+            "strokeWidth": 3
+          },
+          {
+            "id": "link-d",
+            "type": "line",
+            "x": 640,
+            "y": 470,
+            "w": 0,
+            "h": 90,
+            "stroke": "#1D2A35",
+            "strokeWidth": 3
+          },
+          {
+            "id": "hub",
+            "type": "ellipse",
+            "x": 510,
+            "y": 210,
+            "w": 260,
+            "h": 260,
+            "fill": "#14202B",
+            "shadow": "lift"
+          },
+          {
+            "id": "a-head",
+            "type": "text",
+            "textRef": "block.A.heading",
+            "x": 545,
+            "y": 280,
+            "w": 190,
+            "h": 44,
+            "fontSize": 30,
+            "color": "#F6F3EE",
+            "bold": true,
+            "align": "center"
+          },
+          {
+            "id": "a-body",
+            "type": "text",
+            "textRef": "block.A.body",
+            "x": 545,
+            "y": 332,
+            "w": 190,
+            "h": 70,
+            "fontSize": 18,
+            "color": "#AEB8C2",
+            "align": "center",
+            "lineHeight": 1.45
+          },
+          {
+            "id": "card-b",
+            "type": "rect",
+            "x": 80,
+            "y": 250,
+            "w": 320,
+            "h": 180,
+            "fill": "#EAE3D8",
+            "radius": 14
+          },
+          {
+            "id": "b-head",
+            "type": "text",
+            "textRef": "block.B.heading",
+            "x": 108,
+            "y": 276,
+            "w": 264,
+            "h": 36,
+            "fontSize": 24,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "b-body",
+            "type": "text",
+            "textRef": "block.B.body",
+            "x": 108,
+            "y": 320,
+            "w": 264,
+            "h": 90,
+            "fontSize": 19,
+            "color": "#5B6670",
+            "lineHeight": 1.5
+          },
+          {
+            "id": "card-c",
+            "type": "rect",
+            "x": 880,
+            "y": 250,
+            "w": 320,
+            "h": 180,
+            "fill": "#EAE3D8",
+            "radius": 14
+          },
+          {
+            "id": "c-head",
+            "type": "text",
+            "textRef": "block.C.heading",
+            "x": 908,
+            "y": 276,
+            "w": 264,
+            "h": 36,
+            "fontSize": 24,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "c-body",
+            "type": "text",
+            "textRef": "block.C.body",
+            "x": 908,
+            "y": 320,
+            "w": 264,
+            "h": 90,
+            "fontSize": 19,
+            "color": "#5B6670",
+            "lineHeight": 1.5
+          },
+          {
+            "id": "card-d",
+            "type": "rect",
+            "x": 440,
+            "y": 560,
+            "w": 400,
+            "h": 130,
+            "fill": "#EAE3D8",
+            "radius": 14
+          },
+          {
+            "id": "d-head",
+            "type": "text",
+            "textRef": "block.D.heading",
+            "x": 468,
+            "y": 580,
+            "w": 344,
+            "h": 36,
+            "fontSize": 24,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "d-body",
+            "type": "text",
+            "textRef": "block.D.body",
+            "x": 468,
+            "y": 620,
+            "w": 344,
+            "h": 56,
+            "fontSize": 19,
+            "color": "#5B6670",
+            "lineHeight": 1.45
+          }
+        ]
+      }
+    },
+    {
+      "archetype": "quote",
+      "principle": "一句原话或核心判断用 36–44px 粗体居中偏左，超大引号作图形；色块底和留白让一句话成为一页。",
+      "fits": {
+        "roles": [
+          "content",
+          "chapter",
+          "ending"
+        ],
+        "relationships": [
+          "hero",
+          "evidence"
+        ]
+      },
+      "sample": {
+        "title": "一句值得被记住的话",
+        "blocks": [
+          {
+            "id": "A",
+            "heading": "出处与语境",
+            "body": "这里放一句完整的原话或核心判断，长度控制在两行左右。"
+          }
+        ]
+      },
+      "scene": {
+        "schema": "ppt-scene",
+        "schemaVersion": 1,
+        "slideId": "S001",
+        "width": 1280,
+        "height": 720,
+        "background": "#EAE3D8",
+        "objects": [
+          {
+            "id": "mark",
+            "type": "text",
+            "text": "“",
+            "x": 96,
+            "y": 40,
+            "w": 200,
+            "h": 200,
+            "fontSize": 160,
+            "color": "#C8553D",
+            "bold": true,
+            "lineHeight": 1
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "textRef": "title",
+            "binding": "title",
+            "x": 176,
+            "y": 120,
+            "w": 900,
+            "h": 44,
+            "fontSize": 24,
+            "color": "#5B6670",
+            "bold": true,
+            "letterSpacing": 2
+          },
+          {
+            "id": "quote",
+            "type": "text",
+            "textRef": "block.A.body",
+            "x": 176,
+            "y": 220,
+            "w": 960,
+            "h": 230,
+            "fontSize": 42,
+            "color": "#1D2A35",
+            "bold": true,
+            "lineHeight": 1.38
+          },
+          {
+            "id": "rule",
+            "type": "rect",
+            "x": 176,
+            "y": 492,
+            "w": 72,
+            "h": 6,
+            "fill": "#C8553D"
+          },
+          {
+            "id": "source",
+            "type": "text",
+            "textRef": "block.A.heading",
+            "x": 176,
+            "y": 516,
+            "w": 900,
+            "h": 36,
+            "fontSize": 20,
+            "color": "#5B6670"
+          }
+        ]
+      }
+    },
+    {
+      "archetype": "comparison",
+      "principle": "左右对照用明暗两半而不是两张同款卡片；分界处一个强调色圆点，两侧标签用强调色，标题只在亮侧。",
+      "fits": {
+        "roles": [
+          "content"
+        ],
+        "relationships": [
+          "comparison"
+        ]
+      },
+      "sample": {
+        "title": "两种做法，结果不同",
+        "blocks": [
+          {
+            "id": "A",
+            "heading": "原来的做法",
+            "body": "两三句话说明原做法的方式与代价。",
+            "kicker": "以前"
+          },
+          {
+            "id": "B",
+            "heading": "新的做法",
+            "body": "两三句话说明新做法的方式与改善。",
+            "kicker": "现在"
+          }
+        ]
+      },
+      "scene": {
+        "schema": "ppt-scene",
+        "schemaVersion": 1,
+        "slideId": "S001",
+        "width": 1280,
+        "height": 720,
+        "background": "#F6F3EE",
+        "objects": [
+          {
+            "id": "dark",
+            "type": "rect",
+            "x": 640,
+            "y": 0,
+            "w": 640,
+            "h": 720,
+            "fill": "#14202B"
+          },
+          {
+            "id": "seam",
+            "type": "ellipse",
+            "x": 604,
+            "y": 324,
+            "w": 72,
+            "h": 72,
+            "fill": "#C8553D"
+          },
+          {
+            "id": "title",
+            "type": "text",
+            "textRef": "title",
+            "binding": "title",
+            "x": 72,
+            "y": 64,
+            "w": 520,
+            "h": 100,
+            "fontSize": 36,
+            "color": "#1D2A35",
+            "bold": true,
+            "lineHeight": 1.2
+          },
+          {
+            "id": "a-kicker",
+            "type": "text",
+            "textRef": "block.A.kicker",
+            "x": 72,
+            "y": 250,
+            "w": 480,
+            "h": 30,
+            "fontSize": 16,
+            "color": "#C8553D",
+            "bold": true,
+            "letterSpacing": 4
+          },
+          {
+            "id": "a-head",
+            "type": "text",
+            "textRef": "block.A.heading",
+            "x": 72,
+            "y": 290,
+            "w": 480,
+            "h": 72,
+            "fontSize": 52,
+            "color": "#1D2A35",
+            "bold": true
+          },
+          {
+            "id": "a-body",
+            "type": "text",
+            "textRef": "block.A.body",
+            "x": 72,
+            "y": 380,
+            "w": 480,
+            "h": 220,
+            "fontSize": 20,
+            "color": "#5B6670",
+            "lineHeight": 1.6
+          },
+          {
+            "id": "b-kicker",
+            "type": "text",
+            "textRef": "block.B.kicker",
+            "x": 728,
+            "y": 250,
+            "w": 480,
+            "h": 30,
+            "fontSize": 16,
+            "color": "#C8553D",
+            "bold": true,
+            "letterSpacing": 4
+          },
+          {
+            "id": "b-head",
+            "type": "text",
+            "textRef": "block.B.heading",
+            "x": 728,
+            "y": 290,
+            "w": 480,
+            "h": 72,
+            "fontSize": 52,
+            "color": "#F6F3EE",
+            "bold": true
+          },
+          {
+            "id": "b-body",
+            "type": "text",
+            "textRef": "block.B.body",
+            "x": 728,
+            "y": 380,
+            "w": 480,
+            "h": 220,
+            "fontSize": 20,
+            "color": "#AEB8C2",
+            "lineHeight": 1.6
+          }
+        ]
+      }
+    }
+  ]
+}

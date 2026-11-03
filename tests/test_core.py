@@ -200,7 +200,7 @@ class WorkbenchTests(unittest.TestCase):
         action = self.w.next_action("empty", "S001")
         self.assertLessEqual(len(action["questions"]), 3)
         self.assertFalse(action["draftAllowed"])
-        self.assertEqual(len(self.w.list_templates()["templates"]), 54)
+        self.assertIn("parallel-three", {t["id"] for t in self.w.list_templates()["templates"]})
         self.assertEqual(self.w.get_template("chapter")["template"]["id"], "chapter")
 
     def test_html_export_preserves_appended_intent_without_roundtrip_duplication(self):

@@ -51,10 +51,14 @@ def _intersection(a, b):
 
 def _text_background(scene, obj):
     background = scene["background"]
+    corners = [(obj["x"], obj["y"]), (obj["x"] + obj["w"], obj["y"]),
+               (obj["x"], obj["y"] + obj["h"]), (obj["x"] + obj["w"], obj["y"] + obj["h"])]
     for prior in scene["objects"]:
         if prior["id"] == obj["id"]:
             break
-        if prior["type"] == "rect" and prior["fill"] != "none" and prior["opacity"] >= .99 and _contains(prior, obj):
+        if (prior["type"] in ("rect", "ellipse") and prior["fill"] != "none" and prior["opacity"] >= .99
+                and not prior.get("rotation") and _contains(prior, obj)
+                and (prior["type"] == "rect" or all(_inside_ellipse(prior, x, y) for x, y in corners))):
             background = prior["fill"]
         elif prior["type"] == "image" and _contains(prior, obj):
             return None  # A bitmap background cannot be inferred from geometry.
@@ -105,6 +109,11 @@ def audit_scene(scene, measurement=None):
             threshold = 3 if obj["fontSize"] >= 24 or obj["bold"] and obj["fontSize"] >= 19 else 4.5
             if ratio < threshold:
                 issues.append(_issue("TEXT_CONTRAST", f"文字与已知底色的对比度约 {ratio:.2f}，低于本工作台检查线 {threshold:g}；未自动更改配色。", sid, [oid], severity="error"))
+            if obj.get("emphasis") and obj.get("emphasisColor"):
+                ratio = _contrast(obj["emphasisColor"], background)
+                threshold = 3 if obj["fontSize"] >= 19 else 4.5  # Emphasis is always bold.
+                if ratio < threshold:
+                    issues.append(_issue("TEXT_CONTRAST", f"强调色与已知底色的对比度约 {ratio:.2f}，低于本工作台检查线 {threshold:g}。", sid, [oid], severity="error"))
         metric = metrics.get(oid)
         if measured and metric:
             if metric["scrollHeight"] > metric["clientHeight"] + 2 or metric["scrollWidth"] > metric["clientWidth"] + 2:
@@ -121,7 +130,7 @@ def audit_scene(scene, measurement=None):
         if not _content_text(obj):
             continue
         for later in scene["objects"][index + 1:]:
-            if later["type"] not in {"image", "rect"} or later["opacity"] < .99 or later.get("fill") == "none":
+            if later["type"] not in {"image", "rect", "ellipse"} or later["opacity"] < .99 or later.get("fill") == "none":
                 continue
             iw, ih = _intersection(obj, later)
             if iw * ih > obj["w"] * obj["h"] * .9:
@@ -136,7 +145,7 @@ def _safe_height(scene, obj):
     for other in scene["objects"]:
         if other["id"] == obj["id"]:
             continue
-        if other["type"] == "rect" and _contains(other, obj):
+        if other["type"] in ("rect", "ellipse") and _contains(other, obj):
             limit = min(limit, other["y"] + other["h"] - 4)
             continue
         horizontal = min(obj["x"] + obj["w"], other["x"] + other["w"]) - max(obj["x"], other["x"])
@@ -206,7 +215,7 @@ def validate_browser_report(scene, report):
         for field in ("clientWidth", "clientHeight", "scrollWidth", "scrollHeight"):
             if type(row[field]) not in {int, float} or not math.isfinite(row[field]) or not 0 <= row[field] <= 2_000_000:
                 raise EngineError("INVALID_QUALITY_REPORT", "测量尺寸必须是有限的非负数值。")
-        border = 2 * obj["strokeWidth"] if obj["type"] == "rect" else 0
+        border = 2 * obj["strokeWidth"] if obj["type"] in ("rect", "ellipse") else 0
         expected_w, expected_h = max(0, obj["w"] - border), max(0, obj["h"] - border)
         if obj["type"] != "line" and (abs(row["clientWidth"] - expected_w) > 2 or abs(row["clientHeight"] - expected_h) > 2):
             raise EngineError("INVALID_QUALITY_REPORT", "对象测量尺寸与当前场景不符，可能来自旧版页面。")
@@ -223,6 +232,134 @@ def validate_browser_report(scene, report):
     if report["imagesLoaded"] != all(image_results):
         raise EngineError("INVALID_QUALITY_REPORT", "图片总体状态与逐对象状态不一致。")
     return copy.deepcopy(report)
+
+
+SCALE_CONTRAST_TARGET = 2.5
+MONOTONY_SIMILARITY = .85
+PREVIOUS_SIMILARITY = .75  # A new page this close to its predecessor is shown to the reviewer.
+ANCHOR_FONT_SIZE = 72
+_SAMPLE_COLUMNS, _SAMPLE_ROWS = 64, 36
+_LAYOUT_COLUMNS, _LAYOUT_ROWS = 4, 3
+
+
+def _distance(a, b):
+    return math.dist([int(a[i:i+2], 16) for i in (1, 3, 5)], [int(b[i:i+2], 16) for i in (1, 3, 5)])
+
+
+def _inside_ellipse(obj, x, y):
+    rx, ry = obj["w"] / 2, obj["h"] / 2
+    return ((x - obj["x"] - rx) / rx) ** 2 + ((y - obj["y"] - ry) / ry) ** 2 <= 1
+
+
+def _paint(obj):
+    """Visible filled paint of a shape or image, else None."""
+    if obj["type"] == "image":
+        return "image"
+    if obj["type"] in ("rect", "ellipse") and obj.get("fill", "none") != "none" and obj["opacity"] >= .15:
+        return obj["fill"]
+    return None
+
+
+def visual_stats(scene):
+    """Objective hierarchy and colour-field evidence; describes, never judges taste."""
+    scene = validate_scene(scene)
+    width, height = scene["width"], scene["height"]
+    objects = scene["objects"]
+    background = scene["background"]
+    for obj in objects:
+        paint = _paint(obj)
+        if (paint not in (None, "image") and obj["opacity"] >= .9 and not obj.get("rotation")
+                and obj["w"] * obj["h"] >= width * height * .95):
+            background = paint
+    shapes = [(o, _paint(o)) for o in objects if _paint(o)]
+    filled = dark = 0
+    cells = [[0, 0] for _ in range(_LAYOUT_COLUMNS * _LAYOUT_ROWS)]  # [field samples, all samples]
+    for row in range(_SAMPLE_ROWS):
+        y = (row + .5) * height / _SAMPLE_ROWS
+        for column in range(_SAMPLE_COLUMNS):
+            x = (column + .5) * width / _SAMPLE_COLUMNS
+            paint = background
+            for obj, color in shapes:  # Later objects paint over earlier ones.
+                if (obj["x"] <= x <= obj["x"] + obj["w"] and obj["y"] <= y <= obj["y"] + obj["h"]
+                        and (obj["type"] != "ellipse" or _inside_ellipse(obj, x, y))):
+                    paint = color
+            field = paint == "image" or _distance(paint, background) > 18
+            filled += field
+            dark += paint != "image" and _luminance(paint) < .2
+            cell = cells[min(_LAYOUT_ROWS - 1, int(y * _LAYOUT_ROWS / height)) * _LAYOUT_COLUMNS
+                         + min(_LAYOUT_COLUMNS - 1, int(x * _LAYOUT_COLUMNS / width))]
+            cell[0] += field
+            cell[1] += 1
+    samples = _SAMPLE_COLUMNS * _SAMPLE_ROWS
+    texts = [o for o in objects if o["type"] == "text" and o["text"].strip() and o["opacity"] >= .3]
+    largest = max((o["fontSize"] for o in texts), default=0)
+    weights = {}
+    for obj in texts:
+        if obj["fontSize"] < largest and obj["opacity"] >= .5:
+            weights[obj["fontSize"]] = weights.get(obj["fontSize"], 0) + len(obj["text"].strip())
+    body = max(weights, key=lambda size: (weights[size], size)) if weights else None
+    signature = []
+    cell_w, cell_h = width / _LAYOUT_COLUMNS, height / _LAYOUT_ROWS
+    for index, (field, total) in enumerate(cells):
+        box = {"x": (index % _LAYOUT_COLUMNS) * cell_w, "y": (index // _LAYOUT_COLUMNS) * cell_h, "w": cell_w, "h": cell_h}
+        text_area = sum(math.prod(_intersection(o, box)) for o in texts)
+        signature.append("F" if field / total >= .5 else "T" if text_area >= cell_w * cell_h * .08 else ".")
+    dark_ratio = dark / samples
+    tone = "inverse" if dark_ratio >= .7 else "split" if dark_ratio >= .25 else "light"
+    return {"slideId": scene["slideId"], "tone": tone, "darkRatio": round(dark_ratio, 3),
+            "fillAreaRatio": round(filled / samples, 3),
+            "maxFontSize": largest, "bodyFontSize": body,
+            "scaleRatio": round(largest / body, 2) if body else None,
+            "textAreaRatio": round(min(1, sum(o["w"] * o["h"] for o in texts) / (width * height)), 3),
+            "characters": sum(len(o["text"].strip()) for o in texts),
+            "distinctFills": len({c for _, c in shapes if c != "image" and _distance(c, background) > 18}),
+            "layoutSignature": "".join(signature) + ":" + tone}
+
+
+def layout_similarity(a, b):
+    left, tone_a = a["layoutSignature"].split(":")
+    right, tone_b = b["layoutSignature"].split(":")
+    same = sum(x == y for x, y in zip(left, right)) / len(left)
+    return round(same if tone_a == tone_b else same / 2, 3)
+
+
+def visual_findings(stats):
+    """Page-level warnings for reviewers; never a publication gate."""
+    found = []
+    if stats["scaleRatio"] is not None and stats["scaleRatio"] < SCALE_CONTRAST_TARGET:
+        found.append(_issue("LOW_SCALE_CONTRAST", f"最大字号与正文字号之比为 {stats['scaleRatio']:g}，低于 {SCALE_CONTRAST_TARGET:g}，主次不够分明。",
+                            stats["slideId"], basis="visual-metric"))
+    if stats["tone"] == "light" and stats["fillAreaRatio"] < .08 and (stats["scaleRatio"] or 0) < SCALE_CONTRAST_TARGET:
+        found.append(_issue("FLAT_PAGE", "页面几乎只有文字与细线：没有色块，也没有大字号焦点。", stats["slideId"], basis="visual-metric"))
+    return found
+
+
+def previous_page_findings(previous, stats):
+    """Warn while authoring when a new page repeats its predecessor's skeleton."""
+    similarity = layout_similarity(previous, stats)
+    if similarity < PREVIOUS_SIMILARITY:
+        return []
+    return [_issue("SIMILAR_TO_PREVIOUS", f"与上一页版式骨架相似度 {similarity:g}，相邻页应换一种构图。",
+                   stats["slideId"], basis="visual-metric")]
+
+
+def deck_rhythm(scenes):
+    """Whole-deck rhythm evidence: per-page stats plus warnings across neighbours."""
+    pages = [visual_stats(scene) for scene in scenes]
+    findings = [f for stats in pages for f in visual_findings(stats)]
+    for before, after in zip(pages, pages[1:]):
+        similarity = layout_similarity(before, after)
+        if similarity >= MONOTONY_SIMILARITY:
+            findings.append(_issue("LAYOUT_MONOTONY", f"相邻两页版式骨架相似度 {similarity:g}，读者会感到重复。",
+                                   after["slideId"], [before["slideId"], after["slideId"]], basis="visual-metric"))
+    if len(pages) >= 4 and not any(p["tone"] in ("inverse", "split") for p in pages):
+        findings.append(_issue("NO_TONAL_RHYTHM", "整稿没有深色或分割底页，缺少深浅节奏。", None, basis="visual-metric"))
+    lacking = [p["slideId"] for p in pages if p["maxFontSize"] < ANCHOR_FONT_SIZE]
+    if len(pages) >= 2 and len(pages) - len(lacking) < math.ceil(len(pages) / 2):
+        findings.append(_issue("FEW_ANCHORS", f"不到一半的页面有 {ANCHOR_FONT_SIZE}px 以上的大号锚点（关键词、序号或原文数字）。",
+                               None, lacking, basis="visual-metric"))
+    return {"pages": pages, "findings": findings,
+            "scope": "geometry-metrics-not-taste", "severity": "warning-only"}
 
 
 class QualityFlow:

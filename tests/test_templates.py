@@ -8,7 +8,7 @@ from ppt_workbench.core import EngineError
 from ppt_workbench import design_map
 from ppt_workbench.rendering import render_html, validate_scene
 from ppt_workbench.studio import Studio
-from ppt_workbench.templates import apply_template, catalog, sample_scene, template_for_role
+from ppt_workbench.templates import apply_template, catalog, recommend_templates, sample_scene, template_for_role
 from test_studio import PNG
 
 
@@ -22,6 +22,40 @@ class TemplateTests(unittest.TestCase):
         with self.assertRaises(EngineError) as raised:
             func(*args)
         self.assertEqual(raised.exception.code, code)
+
+    def test_recommendations_respect_page_role_and_content(self):
+        cover = recommend_templates("cover", "产品介绍")
+        self.assertTrue(cover)
+        self.assertTrue(all("cover" in item["roles"] and not item.get("legacy") for item in cover))
+        comparison = recommend_templates("content", "竞品对比和差异")
+        self.assertTrue(comparison)
+        self.assertTrue(all("content" in item["roles"] for item in comparison))
+        self.assertTrue(any(item["family"] == "compare" for item in comparison[:3]))
+
+    def test_browsing_purposes_follow_original_content_not_adaptation(self):
+        from collections import Counter
+        from ppt_workbench.template_categories import CATEGORIES
+        cards = {t['id']: t for t in catalog() if not t.get('legacy')}
+        counts = Counter(t['browseCategory'] for t in cards.values())
+        self.assertEqual(sum(counts.values()), 122)
+        self.assertEqual(set(counts), set(CATEGORIES))
+        self.assertLess(max(counts.values()), 30)
+        expected = {'reference-01-06': 'people', 'reference-03-08': 'case',
+                    'reference-04-04': 'data', 'reference-04-05': 'data',
+                    'reference-03-11': 'gallery', 'reference-04-08': 'compare',
+                    'reference-01-04': 'process', 'reference-04-11': 'structure'}
+        for tid, category in expected.items():
+            self.assertEqual(cards[tid]['browseCategory'], category, tid)
+        self.assertEqual(cards['reference-01-06']['family'], 'product')
+        self.assertEqual(cards['reference-01-06']['role'], 'content')
+
+    def test_quick_recommendations_work_without_model_service(self):
+        self.studio.demo()
+        result = self.studio.template_recommendations(self.studio.state()['selectedSlideId'])
+        self.assertTrue(result['recommendations'])
+        self.assertLessEqual(len(result['recommendations']), 6)
+        layouts = [t.get('baseTemplateId', t['id']) for t in result['recommendations']]
+        self.assertEqual(len(layouts), len(set(layouts)))
 
     def test_catalog_and_all_layouts_preserve_content_and_images(self):
         original = sample_scene("clean")
@@ -52,7 +86,7 @@ class TemplateTests(unittest.TestCase):
         structure = json.loads((data / "bbstack-structure.json").read_text())
         cards = {entry["id"]: entry for entry in catalog()}
         self.assertEqual(len(source["templates"]), 54)
-        self.assertEqual(len(cards), 87)
+        self.assertEqual(len(cards), 131)
         self.assertEqual(sum(bool(c.get("variantOf")) for c in cards.values()), 7)
         self.assertEqual(sum(c["legacy"] for c in cards.values()), 9)
         self.assertEqual(sum(bool(c.get("local")) for c in cards.values()), 14)
@@ -137,12 +171,31 @@ class TemplateTests(unittest.TestCase):
         self.assertEqual(old_text, [(o["id"], o["text"], o.get("binding")) for o in applied["scene"]["objects"] if o["type"] == "text"])
         self.assertEqual(json.loads(Path(applied["paths"]["source"]).read_text())["templateId"], "editorial")
         reopened = Studio(self.temp.name, "visual")
-        self.assertEqual(reopened.get_scene(sid), applied)
+        self.assertEqual(reopened.get_scene(sid), {k: v for k, v in applied.items() if k != "selectedTemplateId"})
+        self.assertEqual(reopened.state()["selectedTemplateId"], "editorial")
+        self.assertEqual(reopened.context({"slideId": sid})["currentSceneTemplateId"], "editorial")
         self.assert_code("STALE_REVISION", reopened.select_template, "clean", sid, current["sceneRevision"])
         self.assert_code("STALE_REVISION", reopened.select_template, "clean", sid, None)
-        self.assertEqual(reopened.get_scene(sid), applied)
+        self.assertEqual(reopened.state()["selectedTemplateId"], "editorial")
+        self.assertEqual(reopened.get_scene(sid), {k: v for k, v in applied.items() if k != "selectedTemplateId"})
         regenerated = reopened.generate_scene(sid)
         self.assertEqual(regenerated["scene"]["templateId"], "editorial")
+
+    def test_template_application_preserves_selection_and_page_specific_context(self):
+        self.studio.demo()
+        slides = self.studio.state()["slides"]
+        self.assertGreaterEqual(len(slides), 2)
+        first, second = slides[0]["id"], slides[1]["id"]
+        self.studio.select(second)
+        current = self.studio.get_scene(first)
+        self.studio.select_template("editorial", first, current["sceneRevision"])
+        state = self.studio.state()
+        self.assertEqual(state["selectedSlideId"], second)
+        self.assertEqual(next(s for s in state["slides"] if s["id"] == first)["sceneTemplateId"], "editorial")
+        second_scene = self.studio.get_scene(second)["scene"]["templateId"]
+        context = self.studio.context({"slideId": second})
+        self.assertEqual(context["currentSceneTemplateId"], second_scene)
+        self.assertEqual(context["selectedTemplateId"], "editorial")
 
     def test_manual_edit_updates_binding_invalidates_review_without_ai_round(self):
         self.studio.demo()
@@ -163,6 +216,36 @@ class TemplateTests(unittest.TestCase):
         self.assert_code("INVALID_SCENE_PATCH", self.studio.edit_scene, sid, result["sceneRevision"], [
             {"objectId": "title", "properties": {"binding": "takeaway"}}])
         self.assertEqual(result, self.studio.get_scene(sid))
+
+    def test_missing_declared_logo_allows_edits_but_blocks_release(self):
+        self.studio.demo()
+        sid = self.studio.state()["selectedSlideId"]
+        project = self.studio.wb.get_project("visual")
+        self.studio.wb.update_project("visual", project["revision"],
+                                      {"logoPolicy": "company", "logoReference": "missing-logo.svg"})
+        current = self.studio.generate_scene(sid)
+        state = next(s for s in self.studio.state()["slides"] if s["id"] == sid)
+        self.assertFalse(current["stale"])
+        self.assertTrue(state["previewMaterialUnavailable"])
+        applied = self.studio.select_template("editorial", sid, current["sceneRevision"])
+        edited = self.studio.edit_scene(sid, applied["sceneRevision"], [
+            {"objectId": "title", "properties": {"text": "更新标题"}}])
+        self.assertFalse(edited["stale"])
+        self.assertEqual(self.studio.context({"slideId": sid})["selectedTemplateId"], "editorial")
+        self.assertIn("MATERIAL_UNAVAILABLE", {i["code"] for i in self.studio.wb.get_slide("visual", sid)["integrityIssues"]})
+        self.assertFalse(self.studio.wb.gate("visual")["ready"])
+        self.assert_code("RELEASE_GATE_FAILED", self.studio.wb.release_manifest, "visual")
+
+    def test_missing_slide_asset_still_blocks_edits(self):
+        self.studio.demo()
+        sid = self.studio.state()["selectedSlideId"]
+        page = self.studio.wb.get_slide("visual", sid)
+        self.studio.wb.patch_slide("visual", sid, page["revision"], [{"path": "/assets", "value": [
+            {"id": "A1", "kind": "photo", "owner": "user", "status": "provided",
+             "required": True, "reference": "missing.png", "description": "photo"}]}])
+        current = self.studio.generate_scene(sid)
+        self.assertTrue(current["stale"])
+        self.assert_code("SCENE_STALE", self.studio.select_template, "editorial", sid, current["sceneRevision"])
 
     def test_content_and_artifact_integrity_block_both_manual_mutations(self):
         self.studio.demo()

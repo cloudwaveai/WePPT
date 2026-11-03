@@ -1,0 +1,40 @@
+name: weppt-dev
+services:
+  weppt:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: weppt-dev:${WEPPT_RELEASE:?Set a unique release tag}
+    restart: unless-stopped
+    init: true
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 256
+    ports:
+      - "127.0.0.1:8766:8766"
+    environment:
+      WEPPT_PUBLIC_ORIGIN: https://ppt.bbstack.date
+      WEPPT_PUBLIC_ACCESS: open
+      WEPPT_BIND_HOST: 0.0.0.0
+      WEPPT_TOKEN_FILE: /config/access-token
+      WEPPT_MODEL_PROFILES_FILE: /config/model-profiles.json
+    env_file:
+      - /opt/weppt/config/model.env
+      - /opt/weppt/config/commandcode.env
+      - /opt/weppt/config/deepseek.env
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,size=256m,mode=1777
+    volumes:
+      - data:/data
+      - codex:/home/weppt/.codex
+      - config:/config:ro
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+volumes:
+  data:
+  codex:
+  config:

@@ -57,6 +57,51 @@ class StudioTests(unittest.TestCase):
             "base_scene_revision": scene_revision,
             "changes": [{"objectId": object_id, "properties": properties}]}]}
 
+    def test_pending_codex_passes_project_scoped_selected_records(self):
+        self.studio.set_agent_mode("codex")
+        selected = self.studio.upload("selected.png", "image/png", PNG)
+        self.studio.upload("other.png", "image/png", PNG)
+        job = self.studio.enqueue("参考图片", self.ids[0], attachments=[selected["assetId"]])
+        with patch("ppt_workbench.agent_bridge.diagnose", return_value={"available": True}), \
+             patch("ppt_workbench.agent_bridge.run_turn", return_value={"reply": "收到", "actions": []}) as run:
+            self.assertTrue(self.studio.run_pending())
+        self.assertEqual(self.studio.job(job["jobId"])["status"], "complete")
+        self.assertEqual(run.call_args.kwargs["selected_ids"], [selected["assetId"]])
+        self.assertEqual([r["id"] for r in run.call_args.kwargs["asset_records"]], [selected["assetId"]])
+        self.assertEqual(run.call_args.args[2]["attachments"][0]["readStatus"], "not-inspected")
+        self.assertEqual(run.call_args.args[2]["pageExpression"]["assets"]["imageCount"], 1)
+
+    def test_scene_objects_apply_reorder_and_enforce_scope_and_revision(self):
+        sid = self.ids[0]
+        current = self.studio.get_scene(sid)
+        objects = current["scene"]["objects"]
+        obj = copy.deepcopy(objects[0])
+        obj["id"] = "extra-object"
+        obj.pop("binding", None)
+        action = {"type": "scene_objects", "slide_id": sid, "base_scene_revision": current["sceneRevision"],
+                  "operations": [{"op": "add", "object": obj}]}
+        selected = self.studio.enqueue("add", sid, "title", "object-scope")
+        self.assert_code("SCOPE_VIOLATION", self.studio.apply_plan, selected["jobId"], {"reply": "x", "actions": [action]})
+        stale = self.studio.enqueue("add", sid, None, "stale-object")
+        self.assert_code("STALE_REVISION", self.studio.apply_plan, stale["jobId"],
+                         {"reply": "x", "actions": [action | {"base_scene_revision": current["sceneRevision"] + 1}]})
+        job = self.studio.enqueue("add", sid, None, "add-object")
+        self.studio.apply_plan(job["jobId"], {"reply": "x", "actions": [action]})
+        added = self.studio.get_scene(sid)
+        self.assertEqual(added["scene"]["objects"][-1]["id"], "extra-object")
+        job = self.studio.enqueue("reorder", sid, None, "reorder-object")
+        self.studio.apply_plan(job["jobId"], {"reply": "x", "actions": [action | {
+            "base_scene_revision": added["sceneRevision"],
+            "operations": [{"op": "reorder", "objectId": "extra-object", "index": 0}]}]})
+        reordered = self.studio.get_scene(sid)
+        self.assertEqual(reordered["scene"]["objects"][0]["id"], "extra-object")
+        self.assertGreater(reordered["sceneRevision"], added["sceneRevision"])
+        job = self.studio.enqueue("delete", sid, None, "delete-object")
+        self.studio.apply_plan(job["jobId"], {"reply": "x", "actions": [action | {
+            "base_scene_revision": reordered["sceneRevision"],
+            "operations": [{"op": "delete", "objectId": "extra-object"}]}]})
+        self.assertNotIn("extra-object", [o["id"] for o in self.studio.get_scene(sid)["scene"]["objects"]])
+
     def test_demo_has_three_real_source_preview_and_object_manifests(self):
         self.assertEqual(len(self.ids), 3)
         self.assertTrue(self.initial["demo"])
@@ -202,7 +247,7 @@ class StudioTests(unittest.TestCase):
         before = self.database_snapshot()
         original_pages = self.snapshot_pages()
         first = self.plan_patch(sid, current["sceneRevision"], fontSize=title["fontSize"] + 2)["actions"][0]
-        second = self.plan_patch(sid, current["sceneRevision"], fontSize=0)["actions"][0]
+        second = self.plan_patch(sid, current["sceneRevision"], fontSize="huge")["actions"][0]
         self.assert_code("INVALID_SCENE", self.studio.apply_plan, job["jobId"], {"reply": "两项修改", "actions": [first, second]})
         self.assertEqual(before, self.database_snapshot())
         self.assertEqual(original_pages, self.snapshot_pages())

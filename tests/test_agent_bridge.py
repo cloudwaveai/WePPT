@@ -18,6 +18,33 @@ class PlanValidationTests(unittest.TestCase):
             function(*args, **kwargs)
         self.assertEqual(raised.exception.code, code)
 
+    def test_open_questions_and_optional_choices_match_wire_schema(self):
+        from ppt_workbench.agent_bridge import WIRE_SCHEMA
+        choices_schema=WIRE_SCHEMA['properties']['questions']['items']['properties']['choices']
+        self.assertEqual(choices_schema['minItems'],0)
+        self.assertEqual(choices_schema['maxItems'],6)
+        for count in (0,1,6):
+            choices=[str(i) for i in range(count)]
+            plan={'reply':'请提供公司 Logo 原图。','questions':[{'question':'请上传公司 Logo。','choices':choices}],'actions':[]}
+            self.assertEqual(validate_plan(plan)['questions'],plan['questions'])
+
+    def test_invalid_questions_have_specific_correctable_error(self):
+        for choices in (None,'上传',[str(i) for i in range(7)],['']):
+            with self.subTest(choices=choices):
+                self.assert_code('INVALID_AGENT_QUESTION',validate_plan,{'reply':'需要 Logo','actions':[],
+                    'questions':[{'question':'请提供 Logo','choices':choices}]})
+
+    def test_scene_objects_protocol(self):
+        action = {"type": "scene_objects", "slide_id": "S001", "base_scene_revision": 1,
+                  "operations": [{"op": "add", "object": {"id": "new"}},
+                                 {"op": "reorder", "objectId": "new", "index": 0},
+                                 {"op": "delete", "objectId": "new"}]}
+        self.assertEqual(validate_plan({"reply": "ok", "actions": [action]})["actions"], [action])
+        for operations in ([], [{"op": "reorder", "objectId": "x", "index": True}],
+                           [{"op": "delete", "objectId": "x", "index": 0}], [{"op": "unknown"}]):
+            self.assert_code("INVALID_AGENT_OUTPUT", validate_plan,
+                             {"reply": "x", "actions": [action | {"operations": operations}]})
+
     def test_human_review_is_not_a_generation_action(self):
         self.assert_code("INVALID_AGENT_OUTPUT", validate_plan, {
             "reply": "声称用户认可", "actions": [{"type": "review", "kind": "visual"}]})
@@ -135,7 +162,8 @@ class AgentBridgeProcessTests(unittest.TestCase):
 import json, os, pathlib, sys, time
 args = sys.argv[1:]
 stdin = sys.stdin.read()
-record = {{"args": args, "stdin": stdin, "cwd": os.getcwd()}}
+record = {{"args": args, "stdin": stdin, "cwd": os.getcwd(),
+          "images": [pathlib.Path(args[i + 1]).read_bytes().hex() for i, arg in enumerate(args) if arg == "--image"]}}
 if "--output-schema" in args:
     record["schema"] = json.loads(pathlib.Path(args[args.index("--output-schema")+1]).read_text())
 pathlib.Path({str(self.capture)!r}).write_text(json.dumps(record), encoding="utf-8")
@@ -178,6 +206,27 @@ sys.exit({exit_code!r})
         self.assertFalse(any("dangerously" in arg or "skip-permissions" in arg for arg in args))
         self.assert_clean()
 
+    def test_open_logo_request_survives_both_cli_protocols(self):
+        wire={'reply':'请提供公司 Logo 原图。','questions':[{'question':'请上传 Logo 文件。','choices':[]}],'actions':[]}
+        for mode in ('claude','codex'):
+            with self.subTest(mode=mode):
+                self.program(response=wire,mode=mode)
+                self.assertEqual(self.invoke(mode=mode),wire)
+                self.assert_clean()
+
+    def test_outline_drafting_guidance_reaches_both_agents(self):
+        for mode in ("claude", "codex"):
+            with self.subTest(mode=mode):
+                self.program(mode=mode)
+                outline = "项目计划\n1. 背景\n2. 方案"
+                self.invoke(mode=mode, prompt=outline, context={"projectId": "new", "outline": []})
+                prompt = json.loads(self.capture.read_text())["stdin"]
+                self.assertIn("a pasted outline alone is a request for a complete first draft", prompt)
+                self.assertIn("Do not ask for optional content guidance before drafting", prompt)
+                self.assertIn("use visible placeholders", prompt)
+                self.assertIn("instead of pausing for optional information", prompt)
+                self.assertEqual(json.loads(prompt.split("TASK_DATA_JSON:\n", 1)[1])["user_message"], outline)
+
     def test_codex_schema_file_and_restricted_configuration(self):
         self.program(mode="codex")
         plan = self.invoke(mode="codex")
@@ -189,6 +238,7 @@ sys.exit({exit_code!r})
         self.assertIn("--ignore-user-config", args)
         self.assertIn("--ephemeral", args)
         self.assertIn('default_permissions="ppt_plan"', args)
+        self.assertIn('project_doc_max_bytes=0', args)
         self.assertIn('features.shell_tool=false', args)
         self.assertIn('features.apps=false', args)
         self.assertIn('web_search="disabled"', args)
@@ -199,6 +249,34 @@ sys.exit({exit_code!r})
         self.assertFalse(capture["schema"]["additionalProperties"])
         self.assertEqual(capture["cwd"], str(self.project.resolve()))
         self.assert_clean()
+
+    def test_codex_stages_selected_images_and_reports_supplied_context(self):
+        import hashlib
+        self.program(mode="codex")
+        aid = "A-" + "a" * 32
+        data = b"\x89PNG\r\n\x1a\nimage"
+        uploads = self.project / "uploads"
+        uploads.mkdir()
+        (uploads / (aid + ".png")).write_bytes(data)
+        record = {"id": aid, "mime": "image/png", "path": "uploads/" + aid + ".png",
+                  "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest()}
+        context = {"attachments": [{"assetId": aid, "readStatus": "not-inspected"}]}
+        with patch("ppt_workbench.agent_bridge.shutil.which", return_value=str(self.fake)):
+            run_turn("codex", "参考图片", context, timeout=4, workdir=self.project,
+                     selected_ids=[aid], asset_records=[record])
+        capture = json.loads(self.capture.read_text())
+        self.assertEqual(capture["images"], [data.hex()])
+        sent = json.loads(capture["stdin"].split("TASK_DATA_JSON:\n", 1)[1])
+        self.assertEqual(sent["context"]["attachments"][0]["readStatus"], "image-supplied")
+        self.assertEqual(context["attachments"][0]["readStatus"], "not-inspected")
+        self.assertEqual(list(self.project.iterdir()), [uploads])
+        (uploads / (aid + ".png")).write_bytes(b"changed")
+        with patch("ppt_workbench.agent_bridge.shutil.which", return_value=str(self.fake)):
+            with self.assertRaises(EngineError) as raised:
+                run_turn("codex", "参考图片", context, timeout=4, workdir=self.project,
+                         selected_ids=[aid], asset_records=[record])
+        self.assertEqual(raised.exception.code, "INVALID_ATTACHMENTS")
+        self.assertEqual(list(self.project.iterdir()), [uploads])
 
     def test_codex_keeps_model_selection_without_loading_tools(self):
         from ppt_workbench.agent_bridge import _command
@@ -302,6 +380,23 @@ sys.exit({exit_code!r})
         self.program(response=question_wire)
         self.assertEqual(self.invoke(context=context), question_wire)
         self.assert_clean()
+
+    def test_feedback_image_generation_requires_bound_page_and_no_object_scope(self):
+        body = {"slide_id": "S003", "base_scene_revision": 4, "images": [
+            {"object_id": "new-image", "prompt": "test image", "x": 10, "y": 10, "w": 20, "h": 20}]}
+        wire = {"reply": "生成中", "questions": [], "actions": [
+            {"type": "image_generate", "arguments_json": json.dumps(body)}]}
+        self.program(response=wire, mode="codex")
+        child = {"generationTask": {"kind": "feedback_page"}, "currentFeedback": {"slideId": "S003"}}
+        self.assertEqual(self.invoke(mode="codex", context=child)["actions"][0]["slide_id"], "S003")
+        child["currentFeedback"]["slideId"] = "S002"
+        with self.assertRaises(EngineError) as caught:
+            self.invoke(mode="codex", context=child)
+        self.assertEqual(caught.exception.code, "FEEDBACK_SCOPE_MISMATCH")
+        child["currentFeedback"] = {"slideId": "S003", "objectId": "title"}
+        with self.assertRaises(EngineError) as caught:
+            self.invoke(mode="codex", context=child)
+        self.assertEqual(caught.exception.code, "FEEDBACK_SCOPE_MISMATCH")
 
     def test_feedback_plan_roundtrip_and_child_scope_use_real_process_contract(self):
         body = {"edits": [{"slide_id": "S001", "instruction": "修改测试标题", "object_id": "title"},

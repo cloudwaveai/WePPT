@@ -26,11 +26,15 @@ MAX_OBJECTS = 240
 MAX_IMAGE_BYTES = 8 * 1024 * 1024
 BASE_FIELDS = {"id", "type", "x", "y", "w", "h", "opacity"}
 TYPE_FIELDS = {
-    "text": {"text", "fontSize", "color", "bold", "align", "valign", "fontFamily", "lineHeight", "italic", "binding"},
-    "rect": {"fill", "stroke", "strokeWidth", "radius"},
-    "line": {"stroke", "strokeWidth"},
+    "text": {"text", "fontSize", "color", "bold", "align", "valign", "fontFamily", "lineHeight", "italic", "binding", "textSource",
+             "letterSpacing", "emphasis", "emphasisColor"},
+    "rect": {"fill", "stroke", "strokeWidth", "radius", "rotation", "shadow"},
+    "ellipse": {"fill", "stroke", "strokeWidth", "rotation", "shadow"},
+    "line": {"stroke", "strokeWidth", "startArrow", "endArrow"},
     "image": {"src", "fit", "alt"},
 }
+SHADOWS = {"soft": "0 8px 24px rgba(15,23,42,.14)", "lift": "0 16px 40px rgba(15,23,42,.26)"}
+MAX_EMPHASIS = 8
 COLORS = {"ink": "#12243C", "muted": "#64758A", "blue": "#3459E6",
           "teal": "#168C82", "orange": "#D68438", "paper": "#FFFFFF", "line": "#DCE4ED"}
 
@@ -43,6 +47,20 @@ def _number(value, name, low, high):
     if type(value) not in {int, float} or not math.isfinite(value) or not low <= value <= high:
         _fail("INVALID_SCENE", f"{name} 必须是 {low} 到 {high} 之间的有限数值。")
     return value
+
+
+def _finite(value):
+    """A finite number for optional decoration, else None (the style is then dropped)."""
+    return value if type(value) in {int, float} and math.isfinite(value) else None
+
+
+def _clamped(value, name, low, high):
+    """Style-only numbers (font size, line height, opacity, stroke, radius): an
+    out-of-range model value is clamped instead of blocking the page; non-numbers
+    still fail. Positions and sizes are never clamped here."""
+    if _finite(value) is None:
+        _fail("INVALID_SCENE", f"{name} 必须是 {low} 到 {high} 之间的有限数值。")
+    return min(high, max(low, value))
 
 
 def _string(value, name, max_length=20000):
@@ -66,7 +84,7 @@ def validate_scene(scene):
     """Validate a complete 16:9 scene and return a normalized independent copy."""
     if not isinstance(scene, dict):
         _fail("INVALID_SCENE", "页面场景必须为对象。")
-    allowed = {"schema", "schemaVersion", "slideId", "width", "height", "background", "objects", "title", "notes", "templateId", "bindingSeparator"}
+    allowed = {"schema", "schemaVersion", "slideId", "width", "height", "background", "objects", "title", "notes", "templateId", "bindingSeparator", "diagram"}
     unknown = set(scene) - allowed
     if unknown:
         _fail("INVALID_SCENE", "页面场景包含未知字段。", sorted(unknown))
@@ -108,15 +126,23 @@ def validate_scene(scene):
         h = _number(obj.get("h"), oid + ".h", 0 if kind == "line" else 1, height)
         if x + w > width + 0.01 or y + h > height + 0.01 or (kind == "line" and w == h == 0):
             _fail("SCENE_OUT_OF_BOUNDS", f"对象 {oid} 超出画布，或线段长度为零。")
-        obj["opacity"] = _number(obj.get("opacity", 1), oid + ".opacity", 0, 1)
+        obj["opacity"] = _clamped(obj.get("opacity", 1), oid + ".opacity", 0, 1)
         if kind == "text":
+            if "textSource" in obj:
+                source = obj["textSource"]
+                if (not isinstance(source, dict) or set(source) != {"ref", "start", "end"}
+                        or not isinstance(source["ref"], str)
+                        or not re.fullmatch(r"block\.[A-Za-z][A-Za-z0-9_-]{0,30}\.(heading|body)", source["ref"])
+                        or type(source["start"]) is not int or type(source["end"]) is not int
+                        or not 0 <= source["start"] < source["end"] <= 3000):
+                    _fail("INVALID_SCENE", "textSource 必须是有效的原文范围。")
             if "binding" in obj:
                 binding = obj["binding"]
                 if not isinstance(binding, str) or not re.fullmatch(r"title|takeaway|keyPoints:\d{1,3}", binding) or binding in bindings:
                     _fail("INVALID_SCENE", "文本 binding 必须唯一，使用 title、takeaway 或 keyPoints:0 等格式。")
                 bindings.add(binding)
             obj["text"] = _string(obj.get("text", ""), oid + ".text")
-            obj["fontSize"] = _number(obj.get("fontSize", 30), oid + ".fontSize", 10, 160)
+            obj["fontSize"] = _clamped(obj.get("fontSize", 30), oid + ".fontSize", 10, 160)
             obj["color"] = _color(obj.get("color", COLORS["ink"]), oid + ".color")
             for field in ("bold", "italic"):
                 if type(obj.get(field, False)) is not bool:
@@ -127,19 +153,56 @@ def validate_scene(scene):
                 if not isinstance(obj.get(field, default), str) or obj.get(field, default) not in choices:
                     _fail("INVALID_SCENE", f"{oid}.{field} 取值不支持。")
                 obj[field] = obj.get(field, default)
-            obj["lineHeight"] = _number(obj.get("lineHeight", 1.35), oid + ".lineHeight", 1, 2.5)
+            obj["lineHeight"] = _clamped(obj.get("lineHeight", 1.35), oid + ".lineHeight", 1, 2.5)
             family = obj.get("fontFamily", "Microsoft YaHei")
             if not isinstance(family, str) or not re.fullmatch(r"[\w \-\u3400-\u9fff]{1,80}", family):
                 _fail("INVALID_SCENE", f"{oid}.fontFamily 不是支持的字体名。")
             obj["fontFamily"] = family
-        elif kind == "rect":
+            # Optional decoration is normalized, never allowed to block a page:
+            # a model formatting slip drops the style, the words stay untouched.
+            if "letterSpacing" in obj:
+                spacing = _finite(obj["letterSpacing"])
+                if spacing is None:
+                    del obj["letterSpacing"]
+                else:
+                    obj["letterSpacing"] = min(40, max(-5, spacing))
+            if "emphasisColor" in obj:
+                accent = obj["emphasisColor"]
+                if isinstance(accent, str) and re.fullmatch(r"#[0-9A-Fa-f]{6}", accent):
+                    obj["emphasisColor"] = accent.upper()
+                else:
+                    del obj["emphasisColor"]
+            if "emphasis" in obj:
+                phrases = obj["emphasis"]
+                phrases = [phrases] if isinstance(phrases, str) else phrases if isinstance(phrases, list) else []
+                # Highlights only style existing words: malformed, stale or extra
+                # phrases are dropped instead of inventing or blocking text.
+                kept = list(dict.fromkeys(p for p in phrases if isinstance(p, str) and p.strip()
+                                          and len(p) <= 80 and p in obj["text"]))[:MAX_EMPHASIS]
+                if kept:
+                    obj["emphasis"] = kept
+                else:
+                    del obj["emphasis"]
+        elif kind in ("rect", "ellipse"):
             obj["fill"] = _color(obj.get("fill", "none"), oid + ".fill", True)
             obj["stroke"] = _color(obj.get("stroke", "none"), oid + ".stroke", True)
-            obj["strokeWidth"] = _number(obj.get("strokeWidth", 1), oid + ".strokeWidth", 0, 24)
-            obj["radius"] = _number(obj.get("radius", 0), oid + ".radius", 0, min(w, h) / 2)
+            obj["strokeWidth"] = _clamped(obj.get("strokeWidth", 1), oid + ".strokeWidth", 0, 24)
+            if kind == "rect":
+                obj["radius"] = _clamped(obj.get("radius", 0), oid + ".radius", 0, min(w, h) / 2)
+            if "rotation" in obj:
+                angle = _finite(obj["rotation"])
+                if angle is None:
+                    del obj["rotation"]
+                else:
+                    obj["rotation"] = angle if -180 <= angle <= 180 else ((angle + 180) % 360) - 180
+            if "shadow" in obj and obj["shadow"] not in {"none", *SHADOWS}:
+                del obj["shadow"]
         elif kind == "line":
             obj["stroke"] = _color(obj.get("stroke", COLORS["line"]), oid + ".stroke")
-            obj["strokeWidth"] = _number(obj.get("strokeWidth", 2), oid + ".strokeWidth", 0.1, 24)
+            obj["strokeWidth"] = _clamped(obj.get("strokeWidth", 2), oid + ".strokeWidth", 0.1, 24)
+            for key in ("startArrow", "endArrow"):
+                if key in obj and type(obj[key]) is not bool:
+                    _fail("INVALID_SCENE", f"{oid}.{key} 必须是布尔值。")
         elif kind == "image":
             src = obj.get("src")
             if not isinstance(src, str) or not re.fullmatch(r"data:image/(png|jpeg);base64,[A-Za-z0-9+/=\r\n]+", src):
@@ -156,6 +219,9 @@ def validate_scene(scene):
                 _fail("INVALID_SCENE_IMAGE", "图片 fit 只支持 contain 或 cover。")
             obj["fit"] = obj.get("fit", "contain")
             obj["alt"] = _string(obj.get("alt", oid), oid + ".alt", 1000)
+    if 'diagram' in s:
+        from .diagram_design import validate_metadata
+        validate_metadata(s['diagram'], objects)
     point_indices = sorted(int(b.split(":")[1]) for b in bindings if b.startswith("keyPoints:"))
     if point_indices != list(range(len(point_indices))):
         _fail("INVALID_SCENE", "keyPoints 绑定索引必须从 0 连续排列，避免丢失正文段落。")
@@ -191,8 +257,95 @@ def patch_scene(scene, changes):
     return validate_scene(s)
 
 
+def edit_scene_objects(scene, operations):
+    """Apply atomic structural edits and return a validated independent scene.
+
+    Operations are applied in order: {"op":"add", "object": {...},
+    "index": N} (index optional, defaults to end), {"op":"delete",
+    "objectId": ID}, or {"op":"reorder", "objectId": ID, "index": N}.
+    Indices are zero-based positions in the resulting object list. Added objects
+    cannot introduce content bindings; bound objects cannot be deleted. Existing
+    objects retain their IDs, properties and bindings. The input is never changed,
+    including when an operation or final scene fails validation.
+    """
+    s = validate_scene(scene)
+    if not isinstance(operations, list) or not 1 <= len(operations) <= MAX_OBJECTS:
+        _fail("INVALID_SCENE_OPERATION", "操作需要非空的对象操作数组。")
+    objects = s["objects"]
+    for operation in operations:
+        if not isinstance(operation, dict):
+            _fail("INVALID_SCENE_OPERATION", "对象操作必须为对象。")
+        op = operation.get("op")
+        if op == "add":
+            if set(operation) not in ({"op", "object"}, {"op", "object", "index"}):
+                _fail("INVALID_SCENE_OPERATION", "add 需要 object 和可选 index。")
+            obj = operation["object"]
+            if not isinstance(obj, dict):
+                _fail("INVALID_SCENE_OPERATION", "新增对象必须为对象。")
+            if "binding" in obj:
+                _fail("SCENE_SCOPE_VIOLATION", "新增对象不能设置内容绑定。")
+            index = operation.get("index", len(objects))
+            if type(index) is not int or not 0 <= index <= len(objects):
+                _fail("INVALID_SCENE_OPERATION", "新增位置超出范围。")
+            objects.insert(index, copy.deepcopy(obj))
+        elif op == "delete" or op == "reorder":
+            expected = {"op", "objectId"} | ({"index"} if op == "reorder" else set())
+            if set(operation) != expected:
+                _fail("INVALID_SCENE_OPERATION", "对象操作字段不正确。")
+            oid = operation["objectId"]
+            position = next((i for i, obj in enumerate(objects) if obj.get("id") == oid), None)
+            if not isinstance(oid, str) or position is None:
+                _fail("SCENE_OBJECT_NOT_FOUND", "未找到页面对象。", {"objectId": oid})
+            if op == "delete":
+                if "binding" in objects[position]:
+                    _fail("SCENE_SCOPE_VIOLATION", "不能删除绑定内容的对象。", {"objectId": oid})
+                objects.pop(position)
+                if oid in s.get('diagram', {}).get('objectIds', []):
+                    s.pop('diagram')
+            else:
+                index = operation["index"]
+                if type(index) is not int or not 0 <= index < len(objects):
+                    _fail("INVALID_SCENE_OPERATION", "排序位置超出范围。")
+                objects.insert(index, objects.pop(position))
+        else:
+            _fail("INVALID_SCENE_OPERATION", "不支持的对象操作。")
+    return validate_scene(s)
+
+
 def _css_number(n):
     return format(n, ".6g")
+
+
+def emphasis_segments(text, phrases):
+    """Split text into (segment, emphasized) runs; leftmost, longest phrase wins.
+
+    The PPTX exporter implements the same scan so both renderers agree.
+    """
+    ordered = sorted(set(phrases or ()), key=len, reverse=True)
+    segments, plain, index = [], "", 0
+    while index < len(text):
+        match = next((p for p in ordered if text.startswith(p, index)), None)
+        if match:
+            if plain:
+                segments.append((plain, False))
+                plain = ""
+            segments.append((match, True))
+            index += len(match)
+        else:
+            plain += text[index]
+            index += 1
+    if plain:
+        segments.append((plain, False))
+    return segments
+
+
+def _shape_style(obj):
+    style = ""
+    if obj.get("shadow") in SHADOWS:
+        style += f"box-shadow:{SHADOWS[obj['shadow']]};"
+    if obj.get("rotation"):
+        style += f"transform:rotate({_css_number(obj['rotation'])}deg);transform-origin:center;"
+    return style
 
 
 def render_html(scene, interactive=True):
@@ -210,18 +363,38 @@ def render_html(scene, interactive=True):
             style += (f"font-size:{obj['fontSize']}px;color:{obj['color']};font-weight:{700 if obj['bold'] else 400};"
                       f"font-style:{'italic' if obj['italic'] else 'normal'};text-align:{obj['align']};"
                       f"line-height:{obj['lineHeight']};font-family:'{obj['fontFamily']}', 'Noto Sans CJK SC', sans-serif;justify-content:{justify};")
-            parts.append(f'<div class="object text" {attrs} style="{html.escape(style, quote=True)}"><span class="text-content">{html.escape(obj["text"])}</span></div>')
-        elif kind == "rect":
+            if obj.get("letterSpacing"):
+                style += f"letter-spacing:{_css_number(obj['letterSpacing'])}px;"
+            if obj.get("emphasis"):
+                accent = html.escape(obj.get("emphasisColor", obj["color"]), quote=True)
+                content = "".join(f'<span class="text-em" style="color:{accent};font-weight:700">{html.escape(part)}</span>'
+                                  if emphasized else html.escape(part)
+                                  for part, emphasized in emphasis_segments(obj["text"], obj["emphasis"]))
+            else:
+                content = html.escape(obj["text"])
+            parts.append(f'<div class="object text" {attrs} style="{html.escape(style, quote=True)}"><span class="text-content">{content}</span></div>')
+        elif kind in ("rect", "ellipse"):
+            radius = "50%" if kind == "ellipse" else f"{obj['radius']}px"
             style += (f"background:{'transparent' if obj['fill']=='none' else obj['fill']};"
-                      f"border:{obj['strokeWidth']}px solid {'transparent' if obj['stroke']=='none' else obj['stroke']};border-radius:{obj['radius']}px;")
-            parts.append(f'<div class="object rect" {attrs} style="{html.escape(style, quote=True)}"></div>')
+                      f"border:{obj['strokeWidth']}px solid {'transparent' if obj['stroke']=='none' else obj['stroke']};border-radius:{radius};"
+                      + _shape_style(obj))
+            parts.append(f'<div class="object {kind}" {attrs} style="{html.escape(style, quote=True)}"></div>')
         elif kind == "line":
             # An SVG line is editable in the scene and exported as a native PPT line.
             length = math.hypot(obj["w"], obj["h"])
             angle = math.degrees(math.atan2(obj["h"], obj["w"]))
             style = (f"left:{obj['x']}px;top:{obj['y']}px;width:{length}px;height:{obj['strokeWidth']}px;"
                      f"background:{obj['stroke']};opacity:{obj['opacity']};transform:rotate({angle}deg);transform-origin:0 0;")
-            parts.append(f'<div class="object line" {attrs} style="{style}"></div>')
+            tips=[]
+            head=min(max(8,obj['strokeWidth']*4),length/2)
+            center=obj['strokeWidth']/2
+            for end in ('start','end'):
+                if obj.get(end+'Arrow'):
+                    tip=0 if end=='start' else length
+                    base=head if end=='start' else length-head
+                    tips.append(f'<polygon data-arrow="{end}" points="{tip},{center} {base},{center-head/2} {base},{center+head/2}" fill="{obj["stroke"]}"/>')
+            arrows=(f'<svg width="{length}" height="{obj["strokeWidth"]}" style="position:absolute;inset:0;overflow:visible;pointer-events:none">'+''.join(tips)+'</svg>') if tips else ''
+            parts.append(f'<div class="object line" {attrs} style="{style}">{arrows}</div>')
         else:
             style += f"object-fit:{obj['fit']};"
             parts.append(f'<img class="object image" {attrs} src="{obj["src"]}" alt="{html.escape(obj["alt"], quote=True)}" style="{style}">')
@@ -230,6 +403,7 @@ def render_html(scene, interactive=True):
 const slide=document.getElementById('slide');
 const resize=()=>{{const scale=Math.min(innerWidth/{width},innerHeight/{height});slide.style.transform='translate(-50%,-50%) scale('+scale+')';}};
 addEventListener('resize',resize);resize();requestAnimationFrame(resize);document.fonts.ready.then(resize);
+parent.postMessage({{type:'ppt-ready'}},'*');
 """
     if interactive:
         script += """
@@ -243,6 +417,57 @@ function reportOverflow(){const ids=[...document.querySelectorAll('.text')].filt
 document.fonts.ready.then(reportOverflow);setTimeout(reportOverflow,150);
 """
         script += """
+// Editing gestures are proposals to the parent; only its versioned API persists them.
+const originalGeometry=new Map([...document.querySelectorAll('[data-object-id]')].map(el=>[el.dataset.objectId,{left:el.style.left,top:el.style.top,width:el.style.width,height:el.style.height}]));
+const handles=document.createElement('div');handles.id='selection-handles';handles.hidden=true;slide.append(handles);
+for(const corner of ['nw','ne','sw','se']){const handle=document.createElement('span');handle.className='resize-handle '+corner;handle.dataset.corner=corner;handles.append(handle);}
+function updateHandles(){const el=document.querySelector('.object.selected');handles.hidden=!el || !!el.querySelector('[contenteditable]') || el.dataset.type==='line';if(!handles.hidden){for(const [style,value] of Object.entries({left:el.style.left,top:el.style.top,width:el.style.width,height:el.style.height}))handles.style[style]=value;}}
+const observeSelection=new MutationObserver(updateHandles);document.querySelectorAll('.object').forEach(el=>observeSelection.observe(el,{attributes:true,attributeFilter:['class']}));
+let gesture=null;
+document.addEventListener('pointerdown',e=>{
+  if(e.button!==0 || e.target.isContentEditable)return;
+  const corner=e.target.dataset.corner;
+  const el=corner?document.querySelector('.object.selected'):e.target.closest('[data-object-id]');
+  if(!el)return;
+  if(el.querySelector('[contenteditable]'))return;
+  const scale=slide.getBoundingClientRect().width/slide.offsetWidth;
+  gesture={el,corner,scale,startX:e.clientX,startY:e.clientY,x:parseFloat(el.style.left),y:parseFloat(el.style.top),w:parseFloat(el.style.width),h:parseFloat(el.style.height),moved:false,pointerId:e.pointerId};
+  if(corner)e.preventDefault();
+});
+document.addEventListener('pointermove',e=>{
+  if(!gesture || gesture.pointerId!==e.pointerId)return;
+  const g=gesture,dx=(e.clientX-g.startX)/g.scale,dy=(e.clientY-g.startY)/g.scale;
+  if(!g.moved && Math.hypot(e.clientX-g.startX,e.clientY-g.startY)<4)return;
+  if(!g.moved){selectObject(g.el);g.el.setPointerCapture(e.pointerId);g.moved=true;}
+  e.preventDefault();
+  let x=g.x,y=g.y,w=g.w,h=g.h;
+  if(!g.corner){x=Math.max(0,Math.min(slide.offsetWidth-w,g.x+dx));y=Math.max(0,Math.min(slide.offsetHeight-h,g.y+dy));}
+  else{
+    const west=g.corner.includes('w'),north=g.corner.includes('n');
+    w=Math.max(10,g.w+(west?-dx:dx));h=Math.max(10,g.h+(north?-dy:dy));
+    // Images always preserve their existing display aspect ratio.
+    if(g.el.dataset.type==='image' || e.shiftKey){const ratio=g.w/g.h;h=w/ratio;}
+    const maxW=west?g.x+g.w:slide.offsetWidth-g.x,maxH=north?g.y+g.h:slide.offsetHeight-g.y;
+    if(g.el.dataset.type==='image' || e.shiftKey){const factor=Math.min(1,maxW/w,maxH/h);w*=factor;h*=factor;}else{w=Math.min(w,maxW);h=Math.min(h,maxH);}
+    x=west?g.x+g.w-w:g.x;y=north?g.y+g.h-h:g.y;
+  }
+  g.properties={x:Math.round(x*100)/100,y:Math.round(y*100)/100,...(g.corner?{w:Math.round(w*100)/100,h:Math.round(h*100)/100}:{})};
+  Object.assign(g.el.style,{left:x+'px',top:y+'px',width:w+'px',height:h+'px'});updateHandles();
+});
+document.addEventListener('pointerup',e=>{if(!gesture || gesture.pointerId!==e.pointerId)return;const g=gesture;gesture=null;if(g.moved){g.el.releasePointerCapture(e.pointerId);parent.postMessage({type:'ppt-geometry',objectId:g.el.dataset.objectId,properties:g.properties},'*');}});
+document.addEventListener('pointercancel',()=>{if(gesture){Object.assign(gesture.el.style,originalGeometry.get(gesture.el.dataset.objectId));gesture=null;updateHandles();}});
+document.addEventListener('dragstart',e=>e.preventDefault());
+document.addEventListener('click',e=>{if(e.target===slide){document.querySelectorAll('.selected').forEach(el=>el.classList.remove('selected'));parent.postMessage({type:'ppt-clear'},'*');}});
+document.addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();parent.postMessage({type:'ppt-save'},'*');return;}
+  if(e.target.isContentEditable){if(e.key==='Escape'){e.target.removeAttribute('contenteditable');updateHandles();}return;}
+  if((e.ctrlKey||e.metaKey)&&['z','y'].includes(e.key.toLowerCase())){e.preventDefault();parent.postMessage({type:'ppt-history',action:e.shiftKey||e.key.toLowerCase()==='y'?'redo':'undo'},'*');return;}
+  const el=document.querySelector('.object.selected');if(!el)return;
+  const step=e.shiftKey?10:1;const direction={ArrowLeft:[-step,0],ArrowRight:[step,0],ArrowUp:[0,-step],ArrowDown:[0,step]}[e.key];
+  if(direction){e.preventDefault();parent.postMessage({type:'ppt-geometry',objectId:el.dataset.objectId,properties:{x:Math.max(0,Math.min(slide.offsetWidth-parseFloat(el.style.width),parseFloat(el.style.left)+direction[0])),y:Math.max(0,Math.min(slide.offsetHeight-parseFloat(el.style.height),parseFloat(el.style.top)+direction[1]))}},'*');}
+});
+addEventListener('message',e=>{if(e.source!==parent)return;if(e.data?.type==='ppt-reset-geometry'){const el=[...document.querySelectorAll('[data-object-id]')].find(n=>n.dataset.objectId===e.data.objectId);if(el){Object.assign(el.style,originalGeometry.get(el.dataset.objectId));updateHandles();}}});
+
 // Reports geometry only. The parent binds the iframe to its exact revision;
 // the server validates every object and never interprets this as approval.
 function reportQuality(){
@@ -255,8 +480,10 @@ function reportQuality(){
   const report={schema:'ppt-browser-measurement',schemaVersion:1,slideId:QUALITY_SLIDE_ID,width:QUALITY_WIDTH,height:QUALITY_HEIGHT,fontsReady:document.fonts.status==='loaded',imagesLoaded:objects.filter(o=>o.type==='image').every(o=>o.imageLoaded),objects,overflowIds};
   parent.postMessage({type:'ppt-quality',report},'*');
 }
-let qualityFrame=0;
-function scheduleQuality(){cancelAnimationFrame(qualityFrame);qualityFrame=requestAnimationFrame(()=>requestAnimationFrame(reportQuality));}
+let qualityFrame=0,qualityTimer=0;
+// Background measurement frames are offscreen, sandboxed (cross-origin) frames: Chrome
+// throttles their rendering and may never run animation frames, so a timer also reports.
+function scheduleQuality(){cancelAnimationFrame(qualityFrame);clearTimeout(qualityTimer);qualityFrame=requestAnimationFrame(()=>requestAnimationFrame(reportQuality));qualityTimer=setTimeout(reportQuality,250);}
 document.fonts.ready.then(scheduleQuality);
 Promise.all([...document.querySelectorAll('img')].map(img=>img.complete?Promise.resolve():new Promise(resolve=>{img.addEventListener('load',resolve,{once:true});img.addEventListener('error',resolve,{once:true});}))).then(scheduleQuality);
 setTimeout(scheduleQuality,300);setTimeout(scheduleQuality,1500);
@@ -266,7 +493,7 @@ setTimeout(scheduleQuality,300);setTimeout(scheduleQuality,1500);
 addEventListener('keydown',e=>{let step;if(['ArrowRight','PageDown',' '].includes(e.key))step=1;else if(['ArrowLeft','PageUp'].includes(e.key))step=-1;else if(e.key==='Home')step='first';else if(e.key==='End')step='last';if(step!==undefined){e.preventDefault();parent.postMessage({type:'ppt-navigate',step},'*');}});
 """
     return f'''<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(s.get('title',s['slideId']))}</title>
-<style>*{{box-sizing:border-box}}html,body{{margin:0;width:100%;height:100%;overflow:hidden;background:transparent}}#slide{{position:absolute;left:50%;top:50%;width:{width}px;height:{height}px;transform-origin:center;background:{s['background']};overflow:hidden}}.object{{position:absolute}}.text{{display:flex;flex-direction:column;overflow:hidden}}.text-content{{white-space:pre-wrap;overflow-wrap:anywhere;flex:0 0 auto}}.selected{{outline:3px solid #647CFF!important;outline-offset:5px}}[role=button]{{cursor:pointer}}.image{{display:block}}@media print{{html,body{{width:1280px;height:720px}}#slide{{left:0;top:0;transform:scale({1280/width})!important;transform-origin:top left}}.selected{{outline:none!important}}}}@page{{size:13.333333in 7.5in;margin:0}}</style></head><body><main id="slide" aria-label="演示页面">{''.join(parts)}</main><script>{script}</script></body></html>'''
+<style>*{{box-sizing:border-box}}html,body{{margin:0;width:100%;height:100%;overflow:hidden;background:transparent}}#slide{{position:absolute;left:50%;top:50%;width:{width}px;height:{height}px;transform-origin:center;background:{s['background']};overflow:hidden}}.object{{position:absolute}}.text{{display:flex;flex-direction:column;overflow:hidden}}.text-content{{white-space:pre-wrap;overflow-wrap:anywhere;flex:0 0 auto}}.selected{{outline:3px solid #647CFF!important;outline-offset:5px}}[role=button]{{cursor:pointer}}.image{{display:block}}#selection-handles{{position:absolute;pointer-events:none;outline:1px solid #B7472A;z-index:1000}}.resize-handle{{position:absolute;width:10px;height:10px;background:white;border:1px solid #B7472A;pointer-events:auto}}.resize-handle.nw{{left:-5px;top:-5px;cursor:nwse-resize}}.resize-handle.ne{{right:-5px;top:-5px;cursor:nesw-resize}}.resize-handle.sw{{left:-5px;bottom:-5px;cursor:nesw-resize}}.resize-handle.se{{right:-5px;bottom:-5px;cursor:nwse-resize}}[contenteditable]{{outline:none;cursor:text}}@media print{{html,body{{width:1280px;height:720px}}#slide{{left:0;top:0;transform:scale({1280/width})!important;transform-origin:top left}}.selected{{outline:none!important}}}}@page{{size:13.333333in 7.5in;margin:0}}</style></head><body><main id="slide" aria-label="演示页面">{''.join(parts)}</main><script>{script}</script></body></html>'''
 
 
 def _text_obj(oid, text, x, y, w, h, size=30, color=None, bold=False, **extra):
@@ -317,7 +544,7 @@ def scene_from_slide(slide, project, template=None):
          "title": title, "templateId": tid, "objects": [], "bindingSeparator": separator,
          "notes": "基础排版保留所提供文案；请在实际预览中确认表达与溢出。" + (" 本页暂用用户原话作为草稿。" if used_intent else "")}
     objects = s["objects"]
-    footer = str(project.get("title") or "")
+    footer = ""  # New starter pages never repeat the deck title as a footer.
     page_number = str(int(sid[1:])).zfill(2) if re.fullmatch(r"S\d+", sid) else sid
     if role == "cover" or tid.startswith("cover"):
         s["background"] = "#102544"

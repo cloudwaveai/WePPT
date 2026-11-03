@@ -61,7 +61,7 @@ def sample_scene(template_id):
                 obj["text"] = "CONTENTS" if role == "toc" else ""
         elif obj["type"] == "image" and obj["w"] < 350 and obj["h"] < 120:
             # Brand marks belong to the user's deck, not to a reusable layout.
-            replacement = {"id": obj["id"], "type": "text", "text": "LOGO",
+            replacement = {"id": obj["id"], "type": "text", "text": "",
                            "x": obj["x"], "y": obj["y"], "w": obj["w"], "h": obj["h"],
                            "fontSize": 20, "color": "#A9C8E5", "bold": True}
             obj.clear()
@@ -115,8 +115,21 @@ def apply_template(scene, template_id):
         used_ids.add(obj["id"])
         result["objects"].append(obj)
     text = [obj for obj in original["objects"] if obj["type"] == "text"]
-    extras = [obj for obj in text if obj.get("binding", obj["id"]) not in slots]
+    footers = [obj for obj in text if obj['id'].startswith('footer.') and not obj.get('binding')]
+    extras = [obj for obj in text if obj.get("binding", obj["id"]) not in slots and obj not in footers]
     width, height = original["width"], original["height"]
+    # Keep additional user text between occupied source slots; the previous fixed
+    # 62% start overlapped the source signature and triggered a blank generic reflow.
+    occupied = sorted((slot['y'], slot['y'] + slot['h']) for binding, slot in slots.items()
+                      if any(o.get('binding', o['id']) == binding for o in text))
+    bands, cursor = [], height * .14
+    for top, bottom in occupied:
+        if top > cursor + 12:
+            bands.append((cursor + 6, top - cursor - 12))
+        cursor = max(cursor, bottom)
+    if cursor < height * .91 - 12:
+        bands.append((cursor + 6, height * .91 - cursor - 12))
+    extra_top, extra_height = max(bands, key=lambda band: band[1], default=(height * .62, height * .25))
     for source in original["objects"]:
         obj = copy.deepcopy(source)
         if obj["type"] == "text":
@@ -126,11 +139,13 @@ def apply_template(scene, template_id):
                 obj = copy.deepcopy(slot)
                 obj.pop('binding', None)
                 obj.update(content)
+            elif source in footers:
+                obj['color'] = next(iter(slots.values())).get('color', '#173B53') if slots else '#173B53'
             else:
                 index = extras.index(source)
                 # Extra content is retained in a visible area; never hide it in tiny text.
-                row_h = min(height * .12, height * .34 / max(1, len(extras)))
-                obj.update(x=width * .1, y=height * .62 + index * row_h,
+                row_h = extra_height / max(1, len(extras))
+                obj.update(x=width * .1, y=extra_top + index * row_h,
                            w=width * .8, h=max(1, row_h - 2),
                            fontSize=max(10, min(22 * sy, row_h * .42)),
                            color=next(iter(slots.values())).get("color", "#173B53") if slots else "#173B53",

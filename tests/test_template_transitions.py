@@ -115,6 +115,26 @@ class TemplateTransitionTests(unittest.TestCase):
             self.assertEqual(by_id['heading']['text'], scene['objects'][0]['text'])
             self.assertLess(by_id['heading']['fontSize'], 40)
 
+    def test_dense_damaged_scene_reflows_on_switch_and_preserves_manual_text(self):
+        from ppt_workbench.template_content import text_height
+        scene = content_scene()
+        scene['objects'].pop()
+        for i in range(17):
+            scene['objects'].append(dict(id=f'manual.{i}', type='text',
+                text=('用户手动添加的内容和详细说明。' * (3 if i % 3 == 0 else 1)),
+                x=100, y=200, w=120, h=18, fontSize=10))
+        original = {o['id']: o['text'] for o in scene['objects']}
+        for target in ('feature-map', 'user-journey', 'opening-02-01-cover', 'clean'):
+            result = templates.apply_template(scene, target)
+            text = [o for o in result['objects'] if o['type'] == 'text' and o['id'] in original]
+            self.assertEqual({o['id']: o['text'] for o in text}, original)
+            for i, a in enumerate(text):
+                self.assertLessEqual(text_height(a), a['h'] + 0.01)
+                for b in text[i + 1:]:
+                    self.assertFalse(a['x'] < b['x'] + b['w'] and b['x'] < a['x'] + a['w']
+                                     and a['y'] < b['y'] + b['h'] and b['y'] < a['y'] + a['h'])
+            scene = result
+
     def test_raw_design_map_preview_sources_are_retired_without_dropping_user_image(self):
         scene = design_map.sample_scene('cover')
         scene['objects'].append(dict(id='user-photo', type='image', src=PNG, x=0, y=0, w=100, h=100))

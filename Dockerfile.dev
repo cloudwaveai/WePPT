@@ -1,0 +1,18 @@
+# The Tencent development host already has this official Codex toolchain image.
+# Its immutable image ID is recorded with each deployment.
+ARG WEPPT_BASE_IMAGE=webuddy/project-codex:0.162.1
+FROM ${WEPPT_BASE_IMAGE}
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends bubblewrap chromium fonts-noto-cjk \
+    && rm -rf /var/lib/apt/lists/*
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev && npm install -g @anthropic-ai/claude-code@2.1.314 && npm cache clean --force
+COPY ppt_workbench ./ppt_workbench
+RUN useradd --uid 1100 --user-group --create-home weppt \
+    && mkdir -p /data /config /home/weppt/.codex \
+    && chown -R weppt:weppt /data /config /home/weppt
+ENV HOME=/home/weppt PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
+USER weppt
+ENTRYPOINT ["python3", "-m", "ppt_workbench", "--root", "/data", "studio"]
+CMD ["--project", "main", "--port", "8766", "--agent", "codex"]

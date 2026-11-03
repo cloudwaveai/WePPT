@@ -5,13 +5,18 @@ from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from http.cookies import SimpleCookie
 import json
+import base64
+import hashlib
+import copy
+import html
 import mimetypes
 import os
 from pathlib import Path
 import secrets
+import stat
 import sys
 import threading
-from urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, urlparse, urlencode
 import webbrowser
 
 from .core import EngineError
@@ -19,6 +24,7 @@ from .studio import Studio
 from .templates import catalog, sample_scene
 from .rendering import render_html
 from . import guide_store
+from . import editor
 
 
 # Exact bundled paths only; no user-controlled filesystem path or local POTX access.
@@ -72,6 +78,26 @@ class StudioHTTPServer(ThreadingHTTPServer):
 
     def __init__(self, address, studio, token=None):
         self.studio = studio
+        self.public_origin = os.environ.get("WEPPT_PUBLIC_ORIGIN", "").rstrip("/")
+        public = urlparse(self.public_origin)
+        if self.public_origin and (public.scheme != "https" or not public.hostname
+                or public.username or public.password or public.path or public.query or public.fragment):
+            raise EngineError("INVALID_PUBLIC_ORIGIN", "公网入口必须是无路径的 HTTPS origin。")
+        self.public_host = public.netloc if self.public_origin else None
+        self.open_access = os.environ.get("WEPPT_PUBLIC_ACCESS") == "open"
+        if self.open_access and not self.public_origin:
+            raise EngineError("INVALID_PUBLIC_ORIGIN", "开放开发访问需要明确的 HTTPS origin。")
+        token_path = os.environ.get("WEPPT_TOKEN_FILE")
+        if token is None and token_path:
+            path = Path(token_path)
+            info = path.lstat()
+            if not stat.S_ISREG(info.st_mode) or info.st_mode & 0o077:
+                raise EngineError("INVALID_TOKEN_FILE", "访问凭据必须是仅当前所有者可读写的普通文件。")
+            token = path.read_text().strip()
+            if len(token) < 32 or not all(c.isalnum() or c in "-_" for c in token) or not token.isascii():
+                raise EngineError("INVALID_TOKEN_FILE", "访问凭据必须是至少 32 字符的安全随机文本。")
+        if self.public_origin and not token and not self.open_access:
+            raise EngineError("PUBLIC_AUTH_REQUIRED", "公网部署需要持久化访问凭据。")
         self.token = token or secrets.token_urlsafe(32)
         self.stop_event = threading.Event()
         self.worker_thread = None
@@ -82,6 +108,8 @@ class StudioHTTPServer(ThreadingHTTPServer):
         try:
             super().__init__(address, StudioHandler)
             studio.recover_interrupted_jobs()
+            from .image_generation import ImageJobs
+            ImageJobs(studio).recover_interrupted()
         except BaseException:
             self.project_lock.close()
             raise
@@ -103,6 +131,8 @@ class StudioHTTPServer(ThreadingHTTPServer):
             try:
                 studio = Studio(self.studio.root, project_id, create=False)
                 studio.recover_interrupted_jobs()
+                from .image_generation import ImageJobs
+                ImageJobs(studio).recover_interrupted()
             except BaseException:
                 lock.close()
                 raise
@@ -125,6 +155,18 @@ class StudioHTTPServer(ThreadingHTTPServer):
                         if self.stop_event.is_set():
                             break
                         processed = studio.run_pending() or processed
+                        if not getattr(studio, '_image_worker', None) or not studio._image_worker.is_alive():
+                            from .image_generation import ImageJobs
+                            image_jobs = ImageJobs(studio)
+                            with studio.wb._connection() as db:
+                                batch = db.execute("SELECT id FROM image_generation_batches WHERE project_id=? AND status='pending' ORDER BY created_at LIMIT 1", (studio.project_id,)).fetchone()
+                            if batch:
+                                def run_images(jobs=image_jobs, batch_id=batch['id']):
+                                    from .codex_image_provider import CodexImageProvider
+                                    jobs.run_batch(batch_id, CodexImageProvider())
+                                studio._image_worker = threading.Thread(target=run_images, daemon=True, name='ppt-image-worker')
+                                studio._image_worker.start()
+                                processed = True
                 except Exception as exc:
                     print(f"PPT Studio worker: {type(exc).__name__}", file=sys.stderr)
                     processed = False
@@ -143,9 +185,14 @@ class StudioHandler(BaseHTTPRequestHandler):
         pass
 
     def _host_ok(self):
-        return self.headers.get("Host") in {f"127.0.0.1:{self.server.server_port}", f"localhost:{self.server.server_port}"}
+        hosts = {f"127.0.0.1:{self.server.server_port}", f"localhost:{self.server.server_port}"}
+        if self.server.public_host:
+            hosts.add(self.server.public_host)
+        return self.headers.get("Host") in hosts
 
     def _authorized(self):
+        if self.server.open_access:
+            return True
         given = self.headers.get("X-Studio-Token", "")
         if given and secrets.compare_digest(given, self.server.token):
             return True
@@ -162,15 +209,32 @@ class StudioHandler(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header("Content-Type", mime)
         self.send_header("Content-Length", str(len(data)))
-        self.send_header("Cache-Control", "no-store")
+        self.send_header("Cache-Control", (headers or {}).get("Cache-Control", "no-store"))
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("Referrer-Policy", "no-referrer")
         self.send_header("X-Frame-Options", "SAMEORIGIN")
-        self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'")
+        self.send_header("Content-Security-Policy", "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-ancestors 'self'")
         for key, value in (headers or {}).items():
-            self.send_header(key, value)
+            if key != "Cache-Control":
+                self.send_header(key, value)
         self.end_headers()
         self.wfile.write(data)
+
+    def _scene_html(self, studio, scene, *, interactive=True, saved_scene=None):
+        """Share original image bytes between browser views; exports stay self-contained."""
+        rendered = render_html(scene, interactive=interactive)
+        # Sandboxed frames omit Strict cookies on image subrequests. Keep private
+        # deployments self-contained; do not loosen authentication or sandboxing.
+        if not self.server.open_access:
+            return rendered
+        for obj in (saved_scene or scene)["objects"]:
+            if obj["type"] != "image":
+                continue
+            raw = base64.b64decode(obj["src"].split(",", 1)[1])
+            url = "/api/scene-image?" + urlencode({"project": studio.project_id,
+                "slideId": scene["slideId"], "objectId": obj["id"], "sha": hashlib.sha256(raw).hexdigest()})
+            rendered = rendered.replace(obj["src"], html.escape(url, quote=True))
+        return rendered
 
     def _error(self, exc):
         if isinstance(exc, EngineError):
@@ -190,14 +254,16 @@ class StudioHandler(BaseHTTPRequestHandler):
         if path == "/" and "token" in query and secrets.compare_digest(query["token"][0], self.server.token):
             self.send_response(303)
             self.send_header("Location", "/")
-            self.send_header("Set-Cookie", "ppt_studio=" + self.server.token + "; HttpOnly; SameSite=Strict; Path=/")
+            self.send_header("Set-Cookie", "ppt_studio=" + self.server.token + "; HttpOnly; SameSite=Strict; Path=/"
+                             + ("; Secure" if self.server.public_origin else ""))
             self.send_header("Cache-Control", "no-store")
             self.send_header("Referrer-Policy", "no-referrer")
             self.send_header("Content-Length", "0")
             self.end_headers()
             return
         if not self._authorized():
-            self._send("请使用启动命令输出的完整链接打开工作台。".encode(), "text/plain; charset=utf-8", 401)
+            message = "WePPT 开发环境需要授权访问，请使用管理员提供的专用登录链接。" if self.server.public_origin else "请使用启动命令输出的完整链接打开工作台。"
+            self._send(message.encode(), "text/plain; charset=utf-8", 401)
             return
         try:
             project_id = self.headers.get("X-WePPT-Project") or query.get("project", [None])[0]
@@ -205,22 +271,72 @@ class StudioHandler(BaseHTTPRequestHandler):
             if path == "/api/projects":
                 self._json({"projects": studio.wb.list_projects(), "activeProjectId": studio.project_id})
             elif path == "/api/state":
-                self._json(studio.state())
+                state = studio.state()
+                if (query.get("sinceProject", [None])[0] == studio.project_id
+                        and query.get("since", [None])[0] == str(state["version"])):
+                    self._json({"unchanged": True, "projectId": studio.project_id, "version": state["version"]})
+                else:
+                    self._json(state)
             elif path == "/api/scene":
-                self._json(studio.get_scene(query.get("slide", [None])[0]))
+                current = studio.get_scene(query.get("slide", [None])[0])
+                if query.get("metadata", [None])[0] == "1":
+                    current = copy.deepcopy(current)
+                    for obj in current["scene"]["objects"]:
+                        if obj["type"] == "image":
+                            obj["src"] = "scene-image:" + obj["id"]
+                    for change in current.get("changes", []):
+                        for side in ("before", "after"):
+                            if isinstance(change.get(side), dict) and "src" in change[side]:
+                                change[side]["src"] = "scene-image:" + change.get("objectId", "")
+                self._json(current)
+            elif path == "/api/scene-image":
+                current = studio.get_scene(query.get("slideId", [None])[0])
+                obj = next((o for o in current["scene"]["objects"]
+                            if o["id"] == query.get("objectId", [None])[0] and o["type"] == "image"), None)
+                raw = base64.b64decode(obj["src"].split(",", 1)[1]) if obj else b""
+                if not obj or hashlib.sha256(raw).hexdigest() != query.get("sha", [None])[0]:
+                    self._json({"error": {"code": "IMAGE_CHANGED", "message": "图片已变化，请刷新页面。"}}, 404)
+                else:
+                    self._send(raw, obj["src"].split(";", 1)[0][5:],
+                               headers={"Cache-Control": "private, max-age=3600, immutable"})
+            elif path == "/api/editor/history":
+                self._json(editor.history_status(studio, query.get("slide", [None])[0]))
             elif path in {"/api/guide/draft", "/api/guide/experience"}:
                 self._json(guide_store.load(studio, path.rsplit("/", 1)[-1]))
+            elif path == "/api/user-templates":
+                from .user_templates import list_templates
+                self._json({"templates": list_templates(studio)})
+            elif path == "/api/user-templates/image":
+                from .user_templates import image
+                file, sha = image(studio, query.get("id", [None])[0], int(query.get("index", ["0"])[0] or 0))
+                if sha != query.get("sha", [None])[0]:
+                    self._json({"error": {"code": "ASSET_CHANGED", "message": "图片已更新，请刷新列表。"}}, 404)
+                else:
+                    self._send(file.read_bytes(), "image/png",
+                               headers={"Cache-Control": "private, max-age=31536000, immutable"})
             elif path == "/api/templates":
                 self._json({"templates": catalog()})
+            elif path == "/api/templates/recommendations":
+                self._json(studio.template_recommendations(query.get("slideId", [None])[0]))
             elif path == "/api/templates/preview":
-                self._send(render_html(sample_scene(query.get("template", [None])[0]), interactive=False).encode(),
-                           "text/html; charset=utf-8")
+                revision = query.get("sceneRevision", [None])[0]
+                if revision is not None and not revision.isdecimal():
+                    raise EngineError("INVALID_REQUEST", "页面版本无效。")
+                preview = studio.preview_template(query.get("template", [None])[0],
+                    query.get("slideId", [None])[0], int(revision) if revision is not None else None)
+                saved = studio.get_scene(preview["slideId"])["scene"] if preview["slideId"] else None
+                preview_html = (self._scene_html(studio, preview["scene"], interactive=False, saved_scene=saved)
+                                if saved else render_html(preview["scene"], interactive=False))
+                if query.get("format", [None])[0] == "json":
+                    self._json({"html": preview_html, "slideId": preview["slideId"], "sceneRevision": preview["sceneRevision"]})
+                else:
+                    self._send(preview_html.encode(), "text/html; charset=utf-8")
             elif path.startswith("/api/preview/"):
                 sid = path.rsplit("/", 1)[-1]
                 current = studio.get_scene(sid)
-                # Serve the engine-registered file only after checking containment.
-                preview = studio.wb._inside(Path(current["paths"]["preview"]), studio.wb.project_dir(studio.project_id))
-                self._send(preview.read_bytes(), "text/html; charset=utf-8")
+                # Render the saved scene with current editor interactions. Older
+                # projects gain editing gestures without rewriting their artifacts.
+                self._send(self._scene_html(studio, current["scene"]).encode(), "text/html; charset=utf-8")
             elif path == "/api/export":
                 result = studio.export(query.get("format", ["html"])[0], query.get("slide", [None])[0], query.get("strict", ["false"])[0].lower() in {"true", "1"})
                 file = Path(result["path"])
@@ -233,8 +349,20 @@ class StudioHandler(BaseHTTPRequestHandler):
                 if not file.resolve().is_relative_to(root) or not file.is_file():
                     self._json({"error": {"code": "NOT_FOUND", "message": "没有这个参考资源。"}}, 404)
                 else:
-                    self._send(file.read_bytes(), "image/png" if file.suffix == ".png" else "application/json; charset=utf-8")
-            elif path in {"/", "/index.html", "/app.js", "/style.css", "/guide.html", "/guide.js", "/guide.css", "/guide-experience.json", "/reference-library.html", "/reference-library.js", "/reference-library.css"}:
+                    raw = file.read_bytes()
+                    digest = hashlib.sha256(raw).hexdigest()
+                    version = query.get('v', [None])[0]
+                    if version is not None and version != digest:
+                        self._json({"error": {"code": "ASSET_CHANGED", "message": "参考图片已更新，请刷新样式列表。"}}, 404)
+                        return
+                    headers = {"ETag": '"' + digest + '"', "Cache-Control":
+                               "private, max-age=31536000, immutable" if version else "private, no-cache"}
+                    mime = "image/png" if file.suffix == ".png" else "application/json; charset=utf-8"
+                    if self.headers.get('If-None-Match') == headers['ETag']:
+                        self._send(b'', mime, 304, headers)
+                    else:
+                        self._send(raw, mime, headers=headers)
+            elif path in {"/", "/index.html", "/app.js", "/preview-loader.js", "/style.css", "/editor.css", "/guide.html", "/guide.js", "/guide.css", "/guide-experience.json", "/reference-library.html", "/reference-library.js", "/reference-library.css"}:
                 file = Path(__file__).parent / "web" / ("index.html" if path in {"/", "/index.html"} else path[1:])
                 self._send(file.read_bytes(), {".html": "text/html; charset=utf-8", ".js": "application/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8"}[file.suffix])
             elif path == "/favicon.ico":
@@ -247,6 +375,8 @@ class StudioHandler(BaseHTTPRequestHandler):
     def do_POST(self):
         origin = self.headers.get("Origin")
         origins = {f"http://127.0.0.1:{self.server.server_port}", f"http://localhost:{self.server.server_port}"}
+        if self.server.public_origin:
+            origins.add(self.server.public_origin)
         if not self._host_ok() or not self._authorized() or (origin and origin not in origins):
             self._json({"error": {"code": "REQUEST_REJECTED", "message": "请求不属于当前本机工作台。"}}, 403)
             return
@@ -271,7 +401,12 @@ class StudioHandler(BaseHTTPRequestHandler):
                 project_id = "project-" + secrets.token_hex(8)
                 studio.wb.create_project(project_id, {"title": title.strip()})
                 opened = self.server.open_project(project_id)
-                opened.set_agent_mode(studio.agent_mode)
+                from .model_profiles import selected, select
+                chosen = selected(studio)
+                if chosen and chosen.get("model") != "unavailable":
+                    select(opened, chosen["id"])
+                else:
+                    opened.set_agent_mode(studio.agent_mode)
                 result = {"projectId": project_id}
             elif path == "/api/chat":
                 result = studio.enqueue(body.get("message"), body.get("slideId"), body.get("objectId"), body.get("clientMessageId"),
@@ -279,10 +414,34 @@ class StudioHandler(BaseHTTPRequestHandler):
                                         scope=body.get("scope", "page"), auto_resume=body.get("autoResume", False))
             elif path in {"/api/guide/draft", "/api/guide/experience"}:
                 result = guide_store.save(studio, path.rsplit("/", 1)[-1], body.get("revision"), body.get("document"))
+            elif path == "/api/templates/match":
+                from .template_matching import match
+                result = match(studio, body.get("slideId"), body.get("sceneRevision"), body.get("instruction", ""))
+            elif path == "/api/templates/adapt":
+                from .template_adaptation import propose
+                result = propose(studio,body.get("templateId"),body.get("slideId"),body.get("sceneRevision"),body.get("approach","creative"))
+                saved=studio.get_scene(result["slideId"])["scene"]
+                result["html"]=self._scene_html(studio,result.pop("scene"),interactive=False,saved_scene=saved)
+            elif path == "/api/templates/apply":
+                from .template_adaptation import apply
+                result = apply(studio,body.get("proposalId"))
             elif path == "/api/template":
                 result = studio.select_template(body.get("templateId"), body.get("slideId"), body.get("sceneRevision"))
+            elif path == "/api/templates/recommendations":
+                from .jev_recommendations import recommend
+                result = recommend(studio, body.get("slideId"), body.get("sceneRevision"))
+            elif path == "/api/diagram/image":
+                from .diagram_design import submit_fallback
+                result = submit_fallback(studio, body.get('slideId'), body.get('sceneRevision'), body.get('requestId'))
             elif path == "/api/edit":
                 result = studio.edit_scene(body.get("slideId"), body.get("sceneRevision"), body.get("changes"))
+            elif path == "/api/editor/history":
+                result = editor.travel(studio, body.get("slideId"), body.get("sceneRevision"), body.get("action"))
+            elif path == "/api/editor/suggest":
+                result = editor.suggest(studio, body.get("slideId"), body.get("sceneRevision"),
+                    body.get("action"), body.get("objectId"), body.get("instruction", ""))
+            elif path == "/api/editor/apply":
+                result = editor.apply_suggestion(studio, body.get("proposalId"))
             elif path == "/api/select":
                 result = studio.select(body.get("slideId"))
             elif path == "/api/demo":
@@ -297,9 +456,53 @@ class StudioHandler(BaseHTTPRequestHandler):
                 result = studio.undo_submission(body.get("slideId"), body.get("sceneRevision"), body.get("clientMessageId"))
             elif path == "/api/assets":
                 result = studio.upload(body.get("filename"), body.get("mime", ""), body.get("base64"))
+            elif path == "/api/model":
+                from .model_profiles import select
+                result = select(studio, body.get("profileId"))
             elif path == "/api/agent":
                 studio.set_agent_mode(body.get("mode"))
                 result = studio.state()
+            elif path == "/api/image-mode":
+                result = studio.set_image_mode(body.get("mode"))
+            elif path == "/api/palette":
+                result = studio.set_palette(None if body.get("clear") is True else {"primary": body.get("primary"), "secondary": body.get("secondary")})
+            elif path == "/api/palette/apply":
+                result = studio.apply_palette(body.get("scope", "page"), body.get("slideId"), body.get("sceneRevision"))
+            elif path == "/api/user-templates":
+                from .user_templates import upload
+                result = upload(studio, body.get("kind"), body.get("files"))
+            elif path == "/api/user-templates/rename":
+                from .user_templates import rename
+                result = rename(studio, body.get("id"), body.get("name"))
+            elif path == "/api/user-templates/delete":
+                from .user_templates import delete
+                result = delete(studio, body.get("id"))
+            elif path == "/api/style-templates/analyze":
+                from .user_templates import analyze_style
+                result = analyze_style(studio, body.get("id"))
+            elif path == "/api/style-templates/update":
+                from .user_templates import update_style
+                result = update_style(studio, body.get("id"), body.get("name"), body.get("profile"))
+            elif path == "/api/style-templates/select":
+                from .user_templates import select_style
+                result = select_style(studio, body.get("id"))
+            elif path == "/api/derive":
+                from .derived import derive
+                result = derive(studio, body.get("mode"), body.get("audience"),
+                                body.get("note"), body.get("styleId"))
+                self.server.open_project(result["projectId"])
+            elif path == "/api/logo":
+                from .logo import process_logo
+                result = process_logo(studio, body.get("filename", "logo"), body.get("mime"), body.get("base64"))
+            elif path == "/api/logo/settings":
+                from .logo import save_settings
+                result = save_settings(studio, body)
+            elif path == "/api/logo/apply":
+                from .logo import apply_logo
+                result = apply_logo(studio)
+            elif path == "/api/logo/remove":
+                from .logo import remove_logo
+                result = remove_logo(studio)
             elif path == "/api/deck/control":
                 studio.control_deck(body.get("action"))
                 result = studio.state()
@@ -326,9 +529,14 @@ class StudioHandler(BaseHTTPRequestHandler):
 
 def create_http_server(root, project_id="main", port=8765, agent=None, token=None):
     studio = Studio(root, project_id)
-    server = StudioHTTPServer(("127.0.0.1", port), studio, token)
+    bind = os.environ.get("WEPPT_BIND_HOST", "127.0.0.1")
+    if bind not in {"127.0.0.1", "0.0.0.0"}:
+        raise EngineError("INVALID_BIND_HOST", "监听地址只支持 loopback 或显式容器地址。")
+    if bind == "0.0.0.0" and not os.environ.get("WEPPT_PUBLIC_ORIGIN"):
+        raise EngineError("PUBLIC_AUTH_REQUIRED", "容器对外监听需要明确的 HTTPS 入口与访问凭据。")
+    server = StudioHTTPServer((bind, port), studio, token)
     try:
-        if agent is not None:
+        if agent is not None and not studio.model_state()["selectedModelProfile"]:
             studio.set_agent_mode(agent)
     except BaseException:
         server.server_close()
@@ -343,7 +551,8 @@ def serve(root, project_id="main", port=8765, agent=None, open_browser=False, de
         server.studio.demo()
     info = diagnose(server.studio.agent_mode)
     server.start_worker()
-    url = f"http://127.0.0.1:{server.server_port}/?token={server.token}"
+    url = (server.public_origin + "/" if server.public_origin else
+           f"http://127.0.0.1:{server.server_port}/?token={server.token}")
     print(json.dumps({"url": url, "projectId": project_id, "agent": info, "root": str(server.studio.root)}, ensure_ascii=False), flush=True)
     if open_browser:
         webbrowser.open(url)

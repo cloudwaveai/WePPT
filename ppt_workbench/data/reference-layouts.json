@@ -1,0 +1,5142 @@
+{
+  "reference-01-01": {
+    "source": "0710网梯分享.pptx",
+    "sourcePage": 1,
+    "sourceSHA256": "e26c2aee9f66896f6c64dc19b77398c63f2894f49fef5d32f419f3678da7503a",
+    "titleShapeId": "7",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 97.43,
+        "y": 126.61,
+        "w": 1085.14,
+        "h": 383.14
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "title",
+        "x": 97.43,
+        "y": 218.54,
+        "w": 1104.96,
+        "h": 145.07
+      },
+      {
+        "sourceId": "9",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 386.01,
+        "y": 556.15,
+        "w": 582.24,
+        "h": 102.12
+      },
+      {
+        "sourceId": "4",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 29.95,
+        "y": 18.0,
+        "w": 189.4,
+        "h": 47.23
+      }
+    ]
+  },
+  "reference-01-02": {
+    "source": "0710网梯分享.pptx",
+    "sourcePage": 8,
+    "sourceSHA256": "e26c2aee9f66896f6c64dc19b77398c63f2894f49fef5d32f419f3678da7503a",
+    "titleShapeId": "5",
+    "objects": [
+      {
+        "sourceId": "14",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1028.7,
+        "y": 678.17,
+        "w": 232.47,
+        "h": 42.01
+      },
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "title",
+        "x": 91.21,
+        "y": 96.03,
+        "w": 1056.0,
+        "h": 54.8
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 852.79,
+        "y": 551.55,
+        "w": 211.49,
+        "h": 42.22
+      },
+      {
+        "sourceId": "11",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 102.74,
+        "y": 191.69,
+        "w": 497.19,
+        "h": 324.4
+      },
+      {
+        "sourceId": "15",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 232.19,
+        "y": 551.55,
+        "w": 211.49,
+        "h": 42.22
+      },
+      {
+        "sourceId": "2",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 619.21,
+        "y": 183.47,
+        "w": 621.18,
+        "h": 349.41
+      },
+      {
+        "sourceId": "3",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 25.95,
+        "y": 662.72,
+        "w": 189.4,
+        "h": 47.23
+      },
+      {
+        "sourceId": "16",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 36.44,
+        "y": 33.63,
+        "w": 461.11,
+        "h": 54.29
+      }
+    ]
+  },
+  "reference-01-03": {
+    "source": "0710网梯分享.pptx",
+    "sourcePage": 9,
+    "sourceSHA256": "e26c2aee9f66896f6c64dc19b77398c63f2894f49fef5d32f419f3678da7503a",
+    "titleShapeId": "5",
+    "objects": [
+      {
+        "sourceId": "14",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1028.7,
+        "y": 678.17,
+        "w": 232.47,
+        "h": 42.01
+      },
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "title",
+        "x": 93.18,
+        "y": 110.08,
+        "w": 1056.0,
+        "h": 54.8
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 61.9,
+        "y": 282.16,
+        "w": 528.0,
+        "h": 192.8
+      },
+      {
+        "sourceId": "10",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 621.18,
+        "y": 236.77,
+        "w": 640.0,
+        "h": 360.0
+      },
+      {
+        "sourceId": "2",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 25.95,
+        "y": 662.72,
+        "w": 189.4,
+        "h": 47.23
+      },
+      {
+        "sourceId": "11",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 36.44,
+        "y": 33.63,
+        "w": 461.11,
+        "h": 54.29
+      }
+    ]
+  },
+  "reference-01-04": {
+    "source": "0710网梯分享.pptx",
+    "sourcePage": 10,
+    "sourceSHA256": "e26c2aee9f66896f6c64dc19b77398c63f2894f49fef5d32f419f3678da7503a",
+    "titleShapeId": "5",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "title",
+        "x": 76.8,
+        "y": 57.28,
+        "w": 1142.4,
+        "h": 59.52
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 78.72,
+        "y": 119.68,
+        "w": 1142.4,
+        "h": 32.64
+      },
+      {
+        "sourceId": "15",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 68.16,
+        "y": 203.52,
+        "w": 155.52,
+        "h": 48.0
+      },
+      {
+        "sourceId": "16",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 221.76,
+        "y": 213.12,
+        "w": 36.48,
+        "h": 57.6
+      },
+      {
+        "sourceId": "19",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 256.32,
+        "y": 203.52,
+        "w": 155.52,
+        "h": 48.0
+      },
+      {
+        "sourceId": "20",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 409.92,
+        "y": 213.12,
+        "w": 36.48,
+        "h": 57.6
+      },
+      {
+        "sourceId": "23",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 444.48,
+        "y": 203.52,
+        "w": 155.52,
+        "h": 48.0
+      },
+      {
+        "sourceId": "24",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 598.08,
+        "y": 213.12,
+        "w": 36.48,
+        "h": 57.6
+      },
+      {
+        "sourceId": "27",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 632.64,
+        "y": 203.52,
+        "w": 155.52,
+        "h": 48.0
+      },
+      {
+        "sourceId": "28",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 786.24,
+        "y": 213.12,
+        "w": 36.48,
+        "h": 57.6
+      },
+      {
+        "sourceId": "31",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 820.8,
+        "y": 203.52,
+        "w": 155.52,
+        "h": 48.0
+      },
+      {
+        "sourceId": "32",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 974.4,
+        "y": 213.12,
+        "w": 36.48,
+        "h": 57.6
+      },
+      {
+        "sourceId": "35",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1008.96,
+        "y": 203.52,
+        "w": 155.52,
+        "h": 48.0
+      },
+      {
+        "sourceId": "123",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 31.71,
+        "y": 358.17,
+        "w": 574.37,
+        "h": 323.08
+      },
+      {
+        "sourceId": "3",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 644.67,
+        "y": 345.6,
+        "w": 568.17,
+        "h": 324.24
+      },
+      {
+        "sourceId": "9",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1069.78,
+        "y": 5.25,
+        "w": 189.4,
+        "h": 47.23
+      }
+    ]
+  },
+  "reference-01-05": {
+    "source": "0710网梯分享.pptx",
+    "sourcePage": 17,
+    "sourceSHA256": "e26c2aee9f66896f6c64dc19b77398c63f2894f49fef5d32f419f3678da7503a",
+    "titleShapeId": "9",
+    "objects": [
+      {
+        "sourceId": "18",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 25.95,
+        "y": 662.72,
+        "w": 189.4,
+        "h": 47.23
+      },
+      {
+        "sourceId": "9",
+        "kind": "text",
+        "role": "title",
+        "x": 61.64,
+        "y": 63.83,
+        "w": 421.73,
+        "h": 66.49
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 71.8,
+        "y": 173.86,
+        "w": 428.02,
+        "h": 179.04
+      },
+      {
+        "sourceId": "7",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 531.37,
+        "y": 135.97,
+        "w": 324.21,
+        "h": 486.32
+      },
+      {
+        "sourceId": "12",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 875.95,
+        "y": 132.01,
+        "w": 367.85,
+        "h": 490.27
+      }
+    ]
+  },
+  "reference-01-06": {
+    "source": "0710网梯分享.pptx",
+    "sourcePage": 19,
+    "sourceSHA256": "e26c2aee9f66896f6c64dc19b77398c63f2894f49fef5d32f419f3678da7503a",
+    "titleShapeId": "9",
+    "objects": [
+      {
+        "sourceId": "9",
+        "kind": "text",
+        "role": "title",
+        "x": 25.95,
+        "y": 36.72,
+        "w": 461.11,
+        "h": 54.29
+      },
+      {
+        "sourceId": "10",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 122.11,
+        "y": 117.73,
+        "w": 339.37,
+        "h": 509.05
+      },
+      {
+        "sourceId": "12",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 614.03,
+        "y": 133.14,
+        "w": 595.88,
+        "h": 276.77
+      },
+      {
+        "sourceId": "5",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 25.95,
+        "y": 662.72,
+        "w": 189.4,
+        "h": 47.23
+      }
+    ]
+  },
+  "reference-01-07": {
+    "source": "0710网梯分享.pptx",
+    "sourcePage": 21,
+    "sourceSHA256": "e26c2aee9f66896f6c64dc19b77398c63f2894f49fef5d32f419f3678da7503a",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "14",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1028.7,
+        "y": 678.17,
+        "w": 232.47,
+        "h": 42.01
+      },
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 25.95,
+        "y": 36.72,
+        "w": 461.11,
+        "h": 54.29
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 186.24,
+        "y": 429.94,
+        "w": 248.47,
+        "h": 50.53
+      },
+      {
+        "sourceId": "18",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 205.26,
+        "y": 153.32,
+        "w": 201.53,
+        "h": 50.53
+      },
+      {
+        "sourceId": "19",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 150.83,
+        "y": 289.82,
+        "w": 393.77,
+        "h": 50.53
+      },
+      {
+        "sourceId": "20",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 234.96,
+        "y": 571.45,
+        "w": 151.04,
+        "h": 50.53
+      },
+      {
+        "sourceId": "21",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 25.95,
+        "y": 662.72,
+        "w": 189.4,
+        "h": 47.23
+      },
+      {
+        "sourceId": "23",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 548.89,
+        "y": 160.67,
+        "w": 730.28,
+        "h": 410.78
+      }
+    ]
+  },
+  "reference-01-08": {
+    "source": "0710网梯分享.pptx",
+    "sourcePage": 26,
+    "sourceSHA256": "e26c2aee9f66896f6c64dc19b77398c63f2894f49fef5d32f419f3678da7503a",
+    "titleShapeId": "41",
+    "objects": [
+      {
+        "sourceId": "18",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 25.95,
+        "y": 662.72,
+        "w": 189.4,
+        "h": 47.23
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 60.48,
+        "y": 167.08,
+        "w": 1132.8,
+        "h": 38.4
+      },
+      {
+        "sourceId": "35",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 12.6,
+        "y": 276.05,
+        "w": 400.94,
+        "h": 258.82
+      },
+      {
+        "sourceId": "36",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 446.77,
+        "y": 272.34,
+        "w": 402.11,
+        "h": 261.35
+      },
+      {
+        "sourceId": "37",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 862.9,
+        "y": 272.34,
+        "w": 404.5,
+        "h": 262.53
+      },
+      {
+        "sourceId": "38",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 90.45,
+        "y": 534.87,
+        "w": 230.4,
+        "h": 74.88
+      },
+      {
+        "sourceId": "39",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 524.8,
+        "y": 534.87,
+        "w": 230.4,
+        "h": 74.88
+      },
+      {
+        "sourceId": "40",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 949.95,
+        "y": 532.76,
+        "w": 230.4,
+        "h": 74.88
+      },
+      {
+        "sourceId": "41",
+        "kind": "text",
+        "role": "title",
+        "x": 57.6,
+        "y": 86.44,
+        "w": 979.2,
+        "h": 63.36
+      }
+    ]
+  },
+  "reference-01-09": {
+    "source": "0710网梯分享.pptx",
+    "sourcePage": 27,
+    "sourceSHA256": "e26c2aee9f66896f6c64dc19b77398c63f2894f49fef5d32f419f3678da7503a",
+    "titleShapeId": "41",
+    "objects": [
+      {
+        "sourceId": "18",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 25.95,
+        "y": 662.72,
+        "w": 189.4,
+        "h": 47.23
+      },
+      {
+        "sourceId": "6",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 940.48,
+        "y": 590.18,
+        "w": 466.33,
+        "h": 145.07
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 57.6,
+        "y": 158.25,
+        "w": 1132.8,
+        "h": 38.4
+      },
+      {
+        "sourceId": "39",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 819.92,
+        "y": 608.05,
+        "w": 230.4,
+        "h": 74.88
+      },
+      {
+        "sourceId": "41",
+        "kind": "text",
+        "role": "title",
+        "x": 57.6,
+        "y": 86.44,
+        "w": 979.2,
+        "h": 63.36
+      },
+      {
+        "sourceId": "5",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 822.19,
+        "y": 79.99,
+        "w": 243.41,
+        "h": 540.92
+      },
+      {
+        "sourceId": "10",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 92.65,
+        "y": 205.1,
+        "w": 631.72,
+        "h": 410.5
+      },
+      {
+        "sourceId": "11",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 291.77,
+        "y": 601.86,
+        "w": 230.4,
+        "h": 74.88
+      }
+    ]
+  },
+  "reference-01-10": {
+    "source": "0710网梯分享.pptx",
+    "sourcePage": 28,
+    "sourceSHA256": "e26c2aee9f66896f6c64dc19b77398c63f2894f49fef5d32f419f3678da7503a",
+    "titleShapeId": "12",
+    "objects": [
+      {
+        "sourceId": "14",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 1.73,
+        "y": 7.94,
+        "w": 1280.13,
+        "h": 719.69
+      },
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 136.04,
+        "y": 342.8,
+        "w": 371.29,
+        "h": 113.09
+      },
+      {
+        "sourceId": "11",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 25.95,
+        "y": 662.72,
+        "w": 189.4,
+        "h": 47.23
+      },
+      {
+        "sourceId": "6",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 624.72,
+        "y": 153.09,
+        "w": 446.67,
+        "h": 452.0
+      },
+      {
+        "sourceId": "12",
+        "kind": "text",
+        "role": "title",
+        "x": 3.5,
+        "y": 145.87,
+        "w": 636.48,
+        "h": 136.39
+      }
+    ]
+  },
+  "reference-02-01": {
+    "source": "0828云涌世纪公司介绍.pptx",
+    "sourcePage": 7,
+    "sourceSHA256": "933f1daee4200a26519b6838c0914121b9c5e8e7c87ce3eee4e3992753e70804",
+    "titleShapeId": "9",
+    "objects": [
+      {
+        "sourceId": "14",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1028.7,
+        "y": 678.17,
+        "w": 232.47,
+        "h": 42.01
+      },
+      {
+        "sourceId": "4",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 20.21,
+        "y": 13.15,
+        "w": 258.05,
+        "h": 64.35
+      },
+      {
+        "sourceId": "9",
+        "kind": "text",
+        "role": "title",
+        "x": 408.51,
+        "y": 295.47,
+        "w": 461.11,
+        "h": 54.29
+      }
+    ]
+  },
+  "reference-02-02": {
+    "source": "0828云涌世纪公司介绍.pptx",
+    "sourcePage": 15,
+    "sourceSHA256": "933f1daee4200a26519b6838c0914121b9c5e8e7c87ce3eee4e3992753e70804",
+    "titleShapeId": "5",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "title",
+        "x": 138.51,
+        "y": 71.0,
+        "w": 953.93,
+        "h": 87.24
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 18.97,
+        "y": 680.62,
+        "w": 642.75,
+        "h": 38.78
+      },
+      {
+        "sourceId": "7",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 71.31,
+        "y": 74.41,
+        "w": 67.2,
+        "h": 67.2
+      },
+      {
+        "sourceId": "9",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 197.22,
+        "y": 191.07,
+        "w": 836.52,
+        "h": 488.88
+      },
+      {
+        "sourceId": "6",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1067.91,
+        "y": 666.74,
+        "w": 193.12,
+        "h": 48.16
+      }
+    ]
+  },
+  "reference-03-01": {
+    "source": "420云涌世纪公司介绍.pptx",
+    "sourcePage": 3,
+    "sourceSHA256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+    "titleShapeId": "7",
+    "objects": [
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "title",
+        "x": -130.61,
+        "y": 70.08,
+        "w": 913.02,
+        "h": 145.07
+      },
+      {
+        "sourceId": "11",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 184.04,
+        "y": 227.83,
+        "w": 321.09,
+        "h": 258.5
+      },
+      {
+        "sourceId": "15",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 786.27,
+        "y": 239.26,
+        "w": 301.76,
+        "h": 206.8
+      },
+      {
+        "sourceId": "14",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1067.91,
+        "y": 666.74,
+        "w": 193.12,
+        "h": 48.16
+      },
+      {
+        "sourceId": "17",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 537.08,
+        "y": 120.44,
+        "w": 147.84,
+        "h": 26.88
+      },
+      {
+        "sourceId": "18",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 737.03,
+        "y": 126.11,
+        "w": 576.0,
+        "h": 24.0
+      },
+      {
+        "sourceId": "19",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 704.0,
+        "y": 123.23,
+        "w": 26.88,
+        "h": 26.88
+      }
+    ]
+  },
+  "reference-03-02": {
+    "source": "420云涌世纪公司介绍.pptx",
+    "sourcePage": 5,
+    "sourceSHA256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+    "titleShapeId": "9",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 154.37,
+        "y": 196.89,
+        "w": 137.01,
+        "h": 142.1
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 364.5,
+        "y": 241.97,
+        "w": 447.54,
+        "h": 158.65
+      },
+      {
+        "sourceId": "9",
+        "kind": "text",
+        "role": "title",
+        "x": 115.2,
+        "y": 83.61,
+        "w": 326.13,
+        "h": 67.86
+      },
+      {
+        "sourceId": "12",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 193.35,
+        "y": 353.49,
+        "w": 83.23,
+        "h": 39.48
+      },
+      {
+        "sourceId": "15",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 154.37,
+        "y": 436.16,
+        "w": 153.91,
+        "h": 158.65
+      },
+      {
+        "sourceId": "17",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 185.17,
+        "y": 616.6,
+        "w": 99.6,
+        "h": 38.78
+      },
+      {
+        "sourceId": "18",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 364.5,
+        "y": 475.18,
+        "w": 447.54,
+        "h": 170.04
+      },
+      {
+        "sourceId": "19",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 441.32,
+        "y": 111.44,
+        "w": 160.32,
+        "h": 26.88
+      },
+      {
+        "sourceId": "20",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 364.5,
+        "y": 195.32,
+        "w": 588.12,
+        "h": 24.06
+      },
+      {
+        "sourceId": "21",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 364.5,
+        "y": 437.95,
+        "w": 382.72,
+        "h": 28.8
+      },
+      {
+        "sourceId": "22",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1058.49,
+        "y": 663.87,
+        "w": 193.12,
+        "h": 48.16
+      }
+    ]
+  },
+  "reference-03-03": {
+    "source": "420云涌世纪公司介绍.pptx",
+    "sourcePage": 10,
+    "sourceSHA256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+    "titleShapeId": "5",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "title",
+        "x": 151.92,
+        "y": 67.7,
+        "w": 407.14,
+        "h": 87.24
+      },
+      {
+        "sourceId": "44",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 71.31,
+        "y": 74.41,
+        "w": 67.2,
+        "h": 67.2
+      },
+      {
+        "sourceId": "47",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 572.47,
+        "y": 102.83,
+        "w": 672.0,
+        "h": 48.0
+      },
+      {
+        "sourceId": "18",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 41.97,
+        "y": 252.95,
+        "w": 377.24,
+        "h": 321.13
+      },
+      {
+        "sourceId": "48",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 437.49,
+        "y": 191.26,
+        "w": 354.0,
+        "h": 210.8
+      },
+      {
+        "sourceId": "49",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 809.76,
+        "y": 197.3,
+        "w": 376.74,
+        "h": 204.84
+      },
+      {
+        "sourceId": "50",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 437.49,
+        "y": 414.4,
+        "w": 354.0,
+        "h": 212.85
+      },
+      {
+        "sourceId": "51",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 809.76,
+        "y": 413.51,
+        "w": 376.74,
+        "h": 218.91
+      },
+      {
+        "sourceId": "52",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1067.91,
+        "y": 666.74,
+        "w": 193.12,
+        "h": 48.16
+      }
+    ]
+  },
+  "reference-03-04": {
+    "source": "420云涌世纪公司介绍.pptx",
+    "sourcePage": 11,
+    "sourceSHA256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+    "titleShapeId": "5",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "title",
+        "x": 151.92,
+        "y": 67.7,
+        "w": 536.39,
+        "h": 87.24
+      },
+      {
+        "sourceId": "44",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 71.31,
+        "y": 74.41,
+        "w": 67.2,
+        "h": 67.2
+      },
+      {
+        "sourceId": "6",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 688.31,
+        "y": 104.7,
+        "w": 672.0,
+        "h": 48.0
+      },
+      {
+        "sourceId": "7",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 88.92,
+        "y": 225.36,
+        "w": 239.9,
+        "h": 409.04
+      },
+      {
+        "sourceId": "8",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 393.92,
+        "y": 229.85,
+        "w": 210.25,
+        "h": 409.04
+      },
+      {
+        "sourceId": "9",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 688.31,
+        "y": 229.23,
+        "w": 210.25,
+        "h": 409.04
+      },
+      {
+        "sourceId": "10",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 972.62,
+        "y": 227.6,
+        "w": 203.68,
+        "h": 409.04
+      },
+      {
+        "sourceId": "11",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1067.91,
+        "y": 666.74,
+        "w": 193.12,
+        "h": 48.16
+      }
+    ]
+  },
+  "reference-03-05": {
+    "source": "420云涌世纪公司介绍.pptx",
+    "sourcePage": 14,
+    "sourceSHA256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+    "titleShapeId": "5",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "title",
+        "x": 151.92,
+        "y": 67.7,
+        "w": 463.52,
+        "h": 87.24
+      },
+      {
+        "sourceId": "44",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 71.31,
+        "y": 74.41,
+        "w": 67.2,
+        "h": 67.2
+      },
+      {
+        "sourceId": "6",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 640.0,
+        "y": 102.69,
+        "w": 672.0,
+        "h": 48.0
+      },
+      {
+        "sourceId": "29",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1067.91,
+        "y": 666.74,
+        "w": 193.12,
+        "h": 48.16
+      },
+      {
+        "sourceId": "30",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 578.51,
+        "y": 294.22,
+        "w": 644.23,
+        "h": 315.28
+      },
+      {
+        "sourceId": "31",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 953.04,
+        "y": 52.96,
+        "w": 229.73,
+        "h": 94.57
+      },
+      {
+        "sourceId": "32",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 578.51,
+        "y": 228.33,
+        "w": 491.67,
+        "h": 53.33
+      },
+      {
+        "sourceId": "35",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 105.31,
+        "y": 187.83,
+        "w": 306.67,
+        "h": 26.67
+      },
+      {
+        "sourceId": "36",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 127.84,
+        "y": 207.22,
+        "w": 406.2,
+        "h": 129.8
+      },
+      {
+        "sourceId": "38",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 118.24,
+        "y": 345.0,
+        "w": 306.67,
+        "h": 26.67
+      },
+      {
+        "sourceId": "40",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 127.04,
+        "y": 344.5,
+        "w": 40.07,
+        "h": 32.0
+      },
+      {
+        "sourceId": "41",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 127.84,
+        "y": 379.42,
+        "w": 406.2,
+        "h": 151.08
+      },
+      {
+        "sourceId": "43",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 127.84,
+        "y": 559.05,
+        "w": 326.0,
+        "h": 26.67
+      },
+      {
+        "sourceId": "47",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 128.02,
+        "y": 585.28,
+        "w": 406.2,
+        "h": 96.16
+      }
+    ]
+  },
+  "reference-03-06": {
+    "source": "420云涌世纪公司介绍.pptx",
+    "sourcePage": 16,
+    "sourceSHA256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+    "titleShapeId": "5",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "title",
+        "x": 151.92,
+        "y": 67.7,
+        "w": 463.52,
+        "h": 87.24
+      },
+      {
+        "sourceId": "44",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 71.31,
+        "y": 74.41,
+        "w": 67.2,
+        "h": 67.2
+      },
+      {
+        "sourceId": "6",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 640.0,
+        "y": 102.69,
+        "w": 672.0,
+        "h": 48.0
+      },
+      {
+        "sourceId": "7",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 779.88,
+        "y": 254.11,
+        "w": 404.14,
+        "h": 194.56
+      },
+      {
+        "sourceId": "8",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 779.88,
+        "y": 456.93,
+        "w": 404.14,
+        "h": 194.6
+      },
+      {
+        "sourceId": "9",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1067.91,
+        "y": 666.74,
+        "w": 193.12,
+        "h": 48.16
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 769.36,
+        "y": 187.05,
+        "w": 491.67,
+        "h": 53.33
+      },
+      {
+        "sourceId": "15",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 191.39,
+        "y": 185.3,
+        "w": 306.67,
+        "h": 26.67
+      },
+      {
+        "sourceId": "17",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 195.39,
+        "y": 220.63,
+        "w": 406.2,
+        "h": 129.8
+      },
+      {
+        "sourceId": "19",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 199.39,
+        "y": 558.9,
+        "w": 326.0,
+        "h": 26.67
+      },
+      {
+        "sourceId": "21",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 191.39,
+        "y": 388.43,
+        "w": 306.67,
+        "h": 26.67
+      },
+      {
+        "sourceId": "22",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 193.32,
+        "y": 424.83,
+        "w": 401.13,
+        "h": 110.13
+      },
+      {
+        "sourceId": "24",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 203.59,
+        "y": 600.03,
+        "w": 160.0,
+        "h": 53.33
+      },
+      {
+        "sourceId": "26",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 415.32,
+        "y": 602.5,
+        "w": 160.0,
+        "h": 53.33
+      },
+      {
+        "sourceId": "27",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 196.39,
+        "y": 383.36,
+        "w": 40.07,
+        "h": 32.0
+      },
+      {
+        "sourceId": "28",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 204.86,
+        "y": 658.03,
+        "w": 160.0,
+        "h": 26.67
+      },
+      {
+        "sourceId": "29",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 416.59,
+        "y": 659.03,
+        "w": 160.0,
+        "h": 26.67
+      }
+    ]
+  },
+  "reference-03-07": {
+    "source": "420云涌世纪公司介绍.pptx",
+    "sourcePage": 25,
+    "sourceSHA256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+    "titleShapeId": "2",
+    "objects": [
+      {
+        "sourceId": "2",
+        "kind": "text",
+        "role": "title",
+        "x": 145.9,
+        "y": 79.02,
+        "w": 1055.95,
+        "h": 67.86
+      },
+      {
+        "sourceId": "17",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 96.61,
+        "y": 192.1,
+        "w": 230.4,
+        "h": 48.47
+      },
+      {
+        "sourceId": "18",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 370.74,
+        "y": 194.11,
+        "w": 213.26,
+        "h": 48.47
+      },
+      {
+        "sourceId": "19",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 673.88,
+        "y": 192.1,
+        "w": 245.57,
+        "h": 48.47
+      },
+      {
+        "sourceId": "21",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 964.63,
+        "y": 192.1,
+        "w": 248.59,
+        "h": 48.47
+      },
+      {
+        "sourceId": "5",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 69.26,
+        "y": 79.93,
+        "w": 67.2,
+        "h": 67.2
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 67.15,
+        "y": 251.53,
+        "w": 233.31,
+        "h": 319.89
+      },
+      {
+        "sourceId": "9",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 370.74,
+        "y": 251.53,
+        "w": 233.31,
+        "h": 268.19
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 686.14,
+        "y": 258.94,
+        "w": 233.31,
+        "h": 268.19
+      },
+      {
+        "sourceId": "11",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 979.54,
+        "y": 251.53,
+        "w": 233.31,
+        "h": 190.64
+      }
+    ]
+  },
+  "reference-04-01": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 2,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "6",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 76.8,
+        "y": 66.56,
+        "w": 640.0,
+        "h": 33.28
+      },
+      {
+        "sourceId": "6",
+        "kind": "text",
+        "role": "title",
+        "x": 74.24,
+        "y": 99.84,
+        "w": 512.0,
+        "h": 70.4
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 806.4,
+        "y": 121.6,
+        "w": 396.8,
+        "h": 35.84
+      },
+      {
+        "sourceId": "9",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 76.8,
+        "y": 185.6,
+        "w": 89.6,
+        "h": 64.0
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 179.2,
+        "y": 192.0,
+        "w": 844.8,
+        "h": 53.76
+      },
+      {
+        "sourceId": "11",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1139.2,
+        "y": 192.0,
+        "w": 64.0,
+        "h": 53.76
+      },
+      {
+        "sourceId": "13",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 76.8,
+        "y": 282.88,
+        "w": 89.6,
+        "h": 64.0
+      },
+      {
+        "sourceId": "14",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 179.2,
+        "y": 289.28,
+        "w": 844.8,
+        "h": 53.76
+      },
+      {
+        "sourceId": "15",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1139.2,
+        "y": 289.28,
+        "w": 64.0,
+        "h": 53.76
+      },
+      {
+        "sourceId": "17",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 76.8,
+        "y": 380.16,
+        "w": 89.6,
+        "h": 64.0
+      },
+      {
+        "sourceId": "18",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 179.2,
+        "y": 386.56,
+        "w": 844.8,
+        "h": 53.76
+      },
+      {
+        "sourceId": "19",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1139.2,
+        "y": 386.56,
+        "w": 64.0,
+        "h": 53.76
+      },
+      {
+        "sourceId": "22",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 179.2,
+        "y": 483.84,
+        "w": 844.8,
+        "h": 53.76
+      },
+      {
+        "sourceId": "23",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1139.2,
+        "y": 483.84,
+        "w": 64.0,
+        "h": 53.76
+      },
+      {
+        "sourceId": "26",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 179.2,
+        "y": 581.12,
+        "w": 844.8,
+        "h": 53.76
+      },
+      {
+        "sourceId": "27",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1139.2,
+        "y": 581.12,
+        "w": 64.0,
+        "h": 53.76
+      },
+      {
+        "sourceId": "29",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 76.8,
+        "y": 578.56,
+        "w": 89.6,
+        "h": 64.0
+      },
+      {
+        "sourceId": "30",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 76.8,
+        "y": 481.81,
+        "w": 89.6,
+        "h": 64.0
+      },
+      {
+        "sourceId": "2",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "25",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 675.84,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-02": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 3,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 58.88,
+        "w": 768.0,
+        "h": 64.0
+      },
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 70.4,
+        "y": 128.0,
+        "w": 96.0,
+        "h": 108.8
+      },
+      {
+        "sourceId": "6",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 179.2,
+        "y": 143.36,
+        "w": 268.8,
+        "h": 89.6
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 454.4,
+        "y": 128.0,
+        "w": 96.0,
+        "h": 108.8
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 563.2,
+        "y": 143.36,
+        "w": 268.8,
+        "h": 89.6
+      },
+      {
+        "sourceId": "9",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 838.4,
+        "y": 128.0,
+        "w": 96.0,
+        "h": 108.8
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 947.2,
+        "y": 143.36,
+        "w": 268.8,
+        "h": 89.6
+      },
+      {
+        "sourceId": "12",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 99.84,
+        "y": 253.44,
+        "w": 1088.0,
+        "h": 64.0
+      },
+      {
+        "sourceId": "14",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 70.4,
+        "y": 396.8,
+        "w": 275.2,
+        "h": 43.52
+      },
+      {
+        "sourceId": "15",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 70.4,
+        "y": 448.0,
+        "w": 275.2,
+        "h": 64.0
+      },
+      {
+        "sourceId": "17",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 934.4,
+        "y": 396.8,
+        "w": 275.2,
+        "h": 43.52
+      },
+      {
+        "sourceId": "18",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 934.4,
+        "y": 448.0,
+        "w": 275.2,
+        "h": 64.0
+      },
+      {
+        "sourceId": "24",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 377.6,
+        "y": 343.04,
+        "w": 35.84,
+        "h": 35.84
+      },
+      {
+        "sourceId": "25",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 422.4,
+        "y": 344.32,
+        "w": 512.0,
+        "h": 33.28
+      },
+      {
+        "sourceId": "27",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 437.76,
+        "y": 524.8,
+        "w": 35.84,
+        "h": 35.84
+      },
+      {
+        "sourceId": "28",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 483.84,
+        "y": 526.08,
+        "w": 563.2,
+        "h": 33.28
+      },
+      {
+        "sourceId": "30",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 576.0,
+        "y": 419.84,
+        "w": 128.0,
+        "h": 40.96
+      },
+      {
+        "sourceId": "31",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 576.0,
+        "y": 460.8,
+        "w": 128.0,
+        "h": 25.6
+      },
+      {
+        "sourceId": "33",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 70.4,
+        "y": 591.36,
+        "w": 192.0,
+        "h": 70.4
+      },
+      {
+        "sourceId": "34",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 288.0,
+        "y": 588.8,
+        "w": 140.8,
+        "h": 38.4
+      },
+      {
+        "sourceId": "35",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 288.0,
+        "y": 624.64,
+        "w": 294.4,
+        "h": 53.76
+      },
+      {
+        "sourceId": "36",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 546.56,
+        "y": 597.76,
+        "w": 51.2,
+        "h": 38.4
+      },
+      {
+        "sourceId": "37",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 601.6,
+        "y": 588.8,
+        "w": 140.8,
+        "h": 38.4
+      },
+      {
+        "sourceId": "38",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 601.6,
+        "y": 624.64,
+        "w": 294.4,
+        "h": 53.76
+      },
+      {
+        "sourceId": "39",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 860.16,
+        "y": 597.76,
+        "w": 51.2,
+        "h": 38.4
+      },
+      {
+        "sourceId": "40",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 915.2,
+        "y": 588.8,
+        "w": 140.8,
+        "h": 38.4
+      },
+      {
+        "sourceId": "41",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 915.2,
+        "y": 624.64,
+        "w": 294.4,
+        "h": 53.76
+      },
+      {
+        "sourceId": "43",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "44",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 675.84,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-03": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 5,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "5",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 117.76,
+        "y": 186.88,
+        "w": 768.0,
+        "h": 38.4
+      },
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 262.4,
+        "w": 1152.0,
+        "h": 96.0
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 79.36,
+        "y": 409.6,
+        "w": 1100.8,
+        "h": 108.8
+      },
+      {
+        "sourceId": "9",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 99.84,
+        "y": 528.64,
+        "w": 166.4,
+        "h": 46.08
+      },
+      {
+        "sourceId": "11",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 288.0,
+        "y": 528.64,
+        "w": 166.4,
+        "h": 46.08
+      },
+      {
+        "sourceId": "13",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 476.16,
+        "y": 528.64,
+        "w": 166.4,
+        "h": 46.08
+      }
+    ]
+  },
+  "reference-04-04": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 6,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 53.76,
+        "w": 1152.0,
+        "h": 70.4
+      },
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 70.4,
+        "y": 107.52,
+        "w": 512.0,
+        "h": 33.28
+      },
+      {
+        "sourceId": "2",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 62.68,
+        "y": 143.6,
+        "w": 527.44,
+        "h": 259.11
+      },
+      {
+        "sourceId": "6",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 412.05,
+        "y": 147.28,
+        "w": 340.71,
+        "h": 38.84
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 612.77,
+        "y": 197.0,
+        "w": 279.97,
+        "h": 55.99
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 612.77,
+        "y": 253.0,
+        "w": 156.74,
+        "h": 78.39
+      },
+      {
+        "sourceId": "9",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 802.45,
+        "y": 198.4,
+        "w": 279.97,
+        "h": 55.99
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 802.45,
+        "y": 253.0,
+        "w": 139.98,
+        "h": 78.39
+      },
+      {
+        "sourceId": "11",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 975.37,
+        "y": 197.0,
+        "w": 279.97,
+        "h": 55.99
+      },
+      {
+        "sourceId": "12",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 975.37,
+        "y": 250.24,
+        "w": 157.43,
+        "h": 78.39
+      },
+      {
+        "sourceId": "15",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 62.68,
+        "y": 413.58,
+        "w": 602.88,
+        "h": 274.42
+      },
+      {
+        "sourceId": "18",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 677.68,
+        "y": 488.09,
+        "w": 279.97,
+        "h": 55.99
+      },
+      {
+        "sourceId": "28",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 677.68,
+        "y": 550.93,
+        "w": 156.74,
+        "h": 35.03
+      },
+      {
+        "sourceId": "30",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 862.06,
+        "y": 483.1,
+        "w": 279.97,
+        "h": 55.99
+      },
+      {
+        "sourceId": "31",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 867.36,
+        "y": 554.52,
+        "w": 139.98,
+        "h": 78.39
+      },
+      {
+        "sourceId": "34",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 590.12,
+        "y": 421.39,
+        "w": 340.71,
+        "h": 38.84
+      },
+      {
+        "sourceId": "36",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "37",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 675.84,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-05": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 8,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 53.76,
+        "w": 1152.0,
+        "h": 70.4
+      },
+      {
+        "sourceId": "5",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 70.4,
+        "y": 137.16,
+        "w": 934.4,
+        "h": 453.96
+      },
+      {
+        "sourceId": "6",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 70.4,
+        "y": 668.16,
+        "w": 1152.0,
+        "h": 38.4
+      },
+      {
+        "sourceId": "22",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1049.6,
+        "y": 152.09,
+        "w": 422.4,
+        "h": 35.84
+      },
+      {
+        "sourceId": "23",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1004.8,
+        "y": 186.87,
+        "w": 473.6,
+        "h": 172.8
+      },
+      {
+        "sourceId": "25",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1049.6,
+        "y": 388.89,
+        "w": 422.4,
+        "h": 35.84
+      },
+      {
+        "sourceId": "26",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1004.8,
+        "y": 417.27,
+        "w": 473.6,
+        "h": 108.8
+      },
+      {
+        "sourceId": "28",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1049.6,
+        "y": 555.29,
+        "w": 422.4,
+        "h": 35.84
+      },
+      {
+        "sourceId": "7",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "8",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 675.84,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-06": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 12,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 53.76,
+        "w": 1152.0,
+        "h": 70.4
+      },
+      {
+        "sourceId": "6",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 89.6,
+        "y": 140.8,
+        "w": 313.6,
+        "h": 151.1
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 787.37,
+        "y": 158.53,
+        "w": 512.0,
+        "h": 121.6
+      },
+      {
+        "sourceId": "10",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 89.6,
+        "y": 338.39,
+        "w": 288.0,
+        "h": 148.01
+      },
+      {
+        "sourceId": "12",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 787.37,
+        "y": 357.76,
+        "w": 414.79,
+        "h": 121.6
+      },
+      {
+        "sourceId": "14",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 89.6,
+        "y": 537.6,
+        "w": 288.0,
+        "h": 135.68
+      },
+      {
+        "sourceId": "16",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 787.37,
+        "y": 533.92,
+        "w": 312.73,
+        "h": 121.6
+      },
+      {
+        "sourceId": "3",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 403.2,
+        "y": 144.92,
+        "w": 364.8,
+        "h": 121.6
+      },
+      {
+        "sourceId": "18",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 430.8,
+        "y": 329.41,
+        "w": 295.47,
+        "h": 196.98
+      },
+      {
+        "sourceId": "22",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 394.91,
+        "y": 537.6,
+        "w": 373.09,
+        "h": 125.17
+      },
+      {
+        "sourceId": "2",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "7",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 12.76,
+        "y": 680.06,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-07": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 14,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 53.76,
+        "w": 1152.0,
+        "h": 70.4
+      },
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 79.36,
+        "y": 140.8,
+        "w": 704.0,
+        "h": 51.2
+      },
+      {
+        "sourceId": "6",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 79.36,
+        "y": 207.36,
+        "w": 121.6,
+        "h": 43.52
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 211.2,
+        "y": 209.92,
+        "w": 627.2,
+        "h": 76.8
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 79.36,
+        "y": 286.72,
+        "w": 121.6,
+        "h": 43.52
+      },
+      {
+        "sourceId": "9",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 211.2,
+        "y": 289.28,
+        "w": 627.2,
+        "h": 76.8
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 79.36,
+        "y": 366.08,
+        "w": 121.6,
+        "h": 43.52
+      },
+      {
+        "sourceId": "11",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 211.2,
+        "y": 368.64,
+        "w": 627.2,
+        "h": 76.8
+      },
+      {
+        "sourceId": "12",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 79.36,
+        "y": 445.44,
+        "w": 121.6,
+        "h": 43.52
+      },
+      {
+        "sourceId": "13",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 211.2,
+        "y": 448.0,
+        "w": 627.2,
+        "h": 76.8
+      },
+      {
+        "sourceId": "14",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 848.64,
+        "y": 134.4,
+        "w": 407.99,
+        "h": 277.76
+      },
+      {
+        "sourceId": "15",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 883.2,
+        "y": 419.84,
+        "w": 332.8,
+        "h": 38.4
+      },
+      {
+        "sourceId": "17",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 79.36,
+        "y": 569.6,
+        "w": 1120.0,
+        "h": 96.0
+      },
+      {
+        "sourceId": "2",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "3",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 22.11,
+        "y": 678.77,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-08": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 15,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 53.76,
+        "w": 1152.0,
+        "h": 70.4
+      },
+      {
+        "sourceId": "17",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 79.36,
+        "y": 151.04,
+        "w": 1120.0,
+        "h": 418.56
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 79.36,
+        "y": 601.6,
+        "w": 1120.0,
+        "h": 74.24
+      },
+      {
+        "sourceId": "2",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "3",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 22.11,
+        "y": 678.77,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-09": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 16,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 53.76,
+        "w": 1152.0,
+        "h": 70.4
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 189.44,
+        "y": 163.84,
+        "w": 307.2,
+        "h": 51.2
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 312.32,
+        "y": 175.36,
+        "w": 358.4,
+        "h": 33.28
+      },
+      {
+        "sourceId": "11",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 176.64,
+        "y": 273.92,
+        "w": 409.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "12",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 176.64,
+        "y": 314.88,
+        "w": 414.72,
+        "h": 38.4
+      },
+      {
+        "sourceId": "15",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 176.64,
+        "y": 381.44,
+        "w": 409.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "16",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 176.64,
+        "y": 422.4,
+        "w": 414.72,
+        "h": 38.4
+      },
+      {
+        "sourceId": "19",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 176.64,
+        "y": 488.96,
+        "w": 409.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "20",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 176.64,
+        "y": 529.92,
+        "w": 414.72,
+        "h": 38.4
+      },
+      {
+        "sourceId": "23",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 176.64,
+        "y": 596.48,
+        "w": 409.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "24",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 176.64,
+        "y": 637.44,
+        "w": 414.72,
+        "h": 38.4
+      },
+      {
+        "sourceId": "27",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 762.88,
+        "y": 163.84,
+        "w": 307.2,
+        "h": 51.2
+      },
+      {
+        "sourceId": "28",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 907.52,
+        "y": 172.8,
+        "w": 358.4,
+        "h": 33.28
+      },
+      {
+        "sourceId": "31",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 750.08,
+        "y": 273.92,
+        "w": 409.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "32",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 750.08,
+        "y": 314.88,
+        "w": 414.72,
+        "h": 38.4
+      },
+      {
+        "sourceId": "35",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 750.08,
+        "y": 381.44,
+        "w": 409.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "36",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 750.08,
+        "y": 422.4,
+        "w": 414.72,
+        "h": 38.4
+      },
+      {
+        "sourceId": "39",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 750.08,
+        "y": 488.96,
+        "w": 409.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "40",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 750.08,
+        "y": 529.92,
+        "w": 414.72,
+        "h": 38.4
+      },
+      {
+        "sourceId": "43",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 750.08,
+        "y": 596.48,
+        "w": 409.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "44",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 750.08,
+        "y": 637.44,
+        "w": 414.72,
+        "h": 38.4
+      },
+      {
+        "sourceId": "2",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "3",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 22.11,
+        "y": 678.77,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-10": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 17,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 53.76,
+        "w": 1152.0,
+        "h": 70.4
+      },
+      {
+        "sourceId": "6",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 108.8,
+        "y": 163.84,
+        "w": 1062.4,
+        "h": 89.6
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 115.2,
+        "y": 305.92,
+        "w": 281.6,
+        "h": 43.52
+      },
+      {
+        "sourceId": "9",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 416.0,
+        "y": 296.96,
+        "w": 761.6,
+        "h": 64.0
+      },
+      {
+        "sourceId": "11",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 115.2,
+        "y": 405.76,
+        "w": 281.6,
+        "h": 43.52
+      },
+      {
+        "sourceId": "12",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 416.0,
+        "y": 396.8,
+        "w": 761.6,
+        "h": 64.0
+      },
+      {
+        "sourceId": "14",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 115.2,
+        "y": 505.6,
+        "w": 281.6,
+        "h": 43.52
+      },
+      {
+        "sourceId": "15",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 416.0,
+        "y": 496.64,
+        "w": 761.6,
+        "h": 64.0
+      },
+      {
+        "sourceId": "17",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 115.2,
+        "y": 605.44,
+        "w": 281.6,
+        "h": 43.52
+      },
+      {
+        "sourceId": "18",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 416.0,
+        "y": 596.48,
+        "w": 761.6,
+        "h": 64.0
+      },
+      {
+        "sourceId": "2",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "3",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 22.11,
+        "y": 678.77,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-11": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 18,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 53.76,
+        "w": 1152.0,
+        "h": 70.4
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 650.38,
+        "y": 256.35,
+        "w": 205.73,
+        "h": 205.73
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 720.78,
+        "y": 79.63,
+        "w": 36.85,
+        "h": 36.85
+      },
+      {
+        "sourceId": "11",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 652.94,
+        "y": 80.47,
+        "w": 199.59,
+        "h": 193.45
+      },
+      {
+        "sourceId": "14",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 881.51,
+        "y": 172.43,
+        "w": 36.85,
+        "h": 36.85
+      },
+      {
+        "sourceId": "15",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 813.67,
+        "y": 173.27,
+        "w": 199.59,
+        "h": 193.45
+      },
+      {
+        "sourceId": "18",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 881.51,
+        "y": 358.03,
+        "w": 36.85,
+        "h": 36.85
+      },
+      {
+        "sourceId": "19",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 813.67,
+        "y": 358.87,
+        "w": 199.59,
+        "h": 193.45
+      },
+      {
+        "sourceId": "22",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 720.78,
+        "y": 450.83,
+        "w": 36.85,
+        "h": 36.85
+      },
+      {
+        "sourceId": "23",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 652.94,
+        "y": 451.67,
+        "w": 199.59,
+        "h": 193.45
+      },
+      {
+        "sourceId": "26",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 560.04,
+        "y": 358.03,
+        "w": 36.85,
+        "h": 36.85
+      },
+      {
+        "sourceId": "27",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 492.2,
+        "y": 358.87,
+        "w": 199.59,
+        "h": 193.45
+      },
+      {
+        "sourceId": "30",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 549.29,
+        "y": 156.88,
+        "w": 36.85,
+        "h": 36.85
+      },
+      {
+        "sourceId": "31",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 481.45,
+        "y": 157.72,
+        "w": 199.59,
+        "h": 193.45
+      },
+      {
+        "sourceId": "33",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 105.6,
+        "y": 186.88,
+        "w": 204.8,
+        "h": 38.4
+      },
+      {
+        "sourceId": "35",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 132.48,
+        "y": 226.56,
+        "w": 185.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "37",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 132.48,
+        "y": 270.08,
+        "w": 185.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "39",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 132.48,
+        "y": 313.6,
+        "w": 185.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "41",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 132.48,
+        "y": 357.12,
+        "w": 185.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "43",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 132.48,
+        "y": 400.64,
+        "w": 185.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "45",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 132.48,
+        "y": 444.16,
+        "w": 185.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "48",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1064.96,
+        "y": 564.48,
+        "w": 185.6,
+        "h": 35.84
+      },
+      {
+        "sourceId": "50",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1064.96,
+        "y": 609.28,
+        "w": 185.6,
+        "h": 35.84
+      },
+      {
+        "sourceId": "2",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "3",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 22.11,
+        "y": 678.77,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-12": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 22,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 64.0,
+        "w": 947.2,
+        "h": 64.0
+      },
+      {
+        "sourceId": "7",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 79.36,
+        "y": 194.56,
+        "w": 79.36,
+        "h": 106.24
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 40.96,
+        "y": 304.64,
+        "w": 160.0,
+        "h": 64.0
+      },
+      {
+        "sourceId": "9",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 79.36,
+        "y": 501.76,
+        "w": 76.8,
+        "h": 108.8
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 40.96,
+        "y": 614.4,
+        "w": 160.0,
+        "h": 64.0
+      },
+      {
+        "sourceId": "15",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 253.44,
+        "y": 217.6,
+        "w": 194.56,
+        "h": 115.2
+      },
+      {
+        "sourceId": "18",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 253.44,
+        "y": 506.88,
+        "w": 194.56,
+        "h": 115.2
+      },
+      {
+        "sourceId": "20",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 250.88,
+        "y": 400.64,
+        "w": 194.56,
+        "h": 64.0
+      },
+      {
+        "sourceId": "22",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 277.76,
+        "y": 168.96,
+        "w": 140.8,
+        "h": 30.72
+      },
+      {
+        "sourceId": "27",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 491.52,
+        "y": 217.6,
+        "w": 194.56,
+        "h": 115.2
+      },
+      {
+        "sourceId": "30",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 491.52,
+        "y": 506.88,
+        "w": 194.56,
+        "h": 115.2
+      },
+      {
+        "sourceId": "32",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 488.96,
+        "y": 400.64,
+        "w": 194.56,
+        "h": 64.0
+      },
+      {
+        "sourceId": "34",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 515.84,
+        "y": 640.0,
+        "w": 140.8,
+        "h": 30.72
+      },
+      {
+        "sourceId": "39",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 729.6,
+        "y": 217.6,
+        "w": 194.56,
+        "h": 115.2
+      },
+      {
+        "sourceId": "42",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 729.6,
+        "y": 506.88,
+        "w": 194.56,
+        "h": 115.2
+      },
+      {
+        "sourceId": "44",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 727.04,
+        "y": 400.64,
+        "w": 194.56,
+        "h": 64.0
+      },
+      {
+        "sourceId": "46",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 753.92,
+        "y": 168.96,
+        "w": 140.8,
+        "h": 30.72
+      },
+      {
+        "sourceId": "51",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 967.68,
+        "y": 217.6,
+        "w": 194.56,
+        "h": 115.2
+      },
+      {
+        "sourceId": "54",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 967.68,
+        "y": 506.88,
+        "w": 194.56,
+        "h": 115.2
+      },
+      {
+        "sourceId": "56",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 965.12,
+        "y": 400.64,
+        "w": 194.56,
+        "h": 64.0
+      },
+      {
+        "sourceId": "58",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 992.0,
+        "y": 640.0,
+        "w": 140.8,
+        "h": 30.72
+      },
+      {
+        "sourceId": "63",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 348.16,
+        "y": 686.08,
+        "w": 716.8,
+        "h": 33.28
+      },
+      {
+        "sourceId": "64",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "65",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 22.11,
+        "y": 678.77,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-13": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 25,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 53.76,
+        "w": 1152.0,
+        "h": 70.4
+      },
+      {
+        "sourceId": "6",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 121.6,
+        "y": 153.6,
+        "w": 435.2,
+        "h": 38.4
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 131.2,
+        "y": 204.8,
+        "w": 428.8,
+        "h": 71.68
+      },
+      {
+        "sourceId": "11",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 153.6,
+        "y": 293.12,
+        "w": 384.0,
+        "h": 71.68
+      },
+      {
+        "sourceId": "14",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 176.0,
+        "y": 381.44,
+        "w": 339.2,
+        "h": 71.68
+      },
+      {
+        "sourceId": "17",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 198.4,
+        "y": 469.76,
+        "w": 294.4,
+        "h": 71.68
+      },
+      {
+        "sourceId": "20",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 179.2,
+        "y": 558.08,
+        "w": 332.8,
+        "h": 71.68
+      },
+      {
+        "sourceId": "21",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 620.8,
+        "y": 153.6,
+        "w": 512.0,
+        "h": 38.4
+      },
+      {
+        "sourceId": "24",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 640.0,
+        "y": 230.4,
+        "w": 40.96,
+        "h": 40.96
+      },
+      {
+        "sourceId": "25",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 701.44,
+        "y": 209.92,
+        "w": 460.8,
+        "h": 33.28
+      },
+      {
+        "sourceId": "26",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 701.44,
+        "y": 243.2,
+        "w": 463.36,
+        "h": 53.76
+      },
+      {
+        "sourceId": "29",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 640.0,
+        "y": 338.56,
+        "w": 40.96,
+        "h": 40.96
+      },
+      {
+        "sourceId": "30",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 701.44,
+        "y": 318.08,
+        "w": 460.8,
+        "h": 33.28
+      },
+      {
+        "sourceId": "31",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 701.44,
+        "y": 351.36,
+        "w": 463.36,
+        "h": 53.76
+      },
+      {
+        "sourceId": "34",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 640.0,
+        "y": 446.72,
+        "w": 40.96,
+        "h": 40.96
+      },
+      {
+        "sourceId": "35",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 701.44,
+        "y": 426.24,
+        "w": 460.8,
+        "h": 33.28
+      },
+      {
+        "sourceId": "36",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 701.44,
+        "y": 459.52,
+        "w": 463.36,
+        "h": 53.76
+      },
+      {
+        "sourceId": "39",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 640.0,
+        "y": 554.88,
+        "w": 40.96,
+        "h": 40.96
+      },
+      {
+        "sourceId": "40",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 701.44,
+        "y": 534.4,
+        "w": 460.8,
+        "h": 33.28
+      },
+      {
+        "sourceId": "41",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 701.44,
+        "y": 567.68,
+        "w": 463.36,
+        "h": 53.76
+      },
+      {
+        "sourceId": "42",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 121.6,
+        "y": 655.36,
+        "w": 1062.4,
+        "h": 35.84
+      },
+      {
+        "sourceId": "2",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "3",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 22.11,
+        "y": 678.77,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-14": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 26,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 53.76,
+        "w": 1152.0,
+        "h": 70.4
+      },
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 78.92,
+        "y": 138.95,
+        "w": 640.0,
+        "h": 35.84
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 114.75,
+        "y": 281.6,
+        "w": 512.0,
+        "h": 43.52
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 156.99,
+        "y": 330.24,
+        "w": 427.52,
+        "h": 30.72
+      },
+      {
+        "sourceId": "12",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 156.99,
+        "y": 369.92,
+        "w": 427.52,
+        "h": 38.4
+      },
+      {
+        "sourceId": "14",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 156.99,
+        "y": 409.6,
+        "w": 427.52,
+        "h": 35.84
+      },
+      {
+        "sourceId": "16",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 156.99,
+        "y": 449.28,
+        "w": 416.0,
+        "h": 37.12
+      },
+      {
+        "sourceId": "19",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 711.68,
+        "y": 183.04,
+        "w": 512.0,
+        "h": 43.52
+      },
+      {
+        "sourceId": "21",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 753.92,
+        "y": 227.84,
+        "w": 1011.2,
+        "h": 38.4
+      },
+      {
+        "sourceId": "23",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 753.92,
+        "y": 267.52,
+        "w": 1011.2,
+        "h": 38.4
+      },
+      {
+        "sourceId": "26",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 711.68,
+        "y": 395.52,
+        "w": 512.0,
+        "h": 43.52
+      },
+      {
+        "sourceId": "28",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 753.92,
+        "y": 444.16,
+        "w": 1011.2,
+        "h": 38.4
+      },
+      {
+        "sourceId": "30",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 753.92,
+        "y": 483.84,
+        "w": 1011.2,
+        "h": 38.4
+      },
+      {
+        "sourceId": "32",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 753.92,
+        "y": 523.52,
+        "w": 1011.2,
+        "h": 38.4
+      },
+      {
+        "sourceId": "2",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "3",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 22.11,
+        "y": 678.77,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-15": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 30,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 58.88,
+        "w": 1152.0,
+        "h": 64.0
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 98.56,
+        "y": 166.4,
+        "w": 192.0,
+        "h": 35.84
+      },
+      {
+        "sourceId": "9",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 98.56,
+        "y": 209.92,
+        "w": 500.48,
+        "h": 38.4
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 98.56,
+        "y": 253.44,
+        "w": 371.2,
+        "h": 71.68
+      },
+      {
+        "sourceId": "12",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 474.88,
+        "y": 268.8,
+        "w": 125.44,
+        "h": 40.96
+      },
+      {
+        "sourceId": "13",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 98.56,
+        "y": 327.68,
+        "w": 500.48,
+        "h": 30.72
+      },
+      {
+        "sourceId": "14",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 98.56,
+        "y": 371.2,
+        "w": 248.32,
+        "h": 136.96
+      },
+      {
+        "sourceId": "15",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 352.0,
+        "y": 371.2,
+        "w": 248.32,
+        "h": 142.08
+      },
+      {
+        "sourceId": "18",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 98.56,
+        "y": 522.24,
+        "w": 500.48,
+        "h": 28.16
+      },
+      {
+        "sourceId": "19",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 98.56,
+        "y": 555.52,
+        "w": 500.48,
+        "h": 30.72
+      },
+      {
+        "sourceId": "23",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 680.96,
+        "y": 166.4,
+        "w": 192.0,
+        "h": 35.84
+      },
+      {
+        "sourceId": "24",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 680.96,
+        "y": 209.92,
+        "w": 500.48,
+        "h": 38.4
+      },
+      {
+        "sourceId": "25",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 680.96,
+        "y": 253.44,
+        "w": 384.0,
+        "h": 71.68
+      },
+      {
+        "sourceId": "27",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1070.08,
+        "y": 268.8,
+        "w": 112.64,
+        "h": 40.96
+      },
+      {
+        "sourceId": "28",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 680.96,
+        "y": 327.68,
+        "w": 500.48,
+        "h": 30.72
+      },
+      {
+        "sourceId": "29",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 680.96,
+        "y": 371.2,
+        "w": 276.48,
+        "h": 136.96
+      },
+      {
+        "sourceId": "30",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 972.8,
+        "y": 366.08,
+        "w": 209.92,
+        "h": 157.44
+      },
+      {
+        "sourceId": "32",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 680.96,
+        "y": 522.24,
+        "w": 281.6,
+        "h": 28.16
+      },
+      {
+        "sourceId": "33",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 972.8,
+        "y": 522.24,
+        "w": 217.6,
+        "h": 28.16
+      },
+      {
+        "sourceId": "34",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 680.96,
+        "y": 555.52,
+        "w": 500.48,
+        "h": 30.72
+      },
+      {
+        "sourceId": "36",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 99.84,
+        "y": 627.2,
+        "w": 1088.0,
+        "h": 64.0
+      },
+      {
+        "sourceId": "37",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "38",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1125.08,
+        "y": 681.78,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-16": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 34,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "4",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "title",
+        "x": 70.4,
+        "y": 56.32,
+        "w": 832.0,
+        "h": 64.0
+      },
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 768.0,
+        "y": 71.68,
+        "w": 441.6,
+        "h": 38.4
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 90.88,
+        "y": 135.68,
+        "w": 422.4,
+        "h": 30.72
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 90.88,
+        "y": 168.96,
+        "w": 435.2,
+        "h": 28.16
+      },
+      {
+        "sourceId": "9",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 90.88,
+        "y": 197.12,
+        "w": 435.2,
+        "h": 28.16
+      },
+      {
+        "sourceId": "11",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 766.72,
+        "y": 135.68,
+        "w": 422.4,
+        "h": 30.72
+      },
+      {
+        "sourceId": "12",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 766.72,
+        "y": 168.96,
+        "w": 435.2,
+        "h": 28.16
+      },
+      {
+        "sourceId": "13",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 766.72,
+        "y": 197.12,
+        "w": 435.2,
+        "h": 28.16
+      },
+      {
+        "sourceId": "15",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 552.96,
+        "y": 145.92,
+        "w": 174.08,
+        "h": 69.12
+      },
+      {
+        "sourceId": "18",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 70.4,
+        "y": 258.56,
+        "w": 1139.2,
+        "h": 35.84
+      },
+      {
+        "sourceId": "21",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 72.96,
+        "y": 322.56,
+        "w": 145.92,
+        "h": 33.28
+      },
+      {
+        "sourceId": "22",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 72.96,
+        "y": 355.84,
+        "w": 145.92,
+        "h": 25.6
+      },
+      {
+        "sourceId": "23",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 75.52,
+        "y": 386.56,
+        "w": 140.8,
+        "h": 84.48
+      },
+      {
+        "sourceId": "24",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 219.52,
+        "y": 368.64,
+        "w": 17.92,
+        "h": 38.4
+      },
+      {
+        "sourceId": "27",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 237.44,
+        "y": 322.56,
+        "w": 145.92,
+        "h": 33.28
+      },
+      {
+        "sourceId": "28",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 237.44,
+        "y": 355.84,
+        "w": 145.92,
+        "h": 25.6
+      },
+      {
+        "sourceId": "29",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 240.0,
+        "y": 386.56,
+        "w": 140.8,
+        "h": 84.48
+      },
+      {
+        "sourceId": "30",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 384.0,
+        "y": 368.64,
+        "w": 17.92,
+        "h": 38.4
+      },
+      {
+        "sourceId": "34",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 401.92,
+        "y": 322.56,
+        "w": 145.92,
+        "h": 33.28
+      },
+      {
+        "sourceId": "35",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 401.92,
+        "y": 355.84,
+        "w": 145.92,
+        "h": 25.6
+      },
+      {
+        "sourceId": "36",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 404.48,
+        "y": 386.56,
+        "w": 140.8,
+        "h": 84.48
+      },
+      {
+        "sourceId": "37",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 548.48,
+        "y": 368.64,
+        "w": 17.92,
+        "h": 38.4
+      },
+      {
+        "sourceId": "40",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 566.4,
+        "y": 322.56,
+        "w": 145.92,
+        "h": 33.28
+      },
+      {
+        "sourceId": "41",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 566.4,
+        "y": 355.84,
+        "w": 145.92,
+        "h": 25.6
+      },
+      {
+        "sourceId": "42",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 568.96,
+        "y": 386.56,
+        "w": 140.8,
+        "h": 84.48
+      },
+      {
+        "sourceId": "43",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 712.96,
+        "y": 368.64,
+        "w": 17.92,
+        "h": 38.4
+      },
+      {
+        "sourceId": "46",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 730.88,
+        "y": 322.56,
+        "w": 145.92,
+        "h": 33.28
+      },
+      {
+        "sourceId": "47",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 730.88,
+        "y": 355.84,
+        "w": 145.92,
+        "h": 25.6
+      },
+      {
+        "sourceId": "48",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 733.44,
+        "y": 386.56,
+        "w": 140.8,
+        "h": 84.48
+      },
+      {
+        "sourceId": "49",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 877.44,
+        "y": 368.64,
+        "w": 17.92,
+        "h": 38.4
+      },
+      {
+        "sourceId": "53",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 895.36,
+        "y": 322.56,
+        "w": 145.92,
+        "h": 33.28
+      },
+      {
+        "sourceId": "54",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 895.36,
+        "y": 355.84,
+        "w": 145.92,
+        "h": 25.6
+      },
+      {
+        "sourceId": "55",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 897.92,
+        "y": 386.56,
+        "w": 140.8,
+        "h": 84.48
+      },
+      {
+        "sourceId": "56",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1041.92,
+        "y": 368.64,
+        "w": 17.92,
+        "h": 38.4
+      },
+      {
+        "sourceId": "59",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1059.84,
+        "y": 322.56,
+        "w": 145.92,
+        "h": 33.28
+      },
+      {
+        "sourceId": "60",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1059.84,
+        "y": 355.84,
+        "w": 145.92,
+        "h": 25.6
+      },
+      {
+        "sourceId": "61",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1062.4,
+        "y": 386.56,
+        "w": 140.8,
+        "h": 84.48
+      },
+      {
+        "sourceId": "63",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 111.36,
+        "y": 500.48,
+        "w": 320.0,
+        "h": 28.16
+      },
+      {
+        "sourceId": "65",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 488.96,
+        "y": 500.48,
+        "w": 300.8,
+        "h": 28.16
+      },
+      {
+        "sourceId": "68",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 858.88,
+        "y": 500.48,
+        "w": 108.8,
+        "h": 28.16
+      },
+      {
+        "sourceId": "69",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 896.0,
+        "y": 500.48,
+        "w": 313.6,
+        "h": 28.16
+      },
+      {
+        "sourceId": "71",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 70.4,
+        "y": 570.88,
+        "w": 448.0,
+        "h": 30.72
+      },
+      {
+        "sourceId": "72",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 768.0,
+        "y": 570.88,
+        "w": 441.6,
+        "h": 30.72
+      },
+      {
+        "sourceId": "75",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 32.0,
+        "y": 652.8,
+        "w": 192.0,
+        "h": 30.72
+      },
+      {
+        "sourceId": "77",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 288.0,
+        "y": 652.8,
+        "w": 192.0,
+        "h": 30.72
+      },
+      {
+        "sourceId": "79",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 544.0,
+        "y": 652.8,
+        "w": 192.0,
+        "h": 30.72
+      },
+      {
+        "sourceId": "81",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 800.0,
+        "y": 652.8,
+        "w": 192.0,
+        "h": 30.72
+      },
+      {
+        "sourceId": "83",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1056.0,
+        "y": 652.8,
+        "w": 192.0,
+        "h": 30.72
+      },
+      {
+        "sourceId": "84",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "85",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 22.11,
+        "y": 678.77,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-17": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 37,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "3",
+    "objects": [
+      {
+        "sourceId": "4",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 98.56,
+        "y": 174.61,
+        "w": 192.0,
+        "h": 179.2
+      },
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 120.96,
+        "y": 242.64,
+        "w": 499.2,
+        "h": 204.8
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 335.36,
+        "y": 450.0,
+        "w": 358.4,
+        "h": 38.4
+      },
+      {
+        "sourceId": "8",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 697.6,
+        "y": 204.8,
+        "w": 483.84,
+        "h": 346.88
+      },
+      {
+        "sourceId": "3",
+        "kind": "text",
+        "role": "title",
+        "x": 52.5,
+        "y": 47.44,
+        "w": 777.04,
+        "h": 70.4
+      },
+      {
+        "sourceId": "9",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1139.2,
+        "y": 16.84,
+        "w": 159.03,
+        "h": 39.48
+      },
+      {
+        "sourceId": "10",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 22.11,
+        "y": 678.77,
+        "w": 115.29,
+        "h": 29.26
+      }
+    ]
+  },
+  "reference-04-18": {
+    "source": "v3FDE宣讲世纪互联.pptx",
+    "sourcePage": 39,
+    "sourceSHA256": "3bb77c4e754b1414679028eeb9b8d7e26b798f8e582fd770cc7ac7c5ae299675",
+    "titleShapeId": "3",
+    "objects": [
+      {
+        "sourceId": "14",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 0.0,
+        "y": 13.22,
+        "w": 222.87,
+        "h": 55.33
+      },
+      {
+        "sourceId": "15",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 1137.44,
+        "y": 664.76,
+        "w": 135.03,
+        "h": 33.91
+      },
+      {
+        "sourceId": "17",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 787.36,
+        "y": 386.4,
+        "w": 283.82,
+        "h": 285.25
+      },
+      {
+        "sourceId": "3",
+        "kind": "text",
+        "role": "title",
+        "x": 111.44,
+        "y": 215.47,
+        "w": 656.94,
+        "h": 257.98
+      },
+      {
+        "sourceId": "4",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 787.36,
+        "y": 57.25,
+        "w": 283.82,
+        "h": 287.21
+      }
+    ]
+  },
+  "reference-03-08": {
+    "source": "420云涌世纪公司介绍.pptx",
+    "sourcePage": 27,
+    "sourceSHA256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+    "titleShapeId": "5",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "title",
+        "x": 46.33,
+        "y": 69.73,
+        "w": 823.67,
+        "h": 87.24
+      },
+      {
+        "sourceId": "7",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 120.65,
+        "y": 208.18,
+        "w": 342.98,
+        "h": 444.42
+      },
+      {
+        "sourceId": "8",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 497.06,
+        "y": 277.69,
+        "w": 738.34,
+        "h": 242.34
+      },
+      {
+        "sourceId": "6",
+        "kind": "text",
+        "role": "locked_brand",
+        "x": 1118.36,
+        "y": 666.94,
+        "w": 159.36,
+        "h": 35.54
+      },
+      {
+        "sourceId": "9",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1102.36,
+        "y": 671.99,
+        "w": 21.02,
+        "h": 24.42
+      }
+    ]
+  },
+  "reference-03-09": {
+    "source": "420云涌世纪公司介绍.pptx",
+    "sourcePage": 12,
+    "sourceSHA256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+    "titleShapeId": "5",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "title",
+        "x": 151.92,
+        "y": 67.7,
+        "w": 536.39,
+        "h": 87.24
+      },
+      {
+        "sourceId": "44",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 71.31,
+        "y": 74.41,
+        "w": 67.2,
+        "h": 67.2
+      },
+      {
+        "sourceId": "6",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 688.31,
+        "y": 104.7,
+        "w": 672.0,
+        "h": 48.0
+      },
+      {
+        "sourceId": "7",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 186.82,
+        "y": 217.61,
+        "w": 379.08,
+        "h": 434.7
+      },
+      {
+        "sourceId": "8",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 638.55,
+        "y": 187.95,
+        "w": 370.47,
+        "h": 479.14
+      },
+      {
+        "sourceId": "9",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1067.91,
+        "y": 666.74,
+        "w": 193.12,
+        "h": 48.16
+      }
+    ]
+  },
+  "reference-03-10": {
+    "source": "420云涌世纪公司介绍.pptx",
+    "sourcePage": 18,
+    "sourceSHA256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+    "titleShapeId": "5",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "title",
+        "x": 151.92,
+        "y": 67.7,
+        "w": 463.52,
+        "h": 87.24
+      },
+      {
+        "sourceId": "44",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 71.31,
+        "y": 74.41,
+        "w": 67.2,
+        "h": 67.2
+      },
+      {
+        "sourceId": "9",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 677.8,
+        "y": 82.07,
+        "w": 37.33,
+        "h": 37.33
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 752.47,
+        "y": 47.93,
+        "w": 354.93,
+        "h": 37.33
+      },
+      {
+        "sourceId": "15",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 677.8,
+        "y": 286.6,
+        "w": 37.33,
+        "h": 37.33
+      },
+      {
+        "sourceId": "17",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 752.47,
+        "y": 259.93,
+        "w": 453.33,
+        "h": 34.67
+      },
+      {
+        "sourceId": "18",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 752.47,
+        "y": 96.47,
+        "w": 453.33,
+        "h": 114.73
+      },
+      {
+        "sourceId": "19",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 752.47,
+        "y": 294.2,
+        "w": 453.33,
+        "h": 146.33
+      },
+      {
+        "sourceId": "22",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 677.8,
+        "y": 523.4,
+        "w": 37.33,
+        "h": 37.33
+      },
+      {
+        "sourceId": "23",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 746.72,
+        "y": 528.2,
+        "w": 484.2,
+        "h": 34.67
+      },
+      {
+        "sourceId": "24",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 733.8,
+        "y": 553.6,
+        "w": 453.33,
+        "h": 146.33
+      },
+      {
+        "sourceId": "25",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 71.31,
+        "y": 192.73,
+        "w": 508.8,
+        "h": 53.33
+      },
+      {
+        "sourceId": "26",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 31.35,
+        "y": 275.58,
+        "w": 578.25,
+        "h": 325.01
+      }
+    ]
+  },
+  "reference-03-11": {
+    "source": "420云涌世纪公司介绍.pptx",
+    "sourcePage": 36,
+    "sourceSHA256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+    "titleShapeId": "5",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "text",
+        "role": "title",
+        "x": 57.01,
+        "y": 71.55,
+        "w": 471.76,
+        "h": 87.24
+      },
+      {
+        "sourceId": "6",
+        "kind": "text",
+        "role": "locked_brand",
+        "x": 1118.36,
+        "y": 666.94,
+        "w": 159.36,
+        "h": 35.54
+      },
+      {
+        "sourceId": "7",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 1102.36,
+        "y": 671.99,
+        "w": 21.02,
+        "h": 24.42
+      },
+      {
+        "sourceId": "9",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 129.08,
+        "y": 175.34,
+        "w": 304.66,
+        "h": 304.66
+      },
+      {
+        "sourceId": "11",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 398.93,
+        "y": 170.29,
+        "w": 333.33,
+        "h": 333.33
+      },
+      {
+        "sourceId": "15",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 732.27,
+        "y": 170.29,
+        "w": 333.33,
+        "h": 333.33
+      },
+      {
+        "sourceId": "19",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 125.85,
+        "y": 302.45,
+        "w": 333.33,
+        "h": 333.33
+      },
+      {
+        "sourceId": "21",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 385.58,
+        "y": 313.63,
+        "w": 333.33,
+        "h": 333.33
+      },
+      {
+        "sourceId": "10",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 64.0,
+        "y": 28.16,
+        "w": 197.12,
+        "h": 35.84
+      },
+      {
+        "sourceId": "17",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 677.42,
+        "y": 286.72,
+        "w": 333.33,
+        "h": 333.33
+      },
+      {
+        "sourceId": "18",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 813.5,
+        "y": 375.3,
+        "w": 333.33,
+        "h": 333.33
+      },
+      {
+        "sourceId": "20",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 266.21,
+        "y": 439.61,
+        "w": 333.33,
+        "h": 333.33
+      },
+      {
+        "sourceId": "22",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 553.11,
+        "y": 41.1,
+        "w": 333.33,
+        "h": 333.33
+      },
+      {
+        "sourceId": "23",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 245.23,
+        "y": 73.42,
+        "w": 333.33,
+        "h": 333.33
+      },
+      {
+        "sourceId": "24",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 550.09,
+        "y": 396.12,
+        "w": 333.33,
+        "h": 333.33
+      },
+      {
+        "sourceId": "25",
+        "kind": "shape",
+        "role": "locked_logo_backplate",
+        "x": 582.69,
+        "y": 164.68,
+        "w": 272.19,
+        "h": 74.19
+      },
+      {
+        "sourceId": "26",
+        "kind": "shape",
+        "role": "locked_logo_backplate",
+        "x": 309.47,
+        "y": 163.66,
+        "w": 204.19,
+        "h": 128.19
+      }
+    ]
+  },
+  "reference-03-12": {
+    "source": "420云涌世纪公司介绍.pptx",
+    "sourcePage": 7,
+    "sourceSHA256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+    "titleShapeId": "7",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 97.43,
+        "y": 126.61,
+        "w": 1085.14,
+        "h": 383.14
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "title",
+        "x": 97.43,
+        "y": 218.54,
+        "w": 1104.96,
+        "h": 145.07
+      },
+      {
+        "sourceId": "14",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1028.7,
+        "y": 678.17,
+        "w": 232.47,
+        "h": 42.01
+      },
+      {
+        "sourceId": "4",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 20.21,
+        "y": 13.15,
+        "w": 258.05,
+        "h": 64.35
+      }
+    ]
+  },
+  "reference-03-13": {
+    "source": "420云涌世纪公司介绍.pptx",
+    "sourcePage": 8,
+    "sourceSHA256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+    "titleShapeId": "7",
+    "objects": [
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "title",
+        "x": 97.43,
+        "y": 218.54,
+        "w": 1104.96,
+        "h": 145.07
+      },
+      {
+        "sourceId": "14",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1028.7,
+        "y": 678.17,
+        "w": 232.47,
+        "h": 42.01
+      },
+      {
+        "sourceId": "4",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 20.21,
+        "y": 13.15,
+        "w": 258.05,
+        "h": 64.35
+      }
+    ]
+  },
+  "reference-03-14": {
+    "source": "420云涌世纪公司介绍.pptx",
+    "sourcePage": 37,
+    "sourceSHA256": "b1b4c2995e0152b3b1bb188c2b8d4de2f16683c3fb1ffb10a056ae47d2b58d90",
+    "titleShapeId": "7",
+    "objects": [
+      {
+        "sourceId": "5",
+        "kind": "image",
+        "role": "source_object_review_before_replacement",
+        "x": 97.43,
+        "y": 126.61,
+        "w": 1085.14,
+        "h": 383.14
+      },
+      {
+        "sourceId": "7",
+        "kind": "text",
+        "role": "title",
+        "x": 97.43,
+        "y": 236.34,
+        "w": 1104.96,
+        "h": 145.07
+      },
+      {
+        "sourceId": "14",
+        "kind": "text",
+        "role": "source_object_review_before_replacement",
+        "x": 1028.7,
+        "y": 678.17,
+        "w": 232.47,
+        "h": 42.01
+      },
+      {
+        "sourceId": "2",
+        "kind": "image",
+        "role": "locked_brand",
+        "x": 20.21,
+        "y": 14.14,
+        "w": 193.12,
+        "h": 48.16
+      }
+    ]
+  }
+}

@@ -4,8 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light">
-  <title>WePPT · 对话与预览</title>
+  <title>WePPT · 演示文稿编辑器</title>
   <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/editor.css">
 </head>
 <body>
   <svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
@@ -32,9 +33,7 @@
   <header class="app-header">
     <a class="brand" href="/" aria-label="WePPT 首页"><span class="brand-mark" aria-hidden="true"><i></i><b></b></span><span>WePPT<small>STUDIO</small></span></a>
     <div class="project-label"><span id="project-title">新的演示稿</span><span id="demo-badge" class="demo-badge" hidden>示例</span></div>
-    <div class="header-actions">
-      <a id="guide-link" class="button quiet compact" href="/guide.html" target="_blank" rel="noopener">内容引导</a>
-      <button id="templates-button" class="button quiet compact" type="button" aria-haspopup="dialog"><svg class="icon"><use href="#i-slide"/></svg><span>模板</span></button>
+    <div class="header-actions"><button id="toggle-assistant" class="button quiet compact" type="button" aria-expanded="true" aria-controls="assistant-panel">AI 助手</button>
       <button id="projects-button" class="button quiet compact" type="button" aria-haspopup="dialog"><svg class="icon"><use href="#i-file"/></svg><span>项目</span></button>
       <button id="connection-button" class="connection-button" type="button" aria-haspopup="dialog"><span id="agent-dot" class="status-dot waiting"></span><span id="agent-status">连接中</span><svg class="icon small"><use href="#i-down"/></svg></button>
       <button id="demo-button" class="button quiet demo-entry" type="button">打开演示项目</button>
@@ -44,22 +43,68 @@
     </div>
   </header>
 
+  <section class="ribbon" aria-label="演示稿工具栏">
+    <div class="ribbon-tabs" role="tablist" aria-label="工具选项卡">
+      <button type="button" role="tab" id="ribbon-home-tab" aria-selected="true" aria-controls="ribbon-home" tabindex="0">开始</button>
+      <button type="button" role="tab" id="ribbon-design-tab" aria-selected="false" aria-controls="ribbon-design" tabindex="-1">设计</button>
+    </div>
+    <div class="ribbon-panel" id="ribbon-home" role="tabpanel" aria-labelledby="ribbon-home-tab">
+      <button id="ribbon-new" class="ribbon-action" type="button"><svg class="icon"><use href="#i-plus"/></svg><span>新建项目</span></button>
+      <button id="undo-button" class="ribbon-action" type="button" aria-label="撤销编辑" title="撤销编辑（⌘/Ctrl+Z）" disabled><svg class="icon"><use href="#i-undo"/></svg><span>撤销</span></button>
+      <button id="redo-button" class="ribbon-action" type="button" title="重做编辑（⌘/Ctrl+Shift+Z）" disabled><svg class="icon mirror"><use href="#i-undo"/></svg><span>重做</span></button>
+      <fieldset class="format-group" id="text-format" disabled><legend>字体</legend><div class="format-row"><select id="font-family" aria-label="字体"><option value="Microsoft YaHei">微软雅黑</option><option value="PingFang SC">苹方</option><option value="Arial">Arial</option><option value="Noto Sans CJK SC">思源黑体</option></select><input id="font-size" type="number" min="10" max="160" step="1" aria-label="字号" title="字号（画布像素）"><button id="font-grow" type="button" title="增大字号">A＋</button><button id="font-shrink" type="button" title="减小字号">A−</button></div><div class="format-row"><button id="font-bold" type="button" aria-label="加粗" aria-pressed="false"><b>B</b></button><button id="font-italic" type="button" aria-label="斜体" aria-pressed="false"><i>I</i></button><input id="font-color" type="color" aria-label="文字颜色" title="文字颜色"><span class="format-divider"></span><button type="button" data-align="left" aria-label="左对齐" aria-pressed="false">左</button><button type="button" data-align="center" aria-label="居中对齐" aria-pressed="false">中</button><button type="button" data-align="right" aria-label="右对齐" aria-pressed="false">右</button></div></fieldset>
+      <div class="ribbon-group"><span id="format-selection">选择对象以编辑</span><button id="ribbon-recommend" class="button quiet compact" type="button">推荐模板</button></div>
+      <button id="ribbon-page" class="ribbon-action" type="button"><svg class="icon"><use href="#i-cursor"/></svg><span>编辑当前页</span></button>
+      <button id="ribbon-fullscreen" class="ribbon-action" type="button"><svg class="icon"><use href="#i-expand"/></svg><span>放大预览</span></button>
+    </div>
+    <div class="ribbon-panel" id="ribbon-design" role="tabpanel" aria-labelledby="ribbon-design-tab" hidden>
+      <div class="ribbon-design-heading"><strong>页面样式</strong><small id="template-suggestion-text">根据当前页面推荐合适的样式</small></div>
+      <div class="template-strip-group">
+        <div id="template-categories" class="template-categories" role="group" aria-label="样式类别"></div>
+        <div class="template-strip-row">
+          <button id="template-strip-prev" class="strip-nav" type="button" aria-label="向左翻页">‹</button>
+          <div id="template-strip" class="template-strip" aria-label="推荐样式" aria-live="polite">正在读取推荐样式…</div>
+          <button id="template-strip-next" class="strip-nav" type="button" aria-label="向右翻页">›</button>
+        </div>
+      </div>
+      <button id="diagram-image" class="ribbon-more" type="button" hidden>换成 AI 图解</button>
+      <button id="ribbon-palette" class="ribbon-more" type="button" aria-haspopup="dialog">配色</button>
+      <button id="ribbon-style" class="ribbon-more" type="button" aria-haspopup="dialog">对标风格<span id="style-badge" class="style-badge" hidden></span></button>
+      <button id="ribbon-audience" class="ribbon-more" type="button" aria-haspopup="dialog">受众版本</button>
+      <button id="ribbon-logo" class="ribbon-more" type="button" aria-haspopup="dialog">Logo</button>
+      <p id="derived-line" class="derived-line" hidden></p>
+      <button id="ribbon-styles" class="ribbon-more" type="button" aria-haspopup="dialog">更多样式与筛选</button>
+    </div>
+  </section>
+
   <div id="network-banner" class="network-banner" role="status" hidden><span id="network-message">暂时无法连接工作台，已显示的内容仍保留。</span><button id="retry-button" type="button">重新连接</button></div>
 
   <nav class="mobile-tabs" aria-label="工作区域"><button class="active" type="button" data-mobile-tab="chat"><svg class="icon"><use href="#i-chat"/></svg>对话</button><button type="button" data-mobile-tab="preview"><svg class="icon"><use href="#i-slide"/></svg>页面预览<span id="mobile-page-count"></span></button></nav>
 
   <main class="workspace" data-mobile-view="chat">
-    <section class="chat-panel" aria-labelledby="chat-heading">
-      <div class="panel-heading"><div><p class="eyebrow">从你的想法开始</p><h1 id="chat-heading">把内容放进来，一起改好</h1></div><span class="conversation-mark" aria-hidden="true">“</span></div>
+    <aside class="slides-pane" aria-label="幻灯片列表"></aside>
+    <section id="assistant-panel" class="chat-panel" aria-labelledby="chat-heading">
+      <div class="panel-heading"><div><p class="eyebrow">跟随你的选择</p><h1 id="chat-heading">AI 助手</h1></div><button id="close-assistant" type="button" class="icon-button" aria-label="收起 AI 助手">×</button></div>
+      <section class="quick-assistant" aria-label="模板推荐">
+        <div class="quick-target"><strong id="ai-target">当前页</strong><span id="ai-mode"></span></div>
+        <div class="quick-actions"><button type="button" data-ai-action="layout">找合适模板</button><button id="template-match-all" type="button">浏览模板库</button></div>
+        <div class="quick-custom"><input id="ai-instruction" maxlength="4000" placeholder="想表达什么？例如：问题与解决方案对照" aria-label="模板匹配要求"><button id="ai-custom" type="button">找模板</button></div>
+        <details class="quick-text-tools"><summary>文字工具</summary><div class="quick-actions"><button type="button" data-ai-action="concise">精简文字</button><button type="button" data-ai-action="headline">提炼标题</button><button type="button" data-ai-action="polish">润色表达</button></div></details>
+        <p id="ai-status" role="status">先从模板库选版，确认后再让 AI 适配。</p>
+      </section>
+      <section id="template-matches" class="template-matches" aria-label="当前页推荐模板" hidden>
+        <div class="template-matches-heading"><strong>适合这页的模板</strong><button id="template-match-close" type="button">返回对话</button></div>
+        <p id="template-match-summary" role="status"></p><div id="template-match-list"></div>
+      </section>
       <div id="chat-feed" class="chat-feed" role="log" aria-label="制作对话" aria-live="polite" aria-relevant="additions text">
-        <section id="delivery-panel" class="delivery-panel" aria-labelledby="delivery-title">
-          <div class="delivery-heading"><h2 id="delivery-title">从第一次输入开始</h2><span id="delivery-round-count">0 / 3 轮</span></div>
-          <ol id="delivery-stages" class="delivery-stages" aria-label="三轮交付目标"><li data-round-stage="1"><b>01</b><span>想法与初稿</span></li><li data-round-stage="2"><b>02</b><span>集中反馈</span></li><li data-round-stage="3"><b>03</b><span>调整与交付</span></li></ol>
+        <details class="workspace-details"><summary>制作进度与轮次</summary><section id="delivery-panel" class="delivery-panel" aria-labelledby="delivery-title">
+          <div class="delivery-heading"><h2 id="delivery-title">从第一次输入开始</h2><span id="delivery-round-count">0 轮输入</span></div>
+          <ol id="delivery-stages" class="delivery-stages" aria-label="制作流程"><li data-round-stage="1"><b>01</b><span>想法与初稿</span></li><li data-round-stage="2"><b>02</b><span>集中反馈</span></li><li data-round-stage="3"><b>03</b><span>调整与交付</span></li></ol>
           <p id="delivery-status" class="delivery-status" role="status">用途、逐页想法和资料可以一起提交。</p>
           <p id="delivery-budget-note" class="delivery-budget-note">首次需求、补充回答和修改反馈都计入轮次；后台制作和检查不计。</p>
           <details id="delivery-history" class="delivery-history" hidden><summary id="delivery-history-title">查看每轮结果</summary><ol id="delivery-history-list"></ol></details>
         </section>
-        <section id="quality-panel" class="quality-panel" aria-labelledby="quality-title" hidden>
+        </details><section id="quality-panel" class="quality-panel" aria-labelledby="quality-title" hidden>
           <div class="quality-heading"><h2 id="quality-title">整稿版式检查</h2><span id="quality-state-label">等待页面</span></div>
           <p id="quality-summary" class="quality-summary" role="status"></p>
           <div class="quality-actions"><span id="quality-measure-progress"></span><button id="quality-check" type="button">重新检查</button></div>
@@ -79,42 +124,123 @@
         <div id="revision-budget" class="revision-budget" hidden><span id="revision-count"></span><small id="revision-budget-note"></small><details id="revision-history" class="revision-history" hidden><summary>查看修改记录</summary><ol id="revision-history-list"></ol></details></div>
       </section>
       <div id="mode-notice" class="mode-notice" role="status" hidden><p id="mode-notice-text"></p><button id="mode-notice-action" type="button">选择执行方式</button></div>
-        <div id="chat-welcome" class="welcome-card"><div class="welcome-symbol"><svg class="icon"><use href="#i-chat"/></svg></div><h2>这份 PPT，<br>你希望读者记住什么？</h2><p>把用途、逐页想法和真实资料一起发来。系统逐页制作，你可以在一条消息里集中反馈多页。</p><div class="starter-prompts"><button type="button" data-starter="我想先梳理整套 PPT 的逐页大纲。用途是："><span>先讨论内容与大纲</span><svg class="icon"><use href="#i-chevron"/></svg></button><button id="outline-starter" type="button"><span>按已有大纲直接排版<small>使用你提供的文字，不调用模型</small></span><svg class="icon"><use href="#i-chevron"/></svg></button></div><p class="welcome-note">观点由你提供，缺少资料时明确留待补充。</p></div>
+        <div id="chat-welcome" class="welcome-card"><div class="welcome-symbol"><svg class="icon"><use href="#i-chat"/></svg></div><h2>这份 PPT，<br>你希望读者记住什么？</h2><p>粘贴逐页大纲和真实资料，发送后开始制作第一版。也可以先告诉我们用途，一起梳理内容。</p><div class="starter-prompts"><button type="button" data-starter="我想先梳理整套 PPT 的逐页大纲。用途是："><span>先讨论内容与大纲</span><svg class="icon"><use href="#i-chevron"/></svg></button><button id="outline-starter" type="button"><span>按已有大纲直接排版<small>使用你提供的文字，不调用模型</small></span><svg class="icon"><use href="#i-chevron"/></svg></button></div><p class="welcome-note">观点由你提供，缺少资料时明确留待补充。</p></div>
         <div id="messages"></div>
       </div>
       <button id="new-messages-button" class="new-messages" type="button" hidden>有新回复 ↓</button>
       <div id="job-status" class="job-status" role="status" hidden></div>
       <div id="demo-controls" class="demo-controls" hidden><span id="local-controls-label">本地演示 · 这些指令可直接运行</span><div><button type="button" data-demo-command="标题放大一点">标题放大一点</button><button type="button" data-demo-command="背景换成深蓝色">背景换成深蓝色</button><button type="button" data-demo-command="背景换成白色">换回白色背景</button></div></div>
-      <div id="guide-draft-notice" class="mode-notice" hidden><p id="guide-draft-note">有一份内容引导简报待接收，载入后仍需手动发送。</p><button id="load-guide-draft" type="button">载入草稿</button><a id="review-guide-draft" href="/guide.html" target="_blank" rel="noopener">查看</a></div>
       <form id="composer" class="composer" autocomplete="off">
         <div class="scope-switch" role="group" aria-label="本次反馈范围"><button id="scope-deck" type="button" aria-pressed="true">整稿反馈</button><button id="scope-page" type="button" aria-pressed="false">当前页</button><span id="scope-switch-note">一条消息可涉及多页</span></div>
         <div id="scope-line" class="scope-line"><span id="page-scope">整份演示稿</span><span id="object-scope" class="object-scope" hidden><svg class="icon small"><use href="#i-cursor"/></svg><span id="object-scope-label"></span><button id="clear-object" type="button" aria-label="取消对象选择"><svg class="icon small"><use href="#i-close"/></svg></button></span><button id="reply-question" type="button" class="reply-question" hidden>回答待生成页的问题</button></div>
         <p id="question-scope-note" class="question-scope-note" role="status" hidden></p>
         <div id="attachments" class="attachments" hidden></div>
-        <label for="message-input" class="sr-only">输入你的想法或修改要求</label><textarea id="message-input" placeholder="一起说清你的想法，或集中写下需要修改的页面…" rows="3" maxlength="20000"></textarea>
+        <label for="message-input" class="sr-only">输入你的想法或修改要求</label><textarea id="message-input" placeholder="粘贴逐页大纲，发送后制作第一版；也可以描述你的想法或修改要求…" rows="3" maxlength="20000"></textarea>
         <div class="composer-bottom"><div class="composer-tools"><button id="attach-button" class="icon-button" type="button" aria-label="添加图片或参考资料" title="添加图片或参考资料"><svg class="icon"><use href="#i-paperclip"/></svg></button><span class="composer-hint">Enter 发送</span></div><button id="send-button" class="send-button" type="submit" aria-label="发送消息" disabled><svg class="icon"><use href="#i-arrow"/></svg></button></div>
       </form>
+      <div class="chat-template" id="chat-template" aria-live="polite"></div>
       <div class="chat-footnote" id="chat-footnote">可直接拖入图片和资料。Shift + Enter 换行。</div>
       <input id="file-input" type="file" accept="image/png,image/jpeg,text/plain,text/markdown,.md,.txt,application/pdf" multiple hidden>
     </section>
 
     <section id="preview-panel" class="preview-panel" aria-labelledby="preview-heading">
-      <div class="preview-heading"><div class="preview-title"><p class="eyebrow" id="preview-kicker">把想法变成看得见的一页</p><h2 id="preview-heading">页面预览</h2><p id="preview-deck-status" class="preview-deck-status" hidden></p></div><div class="preview-actions"><button id="undo-button" class="icon-button" type="button" aria-label="撤回本页上一版" title="撤销本页上一版，计为一轮输入" disabled><svg class="icon"><use href="#i-undo"/></svg></button><button id="fullscreen-button" class="icon-button" type="button" aria-label="放大页面预览" title="放大页面预览"><svg class="icon"><use href="#i-expand"/></svg></button></div></div>
-      <div class="template-suggestion"><div><span class="eyebrow">页面样式</span><span id="template-suggestion-text">先选一个喜欢的样子，再放入你的内容。</span></div><button id="recommended-templates" class="button quiet compact" type="button">查看推荐 <span aria-hidden="true">↗</span></button></div>
-      <div id="text-editor" class="text-editor" hidden><div class="text-editor-heading"><strong>编辑文字</strong><span id="text-editor-note">双击页面文字，也可以直接修改</span><button id="close-text-editor" class="icon-button" type="button" aria-label="关闭文字编辑">×</button></div><textarea id="object-text" rows="3" aria-label="选中对象的文字"></textarea><div class="text-editor-actions"><span id="text-save-status" role="status"></span><button id="save-object-text" class="button primary compact" type="button">保存修改</button></div></div>
-      <div class="preview-center"><div class="canvas-wrap" id="canvas-wrap"><div id="page-canvas" class="page-canvas"><div id="empty-preview" class="empty-preview"><div class="empty-page-mark" aria-hidden="true"><span></span><span></span><span></span></div><h3>这一页，等你的第一个想法</h3><p>在对话里讲内容，预览会在这里更新。<br>选中页面里的对象，再说出你想改的地方。</p><button id="empty-demo-button" class="button quiet" type="button">先体验演示项目 <span aria-hidden="true">↗</span></button></div></div><div id="preview-update" class="preview-update" role="status" hidden><span class="loading-dot"></span><span id="preview-update-text">正在更新这一页</span></div></div><div class="preview-caption"><span id="preview-instruction"><svg class="icon small"><use href="#i-cursor"/></svg>点击文字或图形，把修改范围说清楚</span><span id="preview-version"></span></div></div>
+      <div class="preview-heading"><div class="preview-title"><p class="eyebrow" id="preview-kicker">把想法变成看得见的一页</p><h2 id="preview-heading">页面预览</h2><p id="preview-deck-status" class="preview-deck-status" hidden></p></div><div class="preview-actions"><button id="fullscreen-button" class="icon-button" type="button" aria-label="放大页面预览" title="放大页面预览"><svg class="icon"><use href="#i-expand"/></svg></button></div></div>
+      <div id="text-editor" class="text-editor" hidden><div class="text-editor-heading"><strong>编辑文字</strong><span id="text-editor-note">双击画布文字，或在这里修改</span><button id="close-text-editor" class="icon-button" type="button" aria-label="关闭文字编辑">×</button></div><textarea id="object-text" rows="3" aria-label="选中对象的文字"></textarea><div class="text-editor-actions"><span id="text-save-status" role="status"></span><button id="save-object-text" class="button primary compact" type="button">保存修改</button></div></div>
+      <div class="preview-center"><div class="canvas-wrap" id="canvas-wrap"><div id="page-canvas" class="page-canvas"><div id="empty-preview" class="empty-preview"><div class="empty-page-mark" aria-hidden="true"><span></span><span></span><span></span></div><h3>这一页，等你的第一个想法</h3><p>在对话里讲内容，预览会在这里更新。<br>选中页面里的对象，再说出你想改的地方。</p><button id="empty-demo-button" class="button quiet" type="button">先体验演示项目 <span aria-hidden="true">↗</span></button></div></div><div id="preview-update" class="preview-update" role="status" hidden><span class="loading-dot"></span><span id="preview-update-text">正在更新这一页</span></div></div><div class="preview-caption"><span id="preview-instruction"><svg class="icon small"><use href="#i-cursor"/></svg>点击文字直接编辑，或选中对象后在对话中描述修改</span><span id="preview-version"></span></div></div>
+      <div class="editor-status"><span id="editor-save-state" role="status">已载入</span><div class="zoom-controls"><button id="zoom-out" type="button" aria-label="缩小画布">−</button><input id="canvas-zoom" type="range" min="50" max="150" value="100" step="10" aria-label="画布缩放"><span id="zoom-label">100%</span><button id="zoom-in" type="button" aria-label="放大画布">＋</button><button id="zoom-fit" type="button">适应窗口</button></div></div>
       <div class="page-review-row" id="page-review-row" hidden><div class="page-position"><button id="previous-page" class="icon-button" type="button" aria-label="上一页"><svg class="icon rotate"><use href="#i-chevron"/></svg></button><span id="page-position-label"></span><button id="next-page" class="icon-button" type="button" aria-label="下一页"><svg class="icon"><use href="#i-chevron"/></svg></button></div><button id="review-button" class="button quiet review-button" type="button" title="认可这一页会计为一轮输入；也可在检查面板一次确认整稿"><svg class="icon"><use href="#i-check"/></svg><span>认可这一版</span></button></div>
       <div class="filmstrip-wrap"><div class="filmstrip-topline"><span>页面</span><span id="slide-count">0 页</span></div><nav id="filmstrip" class="filmstrip" aria-label="切换页面"><div class="filmstrip-empty">逐页大纲确认后，页面会出现在这里。</div></nav></div>
     </section>
   </main>
 
+  <dialog id="ai-preview-dialog" class="ai-preview-dialog" aria-labelledby="ai-preview-title"><div class="dialog-heading"><h2 id="ai-preview-title">AI 修改建议</h2><button id="ai-preview-close" class="icon-button" type="button" aria-label="关闭建议预览">×</button></div><p id="ai-preview-reply"></p><div class="ai-compare"><figure><figcaption>当前页面</figcaption><iframe id="ai-before" sandbox="allow-scripts" title="修改前预览"></iframe></figure><figure><figcaption>建议效果 · 尚未应用</figcaption><iframe id="ai-after" sandbox="allow-scripts" title="AI 建议预览"></iframe></figure></div><details class="ai-change-details"><summary>查看具体修改</summary><div id="ai-change-list"></div></details><p id="ai-preview-error" role="status"></p><div class="ai-preview-actions"><span>仅应用到本次选择的范围，可撤销。</span><button id="ai-preview-cancel" type="button" class="button quiet">保留原稿</button><button id="ai-apply" type="button" class="button primary">应用建议</button></div></dialog>
+
+  <dialog id="templates-panel" class="templates-dialog" aria-labelledby="templates-title">
+    <div class="dialog-heading"><h2 id="templates-title">页面样式</h2><button id="close-templates" class="icon-button" type="button" aria-label="关闭样式筛选">×</button></div>
+          <p id="template-target"></p>
+          <div class="template-filters" role="group" aria-label="模板筛选"><button type="button" data-template-filter="recommended" aria-pressed="true">为你推荐</button><button type="button" data-template-filter="all" aria-pressed="false">全部样式</button><button type="button" data-template-filter="reference" aria-pressed="false">我的原稿 · 44 页</button><button type="button" data-template-filter="user" aria-pressed="false">我的模板 · 0</button></div>
+          <div class="template-smart-row"><button id="template-smart" type="button" class="button secondary" disabled>智能选版</button><span id="template-smart-status" role="status" aria-live="polite"></span></div>
+          <div id="template-roles" class="template-roles" role="group" aria-label="内容用途"></div>
+          <div class="template-search"><input id="template-search" type="search" placeholder="搜索用途、样式名称" aria-label="搜索模板"><select id="template-position" aria-label="页面位置"><option value="all">页面位置：不限</option><option value="cover">封面</option><option value="toc">目录</option><option value="chapter">章节页</option><option value="content">正文页</option><option value="ending">结束页</option><option value="appendix">附录页</option></select></div>
+          <div id="template-grid" class="template-grid" aria-live="polite"></div><input id="user-template-input" type="file" accept="image/png,image/jpeg" multiple hidden><p id="template-error" role="alert" hidden></p>
+  </dialog>
+
+  <dialog id="palette-dialog" class="palette-dialog" aria-labelledby="palette-title">
+    <div class="dialog-heading"><h2 id="palette-title">配色</h2><button id="palette-close" class="icon-button" type="button" aria-label="关闭配色">×</button></div>
+    <p class="palette-note">一个主色加 1–2 个辅色；用于新页面生成，也可直接重排当前页面配色。</p>
+    <div id="palette-presets" class="palette-presets" role="group" aria-label="推荐配色"></div>
+    <div class="palette-fields">
+      <label class="palette-field">主色<input id="palette-primary" type="color" value="#1F4E9E" aria-label="主色"></label>
+      <div class="palette-field palette-secondary-field"><span>辅色</span><div id="palette-secondary-list"></div><button id="palette-secondary-add" type="button" class="button quiet compact">＋ 添加辅色</button></div>
+    </div>
+    <div id="palette-preview" class="palette-preview" aria-hidden="true"></div>
+    <p id="palette-error" role="alert" hidden></p>
+    <div class="palette-actions">
+      <button id="palette-save" class="button quiet" type="button">用于新生成</button>
+      <button id="palette-apply-page" class="button quiet" type="button">应用到本页</button>
+      <button id="palette-apply-deck" class="button primary" type="button">应用到整稿</button>
+      <button id="palette-clear" class="button quiet" type="button">清除配色</button>
+    </div>
+  </dialog>
+
+  <dialog id="style-dialog" class="palette-dialog" aria-labelledby="style-title">
+    <div class="dialog-heading"><h2 id="style-title">对标风格</h2><button id="style-close" class="icon-button" type="button" aria-label="关闭对标风格">×</button></div>
+    <p class="palette-note">上传 3 页对标 PPT，提炼 UI、元素和设计风格，用于之后生成的整稿；只迁移设计，不复制原稿内容。</p>
+    <div class="style-upload-row"><button id="style-upload" class="button quiet compact" type="button">上传 3 页对标 PPT</button><span id="style-upload-note">PNG / JPEG，恰好 3 张</span><input id="style-file-input" type="file" accept="image/png,image/jpeg" multiple hidden></div>
+    <div class="style-upload-row"><button id="style-derive" class="button quiet compact" type="button" hidden>生成对标风格副本</button><span>按选定的对标风格重排整套页面，原稿不变。</span></div>
+    <div id="style-list" class="style-list"></div>
+    <div id="style-editor" hidden>
+      <p id="style-analyzing" role="status" hidden>正在读取三页对标稿，提炼 UI、元素和设计风格…</p>
+      <div id="style-form"></div>
+      <div class="palette-actions"><button id="style-save" class="button quiet" type="button">保存修改</button><button id="style-use" class="button primary" type="button">用于本项目</button></div>
+    </div>
+    <p id="style-error" role="alert" hidden></p>
+  </dialog>
+
+  <dialog id="audience-dialog" class="palette-dialog" aria-labelledby="audience-title">
+    <div class="dialog-heading"><h2 id="audience-title">受众版本</h2><button id="audience-close" class="icon-button" type="button" aria-label="关闭受众版本">×</button></div>
+    <p class="palette-note">按受众重新组织整稿，生成到新的项目；原稿保持不变，生成需要一些时间。</p>
+    <div id="audience-cards" class="audience-cards"></div>
+    <label class="palette-field"><span>补充要求（可选）</span><textarea id="audience-note" rows="2" maxlength="500" placeholder="例如：突出移动端能力"></textarea></label>
+    <div class="palette-actions"><button id="audience-generate" class="button primary" type="button">生成新版本</button></div>
+    <p id="audience-error" role="alert" hidden></p>
+  </dialog>
+
+  <dialog id="logo-dialog" class="palette-dialog" aria-labelledby="logo-title">
+    <div class="dialog-heading"><h2 id="logo-title">Logo</h2><button id="logo-close" class="icon-button" type="button" aria-label="关闭 Logo">×</button></div>
+    <p class="palette-note">透明底或非透明底都可以，系统会自动去底并按页面深浅选择配色。</p>
+    <div class="style-upload-row"><button id="logo-upload" class="button quiet compact" type="button">上传 Logo（PNG / JPG）</button><input id="logo-file-input" type="file" accept="image/png,image/jpeg" hidden><span id="logo-status"></span></div>
+    <div id="logo-result" hidden>
+      <div class="logo-previews"><div class="logo-swatch light"><img id="logo-preview-light" alt="浅色底预览"></div><div class="logo-swatch dark"><img id="logo-preview-dark" alt="深色底预览"></div></div>
+      <div id="logo-badges"></div>
+      <div class="logo-settings">
+        <label class="palette-field"><span>位置</span><select id="logo-position"><option value="auto">自动</option><option value="top-right">右上</option><option value="top-left">左上</option><option value="bottom-right">右下</option><option value="bottom-left">左下</option></select></label>
+        <label class="palette-field"><span>大小</span><select id="logo-size"><option value="small">小</option><option value="medium" selected>中</option><option value="large">大</option></select></label>
+        <label class="palette-field"><span>页面</span><select id="logo-pages"><option value="all">全部</option><option value="cover">仅封面</option><option value="except-cover">除封面外</option></select></label>
+      </div>
+      <div class="palette-actions"><button id="logo-apply" class="button primary" type="button">应用到所有页面</button><button id="logo-remove" class="button quiet" type="button">移除 Logo</button></div>
+    </div>
+    <p id="logo-error" role="alert" hidden></p>
+  </dialog>
+
+  <dialog id="template-preview-dialog" class="ai-preview-dialog" aria-labelledby="template-preview-title">
+    <div class="dialog-heading"><h2 id="template-preview-title">样式预览</h2><button id="template-preview-close" type="button" class="icon-button" aria-label="关闭样式预览">×</button></div>
+    <p id="template-preview-description"></p>
+    <div class="ai-compare template-comparison">
+      <figure><figcaption id="template-before-label">当前页面</figcaption><img id="template-original" alt="原稿参考页" hidden><iframe id="template-before" title="当前页面预览" sandbox="allow-scripts"></iframe></figure>
+      <figure><figcaption id="template-after-label">当前内容适配 · 尚未应用</figcaption><iframe id="template-after" title="样式适配预览" sandbox="allow-scripts"></iframe></figure>
+    </div>
+    <div id="template-adaptation-controls" class="template-adaptation-controls"><label for="template-adaptation-approach">适配方式</label><select id="template-adaptation-approach"><option value="creative">借鉴模板，重新构图（推荐）</option><option value="faithful">贴近模板原版式</option><option value="content">保留模板风格，按内容重排结构</option></select><button id="template-generate" class="button primary" type="button">生成适配预览</button></div>
+    <p id="template-preview-status" role="status"></p>
+    <div class="ai-preview-actions"><span id="template-preview-note"></span><button id="template-preview-cancel" type="button" class="button quiet">保留原稿</button><button id="template-preview-apply" type="button" class="button primary" disabled>应用这版</button></div>
+  </dialog>
+
   <div id="quality-measure-host" class="quality-measure-host" aria-hidden="true" inert></div>
   <div id="drop-overlay" class="drop-overlay" hidden><div><svg class="icon"><use href="#i-paperclip"/></svg><h2>把资料放到这里</h2><p>PNG / JPG ≤ 8 MB，PDF ≤ 20 MB</p><p>TXT / Markdown 需 UTF-8，50,000 字以内</p></div></div>
   <div id="toast" class="toast" role="status" hidden></div>
 
-  <dialog id="connection-dialog" class="connection-dialog"><div class="dialog-heading"><span class="terminal-symbol"><svg class="icon"><use href="#i-terminal"/></svg></span><button id="close-connection" class="icon-button" type="button" aria-label="关闭执行方式"><svg class="icon"><use href="#i-close"/></svg></button></div><p class="eyebrow">选择这一项目的执行方式</p><h2 id="connection-title">对话与页面制作</h2><p id="connection-description"></p><div class="agent-options" role="group" aria-label="执行方式"><button type="button" data-agent-mode="manual" aria-pressed="false"><span>Coding Agent 协作</span><small>在 Claude Code / Codex 中对话，通过 MCP 继续</small></button><button type="button" data-agent-mode="claude" aria-pressed="false"><span>网页调用 Claude Code</span><small>使用本机已安装、已登录的客户端</small></button><button type="button" data-agent-mode="codex" aria-pressed="false"><span>网页调用 Codex</span><small>使用本机已安装、已登录的客户端</small></button><button type="button" data-agent-mode="outline" aria-pressed="false"><span>按大纲本地排版</span><small>使用你提供的逐页文字，不调用模型</small></button></div><div id="connection-detail" class="connection-detail" role="status"></div><p id="connection-error" class="connection-error" role="alert" hidden></p><button id="connection-outline-starter" class="button quiet" type="button" hidden>填写逐页大纲</button><div id="handoff-card" class="handoff-card"><span>可以发给 Coding Agent</span><p id="handoff-text"></p><button id="copy-handoff" class="button quiet" type="button"><svg class="icon"><use href="#i-copy"/></svg>复制这段指令</button></div><p class="dialog-note">选择模式不会安装或登录客户端。每次页面生成后，预览会自动更新。</p></dialog>
+  <dialog id="connection-dialog" class="connection-dialog"><div class="dialog-heading"><span class="terminal-symbol"><svg class="icon"><use href="#i-terminal"/></svg></span><button id="close-connection" class="icon-button" type="button" aria-label="关闭执行方式"><svg class="icon"><use href="#i-close"/></svg></button></div><p class="eyebrow">选择这一项目的执行方式</p><h2 id="connection-title">对话与页面制作</h2><p id="connection-description"></p><div id="model-picker" hidden><label for="model-profile">本项目的模型</label><select id="model-profile" aria-describedby="model-help"></select><button id="choose-model" class="button primary" type="button">使用此模型</button><p id="model-help">模型与执行客户端分别标注。切换后用于新任务；进行中的任务保持原选择。</p></div><label class="image-mode-toggle"><input id="image-mode" type="checkbox"><span>自动配图<small>整稿完成后，为封面等最多 3 页生成无文字配图，放入页面预留区域；生成失败时保留色块版式。</small></span></label><div class="agent-options" role="group" aria-label="执行方式"><button type="button" data-agent-mode="manual" aria-pressed="false"><span>Coding Agent 协作</span><small>在 Claude Code / Codex 中对话，通过 MCP 继续</small></button><button type="button" data-agent-mode="claude" aria-pressed="false"><span>网页调用 Claude Code</span><small>使用本机已安装、已登录的客户端</small></button><button type="button" data-agent-mode="codex" aria-pressed="false"><span>网页调用 Codex</span><small>使用本机已安装、已登录的客户端</small></button><button type="button" data-agent-mode="outline" aria-pressed="false"><span>按大纲本地排版</span><small>使用你提供的逐页文字，不调用模型</small></button></div><div id="connection-detail" class="connection-detail" role="status"></div><p id="connection-error" class="connection-error" role="alert" hidden></p><button id="connection-outline-starter" class="button quiet" type="button" hidden>填写逐页大纲</button><div id="handoff-card" class="handoff-card"><span>可以发给 Coding Agent</span><p id="handoff-text"></p><button id="copy-handoff" class="button quiet" type="button"><svg class="icon"><use href="#i-copy"/></svg>复制这段指令</button></div><p class="dialog-note">选择模式不会安装或登录客户端。每次页面生成后，预览会自动更新。</p></dialog>
   <dialog id="deck-review-dialog" class="deck-review-dialog"><div class="dialog-heading"><h2>确认当前整稿</h2><button id="close-deck-review" class="icon-button" type="button" aria-label="关闭整稿确认"><svg class="icon"><use href="#i-close"/></svg></button></div><p id="deck-review-snapshot" class="deck-review-snapshot"></p><blockquote id="deck-review-statement"></blockquote><p id="deck-review-round-note" class="deck-review-round-note"></p><p id="deck-review-error" class="deck-review-error" role="alert" hidden></p><p id="deck-review-boundary" class="deck-review-boundary">这项确认只记录你对内容表达和视觉呈现的认可。资料核验、缺失项等正式交付条件仍单独检查。</p><div class="deck-review-dialog-actions"><button id="cancel-deck-review" class="button quiet" type="button">返回查看</button><button id="submit-deck-review" class="button primary" type="button">我已查看并确认</button></div></dialog>
-  <dialog id="templates-dialog" class="templates-dialog" aria-labelledby="templates-title"><div class="dialog-heading"><div><p class="eyebrow">选一个适合内容的样子</p><h2 id="templates-title">页面模板</h2></div><button id="close-templates" class="icon-button" type="button" aria-label="关闭模板">×</button></div><p id="template-target">选定后用于接下来生成的页面。</p><p class="dialog-note"><a id="reference-library-link" href="/reference-library.html" target="_blank" rel="noopener">浏览 44 页原始 POTX 参考库 ↗</a> · 真实原页预览与来源，不可直接套用到工作台场景。</p><div id="template-roles" class="template-roles" role="group" aria-label="页面位置"></div><div class="template-search"><input id="template-search" type="search" placeholder="搜索模板，例如：三项并列、友商对比、时间线" aria-label="搜索模板"><select id="template-family" aria-label="正文表达任务"><option value="all">全部表达任务</option></select></div><div class="template-filters" role="group" aria-label="模板筛选"><button type="button" data-template-filter="recommended" aria-pressed="true">为你推荐</button><button type="button" data-template-filter="all" aria-pressed="false">全部样式</button></div><div id="template-grid" class="template-grid" aria-live="polite"></div><p id="template-error" role="alert" hidden></p></dialog>
   <dialog id="projects-dialog" class="connection-dialog projects-dialog" aria-labelledby="projects-title">
     <div class="dialog-heading"><h2 id="projects-title">我的项目</h2><button id="close-projects" class="icon-button" type="button" aria-label="关闭项目管理"><svg class="icon"><use href="#i-close"/></svg></button></div>
     <p>在当前工作目录中创建和切换演示稿。</p>
@@ -122,6 +248,7 @@
     <form id="create-project-form" class="create-project-form"><label for="new-project-title">新建项目</label><div><input id="new-project-title" name="title" placeholder="输入项目名称" maxlength="120" required><button id="create-project-button" class="button primary" type="submit">创建并打开</button></div></form>
     <p id="projects-error" role="alert" hidden></p>
   </dialog>
+  <script src="/preview-loader.js" defer></script>
   <script src="/app.js" defer></script>
 </body>
 </html>

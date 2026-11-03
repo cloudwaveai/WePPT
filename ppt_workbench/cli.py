@@ -124,7 +124,7 @@ def _parser():
     studio = commands.add_parser("studio", help="启动聊天与实时预览工作台，仅监听本机")
     studio.add_argument("--project", default="main")
     studio.add_argument("--port", default=8765, type=int)
-    studio.add_argument("--agent", default=None, choices=["manual", "claude", "codex", "outline"],
+    studio.add_argument("--agent", default=None, choices=["manual", "claude", "codex", "outline", "api"],
                         help="省略时恢复项目上次的执行方式；可在界面中切换")
     studio.add_argument("--open", action="store_true", help="自动在本机浏览器打开")
     studio.add_argument("--demo", action="store_true", help="空项目中载入明确标注的演示内容")

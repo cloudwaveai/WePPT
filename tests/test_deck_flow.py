@@ -53,6 +53,32 @@ class DeckFlowTests(unittest.TestCase):
         page["user_intent"] = "模型声称的用户原话：此内容不能成为原话字段"
         return {"reply": "测试替身输出当前页动作，不是实际模型调用。", "actions": [{"type": "slide_add", **page}]}
 
+    def test_agent_deck_recovers_unknown_and_incompatible_templates(self):
+        plan = fixture_plan(3, "agent")
+        plan["pages"][0]["template_id"] = "parallel-three"
+        plan["pages"][1]["template_id"] = "invented-layout"
+        plan["pages"][2]["template_id"] = "ending"
+        self.studio.create_deck(plan, self.source, "agent")
+        from ppt_workbench.templates import catalog
+        entries = {entry["id"]: entry for entry in catalog()}
+        with self.studio.wb._connection() as db:
+            import json
+            pages = [json.loads(row[0]) for row in db.execute(
+                "SELECT plan FROM studio_deck_pages ORDER BY page_index")]
+        for page in pages:
+            self.assertIn(page["template_id"], entries)
+            self.assertIn(page["role"], entries[page["template_id"]]["roles"])
+        self.assertEqual(pages[2]["template_id"], "ending")
+
+    def test_visual_variant_is_accepted_and_generated(self):
+        plan = fixture_plan(3)
+        plan["pages"][1]["template_id"] = "parallel-three"
+        self.studio.create_deck(plan, self.source, "outline")
+        state = self.finish()
+        self.assertEqual(state["status"], "complete")
+        slide = self.studio.wb.get_slide("deck", self.studio.state()["slides"][1]["id"])["slide"]
+        self.assertEqual(slide["templateId"], "parallel-three")
+
     def test_ten_pages_continue_automatically_with_real_previews_and_original_source(self):
         initial = self.start(10)
         self.assertEqual(initial["totalPages"], 10)
@@ -90,6 +116,27 @@ class DeckFlowTests(unittest.TestCase):
         messages = self.studio.state()["messages"]
         self.assertEqual(sum(m["role"] == "user" for m in messages), 1)
         self.assertTrue(any("不调用模型" in m["text"] for m in messages))
+
+    def test_agent_modes_route_explicit_and_bare_outlines_to_agent(self):
+        explicit = "按大纲排版\n# 计划\n## 封面｜标题\n介绍\n## 结束｜结尾\n谢谢"
+        bare = "项目计划\n1. 背景\n2. 方案\n3. 下一步"
+        for mode in ("claude", "codex"):
+            for index, text in enumerate((explicit, bare)):
+                with self.subTest(mode=mode, text=text):
+                    studio = Studio(self.root, f"{mode}-{index}", agent=mode)
+                    job = studio.enqueue(text, scope="deck")
+                    self.assertEqual(job["status"], "queued")
+                    self.assertIsNone(studio.deck_state())
+                    self.assertEqual(studio.job(job["jobId"])["payload"]["message"], text)
+
+    def test_agent_cannot_switch_to_deterministic_outline_execution(self):
+        from ppt_workbench.outline import parse_outline
+        text = "按大纲排版\n# 计划\n## 封面｜标题\n介绍\n## 结束｜结尾\n谢谢"
+        studio = Studio(self.root, "agent-outline-guard", agent="codex")
+        job = studio.enqueue(text, scope="deck")
+        self.error("OUTLINE_MODE_REQUIRED", studio.apply_plan, job["jobId"],
+                   {"reply": "计划", "actions": [{"type": "deck_start", **parse_outline(text)}]})
+        self.assertIsNone(studio.deck_state())
 
     def test_pause_resume_prevents_extra_pages_and_reuses_queue(self):
         self.start()
@@ -232,6 +279,72 @@ class DeckFlowTests(unittest.TestCase):
             self.assertTrue(self.studio.run_pending())
         self.assertEqual(self.studio.deck_state()["status"], "cancelled")
         self.assertEqual(self.studio.state()["slides"], [])
+
+    def test_malformed_agent_output_retries_without_duplicate_page(self):
+        self.studio.set_agent_mode("codex")
+        self.start(execution="agent")
+        contexts = []
+        def generate(mode, prompt, context, **kwargs):
+            contexts.append(context)
+            if len(contexts) == 1:
+                raise EngineError("INVALID_AGENT_OUTPUT", "Agent 没有返回可解析的完整 JSON。")
+            return self.mock_agent_plan(mode, prompt, context, **kwargs)
+        with patch("ppt_workbench.agent_bridge.diagnose", return_value={"available": True}), patch("ppt_workbench.agent_bridge.run_turn", side_effect=generate):
+            self.assertTrue(self.studio.run_pending())
+        self.assertEqual(len(contexts), 2)
+        self.assertEqual(contexts[1]["revisionCorrection"]["code"], "INVALID_AGENT_OUTPUT")
+        self.assertEqual(len(self.studio.state()["slides"]), 1)
+        self.assertEqual(self.studio.deck_state()["completedPages"], 1)
+
+    def test_malformed_agent_output_stops_after_three_calls(self):
+        self.studio.set_agent_mode("codex")
+        self.start(execution="agent")
+        with patch("ppt_workbench.agent_bridge.diagnose", return_value={"available": True}), patch("ppt_workbench.agent_bridge.run_turn", side_effect=EngineError("INVALID_AGENT_OUTPUT", "格式错误")) as calls:
+            self.assertTrue(self.studio.run_pending())
+        self.assertEqual(calls.call_count, 3)
+        self.assertEqual(self.studio.state()["slides"], [])
+        self.assertEqual(self.studio.deck_state()["status"], "blocked")
+        self.assertEqual(self.studio.deck_state()["lastError"]["code"], "INVALID_AGENT_OUTPUT")
+
+    def test_truncated_page_output_gets_one_compact_retry(self):
+        self.studio.set_agent_mode("codex")
+        self.start(execution="agent")
+        contexts = []
+        def generate(mode, prompt, context, **kwargs):
+            contexts.append(context)
+            if len(contexts) == 1:
+                raise EngineError("MODEL_OUTPUT_TRUNCATED", "模型输出被长度限制截断，未应用修改。")
+            return self.mock_agent_plan(mode, prompt, context, **kwargs)
+        with patch("ppt_workbench.agent_bridge.diagnose", return_value={"available": True}), patch("ppt_workbench.agent_bridge.run_turn", side_effect=generate):
+            self.assertTrue(self.studio.run_pending())
+        self.assertEqual(len(contexts), 2)
+        self.assertEqual(contexts[1]["revisionCorrection"]["code"], "MODEL_OUTPUT_TRUNCATED")
+        self.assertIn("紧凑", contexts[1]["revisionCorrection"]["instruction"])
+        self.assertEqual(self.studio.deck_state()["completedPages"], 1)
+
+    def test_invalid_composition_in_a_plan_gets_a_correction_retry(self):
+        self.studio.set_agent_mode("codex")
+        contexts = []
+        def plan(mode, prompt, context, **kwargs):
+            contexts.append(context)
+            if len(contexts) == 1:
+                raise EngineError("INVALID_COMPOSITION", "页面关系类型无效：'mosaic'，只能是 hero、parallel 之一。")
+            return {"reply": "已改正", "actions": []}
+        self.studio.enqueue("把这份大纲做成整稿", scope="deck")
+        with patch("ppt_workbench.agent_bridge.diagnose", return_value={"available": True}), patch("ppt_workbench.agent_bridge.run_turn", side_effect=plan):
+            self.studio.run_pending()
+        self.assertEqual(len(contexts), 2)
+        self.assertEqual(contexts[1]["revisionCorrection"]["code"], "INVALID_COMPOSITION")
+        self.assertIn("mosaic", contexts[1]["revisionCorrection"]["message"])
+
+    def test_repeated_truncation_blocks_after_a_single_retry(self):
+        self.studio.set_agent_mode("codex")
+        self.start(execution="agent")
+        with patch("ppt_workbench.agent_bridge.diagnose", return_value={"available": True}), patch("ppt_workbench.agent_bridge.run_turn", side_effect=EngineError("MODEL_OUTPUT_TRUNCATED", "截断")) as calls:
+            self.assertTrue(self.studio.run_pending())
+        self.assertEqual(calls.call_count, 2)
+        self.assertEqual(self.studio.state()["slides"], [])
+        self.assertEqual(self.studio.deck_state()["lastError"]["code"], "MODEL_OUTPUT_TRUNCATED")
 
     def test_empty_agent_actions_preserve_questions_and_block_for_input(self):
         self.studio.set_agent_mode("codex")

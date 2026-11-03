@@ -65,7 +65,8 @@ def strip_template_decoration(scene):
     exists, keeping arbitrary user text and every user image.
     """
     from . import opening_templates
-    tid = scene.get('templateId', '')
+    from .reference_templates import base_id
+    tid = base_id(scene.get('templateId', '')) or scene.get('templateId', '')
     source_fixed = {}
     if opening_templates.has_template(tid):
         source_fixed = {o['id']: o for o in opening_templates.sample_scene(tid)['objects']
@@ -131,18 +132,97 @@ def strip_opening_decoration(scene):
     return strip_template_decoration(scene)
 
 
+def text_height(obj, size=None):
+    """Conservative estimate of the wrapped height of a text object."""
+    size = obj['fontSize'] if size is None else size
+    width = max(1, obj['w'] - 4) / 1.08
+    lines = 0
+    for paragraph in obj.get('text', '').split('\n'):
+        units = sum(1.05 if ord(c) >= 0x2e80 else .36 if c.isspace() else .68 for c in paragraph)
+        lines += max(1, math.ceil(units * size / width))
+    return lines * size * max(1.22, obj.get('lineHeight', 1.2)) + 4
+
+
 def fit_text(obj):
     """Fit supplied words inside a source slot without truncation or rewriting."""
     if obj['type'] != 'text' or not obj.get('text'):
         return
-    width = max(1, obj['w'] - 4) / 1.08
-    def height(size):
-        lines = 0
-        for paragraph in obj['text'].split('\n'):
-            units = sum(1.05 if ord(c) >= 0x2e80 else .36 if c.isspace() else .68 for c in paragraph)
-            lines += max(1, math.ceil(units * size / width))
-        return lines * size * max(1.22, obj.get('lineHeight', 1.2)) + 4
     size = obj['fontSize']
-    while size > 10 and height(size) > obj['h']:
+    while size > 10 and text_height(obj, size) > obj['h']:
         size = max(10, size - .5)
     obj['fontSize'] = size
+
+
+def reflow_overlapping_text(scene):
+    """Use a content ledger when source caption slots cannot hold user text."""
+    text = [o for o in scene['objects'] if o['type'] == 'text' and o.get('text') and o.get('opacity', 1) > 0]
+    def overlap(a, b):
+        return (a['x'] < b['x'] + b['w'] and b['x'] < a['x'] + a['w'] and
+                a['y'] < b['y'] + b['h'] and b['y'] < a['y'] + a['h'])
+    if not any(text_height(o) > o['h'] for o in text) and not any(
+            overlap(a, b) for i, a in enumerate(text) for b in text[i + 1:]):
+        return
+    width, height = scene['width'], scene['height']
+    # The source ornaments correspond to the old slots and can obscure the
+    # reflowed text; hide only generated visuals, retaining user objects.
+    for obj in scene['objects']:
+        if is_template_decoration(obj):
+            # Opening backgrounds establish the page's actual contrast. Retain
+            # their original bytes even when text needs a different arrangement.
+            opening_background = obj['id'].startswith('opening.fixed.') and (
+                (obj['type'] == 'rect' and obj['w'] >= width * .95 and obj['h'] >= height * .95)
+                or (obj['type'] == 'image' and obj['w'] >= width * .65 and obj['h'] >= height * .4))
+            if opening_background:
+                if obj['type'] == 'rect':
+                    scene['background'] = obj['fill']
+            else:
+                obj['opacity'] = 0
+    background = scene.get('background', '#FFFFFF').lstrip('#')
+    try:
+        light = sum(int(background[i:i+2], 16) * weight for i, weight in ((0, .299), (2, .587), (4, .114))) > 145
+    except (ValueError, IndexError):
+        light = True
+    for obj in text:
+        obj['color'] = '#173B53' if light else '#F0F5FA'
+    titles = [o for o in text if o.get('binding') == 'title']
+    footers = [o for o in text if o['id'].startswith('footer.') and o not in titles]
+    body = [o for o in text if o not in titles and o not in footers]
+    title_offset = min(.04, max(0, titles[0]['y'] / height * .1)) if titles else 0
+    for i, obj in enumerate(titles):
+        obj.update(x=width * .05, y=height * (.04 + .14 * i / len(titles)),
+                   w=width * .9, h=height * .13 / len(titles), fontSize=min(42, height * .058),
+                   align='left', valign='top', lineHeight=1.2)
+        fit_text(obj)
+    for i, obj in enumerate(footers):
+        obj.update(x=width * (.05 + .9 * i / len(footers)), y=height * .94,
+                   w=width * .9 / len(footers), h=height * .04, fontSize=12,
+                   align='left', valign='top')
+        fit_text(obj)
+    if not body:
+        return
+    images = [o for o in scene['objects'] if o['type'] == 'image' and not is_template_decoration(o)]
+    left, top = width * .05, height * ((.2 + title_offset) if titles else .05)
+    area_w, area_h = width * (.55 if images else .9), height * ((.72 if footers else .75) - title_offset)
+    if images:
+        for i, obj in enumerate(images):
+            obj.update(x=width * .65, y=top + area_h * i / len(images),
+                       w=width * .3, h=area_h / len(images) - 4)
+    columns = min(3, max(1, math.ceil(len(body) / 6)))
+    rows = math.ceil(len(body) / columns)
+    cell_w = area_w / columns
+    # Allocate each row enough space for its longest block, while retaining order.
+    weights = []
+    for row in range(rows):
+        group = body[row * columns:(row + 1) * columns]
+        for obj in group:
+            obj.update(w=cell_w - 6, lineHeight=1.25)
+        weights.append(max(text_height(obj, 14) for obj in group))
+    total = sum(weights)
+    y = top
+    for row, weight in enumerate(weights):
+        row_h = area_h * weight / total
+        for col, obj in enumerate(body[row * columns:(row + 1) * columns]):
+            obj.update(x=left + col * cell_w, y=y, h=max(1, row_h - 3),
+                       fontSize=min(20, height * .028), align='left', valign='top', opacity=1)
+            fit_text(obj)
+        y += row_h

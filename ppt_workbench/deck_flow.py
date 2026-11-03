@@ -60,9 +60,10 @@ class DeckFlow:
 
     def set_agent_mode(self, mode):
         from .agent_bridge import diagnose
-        if mode not in {"manual", "claude", "codex", "outline"}:
+        if mode not in {"manual", "claude", "codex", "outline", "api"}:
             raise EngineError("INVALID_AGENT", "请选择 manual、claude、codex 或 outline。")
         with self.wb.atomic() as db:
+            db.execute("UPDATE studio_model_selection SET profile_id=NULL WHERE project_id=?", (self.project_id,))
             db.execute("UPDATE studio_runtime SET agent_mode=? WHERE project_id=?", (mode, self.project_id))
             deck = self._deck_row(db)
             if deck and deck["status"] == "blocked" and self._deck_error(deck).get("code") in WAITING_CODES:
@@ -127,7 +128,8 @@ class DeckFlow:
             completed = sum(r["status"] == "complete" for r in rows)
             pending = next((r for r in rows if r["status"] not in {"complete", "cancelled"}), None)
             pending_question = self._pending_deck_question(db, deck, pending)
-            return {"id": deck["id"], "title": deck["title"], "status": deck["status"], "execution": deck["execution"],
+            from .deck_review import review_state
+            return {"designReview": review_state(self, db, deck), "id": deck["id"], "title": deck["title"], "status": deck["status"], "execution": deck["execution"],
                 "totalPages": len(rows), "completedPages": completed,
                 "currentPage": pending["page_index"] + 1 if pending else None,
                 "pendingQuestionMessageId": pending_question,
@@ -211,10 +213,38 @@ class DeckFlow:
         proposed = copy.deepcopy(plan)
         proposed["execution"] = execution
         proposed = validate_deck_plan(proposed)
-        known = {t["id"] for t in self.wb.list_templates()["templates"]} | {"custom", ""}
+        if execution == "agent":
+            from .page_design import drop_unsupported_metrics
+            drop_unsupported_metrics(proposed, [source_message] + self._user_material_texts())
+            chosen = self.palette()
+            if chosen and isinstance(proposed.get("design"), dict):
+                proposed["design"]["accent"] = chosen["primary"]
+                proposed["design"]["secondary"] = chosen["secondary"][0]
+                if len(chosen["secondary"]) > 1:
+                    proposed["design"]["tertiary"] = chosen["secondary"][1]
+            elif isinstance(proposed.get("design"), dict):
+                from .user_templates import selected_style
+                style = selected_style(self)
+                colour = (style or {}).get("profile", {}).get("color") or {}
+                if style and colour:
+                    import re as _re
+                    hex_ok = lambda v: isinstance(v, str) and _re.fullmatch(r"#[0-9a-fA-F]{6}", v)
+                    for field, key in (("background", "background"), ("ink", "ink"),
+                                       ("accent", "primary"), ("secondary", "secondary")):
+                        value = colour.get(key)
+                        if key == "secondary":
+                            value = value[0] if isinstance(value, list) and value else None
+                        if hex_ok(value):
+                            proposed["design"][field] = value.upper()
+        from .templates import recover_generated_template
+        known = {t["id"] for t in self.wb.list_templates()["templates"]}
         for page in proposed["pages"]:
-            if page.get("template_id", "") not in known:
-                raise EngineError("INVALID_DECK_TEMPLATE", "整稿使用了不存在的模板。", {"templateId": page["template_id"]})
+            if "template_id" in page:
+                if execution == "agent":
+                    page["template_id"] = recover_generated_template(
+                        page["template_id"], page["role"], page=page, known_ids=known)
+                elif page["template_id"] not in known | {"custom", ""}:
+                    raise EngineError("INVALID_DECK_TEMPLATE", "整稿使用了不存在的模板。", {"templateId": page["template_id"]})
         fingerprint = _hash({"plan": proposed, "source": source_message})
         with self.wb.atomic() as db:
             existing = self._deck_row(db)
@@ -245,14 +275,36 @@ class DeckFlow:
             self._queue_next_deck_page(db, deck_id)
             return self.deck_state()
 
+    def _user_material_texts(self):
+        """The user's own words and attachment excerpts in this project; never model text."""
+        with self.wb._connection() as db:
+            texts = [r["text"] for r in db.execute(
+                "SELECT text FROM studio_messages WHERE project_id=? AND role='user'", (self.project_id,))]
+            texts += [r["excerpt"] for r in db.execute(
+                "SELECT excerpt FROM studio_assets WHERE project_id=?", (self.project_id,))]
+        return texts
+
     def _queue_next_deck_page(self, db, deck_id):
         deck = self._deck_row(db)
         if not deck or deck["id"] != deck_id or deck["status"] != "running":
             return
         row = db.execute("SELECT * FROM studio_deck_pages WHERE deck_id=? AND status!='complete' ORDER BY page_index LIMIT 1", (deck_id,)).fetchone()
         if row is None:
+            from .deck_review import queue_review
+            if queue_review(self, db, deck):
+                return
             db.execute("UPDATE studio_decks SET status='complete',initial_completed_at=COALESCE(initial_completed_at,?),last_error=NULL,updated_at=? WHERE id=?", (_now(), _now(), deck_id))
             self._message(db, "assistant", "整稿初稿已逐页生成完成，正在汇总本轮结果与自动检查。", deckId=deck_id, roundId=self._deck_round_id(db, deck_id))
+            from .auto_images import queue_auto_images
+            try:
+                queue_auto_images(self, db, deck)
+            except (EngineError, ValueError):
+                pass  # Illustration is optional; the finished deck stays complete.
+            from .logo import apply_to_deck
+            try:
+                apply_to_deck(self, db, deck)
+            except (EngineError, ValueError):
+                pass  # The logo is optional; the finished deck stays complete.
             return
         if row["job_id"]:
             job = self.job(row["job_id"])
@@ -266,6 +318,10 @@ class DeckFlow:
         payload = {"kind": "deck_page", "deckId": deck_id, "pageIndex": row["page_index"], "execution": deck["execution"],
             "message": deck["source_message"], "slideId": None, "objectId": None, "baseRevision": None, "baseSceneRevision": None,
             "projectRevision": self.wb.get_project(self.project_id)["revision"], "attachments": attachments}
+        if source_job:
+            chosen = json.loads(source_job["payload"]).get("modelBinding")
+            if chosen:
+                payload["modelBinding"] = chosen
         db.execute("INSERT INTO studio_jobs VALUES (?,?,?,?,?,?,?,?,?)", (job_id, self.project_id, f"deck:{deck_id}:{row['page_index']}:{row['attempts'] + 1}",
             deck["source_message_id"], "queued", _json(payload), None, _now(), _now()))
         self._bind_round_job(db, self._deck_round_id(db, deck_id), job_id)
@@ -284,6 +340,9 @@ class DeckFlow:
     def _job_available(self, db, job, *, external=False):
         if not self._feedback_available(db, job):
             return False
+        if job["payload"].get("kind") == "deck_review":
+            deck = self._deck_row(db)
+            return bool(not external and deck and deck["id"] == job["payload"]["deckId"] and deck["status"] == "running")
         if job["payload"].get("kind") != "deck_page":
             return True
         deck, page = self._deck_page(db, job["payload"])
@@ -292,6 +351,8 @@ class DeckFlow:
         return deck["status"] == "running" or (external and deck["status"] == "blocked" and self._deck_error(deck).get("code") in WAITING_CODES)
 
     def _validate_deck_submission(self, db, job, actions):
+        if job["payload"].get("kind") == "deck_review":
+            raise EngineError("DECK_REVIEW_INTERNAL", "整稿检查由内部执行器运行，不接受外部修改计划。")
         if job["payload"].get("kind") != "deck_page":
             return
         deck, page = self._deck_page(db, job["payload"])
@@ -303,6 +364,14 @@ class DeckFlow:
         planned = json.loads(page["plan"])
         if actions and (actions[0]["role"] != planned["role"] or actions[0]["title"] != planned["title"]):
             raise EngineError("SCOPE_VIOLATION", "当前页标题与角色需要与已保存的逐页计划一致。")
+        if actions and planned.get('composition'):
+            from .page_design import prepare_scene
+            actions[0]['composition'] = copy.deepcopy(planned['composition'])
+            for field in ('takeaway','key_points'):
+                if field in planned:
+                    actions[0].setdefault(field,planned[field])
+            if prepare_scene(actions[0], resolve_images=self._resolve_images) is None:
+                raise EngineError('DESIGN_LAYOUT_REQUIRED', '结构化页面需要完整原生场景或图解。')
         if deck["status"] == "blocked":
             db.execute("UPDATE studio_decks SET status='running',last_error=NULL,updated_at=? WHERE id=?", (_now(), deck["id"]))
 
@@ -341,6 +410,7 @@ class DeckFlow:
             if action == "pause":
                 db.execute("UPDATE studio_decks SET status='paused',updated_at=? WHERE id=?", (_now(), deck["id"]))
             elif action == "cancel":
+                db.execute("UPDATE studio_jobs SET status='cancelled',updated_at=? WHERE project_id=? AND client_message_id=? AND status IN ('queued','running')", (_now(), self.project_id, "deck-review:" + deck["id"]))
                 rows = db.execute("SELECT job_id FROM studio_deck_pages WHERE deck_id=? AND status!='complete'", (deck["id"],)).fetchall()
                 for row in rows:
                     if row["job_id"]:
@@ -360,5 +430,5 @@ class DeckFlow:
         with self.wb._connection() as db:
             deck, row = self._deck_page(db, payload)
         page = json.loads(row["plan"])
-        action = {"type": "slide_add", **page}
+        action = {"type": "slide_add", **{k:v for k,v in page.items() if k != "designBrief"}}
         return {"reply": f"本地大纲排版已完成第 {row['page_index'] + 1} 页：{page['title']}。文字来自已提供大纲，未调用模型。", "actions": [action], "questions": []}

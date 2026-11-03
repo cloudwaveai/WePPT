@@ -9,7 +9,8 @@ from pathlib import Path
 from .core import EngineError
 from .rendering import validate_scene
 from .template_content import fit_text
-from . import design_map, opening_templates
+from .template_categories import annotate_category
+from . import design_map, opening_templates, semantic_planning, reference_templates
 
 
 _TEMPLATES = (
@@ -74,15 +75,67 @@ def catalog():
             entries.append(dict(id=tid, name=name, title=name, description=description, tags=list(tags),
                                 role="content", roles=list(_ROLES), family="legacy", familyName="经典模板",
                                 use=description, inputs=[], checks=[], legacy=True))
+    entries += reference_templates.catalog(entries)
     for entry in entries:
+        annotate_category(entry)
         if entry["id"] in _REFERENCE:
             entry["sourceLabel"] = "本地新增版式" if entry.get("local") else "设计地图 · 原版布局"
         entry["previewUrl"] = "/api/templates/preview?template=" + entry["id"]
     return entries
 
 
+def recommend_templates(role, text="", limit=6, *, page=None, taste=None):
+    """Rank role-compatible layouts; optionally supply a structured slide as page."""
+    role = role if role in _ROLES else "content"
+    plan = semantic_planning.plan_page_expression(page, text=text)
+    matching = [t for t in catalog() if not t.get("legacy") and role in t.get("roles", [])]
+    features = (taste or {}).get("features") or {}
+    def taste_bonus(template):
+        value = 0
+        for key in ("family", "browseCategory", "baseTemplateId", "source", "styleId"):
+            value += features.get(key, {}).get(template.get(key), 0)
+        return min(10, 6 * value)
+    def score(template):
+        base = dict(template, id=template.get("baseTemplateId", template["id"]))
+        value = semantic_planning.template_score(base, plan)
+        if template.get("reference"):
+            value += 2  # Prefer approved references only among comparable relationships.
+        return value + taste_bonus(template)
+    ranked, seen = [], set()
+    for template in sorted(matching, key=score, reverse=True):
+        layout = template.get("baseTemplateId", template["id"])
+        if layout in seen and limit <= 6:
+            continue
+        seen.add(layout)
+        template["recommendationReason"] = ("参考：" + template["use"] + "；" + template["capacityLabel"]
+                                            if template.get("reference") else template.get("use", ""))
+        if taste_bonus(template) >= 3:
+            template["recommendationReason"] += "；接近你常用的风格"
+            template["tasteMatch"] = True
+        ranked.append(template)
+    return ranked[:limit]
+
+
+def recover_generated_template(template_id, role, *, page=None, known_ids=None):
+    """Resolve model-generated identifiers against selectable, role-compatible layouts."""
+    entries = {entry["id"]: entry for entry in catalog()}
+    known = set(entries) if known_ids is None else set(known_ids) & set(entries)
+    if template_id in {"", "custom"}:
+        return template_id
+    entry = entries.get(template_id)
+    if entry and template_id in known and role in entry.get("roles", []):
+        return template_id
+    candidates = recommend_templates(role, page=page, limit=len(entries))
+    return next((candidate["id"] for candidate in candidates if candidate["id"] in known), "")
+
+
 def template_for_role(template_id, role):
     """Adapt a deck preference to a page role without changing legacy themes."""
+    if reference_templates.base_id(template_id):
+        entry = next(t for t in catalog() if t["id"] == template_id)
+        if role in entry["roles"]:
+            return template_id
+        return template_for_role(entry["baseTemplateId"], role)
     if opening_templates.has_template(template_id):
         return opening_templates.template_for_role(template_id, role) or {
             "ending": "ending", "appendix": "table", "content": "claim-proof"}.get(role, "cover")
@@ -109,14 +162,27 @@ def apply_template(scene, template_id):
     Long content is retained verbatim; browser quality measurement remains the
     authority on overflow. No data or chart objects are introduced.
     """
-    from .template_content import strip_template_decoration
-    scene = strip_template_decoration(validate_scene(scene))
+    from .template_content import strip_template_decoration, reflow_overlapping_text
+    base = reference_templates.base_id(template_id)
+    if base:
+        result = apply_template(scene, base)
+        result["templateId"] = template_id
+        return result
+    scene = validate_scene(scene)
+    scene.pop("diagram", None)  # A different layout no longer has the original diagram topology.
+    scene = strip_template_decoration(scene)
     if opening_templates.has_template(template_id):
-        return opening_templates.apply_template(scene, template_id)
+        result = opening_templates.apply_template(scene, template_id)
+        reflow_overlapping_text(result)
+        return validate_scene(result)
     if design_map.has_template(template_id):
-        return design_map.apply_template(scene, template_id)
+        result = design_map.apply_template(scene, template_id)
+        reflow_overlapping_text(result)
+        return validate_scene(result)
     if template_id in _REFERENCE:
-        return _apply_reference(scene, _REFERENCE[template_id])
+        result = _apply_reference(scene, _REFERENCE[template_id])
+        reflow_overlapping_text(result)
+        return validate_scene(result)
     _, _, _, _, background, ink, accent = _template(template_id)
     result = validate_scene(scene)
     result["templateId"] = template_id
@@ -148,8 +214,8 @@ def apply_template(scene, template_id):
             # Old ornaments can imply obsolete grouping; retain their IDs but
             # use a single accent and suppress the remaining decoration.
             obj["opacity"] = 1 if decoration == 0 else 0
-            if kind == "rect":
-                obj.update(fill=accent, stroke="none", radius=0)
+            if kind in ("rect", "ellipse"):
+                obj.update(fill=accent, stroke="none", **({"radius": 0} if kind == "rect" else {}))
                 box(obj, 64, 58, 7, 64)
             else:
                 obj.update(stroke=accent, strokeWidth=3)
@@ -192,6 +258,7 @@ def apply_template(scene, template_id):
         obj.update(fontSize=max(10, min(30 * sy, cell_h * .24)), lineHeight=1.4)
     for obj in result["objects"]:
         fit_text(obj)
+    reflow_overlapping_text(result)
     return validate_scene(result)
 
 
@@ -271,8 +338,8 @@ def _apply_reference(scene, entry):
             ornaments.append(obj)
     for i, obj in enumerate(ornaments):
         obj["opacity"] = 1 if i == 0 else 0
-        if obj["type"] == "rect":
-            obj.update(fill=accent, stroke="none", radius=0)
+        if obj["type"] in ("rect", "ellipse"):
+            obj.update(fill=accent, stroke="none", **({"radius": 0} if obj["type"] == "rect" else {}))
             place(obj, (64, 58, 7, 64))
         else:
             obj.update(stroke=accent, strokeWidth=3)
@@ -336,6 +403,11 @@ def _apply_reference(scene, entry):
 
 
 def sample_scene(template_id):
+    base = reference_templates.base_id(template_id)
+    if base:
+        result = sample_scene(base)
+        result["templateId"] = template_id
+        return result
     if opening_templates.has_template(template_id):
         return opening_templates.sample_scene(template_id)
     if design_map.has_template(template_id):

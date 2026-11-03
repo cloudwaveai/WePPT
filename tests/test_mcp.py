@@ -110,7 +110,7 @@ class StdioTests(unittest.IsolatedAsyncioTestCase):
                     "changes": [{"path": "/contentStatus", "value": "confirmed"}]})
                 self.assertTrue(protected.is_error)
                 templates = await client.call_tool("ppt_template_get", {})
-                self.assertEqual(len(templates.structured_content["data"]["templates"]), 54)
+                self.assertIn("parallel-three", {t["id"] for t in templates.structured_content["data"]["templates"]})
                 resources = await client.list_resources()
                 self.assertTrue(any(str(r.uri) == "ppt://guide" for r in resources.resources))
                 blocked = await client.call_tool("ppt_release_manifest", {"project_id": "mcp-test"})

@@ -353,14 +353,50 @@ class DeliveryFlow:
         latest = db.execute("SELECT job_id FROM studio_deck_pages WHERE deck_id=? AND page_index=?", (job["payload"]["deckId"], job["payload"]["pageIndex"])).fetchone()
         return bool(latest and latest[0] != job["id"])
 
+    def _conversation_intent(self, db, payload):
+        """Return durable user inputs relevant to this task, bounded at its round."""
+        rid = payload.get("roundId")
+        if not rid:
+            row = db.execute("SELECT id FROM studio_jobs WHERE project_id=? AND payload=? ORDER BY created_at DESC LIMIT 1",
+                             (self.project_id, _json(payload))).fetchone()
+            rid = self._round_for_job(db, row["id"]) if row else None
+        cutoff = db.execute("SELECT number FROM studio_delivery_rounds WHERE id=? AND project_id=?", (rid, self.project_id)).fetchone() if rid else None
+        if not cutoff:
+            return []
+        rows = db.execute("""SELECT r.number,r.input_text,j.payload FROM studio_delivery_rounds r
+            LEFT JOIN studio_delivery_jobs b ON b.round_id=r.id AND b.root_job=1
+            LEFT JOIN studio_jobs j ON j.id=b.job_id
+            WHERE r.project_id=? AND r.number<=? ORDER BY r.number DESC LIMIT 100""",
+            (self.project_id, cutoff[0])).fetchall()
+        sid = payload.get("slideId")
+        deck_scope = payload.get("scope") == "deck" or payload.get("kind") == "deck_page"
+        relevant = []
+        for row in rows:
+            source = json.loads(row["payload"]) if row["payload"] else {}
+            if source.get("kind") == "operator_control":
+                continue
+            source_sid = source.get("slideId")
+            if not deck_scope and source_sid and source_sid != sid:
+                continue
+            if deck_scope and source_sid and payload.get("kind") == "deck_page":
+                continue
+            relevant.append({"round": row["number"], "scope": source.get("scope", "page"),
+                             "slideId": source_sid, "text": row["input_text"][:8000]})
+            if len(relevant) == 30:
+                break
+        return list(reversed(relevant))
+
     def _feedback_available(self, db, job):
         if job["payload"].get("kind") != "feedback_page":
             return True
         row = db.execute("SELECT * FROM studio_feedback_pages WHERE job_id=?", (job["id"],)).fetchone()
         if not row:
             return False
-        earlier = db.execute("SELECT j.status FROM studio_feedback_pages f JOIN studio_jobs j ON j.id=f.job_id WHERE f.parent_job_id=? AND f.position<?", (row["parent_job_id"], row["position"])).fetchall()
-        return all(r["status"] == "complete" for r in earlier)
+        earlier = db.execute("SELECT j.status,j.result FROM studio_feedback_pages f JOIN studio_jobs j ON j.id=f.job_id WHERE f.parent_job_id=? AND f.position<?", (row["parent_job_id"], row["position"])).fetchall()
+        if not all(r["status"] == "complete" and not (json.loads(r["result"]) if r["result"] else {}).get("needsInput") for r in earlier):
+            return False
+        return not db.execute("""SELECT 1 FROM studio_feedback_pages f JOIN image_generation_batches b ON b.id=f.job_id
+            WHERE f.parent_job_id=? AND f.position<? AND b.status NOT IN ('applied','failed_skipped','conflict_skipped','interrupted_skipped') LIMIT 1""", (row["parent_job_id"], row["position"])).fetchone()
 
     def _create_feedback_jobs(self, db, parent, action):
         from .feedback import validate_feedback_action
@@ -394,7 +430,8 @@ class DeliveryFlow:
                 raise EngineError("OBJECT_NOT_FOUND", "反馈指定的对象不存在。", {"slideId": sid, "objectId": oid})
             prepared.append((edit, page, scene))
         deck = self._deck_row(db)
-        local = self.agent_mode == "outline" or (self.agent_mode == "manual" and deck and deck["execution"] == "outline")
+        mode = (parent["payload"].get("modelBinding") or {}).get("mode", self.agent_mode)
+        local = mode == "outline" or (mode == "manual" and deck and deck["execution"] == "outline")
         for index, (edit, page, scene) in enumerate(prepared):
             jid = "J-" + uuid.uuid4().hex
             payload = {"kind": "feedback_page", "parentJobId": parent["id"], "roundId": rid,
@@ -403,6 +440,8 @@ class DeliveryFlow:
                        "baseRevision": page["revision"], "baseSceneRevision": scene["sceneRevision"],
                        "projectRevision": project["revision"], "attachments": parent["payload"].get("attachments", []),
                        "execution": "outline" if local else "agent", "scope": "page"}
+            if parent["payload"].get("modelBinding"):
+                payload["modelBinding"] = parent["payload"]["modelBinding"]
             db.execute("INSERT INTO studio_jobs VALUES (?,?,?,?,?,?,?,?,?)", (jid, self.project_id,
                        "feedback:" + parent["id"] + ":" + str(index), parent["message_id"], "queued", _json(payload), None, _now(), _now()))
             db.execute("INSERT INTO studio_feedback_pages VALUES (?,?,?,?)", (parent["id"], index, jid, edit["slide_id"]))
@@ -415,7 +454,7 @@ class DeliveryFlow:
             return
         if not self._feedback_available(db, job):
             raise EngineError("FEEDBACK_WAITING", "上一页反馈尚未完成，当前页暂不能提交。")
-        if any(a["type"] not in {"slide_patch", "scene_replace", "scene_patch"} or a.get("slide_id") != payload["slideId"] for a in actions):
+        if any(a["type"] not in {"slide_patch", "scene_replace", "scene_patch", "scene_objects", "image_generate"} or a.get("slide_id") != payload["slideId"] for a in actions):
             raise EngineError("SCOPE_VIOLATION", "本反馈子任务只能修改它绑定的页面。")
         # Check both saved baselines even when a model returns only a question.
         self.wb._revision(self.wb.get_slide(self.project_id, payload["slideId"])["revision"], payload["baseRevision"])
@@ -432,6 +471,11 @@ class DeliveryFlow:
             effective = [j for j in jobs if not self._superseded_round_job(db, j)]
             failed = [j for j in effective if j["status"] == "failed"]
             pending = [j for j in effective if j["status"] in {"queued", "running"}]
+            batches = db.execute("""SELECT b.status FROM image_generation_batches b
+                JOIN studio_delivery_jobs d ON d.job_id=b.id WHERE d.round_id=? AND b.project_id=?""",
+                (round_id, self.project_id)).fetchall()
+            image_pending = any(b["status"] in {"pending", "running"} for b in batches)
+            image_failed = any(b["status"] in {"failed", "conflict", "interrupted", "failed_skipped", "conflict_skipped", "interrupted_skipped"} for b in batches)
             deck = self._deck_row(db)
             owns_deck = bool(deck and self._deck_round_id(db, deck["id"]) == round_id)
             deck_error = self._deck_error(deck) if owns_deck else {}
@@ -442,9 +486,14 @@ class DeliveryFlow:
             elif failed:
                 status = "failed"
                 error = error or (failed[0].get("result") or {}).get("error")
+            elif image_failed:
+                status = "failed"
+                error = {"code": "IMAGE_GENERATION_FAILED", "message": "图片生成未完成或页面已发生变化，请检查图片任务状态。"}
             elif owns_deck and deck["status"] == "blocked" and deck_error.get("code") == "PAGE_NEEDS_INPUT":
                 status = "needs_input"
-            elif pending or (owns_deck and deck["status"] in {"running", "paused", "blocked"}):
+            elif any(j["payload"].get("kind") == "feedback_page" and (j.get("result") or {}).get("needsInput") for j in effective):
+                status = "needs_input"
+            elif pending or image_pending or (owns_deck and deck["status"] in {"running", "paused", "blocked"}):
                 status = "waiting_agent" if owns_deck and deck["status"] == "blocked" else "processing"
                 db.execute("UPDATE studio_delivery_rounds SET status=?,updated_at=? WHERE id=?", (status, _now(), round_id))
                 return
@@ -465,7 +514,8 @@ class DeliveryFlow:
                 # For a selected-object operation, no automatic change to a
                 # different object is allowed. Full-deck input may safely fix
                 # layout only on pages this round actually changed.
-                auto_fix = bool(changed and not scoped and (owns_deck or any(j["payload"].get("scope") == "deck" for j in roots)))
+                auto_fix = bool(changed and not scoped and (owns_deck or any(j["payload"].get("scope") == "deck" for j in roots))
+                                and not any(j["payload"].get("kind") == "deck_review" for j in jobs))
                 try:
                     with self._operation(generation=True, round_id=round_id, automatic=True, description="本轮自动版式检查"):
                         quality = self.run_quality(auto_fix=auto_fix, round_id=round_id, scope_slide_ids=changed)
@@ -515,6 +565,9 @@ class DeliveryFlow:
                             parts.extend(line for line in declarations if "页依据要求：" in line)
                         label = "；".join(parts) or label
                     choices.append({"label": label, "value": value.strip(), "groupId": question["id"], "intakeChoice": True})
+            source = db.execute("SELECT payload FROM studio_jobs WHERE project_id=? AND message_id=? ORDER BY created_at LIMIT 1", (self.project_id, row["input_message_id"])).fetchone()
+            if source and json.loads(source[0]).get("modelBinding"):
+                extras["modelBinding"] = json.loads(source[0])["modelBinding"]
             extras["choices"] = choices
             output_id = row["output_message_id"]
             if output_id:
@@ -551,9 +604,6 @@ class DeliveryFlow:
                 lines.append("页面已生成，等待浏览器完成实际文字与图片检查；目前不能据此认定版式已通过。")
             else:
                 lines.append("自动检查仍有需要处理或查看的项目，详情见检查面板。")
-        if number > 3:
-            lines.append("本次已超过三轮交互目标，记录不会清零。")
-        lines.append("自动页内调整与任务重试不新增用户轮次；合格与否仍以实际内容、预览及文件检查为准。")
         return "\n\n".join(lines)
 
     def refresh_delivery_quality(self):
@@ -632,8 +682,8 @@ class DeliveryFlow:
             return {"autoFix": bool(changed and scoped and not precise), "slideIds": changed if scoped and not precise else []}
 
     def control_delivery(self, action, round_id=None):
-        if action not in {"retry", "cancel"}:
-            raise EngineError("INVALID_DELIVERY_CONTROL", "支持重试失败任务或停止当前轮。")
+        if action not in {"retry", "cancel", "continue_without_images"}:
+            raise EngineError("INVALID_DELIVERY_CONTROL", "支持重试失败任务、跳过失败图片继续后续页面或停止当前轮。")
         with self.wb.atomic() as db:
             if round_id is None:
                 found = db.execute("SELECT id FROM studio_delivery_rounds WHERE project_id=? ORDER BY number DESC LIMIT 1", (self.project_id,)).fetchone()
@@ -644,7 +694,21 @@ class DeliveryFlow:
             if row["status"] == "cancelled" and action == "retry":
                 raise EngineError("ROUND_CANCELLED", "这一轮已经停止，不能重启其中部分任务。请重新提交明确反馈。")
             jobs = self._round_jobs(db, round_id)
-            if action == "cancel":
+            if action == "continue_without_images":
+                batches = db.execute("""SELECT b.id FROM image_generation_batches b
+                    JOIN studio_delivery_jobs d ON d.job_id=b.id
+                    JOIN studio_feedback_pages f ON f.job_id=b.id
+                    WHERE d.round_id=? AND b.project_id=? AND b.status IN ('failed','conflict','interrupted')
+                    AND EXISTS (SELECT 1 FROM studio_feedback_pages later JOIN studio_jobs j ON j.id=later.job_id
+                                WHERE later.parent_job_id=f.parent_job_id AND later.position>f.position AND j.status='queued')""",
+                    (round_id, self.project_id)).fetchall()
+                if not batches:
+                    raise EngineError("ROUND_NOT_CONTINUABLE", "没有可跳过的失败图片任务或等待处理的后续页面。")
+                for batch in batches:
+                    db.execute("UPDATE image_generation_batches SET status=status||'_skipped' WHERE id=?", (batch['id'],))
+                self._touch(db)
+                self._finish_round(round_id)
+            elif action == "cancel":
                 for job in jobs:
                     db.execute("UPDATE studio_jobs SET status='cancelled',updated_at=? WHERE id=? AND status IN ('queued','running')", (_now(), job["id"]))
                 deck = self._deck_row(db)
@@ -657,6 +721,8 @@ class DeliveryFlow:
                     raise EngineError("ROUND_NOT_RETRYABLE", "本轮没有可重试的失败任务。补充观点请发送新消息，自动检查可单独重跑。")
                 for job in failed:
                     db.execute("UPDATE studio_jobs SET status='queued',result=NULL,updated_at=? WHERE id=?", (_now(), job["id"]))
+                    if job["payload"].get("kind") == "deck_review":
+                        db.execute("UPDATE studio_decks SET status='running',last_error=NULL,updated_at=? WHERE id=?", (_now(), job["payload"]["deckId"]))
                     if job["payload"].get("kind") == "deck_page":
                         db.execute("UPDATE studio_deck_pages SET status='queued',error=NULL WHERE job_id=?", (job["id"],))
                         db.execute("UPDATE studio_decks SET status='running',last_error=NULL,updated_at=? WHERE id=?", (_now(), job["payload"]["deckId"]))

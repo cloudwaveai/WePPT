@@ -357,16 +357,16 @@ class QualityTests(unittest.TestCase):
         program = r"""
 const fs=require('fs'),vm=require('vm');
 const input=JSON.parse(fs.readFileSync(0,'utf8')),messages=[];
-const elements=input.objects.map(o=>({...o,dataset:{objectId:o.objectId,type:o.type},complete:true,naturalWidth:1,addEventListener(){},classList:{add(){},remove(){}}}));
-const slide={style:{}};
-const document={fonts:{ready:Promise.resolve(),status:'loaded'},getElementById(){return slide;},addEventListener(){},querySelectorAll(selector){
+const elements=input.objects.map(o=>({...o,style:{left:'0px',top:'0px',width:'100px',height:'100px'},dataset:{objectId:o.objectId,type:o.type},complete:true,naturalWidth:1,addEventListener(){},classList:{add(){},remove(){}}}));
+const slide={style:{},append(){}};
+const document={fonts:{ready:Promise.resolve(),status:'loaded'},createElement(){return {style:{},dataset:{},append(){}};},getElementById(){return slide;},addEventListener(){},querySelectorAll(selector){
   if(selector==='[data-object-id]')return elements;
   if(selector==='.text')return elements.filter(o=>o.type==='text');
   if(selector==='img')return elements.filter(o=>o.type==='image');
   return [];
 }};
-vm.runInNewContext(input.script,{document,parent:{postMessage(m){messages.push(m);}},innerWidth:1280,innerHeight:720,
-  addEventListener(){},requestAnimationFrame(cb){cb();return 1;},cancelAnimationFrame(){},setTimeout(cb){cb();},Promise});
+vm.runInNewContext(input.script,{document,MutationObserver:class{observe(){}},parent:{postMessage(m){messages.push(m);}},innerWidth:1280,innerHeight:720,
+  addEventListener(){},requestAnimationFrame(cb){cb();return 1;},cancelAnimationFrame(){},setTimeout(cb){cb();},clearTimeout(){},Promise});
 setImmediate(()=>{const result=messages.filter(m=>m.type==='ppt-quality').at(-1);if(!result)throw Error('No quality report');process.stdout.write(JSON.stringify(result.report));});
 """
         result = subprocess.run([shutil.which("node"), "-e", program], input=json.dumps({"script": script, "objects": fixture["objects"]}),

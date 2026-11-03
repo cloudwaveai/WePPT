@@ -265,9 +265,10 @@ class OpeningImporter:
                     scene["objects"].append(dict(id=oid, type="line", **box, stroke=stroke if stroke != "none" else "#000000", strokeWidth=max(.1,stroke_w)))
                     provenance.append(meta)
                 elif fill is not None or stroke != "none":
-                    if preset not in {"rect", "roundRect"}: self.warn("unsupported-geometry", oid, f"{preset} approximated as rectangle")
-                    scene["objects"].append(dict(id=oid+"-shape", type="rect", **box, fill=self.color(fill,"none"), stroke=stroke,
-                        strokeWidth=min(24,stroke_w), radius=min(box["w"],box["h"])*.16 if preset == "roundRect" else 0))
+                    if preset not in {"rect", "roundRect", "ellipse"}: self.warn("unsupported-geometry", oid, f"{preset} approximated as rectangle")
+                    shape_fields = {} if preset == "ellipse" else {"radius": min(box["w"],box["h"])*.16 if preset == "roundRect" else 0}
+                    scene["objects"].append(dict(id=oid+"-shape", type="ellipse" if preset == "ellipse" else "rect", **box,
+                        fill=self.color(fill,"none"), stroke=stroke, strokeWidth=min(24,stroke_w), **shape_fields))
                     alpha = _find(fill, "a:srgbClr/a:alpha")
                     if alpha is None: alpha = _find(fill, "a:schemeClr/a:alpha")
                     if alpha is not None: scene["objects"][-1]["opacity"] = int(alpha.get("val"))/100000

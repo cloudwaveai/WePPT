@@ -1,3 +1,4 @@
+import copy
 """Round-level acceptance behavior with actual state/scenes, not browser proof."""
 import json
 from pathlib import Path
@@ -82,6 +83,81 @@ class DeliveryTests(unittest.TestCase):
     def scenes(self):
         return {p["id"]: self.s.get_scene(p["id"]) for p in self.s.state()["slides"]}
 
+    def test_feedback_image_batch_waits_and_attributes_result(self):
+        from ppt_workbench.image_generation import ImageJobs, GeneratedImage
+        import base64
+        self.initial()
+        result = self.s.enqueue("整稿修改\n第3页：生成图片", client_message_id="images", scope="deck")
+        with self.s.wb._connection() as db:
+            child = db.execute("SELECT job_id FROM studio_feedback_pages WHERE parent_job_id=?", (result["jobId"],)).fetchone()[0]
+        scene = self.s.get_scene("S003")
+        action = {"type": "image_generate", "slide_id": "S003", "base_scene_revision": scene["sceneRevision"],
+                  "images": [{"object_id": "new-image", "prompt": "test", "x": 10, "y": 10, "w": 20, "h": 20}]}
+        self.s.apply_plan(child, {"reply": "图片正在生成", "actions": [action]})
+        round_id = self.s.job(child)["payload"]["roundId"]
+        with self.s.wb._connection() as db:
+            self.assertEqual(db.execute("SELECT status FROM studio_delivery_rounds WHERE id=?", (round_id,)).fetchone()[0], "processing")
+        class Provider:
+            def generate(self, prompt):
+                return GeneratedImage(base64.b64decode('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aM1sAAAAASUVORK5CYII='), 'image/png')
+        ImageJobs(self.s).run_batch(child, Provider())
+        with self.s.wb._connection() as db:
+            row = db.execute("SELECT status,changed_slides FROM studio_delivery_rounds WHERE id=?", (round_id,)).fetchone()
+        self.assertNotEqual(row[0], "processing")
+        self.assertIn("S003", json.loads(row[1]))
+        self.assertTrue(any(o["id"] == "new-image" for o in self.s.get_scene("S003")["scene"]["objects"]))
+
+    def test_continue_skips_failed_image_batch_and_runs_later_feedback(self):
+        from ppt_workbench.image_generation import ImageJobs
+        self.initial()
+        result = self.s.enqueue("整稿修改\n第1页：生成图片\n第3页：标题改为：后续页面", client_message_id="image-fail", scope="deck")
+        with self.s.wb._connection() as db:
+            children = [r[0] for r in db.execute("SELECT job_id FROM studio_feedback_pages WHERE parent_job_id=? ORDER BY position", (result['jobId'],))]
+        original = self.s.get_scene('S001')['scene']
+        scene = self.s.get_scene('S001')
+        self.s.apply_plan(children[0], {'reply': '图片正在生成', 'actions': [{'type': 'image_generate', 'slide_id': 'S001', 'base_scene_revision': scene['sceneRevision'], 'images': [{'object_id': 'new-image', 'prompt': 'test', 'x': 10, 'y': 10, 'w': 20, 'h': 20}]}]})
+        class BadProvider:
+            def generate(self, prompt):
+                raise RuntimeError('failure')
+        ImageJobs(self.s).run_batch(children[0], BadProvider())
+        self.assertFalse(self.s.run_pending())
+        self.s.enqueue('继续', client_message_id='resume-image', scope='deck')
+        self.drain()
+        self.assertEqual(self.s.get_scene('S001')['scene'], original)
+        self.assertEqual(self.s.wb.get_slide('rounds', 'S003')['slide']['title'], '后续页面')
+        with self.s.wb._connection() as db:
+            self.assertEqual(db.execute('SELECT status FROM image_generation_batches WHERE id=?', (children[0],)).fetchone()[0], 'failed_skipped')
+            self.assertEqual(db.execute('SELECT status FROM studio_delivery_rounds WHERE id=?', (result['roundId'],)).fetchone()[0], 'failed')
+
+    def test_continue_retries_existing_failed_feedback_without_replaying_completed_page(self):
+        self.initial()
+        result = self.s.enqueue("整稿修改\n第1页：标题改为：已完成\n第3页：标题改为：待继续", client_message_id="interrupted", scope="deck")
+        with self.s.wb._connection() as db:
+            children = db.execute("SELECT job_id FROM studio_feedback_pages WHERE parent_job_id=? ORDER BY position", (result["jobId"],)).fetchall()
+        self.assertTrue(self.s.run_pending())
+        self.s.fail_job(children[1][0], EngineError("AGENT_FAILED", "临时失败"))
+        revision = self.s.get_scene("S001")["sceneRevision"]
+        resumed = self.s.enqueue("继续", client_message_id="resume", scope="deck")
+        self.assertEqual(resumed["status"], "complete")
+        self.assertEqual(self.s.job(children[1][0])["status"], "queued")
+        self.drain()
+        self.assertEqual(self.s.get_scene("S001")["sceneRevision"], revision)
+        self.assertEqual(self.s.wb.get_slide("rounds", "S003")["slide"]["title"], "待继续")
+        self.assertTrue(self.s.enqueue("继续", client_message_id="resume", scope="deck")["deduplicated"])
+
+    def test_intent_history_is_scoped_and_survives_short_history_window(self):
+        self.initial()
+        first = self.s.enqueue("标题改为：第一页决定", "S001", "title", "page-one")
+        self.s.enqueue("标题改为：第二页决定", "S002", "title", "page-two")
+        for i in range(15):
+            self.s.enqueue(f"标题改为：第二页版本{i}", "S002", "title", f"later-{i}")
+        current = self.s.enqueue("请调整第一页", "S001", client_message_id="current")
+        history = self.s.context(self.s.job(current["jobId"])["payload"])["userIntentHistory"]
+        texts = [item["text"] for item in history]
+        self.assertIn("标题改为：第一页决定", texts)
+        self.assertNotIn("标题改为：第二页决定", texts)
+        self.assertIn(OUTLINE, texts)
+
     def test_three_user_inputs_include_initial_and_batch_edits(self):
         self.initial()
         first = self.s.delivery_state()
@@ -132,7 +208,7 @@ class DeliveryTests(unittest.TestCase):
         result = self.s.delivery_state()
         self.assertEqual((result["inputCount"], result["outputCount"]), (4, 4))
         self.assertFalse(result["withinTarget"])
-        self.assertIn("超过三轮", next(m["text"] for m in self.s.state()["messages"] if m["id"] == result["rounds"][-1]["outputMessageId"]))
+        self.assertNotIn("超过三轮", next(m["text"] for m in self.s.state()["messages"] if m["id"] == result["rounds"][-1]["outputMessageId"]))
 
     def test_external_scene_change_survives_later_rounds_without_inventing_user_count(self):
         self.initial()
@@ -205,6 +281,239 @@ class DeliveryTests(unittest.TestCase):
         self.assertEqual(state["rounds"][-1]["status"], "ready")
         self.assertEqual(state["rounds"][-1]["outputMessageId"], failed["outputMessageId"])
         self.assertEqual(self.s.wb.get_slide("rounds", "S003")["slide"]["title"], "继续下一项")
+
+    def test_feedback_invalid_patch_path_is_corrected_without_partial_mutation(self):
+        self.initial();self.s=Studio(self.root,'rounds',agent='codex')
+        self.s.enqueue('整稿修改\n第3页：标题换成明确的新标题',client_message_id='invalid-path',scope='deck')
+        before=self.s.get_scene('S003');contexts=[]
+        from ppt_workbench.agent_bridge import validate_plan
+        def run(mode,message,context,**kwargs):
+            contexts.append(context)
+            if len(contexts)==1:
+                return validate_plan({'reply':'修改','actions':[{'type':'slide_patch','slide_id':'S003',
+                    'base_revision':before['contentRevision'],'changes':[{'path':'/content/title','value':'明确的新标题'}]}]})
+            self.assertEqual(self.s.get_scene('S003'),before)
+            return {'reply':'修改','actions':[{'type':'scene_patch','slide_id':'S003',
+                'base_scene_revision':before['sceneRevision'],'changes':[{'objectId':'title','properties':{'text':'明确的新标题'}}]}]}
+        with patch('ppt_workbench.agent_bridge.diagnose',return_value={'available':True}),patch('ppt_workbench.agent_bridge.run_turn',side_effect=run):
+            self.s.run_pending()
+        self.assertEqual(len(contexts),2)
+        self.assertIn('/title',contexts[1]['revisionCorrection']['allowedSlidePatchPaths'])
+        self.assertEqual(self.s.get_scene('S003')['sceneRevision'],before['sceneRevision']+1)
+
+    def test_invalid_protocol_retry_is_bounded(self):
+        self.initial();self.s=Studio(self.root,'rounds',agent='codex')
+        j=self.s.enqueue('只改标题','S001',client_message_id='protocol-exhaustion')
+        before=self.s.get_scene('S001')
+        with patch('ppt_workbench.agent_bridge.diagnose',return_value={'available':True}),patch('ppt_workbench.agent_bridge.run_turn',side_effect=EngineError('INVALID_AGENT_OUTPUT','错误字段')) as run:
+            self.s.run_pending()
+        self.assertEqual(run.call_count,3);self.assertEqual(self.s.job(j['jobId'])['status'],'failed')
+        self.assertEqual(self.s.get_scene('S001'),before)
+
+    def test_feedback_geometry_error_is_corrected_before_applying_once(self):
+        self.initial();self.s=Studio(self.root,'rounds',agent='codex')
+        self.s.enqueue('整稿修改\n第3页：改得圆润一些',client_message_id='rounded-feedback',scope='deck')
+        before=self.s.get_scene('S003');other=self.s.get_scene('S001');contexts=[]
+        def run(mode,message,context,**kwargs):
+            contexts.append(context);scene=copy.deepcopy(before['scene'])
+            scene['objects'].append({'id':'narrow-accent','type':'rect','x':0,'y':0,'w':5,'h':30,
+                                     'fill':'#112233','radius':'round' if len(contexts)==1 else 2.5})
+            return {'reply':'调整圆角','actions':[{'type':'scene_replace','slide_id':'S003',
+                     'base_revision':before['contentRevision'],'scene':scene}]}
+        with patch('ppt_workbench.agent_bridge.diagnose',return_value={'available':True}),patch('ppt_workbench.agent_bridge.run_turn',side_effect=run):
+            self.s.run_pending()
+        self.assertEqual(len(contexts),2)
+        self.assertEqual(contexts[1]['revisionCorrection']['code'],'INVALID_SCENE')
+        self.assertEqual(self.s.get_scene('S003')['sceneRevision'],before['sceneRevision']+1)
+        self.assertEqual(self.s.get_scene('S001'),other)
+
+    def test_feedback_geometry_retry_exhaustion_preserves_scene(self):
+        self.initial();self.s=Studio(self.root,'rounds',agent='codex')
+        self.s.enqueue('整稿修改\n第3页：改得圆润一些',client_message_id='rounded-exhaustion',scope='deck')
+        before=self.s.get_scene('S003');child=self.s.next_job()['job'];scene=copy.deepcopy(before['scene'])
+        scene['objects'].append({'id':'narrow-accent','type':'rect','x':0,'y':0,'w':5,'h':30,'fill':'#112233','radius':'round'})
+        plan={'reply':'调整圆角','actions':[{'type':'scene_replace','slide_id':'S003',
+              'base_revision':before['contentRevision'],'scene':scene}]}
+        with patch('ppt_workbench.agent_bridge.diagnose',return_value={'available':True}),patch('ppt_workbench.agent_bridge.run_turn',return_value=plan) as run:
+            self.s.run_pending()
+        self.assertEqual(run.call_count,3)
+        self.assertEqual(self.s.job(child['id'])['status'],'failed')
+        self.assertEqual(self.s.get_scene('S003'),before)
+
+    def test_root_question_format_retry_keeps_pages_and_round_count(self):
+        self.initial();before=self.scenes()
+        self.s=Studio(self.root,'rounds',agent='codex')
+        result=self.s.enqueue('补上公司的 Logo',client_message_id='logo-open-question',scope='deck')
+        calls=[]
+        def run(mode,message,context,**kwargs):
+            calls.append(context)
+            return {'reply':'请提供公司 Logo 原图。','actions':[],
+                    'questions':[{'question':'请上传公司 Logo。','choices':None if len(calls)==1 else []}]}
+        with patch('ppt_workbench.agent_bridge.diagnose',return_value={'available':True}), patch('ppt_workbench.agent_bridge.run_turn',side_effect=run):
+            self.s.run_pending()
+        self.assertEqual(len(calls),2)
+        self.assertEqual(calls[1]['revisionCorrection']['code'],'INVALID_AGENT_QUESTION')
+        state=self.s.delivery_state()
+        self.assertEqual(state['inputCount'],2)
+        self.assertEqual(state['rounds'][-1]['id'],result['roundId'])
+        self.assertEqual(state['rounds'][-1]['status'],'needs_input')
+        self.assertEqual(self.scenes(),before)
+        self.assertTrue(any('请上传公司 Logo。' in m['text'] for m in self.s.state()['messages']))
+
+    def test_question_retry_is_bounded_and_never_applies_invalid_plan(self):
+        self.initial();before=self.scenes()
+        self.s=Studio(self.root,'rounds',agent='codex')
+        result=self.s.enqueue('请调整这一页', 'S001', client_message_id='bad-question')
+        plan={'reply':'修改','questions':[{'question':'如何处理？','choices':None}],
+              'actions':[{'type':'scene_patch','slide_id':'S001','base_scene_revision':self.s.get_scene('S001')['sceneRevision'],
+                          'changes':[{'objectId':'title','properties':{'text':'不能应用'}}]}]}
+        with patch('ppt_workbench.agent_bridge.diagnose',return_value={'available':True}), patch('ppt_workbench.agent_bridge.run_turn',return_value=plan) as run:
+            self.s.run_pending()
+        self.assertEqual(run.call_count,3)
+        self.assertEqual(self.s.job(result['jobId'])['status'],'failed')
+        self.assertEqual(self.scenes(),before)
+        self.assertEqual(self.s.delivery_state()['inputCount'],2)
+
+    def test_all_six_question_choices_are_preserved_in_messages(self):
+        self.initial();self.s=Studio(self.root,'rounds',agent='codex')
+        result=self.s.enqueue('请让我选择',client_message_id='six-choices',scope='deck')
+        choices=[f'方案{i}' for i in range(6)]
+        self.s.apply_plan(result['jobId'],{'reply':'请选择','actions':[],
+            'questions':[{'question':'选择哪个？','choices':choices}]})
+        messages=[m for m in self.s.state()['messages'] if m.get('jobId')==result['jobId'] and m['role']=='assistant']
+        self.assertEqual([c['label'] for c in messages[-1]['choices']],choices)
+
+    def test_model_revision_correction_retries_with_original_baselines(self):
+        self.initial()
+        self.s = Studio(self.root, "rounds", agent="codex")
+        page = self.s.get_scene("S003")
+        self.s.enqueue("整稿修改\n第3页：更新标题", client_message_id="revision-retry", scope="deck")
+        # The explicit batch is dispatched without invoking the model.
+        calls = []
+        def run(mode, message, context, **kwargs):
+            calls.append(context)
+            revision = 999 if len(calls) == 1 else page["contentRevision"]
+            return {"reply": "更新标题", "actions": [{"type": "slide_patch", "slide_id": "S003",
+                    "base_revision": revision, "changes": [{"path": "/title", "value": "修正版本后的标题"}]}]}
+        with patch("ppt_workbench.agent_bridge.diagnose", return_value={"available": True}), patch("ppt_workbench.agent_bridge.run_turn", side_effect=run):
+            self.assertTrue(self.s.run_pending())
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(calls[1]["revisionCorrection"]["field"], "base_revision")
+        self.assertEqual(calls[1]["revisionCorrection"]["current"], page["contentRevision"])
+        self.assertEqual(self.s.wb.get_slide("rounds", "S003")["slide"]["title"], "修正版本后的标题")
+
+    def test_nested_scene_target_is_corrected_without_cross_page_mutation(self):
+        self.initial()
+        self.s = Studio(self.root, "rounds", agent="codex")
+        self.s.enqueue("整稿修改\n第3页：优化背景", client_message_id="nested-target", scope="deck")
+        before=self.s.get_scene('S003');first=self.s.get_scene('S001');contexts=[]
+        def run(mode,message,context,**kwargs):
+            contexts.append(context)
+            scene=copy.deepcopy(before['scene']);scene['background']='#112233'
+            scene['slideId']='S001' if len(contexts)==1 else 'S003'
+            return {'reply':'优化背景','actions':[{'type':'scene_replace','slide_id':'S003',
+                'base_revision':before['contentRevision'],'scene':scene}]}
+        with patch('ppt_workbench.agent_bridge.diagnose',return_value={'available':True}), patch('ppt_workbench.agent_bridge.run_turn',side_effect=run):
+            self.s.run_pending()
+        self.assertEqual(len(contexts),2)
+        self.assertEqual(contexts[1]['revisionCorrection']['current'],'S003')
+        self.assertEqual(self.s.get_scene('S001'),first)
+        self.assertEqual(self.s.get_scene('S003')['sceneRevision'],before['sceneRevision']+1)
+
+    def test_nested_scene_target_retries_are_bounded(self):
+        self.initial()
+        self.s = Studio(self.root, "rounds", agent="codex")
+        self.s.enqueue("整稿修改\n第3页：优化背景", client_message_id="nested-bounded", scope="deck")
+        child=self.s.next_job()['job'];before=self.scenes()
+        page=self.s.get_scene('S003');scene=copy.deepcopy(page['scene']);scene['slideId']='S001'
+        plan={'reply':'优化背景','actions':[{'type':'scene_replace','slide_id':'S003',
+            'base_revision':page['contentRevision'],'scene':scene}]}
+        with patch('ppt_workbench.agent_bridge.diagnose',return_value={'available':True}), patch('ppt_workbench.agent_bridge.run_turn',return_value=plan) as run:
+            self.s.run_pending()
+        self.assertEqual(run.call_count,3)
+        self.assertEqual(self.s.job(child['id'])['status'],'failed')
+        self.assertEqual(self.scenes(),before)
+
+    def test_image_target_correction_is_bounded_and_enqueues_only_once(self):
+        self.initial()
+        self.s = Studio(self.root, "rounds", agent="codex")
+        self.s.enqueue("整稿修改\n第3页：生成背景图片", client_message_id="image-target-retry", scope="deck")
+        child = self.s.next_job()['job'];before = self.s.get_scene('S003');contexts=[]
+        def run(mode, message, context, **kwargs):
+            contexts.append(context)
+            image={'object_id':'background-new','prompt':'abstract background without words',
+                   'x':0,'y':0,'w':1280,'h':720,'placement':'background'}
+            if len(contexts)==1:
+                image['replace_object_id']='nonexistent-background'
+            return {'reply':'生成背景','actions':[{'type':'image_generate','slide_id':'S003',
+                'base_scene_revision':before['sceneRevision'],'images':[image]}]}
+        with patch('ppt_workbench.agent_bridge.diagnose',return_value={'available':True}), patch('ppt_workbench.agent_bridge.run_turn',side_effect=run):
+            self.assertTrue(self.s.run_pending())
+        self.assertEqual(len(contexts),2)
+        self.assertEqual(contexts[1]['revisionCorrection']['code'],'IMAGE_INVALID_TARGET')
+        self.assertEqual(contexts[1]['revisionCorrection']['details']['objectId'],'nonexistent-background')
+        self.assertEqual(self.s.get_scene('S003'),before)
+        self.assertEqual(self.s.job(child['id'])['status'],'complete')
+        with self.s.wb._connection() as db:
+            self.assertEqual(db.execute('SELECT count(*) FROM image_generation_jobs').fetchone()[0],1)
+            self.assertEqual(db.execute('SELECT status FROM image_generation_batches').fetchone()[0],'pending')
+
+    def test_image_target_repeated_failure_stops_without_starting_generation(self):
+        self.initial()
+        self.s = Studio(self.root, "rounds", agent="codex")
+        self.s.enqueue("整稿修改\n第3页：生成背景图片", client_message_id="image-target-exhausted", scope="deck")
+        child=self.s.next_job()['job'];before=self.s.get_scene('S003')
+        plan={'reply':'生成背景','actions':[{'type':'image_generate','slide_id':'S003',
+            'base_scene_revision':before['sceneRevision'],'images':[{'object_id':'new','replace_object_id':'missing',
+                'prompt':'background','x':0,'y':0,'w':1280,'h':720}]}]}
+        with patch('ppt_workbench.agent_bridge.diagnose',return_value={'available':True}), patch('ppt_workbench.agent_bridge.run_turn',return_value=plan) as run:
+            self.assertTrue(self.s.run_pending())
+        self.assertEqual(run.call_count,3)
+        self.assertEqual(self.s.job(child['id'])['result']['error']['code'],'IMAGE_INVALID_TARGET')
+        self.assertEqual(self.s.get_scene('S003'),before)
+        with self.s.wb._connection() as db:
+            self.assertEqual(db.execute('SELECT count(*) FROM image_generation_jobs').fetchone()[0],0)
+
+    def test_model_revision_retry_is_bounded_and_real_conflicts_never_retry(self):
+        for conflict in (False, True):
+            with self.subTest(conflict=conflict):
+                self.initial() if not self.s.state()["slides"] else None
+                self.s = Studio(self.root, "rounds", agent="codex")
+                request = self.s.enqueue("整稿修改\n第3页：更新标题", client_message_id="bounded-" + str(conflict), scope="deck")
+                child = self.s.next_job()["job"]
+                before = self.s.get_scene("S003")
+                if conflict:
+                    self.s.change_scene("S003", before["sceneRevision"], [{"objectId": "title", "properties": {"text": "并发修改"}}])
+                plan = {"reply": "修改", "actions": [{"type": "scene_patch", "slide_id": "S003",
+                        "base_scene_revision": 999, "changes": [{"objectId": "title", "properties": {"text": "错误计划"}}]}]}
+                with patch("ppt_workbench.agent_bridge.diagnose", return_value={"available": True}), patch("ppt_workbench.agent_bridge.run_turn", return_value=plan) as run:
+                    self.assertTrue(self.s.run_pending())
+                self.assertEqual(run.call_count, 1 if conflict else 3)
+                self.assertEqual(self.s.job(child["id"])["status"], "failed")
+                self.assertEqual(self.s.job(child["id"])["result"]["error"]["code"], "STALE_REVISION")
+                if not conflict:
+                    self.assertEqual(self.s.get_scene("S003"), before)
+
+    def test_revision_retry_stops_if_target_changes_between_attempts(self):
+        self.initial()
+        self.s = Studio(self.root, "rounds", agent="codex")
+        self.s.enqueue("整稿修改\n第3页：更新标题", client_message_id="retry-race", scope="deck")
+        child = self.s.next_job()["job"]
+        before = self.s.get_scene("S003")
+        calls = []
+        def run(mode, message, context, **kwargs):
+            calls.append(context)
+            if len(calls) == 2:
+                self.s.change_scene("S003", before["sceneRevision"], [{"objectId": "title", "properties": {"text": "并发修改"}}])
+            return {"reply": "修改", "actions": [{"type": "scene_patch", "slide_id": "S003",
+                    "base_scene_revision": 999 if len(calls) == 1 else before["sceneRevision"],
+                    "changes": [{"objectId": "title", "properties": {"text": "模型修改"}}]}]}
+        with patch("ppt_workbench.agent_bridge.diagnose", return_value={"available": True}), patch("ppt_workbench.agent_bridge.run_turn", side_effect=run):
+            self.s.run_pending()
+        self.assertEqual(len(calls), 2)
+        self.assertEqual(calls[1]["revisionCorrection"]["field"], "base_scene_revision")
+        self.assertEqual(self.s.job(child["id"])["result"]["error"]["code"], "STALE_REVISION")
+        self.assertEqual(self.s.wb.get_slide("rounds", "S003")["slide"]["title"], "并发修改")
 
     def test_child_cannot_change_an_unassigned_page(self):
         self.initial()

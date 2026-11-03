@@ -45,8 +45,16 @@ def validate_deck_plan(plan, *, error_code="INVALID_DECK_PLAN"):
         clean = json.loads(encoded)
     except (ValueError, TypeError, RecursionError, UnicodeError):
         _error("整稿计划必须是有效 JSON 对象。", error_code)
-    if not isinstance(clean, dict) or set(clean) != {"title", "pages", "execution"}:
+    if not isinstance(clean, dict) or not {"title", "pages", "execution"}.issubset(clean) or set(clean) - {"title", "pages", "execution", "design", "strategy"}:
         _error("整稿计划需要且只接受 title、pages、execution。", error_code)
+
+    if "design" in clean:
+        from .page_design import validate_design
+        validate_design(clean["design"])
+
+    if "strategy" in clean:
+        from .deck_design import validate_strategy
+        validate_strategy(clean["strategy"])
 
     def text(value, field, required=True):
         if not isinstance(value, str) or len(value) > MAX_OUTLINE_CHARS or (required and not value.strip()):
@@ -58,17 +66,32 @@ def validate_deck_plan(plan, *, error_code="INVALID_DECK_PLAN"):
     if not isinstance(clean["pages"], list) or not MIN_DECK_PAGES <= len(clean["pages"]) <= MAX_DECK_PAGES:
         _error(f"整稿需要 {MIN_DECK_PAGES} 至 {MAX_DECK_PAGES} 页。", error_code)
     required = {"title", "user_intent", "role"}
-    optional = {"template_id", "takeaway", "key_points"}
+    optional = {"template_id", "takeaway", "key_points", "diagram", "composition", "designBrief"}
     for number, page in enumerate(clean["pages"], 1):
         if not isinstance(page, dict) or not required.issubset(page) or set(page) - required - optional:
-            _error(f"第 {number} 页字段不符合整稿计划协议。", error_code)
+            extra = sorted(set(page) - required - optional) if isinstance(page, dict) else []
+            _error(f"第 {number} 页字段不符合整稿计划协议。", error_code, {"page": number, "unknownFields": extra})
         text(page["title"], f"第 {number} 页 title")
         text(page["user_intent"], f"第 {number} 页 user_intent")
         if not isinstance(page["role"], str) or page["role"] not in ROLES - {""}:
             _error(f"第 {number} 页 role 无效。", error_code)
-        for field in optional:
+        for field in optional - {"diagram", "composition", "designBrief"}:
             if field in page:
                 text(page[field], f"第 {number} 页 {field}", required=False)
+        if "composition" in page:
+            from .page_design import validate_composition
+            validate_composition(page["composition"])
+            if "designBrief" in page or "strategy" in clean:
+                from .deck_design import normalize_brief
+                page["designBrief"] = normalize_brief(page.get("designBrief"), page["composition"], page.get("title", ""))
+        if "designBrief" in page:
+            from .deck_design import validate_brief
+            validate_brief(page["designBrief"])
+        elif "strategy" in clean:
+            _error(f"第 {number} 页缺少 designBrief。", error_code)
+        if "diagram" in page:
+            from .diagram_design import validate_spec
+            validate_spec(page['diagram'])
     return clean
 
 

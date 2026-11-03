@@ -36,6 +36,81 @@ class HTTPTests(unittest.TestCase):
         conn.close()
         return answer
 
+    def test_diagram_fallback_http_scope_revision_and_idempotency(self):
+        from test_diagram_design import SPEC
+        studio = self.server.studio
+        job = studio.enqueue('原生图解')
+        result = studio.apply_plan(job['jobId'], {'reply': '完成', 'actions': [
+            {'type': 'slide_add', 'title': '产品流程', 'user_intent': '流程', 'role': 'content', 'diagram': SPEC}]})
+        sid = result['slideId']
+        current = studio.get_scene(sid)
+        body = {'slideId': sid, 'sceneRevision': current['sceneRevision'], 'requestId': 'http-diagram'}
+        endpoint = '/api/diagram/image'
+        self.assertEqual(self.request('POST', endpoint, body, authorized=False)[0], 403)
+        self.assertEqual(self.request('POST', endpoint, body, extra={'Origin': 'https://example.com'})[0], 403)
+        self.assertEqual(self.request('POST', endpoint, {**body, 'sceneRevision': body['sceneRevision']-1})[0], 409)
+        status, _, raw = self.request('POST', endpoint, body)
+        self.assertEqual(status, 200, raw)
+        status, _, raw = self.request('POST', endpoint, body)
+        self.assertEqual(status, 200, raw)
+        self.assertTrue(json.loads(raw)['deduplicated'])
+        self.assertEqual(studio.get_scene(sid)['scene'], current['scene'])
+
+    def test_template_match_is_readonly_and_access_checked(self):
+        self.server.studio.demo()
+        before = self.server.studio.get_scene('S003')
+        body = {'slideId': 'S003', 'sceneRevision': before['sceneRevision'], 'instruction': '问题与方案对比'}
+        endpoint = '/api/templates/match'
+        self.assertEqual(self.request('POST', endpoint, body, authorized=False)[0], 403)
+        self.assertEqual(self.request('POST', endpoint, body, extra={'Origin': 'https://example.com'})[0], 403)
+        status, _, raw = self.request('POST', endpoint, body)
+        self.assertEqual(status, 200, raw)
+        result = json.loads(raw)
+        self.assertEqual(result['modelCalls'], 0)
+        self.assertEqual(result['recommendations'][0]['browseCategory'], 'compare')
+        self.assertEqual(self.request('POST', endpoint, {**body, 'sceneRevision': 999})[0], 409)
+        self.assertEqual(self.server.studio.get_scene('S003'), before)
+
+    def test_smart_template_recommendation_respects_access_and_revision(self):
+        from unittest.mock import patch
+        from ppt_workbench import jev_recommendations as jev
+        self.server.studio.demo()
+        sid = self.server.studio.state()['selectedSlideId']
+        scene = self.server.studio.get_scene(sid)
+        body = {'slideId': sid, 'sceneRevision': scene['sceneRevision']}
+        endpoint = '/api/templates/recommendations'
+        with patch.object(jev, '_request') as request, patch.dict('os.environ', {'WEPPT_JEV_API_KEY': ''}):
+            self.assertEqual(self.request('POST', endpoint, body, authorized=False)[0], 403)
+            self.assertEqual(self.request('POST', endpoint, body, extra={'Origin': 'https://example.com'})[0], 403)
+            status, _, raw = self.request('POST', endpoint, body)
+            self.assertEqual(status, 200, raw)
+            self.assertEqual(json.loads(raw)['recommendationEngine'], 'rules')
+            self.assertEqual(self.request('POST', endpoint, {**body, 'sceneRevision': body['sceneRevision']-1})[0], 409)
+            request.assert_not_called()
+        self.assertEqual(self.server.studio.get_scene(sid), scene)
+
+    def test_reference_images_cache_by_original_bytes_and_keep_access_checks(self):
+        import hashlib
+        from pathlib import Path
+        from ppt_workbench.templates import catalog
+        reference = next(t for t in catalog() if t.get('reference'))
+        url = reference['referencePreviewUrl']
+        status, headers, raw = self.request('GET', url)
+        self.assertEqual(status, 200)
+        original = Path('ppt_workbench/web' + url.split('?')[0]).read_bytes()
+        self.assertEqual(raw, original)
+        self.assertEqual(headers['ETag'], '"' + hashlib.sha256(original).hexdigest() + '"')
+        self.assertIn('immutable', headers['Cache-Control'])
+        self.assertIn('private', headers['Cache-Control'])
+        self.assertEqual(self.request('GET', url, authorized=False)[0], 401)
+        status, _, body = self.request('GET', url, extra={'If-None-Match': headers['ETag']})
+        self.assertEqual(status, 304)
+        self.assertEqual(body, b'')
+        self.assertEqual(self.request('GET', url.split('?')[0] + '?v=outdated')[0], 404)
+        status, headers, raw = self.request('GET', url.split('?')[0])
+        self.assertEqual(raw, original)
+        self.assertEqual(headers['Cache-Control'], 'private, no-cache')
+
     def test_independent_guidance_persistence_conflicts_and_isolation(self):
         for kind in ('draft', 'experience'):
             path = '/api/guide/' + kind
@@ -54,6 +129,80 @@ class HTTPTests(unittest.TestCase):
         self.assertEqual(other['document'], {})
         self.assertEqual(self.server.studio.state()['slides'], [])
         self.assertEqual(self.request('POST', '/api/guide/draft', {'revision': 1, 'document': 'invalid'})[0], 400)
+
+    def test_page_recommendations_return_expression_and_role(self):
+        self.assertEqual(self.request('POST', '/api/demo', {})[0], 200)
+        state = json.loads(self.request('GET', '/api/state')[2])
+        sid = state['selectedSlideId']
+        response = self.request('GET', '/api/templates/recommendations?slideId=' + sid)
+        self.assertEqual(response[0], 200)
+        result = json.loads(response[2])
+        self.assertEqual(result['slideId'], sid)
+        self.assertIn('relationship', result['expressionPlan'])
+        self.assertTrue(result['recommendations'])
+        self.assertTrue(all(result['role'] in item['roles'] for item in result['recommendations']))
+
+    def test_incremental_state_never_hides_project_changes(self):
+        first = json.loads(self.request('GET', '/api/state')[2])
+        path = f'/api/state?since={first["version"]}&sinceProject={first["projectId"]}'
+        unchanged = json.loads(self.request('GET', path)[2])
+        self.assertEqual(unchanged, {'unchanged': True, 'projectId': first['projectId'], 'version': first['version']})
+        wrong_project = json.loads(self.request('GET', path.replace('sinceProject=web', 'sinceProject=another'))[2])
+        self.assertIn('messages', wrong_project)
+        self.request('POST', '/api/demo', {})
+        changed = json.loads(self.request('GET', path)[2])
+        self.assertIn('slides', changed)
+        self.assertGreater(changed['version'], first['version'])
+        self.assertIn('messages', json.loads(self.request('GET', '/api/state')[2]))
+
+    def test_browser_images_share_original_bytes_and_remain_project_scoped(self):
+        import base64, hashlib, html, re
+        from test_studio import PNG
+        self.request('POST', '/api/demo', {})
+        studio = self.server.studio
+        sid = studio.state()['selectedSlideId']
+        current = studio.get_scene(sid)
+        scene = current['scene']
+        scene['objects'].append({'id': 'real-image', 'type': 'image', 'src': 'data:image/png;base64,' + PNG,
+                                 'x': 850, 'y': 300, 'w': 200, 'h': 200})
+        studio.put_scene(sid, current['contentRevision'], scene)
+        self.assertIn(PNG.encode(), self.request('GET', '/api/preview/' + sid)[2])
+        self.server.open_access = True
+        result = self.request('GET', '/api/preview/' + sid)
+        self.server.open_access = False
+        markup = result[2].decode()
+        self.assertNotIn(PNG, markup)
+        url = html.unescape(re.search(r'src="(/api/scene-image[^"]+)"', markup)[1])
+        self.assertEqual(self.request('GET', url, authorized=False)[0], 401)
+        status, headers, raw = self.request('GET', url)
+        self.assertEqual(status, 200)
+        self.assertEqual(raw, base64.b64decode(PNG))
+        self.assertEqual(headers['Content-Type'], 'image/png')
+        self.assertIn('private', headers['Cache-Control'])
+        self.assertEqual(self.request('GET', url.replace(hashlib.sha256(raw).hexdigest(), '0' * 64))[0], 404)
+        other = json.loads(self.request('POST', '/api/projects', {'title': '独立图片项目'})[2])['projectId']
+        self.assertNotEqual(self.request('GET', url.replace('project=web', 'project=' + other))[0], 200)
+        metadata = self.request('GET', '/api/scene?slide=' + sid + '&metadata=1')[2]
+        full = self.request('GET', '/api/scene?slide=' + sid)[2]
+        self.assertNotIn(PNG.encode(), metadata)
+        self.assertIn(PNG.encode(), full)
+
+    def test_template_adaptation_preview_is_scoped_readonly_and_revision_checked(self):
+        self.request('POST', '/api/demo', {})
+        state = json.loads(self.request('GET', '/api/state')[2])
+        sid = state['selectedSlideId']
+        before = json.loads(self.request('GET', '/api/scene?slide=' + sid)[2])
+        path = f'/api/templates/preview?template=reference-04-09&slideId={sid}&sceneRevision={before["sceneRevision"]}&format=json'
+        self.assertEqual(self.request('GET', path, authorized=False)[0], 401)
+        response = self.request('GET', path)
+        self.assertEqual(response[0], 200, response[2])
+        self.assertIn('html', json.loads(response[2]))
+        self.assertEqual(json.loads(self.request('GET', '/api/scene?slide=' + sid)[2]), before)
+        self.assertIsNone(self.server.studio.selected_template())
+        other = json.loads(self.request('POST', '/api/projects', {'title': '独立预览项目'})[2])['projectId']
+        self.assertNotEqual(self.request('GET', path + '&project=' + other)[0], 200)
+        self.assertEqual(self.request('GET', path.replace('sceneRevision=' + str(before['sceneRevision']), 'sceneRevision=999'))[0], 409)
+        self.assertEqual(self.request('GET', path.replace('sceneRevision=' + str(before['sceneRevision']), 'sceneRevision=x'))[0], 400)
 
     def test_chat_object_edit_preview_and_download_are_real(self):
         self.assertEqual(self.request("POST", "/api/demo", {})[0], 200)
@@ -115,12 +264,37 @@ class HTTPTests(unittest.TestCase):
         self.assertEqual(self.request("GET", "/api/state?project=missing")[0], 400)
         self.assertEqual(self.request("GET", "/api/projects", authorized=False)[0], 401)
 
+    def test_missing_logo_template_request_after_server_restart(self):
+        self.request("POST", "/api/demo", {})
+        studio = self.server.studio
+        sid = studio.state()["selectedSlideId"]
+        project = studio.wb.get_project("web")
+        studio.wb.update_project("web", project["revision"], {"logoPolicy": "company", "logoReference": "absent.svg"})
+        studio.generate_scene(sid)
+        self.server.shutdown()
+        self.server.server_close()
+        self.thread.join(timeout=3)
+        self.server = create_http_server(self.temp.name, "web", 0, "manual", "test-browser-token")
+        self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
+        self.thread.start()
+        self.port = self.server.server_port
+        state = json.loads(self.request("GET", "/api/state")[2])
+        slide = next(s for s in state["slides"] if s["id"] == sid)
+        self.assertFalse(slide["stale"])
+        self.assertTrue(slide["previewMaterialUnavailable"])
+        response = self.request("POST", "/api/template", {"slideId": sid, "sceneRevision": slide["sceneRevision"], "templateId": "editorial"})
+        self.assertEqual(response[0], 200, response[2])
+        context = self.server.studio.context({"slideId": sid})
+        self.assertEqual(context["selectedTemplateId"], "editorial")
+        self.assertEqual(context["currentSceneTemplateId"], "editorial")
+        self.assertFalse(self.server.studio.wb.gate("web")["ready"])
+
     def test_template_catalog_scene_edit_and_project_routing(self):
         for path in ("/api/templates", "/api/templates/preview?template=clean", "/api/scene?slide=S001"):
             self.assertEqual(self.request("GET", path, authorized=False)[0], 401)
         cards = json.loads(self.request("GET", "/api/templates")[2])["templates"]
-        self.assertEqual(len(cards), 87)
-        self.assertEqual(sum(not card.get("legacy", False) for card in cards), 78)
+        self.assertEqual(len(cards), 131)
+        self.assertEqual(sum(not card.get("legacy", False) for card in cards), 122)
         self.assertEqual(sum(bool(card.get("opening")) for card in cards), 7)
         for card in cards:
             response = self.request("GET", card["previewUrl"])
