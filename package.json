@@ -8,5 +8,8 @@
   "description": "Local editable PowerPoint export adapter",
   "dependencies": {
     "pptxgenjs": "4.0.1"
+  },
+  "devDependencies": {
+    "playwright-core": "1.64.1"
   }
 }

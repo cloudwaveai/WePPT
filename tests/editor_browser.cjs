@@ -7,7 +7,7 @@ if(!url)throw Error('Set PPT_STUDIO_TEST_URL to an isolated demo workspace.');
 const output=process.env.PPT_BROWSER_OUTPUT || '/tmp/weppt-editor-browser';
 (async()=>{
   await fs.mkdir(output,{recursive:true});
-  const browser=await chromium.launch({channel:process.env.PPT_BROWSER_CHANNEL || 'chrome',headless:true});
+  const browser=await chromium.launch({headless:true,executablePath:process.env.WEPPT_CHROMIUM||(process.platform==='darwin'?'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome':'chromium')});
   try{
     const page=await browser.newPage({viewport:{width:1440,height:950},baseURL:new URL(url).origin}),errors=[];
     page.setDefaultTimeout(15000);

@@ -84,7 +84,9 @@ try {
         slide.addText(obj.emphasis ? runs(obj) : obj.text, {...box,fontFace:obj.fontFamily,fontSize:obj.fontSize*points,
           color:rgb(obj.color),bold:obj.bold,italic:obj.italic,align:obj.align,
           valign:obj.valign==='middle'?'mid':obj.valign,margin:0,breakLine:false,
-          lineSpacingMultiple:obj.lineHeight,paraSpaceAfter:0,paraSpaceBefore:0,
+          // CSS line-height is a multiple of the font size; OOXML spcPct is a multiple of the
+          // font's own line height (~1.24em for CJK fonts). Exact points keep the browser pitch.
+          lineSpacing:Math.round(obj.fontSize*obj.lineHeight*points*100)/100,paraSpaceAfter:0,paraSpaceBefore:0,
           ...(obj.letterSpacing ? {charSpacing: obj.letterSpacing * points} : {}),
           isTextBox:true,fit:'none',wrap:!singleLine,transparency,lang:'zh-CN'});
       } else if (obj.type === 'rect' || obj.type === 'ellipse') {

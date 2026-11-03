@@ -185,6 +185,9 @@ class ScenePrimitiveTests(unittest.TestCase):
             self.assertLessEqual(len(paragraph.findall('a:pPr', NS)), 1)
             self.assertTrue(paragraph.find('a:pPr', NS) is None or list(paragraph)[0].tag.endswith('}pPr'))
         self.assertEqual(shapes['num'].find('.//a:bodyPr', NS).attrib['wrap'], 'none')
+        # CSS line pitch (fontSize × lineHeight) exported as exact points, not a font-relative percentage.
+        self.assertEqual(shapes['num'].find('.//a:lnSpc/a:spcPts', NS).attrib['val'], '3750')
+        self.assertIsNone(shapes['num'].find('.//a:lnSpc/a:spcPct', NS))
         self.assertEqual(shapes['body-1'].find('.//a:bodyPr', NS).attrib['wrap'], 'square')
         self.assertEqual([p.findall('a:r', NS)[0].find('a:t', NS).text for p in shapes['body-1'].findall('.//a:p', NS)],
                          ['第一行', '第二行很长的说明文字'])

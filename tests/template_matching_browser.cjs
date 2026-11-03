@@ -2,7 +2,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs');
 const {chromium}=require(process.env.PPT_PLAYWRIGHT_MODULE||'playwright');
 const url=process.env.PPT_STUDIO_TEST_URL;if(!url)throw Error('Provide an isolated demo URL');
 const out=process.env.PPT_BROWSER_OUTPUT||'/tmp/weppt-template-matching';fs.mkdirSync(out,{recursive:true});
-(async()=>{const b=await chromium.launch({channel:'chrome',headless:true});try{
+(async()=>{const b=await chromium.launch({headless:true,executablePath:process.env.WEPPT_CHROMIUM||(process.platform==='darwin'?'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome':'chromium')});try{
  const page=await b.newPage({viewport:{width:1440,height:900}}),errors=[],posts=[];
  page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>{if(r.method()==='POST')posts.push(new URL(r.url()).pathname)});
  await page.goto(url);await page.locator('.page-frame.active').waitFor();await page.waitForFunction(()=>document.querySelector('#preview-update').hidden);

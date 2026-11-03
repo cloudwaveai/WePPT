@@ -18,6 +18,7 @@ Codex 开始任何"让 PPT 更灵动/视觉升级"相关工作前：
 
 - 测试：`.venv/bin/python -m unittest discover -s tests`
 - 前端逻辑：`node tests/ui_logic.mjs`
+- 浏览器测试：`WEPPT_CHROMIUM="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" node tests/run_browser_tests.mjs`（启动临时演示项目并逐个跑 tests/*browser*.cjs；可用文件名过滤）
 - PPTX 导出依赖：`npm install`（pptxgenjs 4.0.1；导出脚本还会用到它的依赖 jszip）
 - 本机页面渲染（设计检查、contact sheet）需指定 Chrome：`WEPPT_CHROMIUM="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"`
 - 本机 LibreOffice 渲染 PPTX 时，要用 `FONTCONFIG_FILE` 把 Noto Sans SC、Microsoft YaHei 映射到已安装的 Noto Sans CJK SC，否则中文显示为方框（做法见 `validation/vivid-T2T8-2026-11-01/README.md`）。

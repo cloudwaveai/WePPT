@@ -5,7 +5,7 @@ const url=process.env.PPT_STUDIO_TEST_URL; if(!url)throw Error('Set PPT_STUDIO_T
 const origin=new URL(url).origin;
 (async()=>{
  await require('node:fs/promises').mkdir(out,{recursive:true});
- const browser=await chromium.launch({channel:'chrome',headless:true});
+ const browser=await chromium.launch({headless:true,executablePath:process.env.WEPPT_CHROMIUM||(process.platform==='darwin'?'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome':'chromium')});
  try{
   const page=await browser.newPage({viewport:{width:1440,height:1000}}), errors=[];
   page.on('pageerror',e=>errors.push(e.message));

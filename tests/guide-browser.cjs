@@ -2,7 +2,7 @@
 // GUIDE_STARTUP_LOG=/path/to/server-output node tests/guide-browser.cjs
 const fs = require('node:fs');
 const assert = require('node:assert/strict');
-const { chromium } = require('/Users/auntlee/.npm/_npx/e41f203b7505f1fb/node_modules/playwright');
+const { chromium } = require(process.env.PPT_PLAYWRIGHT_MODULE || 'playwright-core');
 (async () => {
   const log = fs.readFileSync(process.env.GUIDE_STARTUP_LOG, 'utf8');
   const authURL = log.match(/http:\/\/127\.0\.0\.1:\d+\/\?token=[^\s"\\]+/)[0];

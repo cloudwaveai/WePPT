@@ -3,7 +3,7 @@ const {chromium}=require(process.env.PPT_PLAYWRIGHT_MODULE || 'playwright');
 const url=process.env.PPT_STUDIO_TEST_URL;
 if(!url)throw Error('Set PPT_STUDIO_TEST_URL. Clicking smart selection calls the configured model.');
 (async()=>{
- const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-proxy-server']});
+ const browser=await chromium.launch({headless:true,executablePath:process.env.WEPPT_CHROMIUM||(process.platform==='darwin'?'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome':'chromium')});
  try{
   const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[],posts=[];
   page.setDefaultTimeout(60000);page.on('pageerror',e=>errors.push(e.message));
