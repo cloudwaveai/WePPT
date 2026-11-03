@@ -2,13 +2,14 @@
 import copy
 import hashlib
 import json
+import math
 from pathlib import Path
 
 from .core import EngineError, _json, _now
 from .design_loop import review_candidate, scene_for_model, semantic_source, patch_candidate, vision_available, review_verdict
 from .design_review import render_candidate, _inventory
 from .rendering import validate_scene
-from .quality import audit_scene, deck_rhythm
+from .quality import audit_scene, boost_anchors, deck_rhythm
 
 # Model-side failures of a review call: the finished pages stay as they are.
 REVIEW_MODEL_FAILURES = {'AGENT_TIMEOUT', 'AGENT_FAILED', 'MODEL_OUTPUT_TRUNCATED', 'INVALID_AGENT_OUTPUT',
@@ -106,8 +107,9 @@ def run_review(studio, job, mode, runner):
               'pageRepairCalls': previous.get('pageRepairCalls', len(previous.get('repairs', []))),
               'repairRounds': previous.get('repairRounds', 0),
               'passes': [], 'repairedPages': [], 'summary': ''}
-    # Initial check, at most two repair rounds (three page repairs total), final check.
-    call_limit = 3 * ((len(scenes) + 3) // 4) + 6
+    page_cap = min(6, max(3, math.ceil(len(scenes) / 3)))
+    # Initial check, at most two repair rounds (page_cap page repairs total), final check.
+    call_limit = 3 * ((len(scenes) + 3) // 4) + 2 * page_cap + 2
 
     def save():
         temporary = checkpoint.with_suffix('.tmp')
@@ -141,8 +143,22 @@ def run_review(studio, job, mode, runner):
             report.setdefault('modelFailures', []).append(exc.code)
             return {'reply': f'NEEDS_ATTENTION\n自动检查未完成（{exc.code}），页面保持原样。', 'actions': []}
 
+    report['anchorBoosts'] = boost_anchors(scenes, plan)
+    boosted_ids = {b['slideId']: b for b in report['anchorBoosts']}
+
     def inspect(stage, allow_repairs=True):
         sheets, measurements = contact_sheets(scenes, folder / stage)
+        reverted = len(report.get('anchorBoostReverted', []))
+        # A boosted anchor that now overflows is restored; later passes re-measure.
+        for scene, measure in zip(scenes, measurements):
+            boost = boosted_ids.get(scene['slideId'])
+            if boost and boost['objectId'] in set(measure.get('overflow') or []):
+                obj = next((o for o in scene['objects'] if o['id'] == boost['objectId']), None)
+                if obj:
+                    obj.update(boost['before'])
+                    report.setdefault('anchorBoostReverted', []).append({'slideId': scene['slideId'], 'objectId': boost['objectId']})
+        if len(report.get('anchorBoostReverted', [])) > reverted:
+            sheets, measurements = contact_sheets(scenes, folder / (stage + '-reverted'))
         rhythm = deck_rhythm(scenes)
         edits, passed = {}, True
         for start, count, png in sheets:
@@ -154,6 +170,7 @@ def run_review(studio, job, mode, runner):
                                   'measurement': measurements[i], 'mechanicalFindings': audit_scene(scenes[i]),
                                   'visualStats': rhythm['pages'][i]} for i in range(start, start + count)],
                        'deckRhythmFindings': rhythm['findings'],
+                       'anchorBoosts': report['anchorBoosts'],
                        'previousFindings': report['passes'][-1:]}
             result = call(mode,
                 '检查整套PPT的叙事与视觉节奏，结合完整设计清单及当前连续页面。核对是否兑现原始需求、'
@@ -161,7 +178,8 @@ def run_review(studio, job, mode, runner):
                 '连续两页版式骨架相同、整稿缺少深浅或疏密节奏、页面没有视觉焦点时，指出具体页面并给出修改方向；'
                 '单调同样是需要修正的问题。deckRhythmFindings 与 pages[].visualStats 是按几何计算的客观度量'
                 '（LAYOUT_MONOTONY、LOW_SCALE_CONTRAST、FLAT_PAGE、NO_TONAL_RHYTHM、FEW_ANCHORS），请结合截图判断；'
-                'FEW_ANCHORS 时把已有的序号、kicker、原文数字或核心关键词放大到 72px 以上作为焦点，不新增文字；'
+                'FEW_ANCHORS 时，系统已先自动放大部分短序号或原文数字（见 anchorBoosts）；仍不足时，把已有的序号、kicker、原文数字或核心关键词放大到 72px 以上作为焦点，不新增文字；'
+                '原稿缺少的事实已用“待补充”等方式明确标注时，属于正常的内容缺口，不作为 NEEDS_ATTENTION 的理由，可在 reply 中提醒；只有视觉、可读性、层级、版式节奏或证据越界的问题才判 REVISE 或 NEEDS_ATTENTION。'
                 '对照 designRoster 中每页 layoutArchetype、focalElement、backgroundTreatment 核对计划是否兑现。'
                 'id 以 image-slot 开头的矩形是自动配图预留区，不要建议删除。只建议当前图片内具体问题页。'
                 'measurement.textFlow 包含实际断行信息，核对孤行候选、过窄正文和字号层级；'
@@ -174,7 +192,7 @@ def run_review(studio, job, mode, runner):
                 context, timeout=180, **({"preview_png": png} if visual else {}))
             verdict = review_verdict(result.get('reply', ''))
             actions = result.get('actions', [])
-            allowed = {s['slideId'] for s in scenes[start:start + count]}
+            allowed = {s['slideId'] for s in scenes}
             rejected = []
             if actions:
                 # An out-of-scope suggestion is never applied; it no longer blocks a
@@ -199,11 +217,11 @@ def run_review(studio, job, mode, runner):
         return edits, passed
 
     try:
-        remaining_repairs = report['pageRepairCalls'] < 3 and report['repairRounds'] < 2
+        remaining_repairs = report['pageRepairCalls'] < page_cap and report['repairRounds'] < 2
         edits, passed = inspect('initial', allow_repairs=remaining_repairs)
         repairs_used = report['pageRepairCalls']
         for repair_round in range(report['repairRounds'], 2):
-            budget = 3 - repairs_used
+            budget = page_cap - repairs_used
             if len(edits) > budget:
                 # Repair what the budget allows, in page order; keep the rest as
                 # recorded findings instead of discarding every repair.
@@ -211,7 +229,7 @@ def run_review(studio, job, mode, runner):
                 report.setdefault('deferredEdits', []).extend(
                     {'slideId': sid, 'instruction': edits[sid]} for sid in ordered[budget:])
                 edits = {sid: edits[sid] for sid in ordered[:budget]}
-                report['summary'] = '问题页超过三次页面修正上限：已按页序修正可修的页面，其余检查意见保留待处理。'
+                report['summary'] = f'问题页超过 {page_cap} 次页面修正上限：已按页序修正可修的页面，其余检查意见保留待处理。'
                 passed = False
             if not edits:
                 break
@@ -253,7 +271,7 @@ def run_review(studio, job, mode, runner):
                     model_binding=job['payload'].get('modelBinding'))
                 report.setdefault('repairs', []).append({'slideId': sid, 'instruction': instruction, 'review': detail})
                 scenes[index] = revised
-            more = repair_round == 0 and repairs_used < 3
+            more = repair_round == 0 and repairs_used < page_cap
             edits, passed = inspect('verify' if more else 'final', allow_repairs=more)
         ensure_current()
         report['status'] = 'reviewed' if passed else 'needs_attention'

@@ -209,8 +209,7 @@ class DeckDesignTests(unittest.TestCase):
    run_review(self.studio,job,'claude',outside)
   state=self.studio.deck_state()
   self.assertEqual(state['status'],'complete');self.assertEqual(state['designReview']['status'],'needs_attention')
-  self.assertEqual(state['designReview']['repairedPages'],[])
-  self.assertEqual(self.studio.get_scene('S001')['sceneRevision'],1)
+  self.assertNotIn('S999',state['designReview']['repairedPages'])
   report=json.loads((self.studio.wb.project_dir('test')/'deck-reviews'/job['id']/'report.json').read_text())
   self.assertEqual(report['passes'][0]['rejectedSuggestions'],[{'reason':'out-of-scope','slideId':'S999'}])
 
@@ -238,7 +237,7 @@ class DeckDesignTests(unittest.TestCase):
  def test_exhausted_restart_budget_does_not_call_or_apply(self):
   job=self.ready()
   folder=self.studio.wb.project_dir('test')/'deck-reviews'/job['id'];folder.mkdir(parents=True,exist_ok=True)
-  (folder/'report.json').write_text(json.dumps({'modelCalls':9}))
+  (folder/'report.json').write_text(json.dumps({'modelCalls':100}))
   with patch('ppt_workbench.deck_review.contact_sheets',side_effect=self.sheets):
    with self.assertRaises(EngineError):run_review(self.studio,job,'claude',lambda *a,**k:self.fail('budget must stop call'))
   self.assertEqual(self.studio.get_scene('S001')['sceneRevision'],1)

@@ -11,6 +11,7 @@ import copy
 import json
 import math
 import re
+import unicodedata
 import uuid
 
 from .core import EngineError, _hash, _json, _now
@@ -341,6 +342,80 @@ def previous_page_findings(previous, stats):
         return []
     return [_issue("SIMILAR_TO_PREVIOUS", f"与上一页版式骨架相似度 {similarity:g}，相邻页应换一种构图。",
                    stats["slideId"], basis="visual-metric")]
+
+
+def _char_width(ch):
+    return 1.0 if ord(ch) > 0x2E7F or unicodedata.east_asian_width(ch) in ("W", "F") else 0.62
+
+
+def boost_anchors(scenes, plan):
+    """Deterministically enlarge one short anchor text per lacking page until at
+    least ceil(n/2) pages have a >=72px focal. Mutates scenes; returns records."""
+    from .design_loop import connector_glyph
+    n = len(scenes)
+    if n < 2:
+        return []
+    lacking = [i for i, scene in enumerate(scenes)
+               if max((o.get("fontSize", 0) for o in scene.get("objects", []) if o.get("type") == "text"), default=0) < ANCHOR_FONT_SIZE]
+    need = math.ceil(n / 2) - (n - len(lacking))
+    if need <= 0:
+        return []
+    plan_pages = (plan or {}).get("pages") or []
+    def has_focus(i):
+        page = plan_pages[i] if i < len(plan_pages) else {}
+        blocks = page.get("blocks") or []
+        brief = page.get("designBrief") or {}
+        return any(b.get("metric") or b.get("kicker") for b in blocks if isinstance(b, dict)) or bool(brief.get("focalElement"))
+    ordered = sorted(lacking, key=lambda i: (not has_focus(i), i))
+    W, H, INSET = 1280, 720, 24
+    def overlaps(a, b):
+        return (a["x"] < b["x"] + b["w"] and b["x"] < a["x"] + a["w"]
+                and a["y"] < b["y"] + b["h"] and b["y"] < a["y"] + a["h"])
+    boosted = []
+    for i in ordered:
+        if len(boosted) >= need:
+            break
+        scene = scenes[i]
+        page = plan_pages[i] if i < len(plan_pages) else {}
+        blocks = page.get("blocks") or []
+        metric = next((str(b["metric"]).strip() for b in blocks if isinstance(b, dict) and b.get("metric")), None)
+        kicker = next((str(b["kicker"]).strip() for b in blocks if isinstance(b, dict) and b.get("kicker")), None)
+        def priority(obj):
+            text = (obj.get("text") or "").strip()
+            if metric and text == metric and len(text) <= 16:
+                return 0
+            if any(c.isdigit() for c in text):
+                return 1
+            if kicker and text == kicker and len(text) <= 16:
+                return 2
+            return 3
+        candidates = [o for o in scene.get("objects", [])
+                      if o.get("type") == "text" and not connector_glyph(o) and not o.get("rotation")
+                      and (1 <= len((o.get("text") or "").strip()) <= 6
+                           or (metric and (o.get("text") or "").strip() == metric and len(metric) <= 16)
+                           or (kicker and (o.get("text") or "").strip() == kicker and len(kicker) <= 16))]
+        candidates.sort(key=lambda o: (priority(o), o.get("y", 0), o.get("x", 0)))
+        blockers = [o for o in scene.get("objects", []) if o.get("type") in ("text", "image")]
+        for obj in candidates:
+            text = obj.get("text", "")
+            spacing = obj.get("letterSpacing", 0) or 0
+            width = sum(_char_width(c) for c in text) * ANCHOR_FONT_SIZE + spacing * max(0, len(text) - 1) + 8
+            height = math.ceil(ANCHOR_FONT_SIZE * 1.25)
+            align, valign = obj.get("align", "left"), obj.get("valign", "top")
+            x = obj["x"] if align == "left" else obj["x"] + obj["w"] / 2 - width / 2 if align == "center" else obj["x"] + obj["w"] - width
+            y = obj["y"] if valign == "top" else obj["y"] + obj["h"] / 2 - height / 2 if valign == "middle" else obj["y"] + obj["h"] - height
+            box = {"x": round(x, 2), "y": round(y, 2), "w": round(width, 2), "h": height}
+            if (box["x"] < INSET or box["y"] < INSET or box["x"] + box["w"] > scene.get("width", W) - INSET
+                    or box["y"] + box["h"] > scene.get("height", H) - INSET):
+                continue
+            if any(other is not obj and overlaps(box, other) for other in blockers):
+                continue
+            boosted.append({"slideId": scene["slideId"], "objectId": obj["id"],
+                            "before": {k: obj[k] for k in ("x", "y", "w", "h")} |
+                                      {"fontSize": obj.get("fontSize"), "lineHeight": obj.get("lineHeight")}})
+            obj.update(x=box["x"], y=box["y"], w=box["w"], h=box["h"], fontSize=ANCHOR_FONT_SIZE, lineHeight=1)
+            break
+    return boosted
 
 
 def deck_rhythm(scenes):
