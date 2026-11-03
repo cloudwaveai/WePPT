@@ -37,3 +37,10 @@ htmlcov/
 .vscode/
 *.swp
 *.log
+
+# Local user outputs and raw validation artifacts (write-ups stay tracked)
+/outputs/
+/validation/**
+!/validation/**/
+!/validation/**/*.md
+!/validation/*.cjs
