@@ -96,8 +96,12 @@ def propose(studio, template_id, sid, revision, approach='creative'):
     from .design_review import render_candidate
     if approach not in ('faithful','content','creative'):
         raise EngineError('INVALID_REQUEST','请选择贴近模板或按内容适配。')
-    user_template=None
-    if isinstance(template_id,str) and template_id.startswith('user-'):
+    user_template=style=None
+    if isinstance(template_id,str) and template_id.startswith('style-'):
+        from .user_templates import style_card
+        card,user_image,style=style_card(studio,template_id[6:])
+        user_template=True
+    elif isinstance(template_id,str) and template_id.startswith('user-'):
         from .user_templates import template_card
         card,user_image=template_card(studio,template_id[5:])
         user_template=True
@@ -133,14 +137,19 @@ def propose(studio, template_id, sid, revision, approach='creative'):
         folder=studio.wb.project_dir(studio.project_id)/'template-proposals'/proposal_id
         folder.mkdir(parents=True,exist_ok=False)
         visual=mode=='codex' or (mode=='api' and bool(profile and profile.get('vision')))
-        if user_template and not visual:
+        if user_template and not style and not visual:
             raise EngineError('TEMPLATE_NEEDS_VISION','这个模板是图片，需要支持看图的模型；请在右上角切换模型后重试。')
         context.update(proposalOnly=True,generationTask={'kind':'template_adaptation'},
             previewPurpose='选中模板的原页设计参考。只模仿设计，不复制示例事实、人物、Logo、数据或截图。',
             templateReference={k:card.get(k) for k in ('id','name','role','use','capacity','fixed','editable','fitRule','source','sourcePage')},
             referenceLayout=None if user_template else source_layout(template_id),adaptationApproach=approach)
+        context['styleReference']=style or full.get('styleReference')
         image=None
-        if user_template:
+        if style:
+            # The written profile carries the style; the 3-page contact sheet helps vision models.
+            if visual and user_image:image=folder/'reference.png';shutil.copyfile(user_image,image)
+            context['referenceReadMode']='image-and-profile' if image else 'profile-only'
+        elif user_template:
             image=folder/'reference.png';shutil.copyfile(user_image,image)
             context['referenceReadMode']='image-only'
         elif card.get('reference'):
@@ -154,7 +163,7 @@ def propose(studio, template_id, sid, revision, approach='creative'):
             for o in context['referenceLayout']['scene']['objects']:
                 if o['type']=='image':o['src']='template-example-image-not-for-reuse'
             if visual:image,_=render_candidate(example,folder/'reference')
-        if context.get('referenceReadMode')!='image-only':
+        if context.get('referenceReadMode') not in ('image-only','image-and-profile','profile-only'):
             context['referenceReadMode']='image-and-layout' if image else 'layout-only'
         context['requiredContent']=[{k:o[k] for k in ('id','type','text','binding') if k in o} |
             ({'src':'scene-image:'+sid+'/'+o['id'],'alt':o.get('alt','')} if o['type']=='image' else {})
@@ -171,8 +180,11 @@ def propose(studio, template_id, sid, revision, approach='creative'):
             '同一页保留全部内容，不截断、不合并删除、不藏到备注、不缩成小字。新装饰不要遮盖正文，内容对象放在其上。'
             '标题明确醒目，结论次一级。不要添加页脚、口号或额外小字。不能满足完整性时说明冲突并返回空 actions。'
             'reply 说明如何把当前内容匹配到模板，以及必要的结构调整。'
-            '本次目标是换版式，而不是换颜色：新方案必须改变当前页的构图骨架，内容分组方式、主要区域的位置与比例、阅读路径至少改变其中两项；'
-            '只改颜色、字体或微调位置不算完成。服务端会比较内容对象的位置，构图基本未变的方案会被退回重做。'
+            + ('本次目标是按 styleReference 的对标风格重做本页：迁移它的版面网格、元素、字体层级、配色和装饰语言；'
+               '可以保留适合内容的结构，但整体视觉必须明显接近对标风格。原图是三页对标稿拼图，只模仿设计。'
+               if style else
+               '本次目标是换版式，而不是换颜色：新方案必须改变当前页的构图骨架，内容分组方式、主要区域的位置与比例、阅读路径至少改变其中两项；'
+               '只改颜色、字体或微调位置不算完成。服务端会比较内容对象的位置，构图基本未变的方案会被退回重做。')
             + ('尽量贴近原模板：保留分区比例、标题位置、品牌色和图形语言，按语义将原文放入最匹配区域。'
                if approach=='faithful' else '内容优先自由设计：允许改变栏数、节点形态、信息路径、图文比例和连接方式，保留参考中有价值的视觉语言。给出适合本页的独立构图，简要说明借鉴了什么、为什么改变结构。'))
         for attempt in range(3):
@@ -187,7 +199,7 @@ def propose(studio, template_id, sid, revision, approach='creative'):
                     raise EngineError('TEMPLATE_CONTENT_MISMATCH','模板适配只能生成当前页的完整方案。')
                 studio.wb._revision(actions[0]['base_revision'],current['contentRevision'])
                 candidate=_validate_candidate(studio,current['scene'],actions[0]['scene'],'custom' if user_template else template_id)
-                if layout_unchanged(current['scene'],candidate):
+                if not style and layout_unchanged(current['scene'],candidate):
                     raise EngineError('TEMPLATE_LAYOUT_UNCHANGED','适配方案只改了颜色或细节，构图没有变化。',
                                       {'meanIoU':round(_layout_iou(current['scene'],candidate),3)})
                 png,measurement=render_candidate(candidate,folder/f'candidate-{attempt+1}')
@@ -218,7 +230,7 @@ def propose(studio, template_id, sid, revision, approach='creative'):
             else:
                 raise EngineError('DESIGN_REVIEW_SCOPE','检查修正只能重排当前候选页。')
             repaired=_validate_candidate(studio,current['scene'],repaired,'custom' if user_template else template_id)
-            if layout_unchanged(current['scene'],repaired):
+            if not style and layout_unchanged(current['scene'],repaired):
                 raise EngineError('TEMPLATE_LAYOUT_UNCHANGED','修正后的候选构图与原页几乎相同，保留原候选。',
                                   {'meanIoU':round(_layout_iou(current['scene'],repaired),3)})
             return repaired
@@ -253,7 +265,7 @@ def apply(studio, proposal_id):
         studio.wb._revision(current['contentRevision'],row['content_revision'])
         saved=json.loads(row['body'])
         result=replace_scene(studio,row['slide_id'],row['scene_revision'],saved['scene'],'应用已确认的模板适配：'+row['template_id'])
-        if not str(row['template_id']).startswith('user-'):
+        if not str(row['template_id']).startswith(('user-','style-')):
             db.execute('INSERT INTO studio_template_preferences VALUES (?,?) ON CONFLICT(project_id) DO UPDATE SET template_id=excluded.template_id',(studio.project_id,row['template_id']))
         db.execute('UPDATE studio_template_proposals SET applied_revision=? WHERE id=?',(result['sceneRevision'],proposal_id))
         studio._message(db,'assistant','已应用你确认的模板适配预览。'+saved['reply'],row['slide_id'],modelBinding=saved.get('modelBinding'))

@@ -362,7 +362,7 @@ Logo：[本次不使用，或注明已提供的素材]
     $('review-button').classList.toggle('reviewed', !!reviewed);
     $('review-button').querySelector('span').textContent = reviewed ? '本页已认可' : '认可这一页';
     $('review-button').disabled = ui.reviewBusy || !slide?.hasPreview || !!slide?.stale || reviewed;
-    updateAgent(); renderDelivery(); renderDeckProgress(); renderQuality(); renderRelease(); renderMessages(force); renderSlides(force); renderPreview(); renderStyleBadge(); renderDerivedLine(); $('style-derive').hidden=!ui.state.styleReference; updateJobStatus(); updateSend(); updateConnectionDialog(); updateReviewDialog(); fitCanvas(); scheduleMeasurements(); syncEditor();
+    updateAgent(); renderDelivery(); renderDeckProgress(); renderQuality(); renderRelease(); renderMessages(force); renderSlides(force); renderPreview(); renderStyleBadge(); renderDerivedLine(); $('style-derive').hidden=!ui.state.styleReference;$('style-restyle').hidden=!ui.state.styleReference; updateJobStatus(); updateSend(); updateConnectionDialog(); updateReviewDialog(); fitCanvas(); scheduleMeasurements(); syncEditor();
   }
 
   function updateAgent() {
@@ -1808,6 +1808,40 @@ Logo：[本次不使用，或注明已提供的素材]
     const error=await derive('restyle',{styleId:ref.id});
     if(error){$('style-error').textContent=error;$('style-error').hidden=false;}
   });
+  const restyle={queue:[],index:0,proposal:null,token:0,busy:false};
+  async function restyleNext(){
+    const token=restyle.token,ref=ui.state?.styleReference;
+    restyle.proposal=null;$('restyle-apply').disabled=true;$('restyle-skip').disabled=true;$('restyle-reply').textContent='';
+    if(restyle.index>=restyle.queue.length){$('restyle-progress').textContent=`已处理全部 ${restyle.queue.length} 页。`;return;}
+    const slide=(ui.state?.slides||[]).find(s=>s.id===restyle.queue[restyle.index]);
+    if(!slide?.hasPreview){restyle.index++;return restyleNext();}
+    const label=`第 ${restyle.index+1}/${restyle.queue.length} 页`;
+    $('restyle-progress').textContent=`${label}：正在按「${ref.name}」生成改版预览，约需 1–2 分钟…`;
+    const url=new URL('/api/preview/'+encodeURIComponent(slide.id),location.origin);url.searchParams.set('project',ui.state.projectId);url.searchParams.set('rev',slide.sceneRevision);
+    loadTemplateFrame('restyle-before',null,url.href).catch(()=>{});
+    try{
+      const result=await api('/api/templates/adapt','POST',{templateId:'style-'+ref.id,slideId:slide.id,sceneRevision:slide.sceneRevision,approach:'creative'});
+      if(token!==restyle.token)return;
+      await loadTemplateFrame('restyle-after',result.html);
+      if(token!==restyle.token)return;
+      restyle.proposal=result.proposalId;$('restyle-apply').disabled=false;$('restyle-skip').disabled=false;
+      $('restyle-progress').textContent=`${label}：改版预览已生成，确认后应用。`;$('restyle-reply').textContent=result.reply||'';
+    }catch(error){if(token!==restyle.token)return;$('restyle-progress').textContent=`${label}：${error.message}`;$('restyle-skip').disabled=false;}
+  }
+  function stopRestyle(){restyle.token++;$('restyle-dialog').close();}
+  $('style-restyle').addEventListener('click',()=>{
+    if(!ui.state?.styleReference){$('style-error').textContent='请先「用于本项目」选定一个已解析的对标风格。';$('style-error').hidden=false;return;}
+    restyle.queue=(ui.state.slides||[]).filter(s=>s.hasPreview).map(s=>s.id);restyle.index=0;restyle.token++;
+    $('style-dialog').close();$('restyle-dialog').showModal();restyleNext();
+  });
+  $('restyle-skip').addEventListener('click',()=>{restyle.index++;restyleNext();});
+  $('restyle-apply').addEventListener('click',async()=>{
+    if(!restyle.proposal)return;$('restyle-apply').disabled=true;
+    try{await api('/api/templates/apply','POST',{proposalId:restyle.proposal});await refreshState(true);restyle.index++;restyleNext();}
+    catch(error){$('restyle-progress').textContent=error.message;$('restyle-apply').disabled=false;}
+  });
+  for(const id of ['restyle-stop','restyle-close'])$(id).addEventListener('click',stopRestyle);
+  $('restyle-dialog').addEventListener('cancel',()=>{restyle.token++;});
   $('ribbon-audience').addEventListener('click',openAudience);
   $('audience-close').addEventListener('click',()=>$('audience-dialog').close());
   $('audience-generate').addEventListener('click',async()=>{

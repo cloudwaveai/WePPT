@@ -188,6 +188,7 @@
     <p class="palette-note">上传 3 页对标 PPT，提炼 UI、元素和设计风格，用于之后生成的整稿；只迁移设计，不复制原稿内容。</p>
     <div class="style-upload-row"><button id="style-upload" class="button quiet compact" type="button">上传 3 页对标 PPT</button><span id="style-upload-note">PNG / JPEG，恰好 3 张</span><input id="style-file-input" type="file" accept="image/png,image/jpeg" multiple hidden></div>
     <div class="style-upload-row"><button id="style-derive" class="button quiet compact" type="button" hidden>生成对标风格副本</button><span>按选定的对标风格重排整套页面，原稿不变。</span></div>
+    <div class="style-upload-row"><button id="style-restyle" class="button quiet compact" type="button" hidden>逐页改版（可预览）</button><span>在当前项目逐页生成改版预览，每页确认后才应用，可撤销。</span></div>
     <div id="style-list" class="style-list"></div>
     <div id="style-editor" hidden>
       <p id="style-analyzing" role="status" hidden>正在读取三页对标稿，提炼 UI、元素和设计风格…</p>
@@ -195,6 +196,14 @@
       <div class="palette-actions"><button id="style-save" class="button quiet" type="button">保存修改</button><button id="style-use" class="button primary" type="button">用于本项目</button></div>
     </div>
     <p id="style-error" role="alert" hidden></p>
+  </dialog>
+
+  <dialog id="restyle-dialog" class="ai-preview-dialog" aria-labelledby="restyle-title">
+    <div class="dialog-heading"><h2 id="restyle-title">逐页改版</h2><button id="restyle-close" class="icon-button" type="button" aria-label="关闭逐页改版">×</button></div>
+    <p id="restyle-progress" role="status"></p>
+    <div class="ai-compare"><figure><figcaption>当前页面</figcaption><iframe id="restyle-before" sandbox="allow-scripts" title="当前页面"></iframe></figure><figure><figcaption>对标风格改版 · 尚未应用</figcaption><iframe id="restyle-after" sandbox="allow-scripts" title="改版预览"></iframe></figure></div>
+    <p id="restyle-reply"></p>
+    <div class="ai-preview-actions"><span>每页确认后才应用，可撤销。</span><button id="restyle-stop" type="button" class="button quiet">停止</button><button id="restyle-skip" type="button" class="button quiet">跳过这页</button><button id="restyle-apply" type="button" class="button primary" disabled>应用这页</button></div>
   </dialog>
 
   <dialog id="audience-dialog" class="palette-dialog" aria-labelledby="audience-title">

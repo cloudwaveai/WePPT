@@ -300,6 +300,22 @@ def template_card(studio, template_id):
              "userTemplate": True}, path)
 
 
+def style_reference(name, profile):
+    return {"name": name, "profile": profile, "instruction": STYLE_INSTRUCTION}
+
+
+def style_card(studio, template_id):
+    """An analysed benchmark style used as the reference for restyling one page."""
+    row = _get(studio, template_id, "style")
+    profile = json.loads(row["body"]).get("profile")
+    if not profile:
+        fail("STYLE_NOT_ANALYZED", "请先解析对标风格。")
+    contact = _directory(studio, template_id) / "contact.png"
+    return ({"id": "style-" + row["id"], "name": row["name"], "role": "content", "use": "对标风格逐页改版",
+             "fitRule": "按对标风格重排本页；只迁移设计，不复制对标页的文字、数据、Logo 或人物。"},
+            contact if contact.is_file() else None, style_reference(row["name"], profile))
+
+
 def _vision_mode(studio):
     from .model_profiles import selected, resolve
     chosen = selected(studio)

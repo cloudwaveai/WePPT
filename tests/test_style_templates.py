@@ -41,6 +41,41 @@ class StyleTests(unittest.TestCase):
                    side_effect=EngineError("DESIGN_RENDER_UNAVAILABLE", "no")):
             return ut.upload(self.s, "style", [file("a.png"), file("b.png"), file("c.png")])["templates"][0]
 
+    def test_restyle_one_page_with_style_reference(self):
+        from ppt_workbench import template_adaptation as adaptation
+        tid = self.upload3()["id"]
+        self.s.demo()
+        before = self.s.get_scene("S001")
+        self.s.set_agent_mode("api")
+        binding = {"id": "x", "label": "L", "mode": "api", "model": "m"}
+        self.error("STYLE_NOT_ANALYZED", adaptation.propose, self.s, "style-" + tid, "S001", before["sceneRevision"])
+        ut.update_style(self.s, tid, profile=PROFILE)
+        same = json.loads(json.dumps(before["scene"]))
+        same["background"] = "#FAFAFA"  # Same geometry: a style restyle may keep the structure.
+        calls = []
+        def run(*a, **kw):
+            calls.append((a, kw))
+            if a[2].get("generationTask", {}).get("kind") == "design_loop_review":
+                return {"reply": "PASS\nok", "actions": []}
+            return {"reply": "done", "actions": [{"type": "scene_replace", "slide_id": "S001",
+                    "base_revision": before["contentRevision"], "scene": same}]}
+        png = Path(self.temp.name) / "r.png"; png.write_bytes(b"\x89PNG\r\n\x1a\n")
+        with patch("ppt_workbench.model_profiles.selected", return_value=binding), \
+             patch("ppt_workbench.model_profiles.resolve", return_value={**binding, "vision": False}), \
+             patch("ppt_workbench.agent_bridge.run_turn", side_effect=run), \
+             patch("ppt_workbench.design_review.render_candidate", return_value=(png, {"fontsReady": True, "overflow": []})):
+            proposal = adaptation.propose(self.s, "style-" + tid, "S001", before["sceneRevision"])
+        context, prompt = calls[0][0][2], calls[0][0][1]
+        self.assertEqual(context["styleReference"]["profile"], PROFILE)
+        self.assertEqual(context["referenceReadMode"], "profile-only")  # Non-vision models still restyle from the profile.
+        self.assertNotIn("preview_png", calls[0][1])
+        self.assertIn("对标风格重做本页", prompt)
+        self.assertNotIn("构图基本未变的方案会被退回", prompt)
+        self.assertEqual(proposal["scene"]["templateId"], "custom")
+        adaptation.apply(self.s, proposal["proposalId"])
+        self.assertIsNone(self.s.selected_template())
+        self.assertEqual(self.s.get_scene("S001")["scene"]["background"], "#FAFAFA")
+
     def test_exactly_three(self):
         for files in ([file()], [file()] * 2, [file()] * 4):
             self.error("INVALID_UPLOAD", ut.upload, self.s, "style", files)
