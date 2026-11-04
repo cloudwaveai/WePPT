@@ -70,6 +70,25 @@ class PlanValidationTests(unittest.TestCase):
         self.assertEqual(result, plan)
         self.assertIsNot(result["actions"], plan["actions"])
 
+    def test_project_enum_values_are_normalized(self):
+        # Model wording is mapped into the allowed enums instead of failing
+        # the whole plan at project update time.
+        result = validate_plan({"reply": "x", "actions": [
+            {"type": "project_update", "changes": {"purpose": "产品介绍"}}]})
+        self.assertEqual(result["actions"][0]["changes"]["purpose"], "proposal")
+        result = validate_plan({"reply": "x", "actions": [
+            {"type": "project_update", "changes": {"purpose": "公司战略宣讲材料", "logoPolicy": "企业标识", "dataPolicy": "内部"}}]})
+        changes = result["actions"][0]["changes"]
+        self.assertEqual(changes["purpose"], "other")
+        self.assertEqual(changes["purposeOther"], "公司战略宣讲材料")
+        self.assertEqual(changes["logoPolicy"], "undecided")
+        self.assertEqual(changes["dataPolicy"], "undecided")
+        # Explicit purposeOther is not overwritten by a recognisable purpose.
+        result = validate_plan({"reply": "x", "actions": [
+            {"type": "project_update", "changes": {"purpose": "季度汇报", "purposeOther": "自定义说明"}}]})
+        self.assertEqual(result["actions"][0]["changes"]["purpose"], "report")
+        self.assertEqual(result["actions"][0]["changes"]["purposeOther"], "自定义说明")
+
     def test_bad_types_unknown_fields_and_nonfinite_values_fail_cleanly(self):
         invalid = [
             {"reply": "x", "actions": [{"type": []}]},

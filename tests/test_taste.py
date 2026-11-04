@@ -60,6 +60,52 @@ class TasteTests(unittest.TestCase):
         ctx = s.context({"scope": "deck"})
         self.assertIn("审美参考", ctx["userTasteProfile"]["instruction"])
 
+    def test_worker_scopes_history_to_the_job_project_owner(self):
+        # A background job must aggregate taste only from its project's owner,
+        # never from another space, even with no visitor context set.
+        from unittest.mock import patch
+        from ppt_workbench import owners
+        alice = owners.set_current('a' * 43)
+        a = Studio(self.temp.name, "alice-proj")
+        owners.claim_project(a.wb, "alice-proj")
+        owners.reset(alice)
+        bob = owners.set_current('b' * 43)
+        b = Studio(self.temp.name, "bob-proj")
+        owners.claim_project(b.wb, "bob-proj")
+        owners.reset(bob)
+        shared = Studio(self.temp.name, "shared-proj")
+        # Scoped to Alice's job: only Alice's projects feed history.
+        scope = owners.set_scoped(owners.project_owner(a.wb, "alice-proj"))
+        try:
+            self.assertEqual(owners.owned_project_ids(a.wb), {"alice-proj"})
+        finally:
+            owners.reset(scope)
+        # A job in a shared project sees shared projects only — not either space.
+        scope = owners.set_scoped(owners.project_owner(shared.wb, "shared-proj"))
+        try:
+            ids = owners.owned_project_ids(shared.wb)
+            self.assertIn("shared-proj", ids)
+            self.assertNotIn("alice-proj", ids)
+            self.assertNotIn("bob-proj", ids)
+        finally:
+            owners.reset(scope)
+        # run_pending executes inside that scope.
+        a.set_agent_mode("codex")
+        a.enqueue("继续", scope="deck", client_message_id="t")
+        seen = []
+        original = Studio.context
+        def spy(self, payload=None):
+            seen.append(owners.current())
+            return original(self, payload)
+        from ppt_workbench.core import EngineError
+        with patch("ppt_workbench.agent_bridge.diagnose", return_value={"available": True}), \
+             patch("ppt_workbench.agent_bridge.run_turn", side_effect=EngineError("X", "no model")), \
+             patch.object(Studio, "context", spy):
+            a.run_pending()
+        self.assertTrue(seen)
+        self.assertEqual(seen[0], owners.project_owner(a.wb, "alice-proj"))
+        self.assertIsNone(owners.current())
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -78,6 +78,32 @@ class DeriveTests(unittest.TestCase):
             self.assertIn(rule, message)
             self.assertIn(label[:-1], message.split("「")[1])
 
+    def test_landed_slot_images_are_copied_not_skipped(self):
+        # Generated images keep image-slot-* ids; only empty placeholders skip.
+        sid = self.s.state()["slides"][0]["id"]
+        target = Studio(self.temp.name, "target")
+        before, _ = mod._copy_images(self.s, target, mod._source_pages(self.s))
+        scene = self.s.get_scene(sid)["scene"]
+        scene["objects"].append({"id": "image-slot-hero", "type": "image", "x": 0, "y": 0,
+                                 "w": 100, "h": 100, "src": "data:image/png;base64," + PNG})
+        scene["objects"].append({"id": "image-slot-empty", "type": "rect", "x": 0, "y": 0,
+                                 "w": 100, "h": 100, "fill": "#EEEEEE"})
+        scene["objects"].append({"id": "user-picture", "type": "image", "x": 0, "y": 0,
+                                 "w": 100, "h": 100, "src": "data:image/png;base64," + PNG})
+        self.s.put_scene(sid, self.s.get_scene(sid)["contentRevision"], scene, "测试")
+        assets, dropped = mod._copy_images(self.s, target, mod._source_pages(self.s))
+        self.assertEqual(len(assets), len(before) + 1)  # slot image + user picture dedupe to one
+        self.assertEqual(dropped, 0)
+        # Eleven distinct images exceed the cap: reported, not silently lost.
+        s = self.s.get_scene(sid)["scene"]
+        for i in range(11):
+            s["objects"].append({"id": f"extra-{i}", "type": "image", "x": 0, "y": 0, "w": 10, "h": 10,
+                                 "src": "data:image/png;base64," + base64.b64encode(b"\x89PNG\r\n\x1a\n" + bytes([i])).decode()})
+        self.s.put_scene(sid, self.s.get_scene(sid)["contentRevision"], s, "测试")
+        assets2, dropped2 = mod._copy_images(self.s, target, mod._source_pages(self.s))
+        self.assertEqual(len(assets2), mod.MAX_IMAGES)
+        self.assertGreater(dropped2, 0)
+
     def test_busy_and_agent_and_empty(self):
         self.s.enqueue("生成整稿", scope="deck", client_message_id="x1")
         self.error("DERIVE_BUSY", mod.derive, self.s, "audience", audience="customer")

@@ -1096,6 +1096,11 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
                 db.execute("UPDATE studio_deck_pages SET status='running' WHERE job_id=?", (job_id,))
             db.execute("UPDATE studio_messages SET status='running' WHERE id=?", (job["message_id"],))
             self._touch(db)
+        # Jobs run in the owner scope of their project: history-derived
+        # features (taste, recommendations, template lists) must not read
+        # another space's data just because the worker has no visitor context.
+        from . import owners
+        owner_scope = owners.set_scoped(owners.project_owner(self.wb, self.project_id))
         try:
             from functools import partial
             from .model_profiles import resolve
@@ -1192,6 +1197,8 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
             self.apply_plan(job_id, plan)
         except Exception as exc:
             self.fail_job(job_id, exc)
+        finally:
+            owners.reset(owner_scope)
         return True
 
     def demo(self):

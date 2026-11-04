@@ -422,6 +422,38 @@ def _unique_object(pairs):
     return value
 
 
+_PURPOSE_MAP = [
+    (("proposal", "方案", "建议书", "计划书", "介绍", "宣传", "推介"), "proposal"),
+    (("report", "报告", "汇报", "总结", "复盘"), "report"),
+    (("pitch", "路演", "融资", "bp", "商业计划", "创投"), "pitch"),
+    (("teaching", "教学", "培训", "课件", "课程", "授课"), "teaching"),
+]
+_PROJECT_ENUM_DEFAULTS = {"delivery": "", "logoPolicy": "undecided", "dataPolicy": "undecided"}
+
+
+def _normalize_project_enums(changes):
+    """Map model-written enum values into the brief's allowed set.
+
+    Unknown purposes keep their wording in purposeOther instead of failing the
+    whole plan; empty/unrecognised optional enums fall back to neutral values.
+    """
+    purpose = changes.get("purpose")
+    if purpose is not None:
+        allowed = {"", "proposal", "report", "pitch", "teaching", "other"}
+        if purpose not in allowed:
+            text = purpose.strip().lower()
+            mapped = next((value for keys, value in _PURPOSE_MAP if any(k in text for k in keys)), "other")
+            if purpose.strip() and not changes.get("purposeOther"):
+                changes["purposeOther"] = purpose.strip()[:200]
+            changes["purpose"] = mapped
+    for key, fallback in _PROJECT_ENUM_DEFAULTS.items():
+        choices = {"delivery": {"", "live", "read", "both"},
+                   "logoPolicy": {"undecided", "none", "company", "joint"},
+                   "dataPolicy": {"undecided", "user", "research", "mixed", "none"}}[key]
+        if key in changes and changes[key] not in choices:
+            changes[key] = fallback
+
+
 def _loads(raw):
     try:
         return json.loads(raw, object_pairs_hook=_unique_object,
@@ -480,6 +512,7 @@ def validate_plan(plan):
                 _fail("project_update 只能包含已定义的项目用途字段。")
             for name, value in changes.items():
                 _text(value, name, required=False)
+            _normalize_project_enums(changes)
         elif kind == "deck_start":
             _keys(action, {"type", "title", "pages", "execution"}, {"design", "strategy"}, name=kind)
             clean = validate_deck_plan({field: value for field, value in action.items() if field != "type"},

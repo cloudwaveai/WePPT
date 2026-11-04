@@ -99,28 +99,39 @@ def _image_bytes(studio, scene, oid):
     return None
 
 
+MAX_IMAGES, MAX_IMAGE_BYTES = 10, 8 * 1024 * 1024
+
+
 def _copy_images(studio, target, pages):
-    """Copy up to 10 distinct PNG/JPEG scene images; returns attachment ids."""
-    seen, assets = set(), []
+    """Copy up to 10 distinct PNG/JPEG scene images.
+
+    Returns (attachment ids, dropped image count). Empty image-slot
+    placeholders have no resolvable bytes and are skipped implicitly; real
+    images land under any object id and must be copied. Images dropped by the
+    10-image/8MB limits are counted so the job prompt can say so explicitly.
+    """
+    seen, assets, dropped = set(), [], 0
     for page in pages:
         for obj in page["scene"].get("objects", []):
-            if len(assets) >= 10:
-                return assets
-            if obj.get("type") != "image" or obj["id"] in {"brand-logo"} or obj["id"].startswith("image-slot"):
+            if obj.get("type") != "image" or obj["id"] == "brand-logo":
                 continue
             found = _image_bytes(studio, page["scene"], obj["id"])
             if not found:
                 continue
             mime, data = found
             sha = hashlib.sha256(data).hexdigest()
-            if sha in seen or len(data) > 8 * 1024 * 1024:
+            if sha in seen:
+                continue
+            if len(assets) >= MAX_IMAGES or len(data) > MAX_IMAGE_BYTES:
+                dropped += 1
+                seen.add(sha)
                 continue
             seen.add(sha)
             ext = "png" if mime == "image/png" else "jpg"
             uploaded = target.upload(f"源稿第{page['index']}页-{obj['id']}.{ext}", mime,
                                      base64.b64encode(data).decode())
             assets.append(uploaded["assetId"])
-    return assets
+    return assets, dropped
 
 
 def derive(studio, mode, audience=None, note=None, style_id=None):
@@ -207,8 +218,12 @@ def derive(studio, mode, audience=None, note=None, style_id=None):
         for png in brand.glob("logo-*.png"):
             shutil.copyfile(png, target_brand / png.name)
         save_logo_record(opened, logo["body"], logo["settings"])
-    assets = _copy_images(studio, opened, pages)
-    job = opened.enqueue(build(bool(assets)), scope="deck", attachments=assets,
+    assets, dropped = _copy_images(studio, opened, pages)
+    message = build(bool(assets))
+    if dropped:
+        message = message.replace("源稿内容（按页）：",
+                                  f"注意：源稿还有 {dropped} 张图片因数量或大小限制未随附件复制，对应页面如需图片请明确标注“待补充”，不得虚构图片内容。\n源稿内容（按页）：")
+    job = opened.enqueue(message, scope="deck", attachments=assets,
                          client_message_id="derive-" + uuid.uuid4().hex[:16])
     with opened.wb.atomic() as db:
         db.execute("INSERT INTO studio_derived_projects VALUES (?,?,?,?,?,?)",

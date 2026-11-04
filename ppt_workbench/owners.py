@@ -28,12 +28,26 @@ def set_current(token):
     return _current.set(hashlib.sha256(token.encode()).hexdigest() if token else None)
 
 
+# Worker scope for shared projects that have no owner: history-derived
+# features see only unowned projects, never a real visitor's space.
+_UNOWNED = "\0unowned"
+
+
+def set_scoped(owner):
+    """Scope a background job to its project's owner (or to unowned projects)."""
+    return _current.set(owner if owner else _UNOWNED)
+
+
 def reset(marker):
     _current.reset(marker)
 
 
 def current():
     return _current.get()
+
+
+def project_owner(wb, project_id):
+    return _owner(wb, "studio_project_owners", "project_id", project_id)
 
 
 def initialize(wb):
@@ -54,7 +68,7 @@ def _owner(wb, table, column, key):
 
 def _claim(wb, table, key):
     owner = current()
-    if owner is None:
+    if owner in (None, _UNOWNED):
         return
     initialize(wb)
     with wb.atomic() as db:
@@ -80,13 +94,21 @@ def template_visible(wb, template_id):
 
 
 def owned_project_ids(wb):
-    """Projects owned by the current visitor, or None when spaces are not in effect."""
+    """Projects whose history may feed this context's taste/recommendations.
+
+    None when personal spaces are not in effect (token-protected local use).
+    An owner hash scopes to that owner's projects; a job in a shared project
+    (_UNOWNED scope) sees only projects that have no owner.
+    """
     owner = current()
     if owner is None:
         return None
     initialize(wb)
     with wb._connection() as db:
-        return {r[0] for r in db.execute("SELECT project_id FROM studio_project_owners WHERE owner=?", (owner,))}
+        owners = dict(db.execute("SELECT project_id, owner FROM studio_project_owners").fetchall())
+    if owner == _UNOWNED:
+        return {p["projectId"] for p in wb.list_projects() if p["projectId"] not in owners}
+    return {pid for pid, value in owners.items() if value == owner}
 
 
 def list_projects(wb):

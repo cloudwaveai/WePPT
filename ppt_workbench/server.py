@@ -162,9 +162,14 @@ class StudioHTTPServer(ThreadingHTTPServer):
                             with studio.wb._connection() as db:
                                 batch = db.execute("SELECT id FROM image_generation_batches WHERE project_id=? AND status='pending' ORDER BY created_at LIMIT 1", (studio.project_id,)).fetchone()
                             if batch:
-                                def run_images(jobs=image_jobs, batch_id=batch['id']):
+                                def run_images(jobs=image_jobs, batch_id=batch['id'], wb=studio.wb, pid=studio.project_id):
                                     from .codex_image_provider import CodexImageProvider
-                                    jobs.run_batch(batch_id, CodexImageProvider())
+                                    from . import owners
+                                    scope = owners.set_scoped(owners.project_owner(wb, pid))
+                                    try:
+                                        jobs.run_batch(batch_id, CodexImageProvider())
+                                    finally:
+                                        owners.reset(scope)
                                 studio._image_worker = threading.Thread(target=run_images, daemon=True, name='ppt-image-worker')
                                 studio._image_worker.start()
                                 processed = True

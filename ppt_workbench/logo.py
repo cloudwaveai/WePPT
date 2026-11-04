@@ -31,7 +31,8 @@ PROCESS_SCRIPT = """<script>
 (async()=>{
 const src=%%SRC%%;
 const img=new Image();await new Promise((res,rej)=>{img.onload=res;img.onerror=()=>rej(new Error('bad image'));img.src=src;});
-const scale=Math.min(1,1200/Math.max(img.naturalWidth,img.naturalHeight));
+// Keep original pixels; only extreme inputs are capped for canvas memory.
+const scale=Math.min(1,4000/Math.max(img.naturalWidth,img.naturalHeight));
 const W=Math.max(1,Math.round(img.naturalWidth*scale)),H=Math.max(1,Math.round(img.naturalHeight*scale));
 const cv=document.createElement('canvas');cv.width=W;cv.height=H;
 const cx=cv.getContext('2d',{willReadFrequently:true});cx.drawImage(img,0,0,W,H);

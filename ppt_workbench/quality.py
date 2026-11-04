@@ -363,7 +363,7 @@ def boost_anchors(scenes, plan):
     plan_pages = (plan or {}).get("pages") or []
     def has_focus(i):
         page = plan_pages[i] if i < len(plan_pages) else {}
-        blocks = page.get("blocks") or []
+        blocks = (page.get("composition") or {}).get("blocks") or []
         brief = page.get("designBrief") or {}
         return any(b.get("metric") or b.get("kicker") for b in blocks if isinstance(b, dict)) or bool(brief.get("focalElement"))
     ordered = sorted(lacking, key=lambda i: (not has_focus(i), i))
@@ -377,7 +377,7 @@ def boost_anchors(scenes, plan):
             break
         scene = scenes[i]
         page = plan_pages[i] if i < len(plan_pages) else {}
-        blocks = page.get("blocks") or []
+        blocks = (page.get("composition") or {}).get("blocks") or []
         metric = next((str(b["metric"]).strip() for b in blocks if isinstance(b, dict) and b.get("metric")), None)
         kicker = next((str(b["kicker"]).strip() for b in blocks if isinstance(b, dict) and b.get("kicker")), None)
         def priority(obj):

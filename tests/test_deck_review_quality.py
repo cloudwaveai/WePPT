@@ -33,10 +33,26 @@ class BoostAnchorTests(unittest.TestCase):
     def test_priority_metric_digit_kicker_other(self):
         s = scene([text("other", "短词", 60, 500), text("k1", "KPI", 60, 380),
                    text("num", "42", 60, 260), text("m", "98%", 60, 140)])
-        plan = {"pages": [{"blocks": [{"metric": "98%"}, {"kicker": "KPI"}]}]}
+        plan = {"pages": [{"composition": {"blocks": [{"metric": "98%"}, {"kicker": "KPI"}]}}]}
         boosts = boost_anchors([s, scene([text("x", "也短", 900, 600, size=20)])], plan)
         self.assertEqual(len(boosts), 1)
         self.assertEqual(boosts[0]["objectId"], "m")
+
+    def test_metric_from_nested_composition_is_boosted(self):
+        # Real plans nest blocks under page.composition; a longer metric on the
+        # page must be found there and boosted, not left at body size.
+        s = scene([text("m", "12345万元", 60, 300, size=32, w=300, h=60)])
+        plan = {"pages": [{"composition": {"blocks": [{"metric": "12345万元"}]}}]}
+        boosts = boost_anchors([s, scene([text("x", "也短", 900, 600, size=20)])], plan)
+        self.assertEqual(len(boosts), 1)
+        self.assertEqual(boosts[0]["objectId"], "m")
+        self.assertEqual(s["objects"][0]["fontSize"], 72)
+        # A flat blocks key is not a valid plan shape and must not fake a metric.
+        s2 = scene([text("m", "12345万元", 60, 300, size=32, w=300, h=60)])
+        flat = {"pages": [{"blocks": [{"metric": "12345万元"}]}]}
+        boosts2 = boost_anchors([s2, scene([text("x", "也短", 900, 600, size=20)])], flat)
+        if boosts2:
+            self.assertNotEqual(boosts2[0]["objectId"], "m")
 
     def test_overlap_and_canvas_rejection(self):
         s = scene([text("free", "7", 60, 560, w=40, h=40), text("block", "很长的一段正文内容", 60, 60),
