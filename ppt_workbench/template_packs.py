@@ -280,9 +280,7 @@ def compile_page(page, pack_id=None, images=()):
 def bind_plan(studio, plan):
     """Freeze one family once. Old/unstructured/reference-style decks keep their path."""
     binding = next((split(p.get('template_id')) for p in plan['pages'] if split(p.get('template_id'))), None)
-    # Retired preferences must not silently bind a new deck. Existing queued
-    # decks already carry frozen template_ids and keep their rendering path.
-    pid = binding[0] if binding else None
+    pid = selected(studio) or (binding[0] if binding else None)
     if not pid:
         return False
     image_map = studio.wb.project_dir(studio.project_id) / 'template-source-images.json'

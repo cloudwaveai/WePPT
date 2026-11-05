@@ -130,9 +130,8 @@ def create_server(root: str | Path):
 
     @server.tool(annotations=read)
     def ppt_template_get(template_id: str = "") -> CallToolResult:
-        """不传ID返回50套精选设计案例；传ID读取观察、短板和适配建议，不是可套用母版。"""
-        from .curated_designs import public_catalog, public_detail
-        return run(public_detail, template_id) if template_id else run(public_catalog)
+        """不传 ID 返回 54 个模板的索引；传 ID 返回该场景的详细布局、素材、容量和检查规则。"""
+        return run(engine.get_template, template_id) if template_id else run(engine.list_templates)
 
     @server.tool(annotations=write)
     def ppt_artifact_register(project_id: str, slide_id: str, base_revision: int,
@@ -286,8 +285,7 @@ def create_server(root: str | Path):
 
     @server.resource("ppt://templates", name="ppt-template-index", mime_type="application/json")
     def templates() -> str:
-        from .curated_designs import public_catalog
-        return json.dumps(public_catalog(), ensure_ascii=False)
+        return json.dumps(engine.list_templates(), ensure_ascii=False)
 
     return server
 

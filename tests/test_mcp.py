@@ -110,8 +110,7 @@ class StdioTests(unittest.IsolatedAsyncioTestCase):
                     "changes": [{"path": "/contentStatus", "value": "confirmed"}]})
                 self.assertTrue(protected.is_error)
                 templates = await client.call_tool("ppt_template_get", {})
-                self.assertEqual(len(templates.structured_content["data"]["templates"]), 50)
-                self.assertTrue(all(t['id'].startswith('curated-') for t in templates.structured_content['data']['templates']))
+                self.assertIn("parallel-three", {t["id"] for t in templates.structured_content["data"]["templates"]})
                 resources = await client.list_resources()
                 self.assertTrue(any(str(r.uri) == "ppt://guide" for r in resources.resources))
                 blocked = await client.call_tool("ppt_release_manifest", {"project_id": "mcp-test"})
@@ -146,11 +145,9 @@ class StdioTests(unittest.IsolatedAsyncioTestCase):
             async with Client(params, read_timeout_seconds=15, mode="legacy") as client:
                 listing = await client.list_tools()
                 self.assertEqual(len(listing.tools), 33)
-                result = await client.call_tool("ppt_template_get", {"template_id": "curated-129"})
+                result = await client.call_tool("ppt_template_get", {"template_id": "cover"})
                 self.assertFalse(result.is_error, result)
-                self.assertEqual(result.structured_content["data"]["template"]["id"], "curated-129")
-                retired = await client.call_tool('ppt_template_get', {'template_id': 'cover'})
-                self.assertTrue(retired.is_error)
+                self.assertEqual(result.structured_content["data"]["template"]["id"], "cover")
 
     async def test_whole_deck_plan_control_and_resume_over_stdio(self):
         from mcp import Client, StdioServerParameters

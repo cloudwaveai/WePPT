@@ -345,8 +345,7 @@ def _dispatch(args):
     if args.command == "next":
         return wb.next_action(args.project_id, args.slide_id), 0
     if args.command == "template":
-        from .curated_designs import public_catalog, public_detail
-        return (public_catalog() if args.template_command == "list" else public_detail(args.template_id)), 0
+        return (wb.list_templates() if args.template_command == "list" else wb.get_template(args.template_id)), 0
     if args.command == "artifact":
         return wb.register_artifact(args.project_id, args.slide_id, args.base_revision,
                                     args.artifact, args.preview, args.manifest), 0

@@ -100,11 +100,33 @@
     $('template-matches').hidden=true;
   }
   async function requestTemplateMatches(){
-    await loadTemplates();design.filter='all';design.category='all';design.role='all';design.query='';
-    $('template-search').value='';renderTemplates();$('templates-panel').showModal();return;
+    if(!editorReady())return;
+    if(design.dirty || design.saving){toast('请先保存文字，再找模板。');return;}
+    const target={...design.target},key=design.targetKey,sequence=++templateMatchSequence;
+    if(!target.slideId)return;
+    showAssistant();$('assistant-panel').classList.add('matching-templates');$('template-matches').hidden=false;
+    const list=$('template-match-list');clearPreviews(list);list.replaceChildren();
+    $('template-match-summary').textContent='正在从原稿模板库匹配…';
+    $('ai-status').textContent='选模板不会修改当前页，也不调用生成模型。';
+    try{
+      const result=await api('/api/templates/match','POST',{...target,instruction:$('ai-instruction').value.trim()});
+      if(sequence!==templateMatchSequence || key!==design.targetKey)return;
+      if(result.slideId!==target.slideId || result.sceneRevision!==target.sceneRevision)throw Error('页面已变化，请重新匹配。');
+      $('template-match-summary').textContent=result.summary;
+      for(const template of result.recommendations){
+        const item=node('article','template-match-card'),img=node('img');img.alt=template.name+' · 原稿模板';
+        lazyPreview(img,template.referencePreviewUrl);
+        const button=node('button','button primary compact','选这个模板');button.type='button';
+        button.addEventListener('click',()=>{if(key!==design.targetKey){toast('页面已变化，请重新匹配。');return;}previewTemplate(template);});
+        item.append(img,node('strong','',template.name),node('p','',template.recommendationReason));
+        const detail=node('details'),summary=node('summary','','适配条件');detail.append(summary,node('p','',template.adaptationNote));
+        item.append(detail,button);list.append(item);
+      }
+      if(!result.recommendations.length)list.append(node('p','','当前页暂未匹配到原稿模板，可以浏览模板库选择。'));
+    }catch(error){if(sequence===templateMatchSequence)$('template-match-summary').textContent=error.message;}
   }
   $('template-match-close').addEventListener('click',closeTemplateMatches);
-  $('template-match-all').addEventListener('click',requestTemplateMatches);
+  $('template-match-all').addEventListener('click',async()=>{await loadTemplates();design.filter='reference';design.category='all';design.role='all';design.query='';$('template-search').value='';renderTemplates();$('templates-panel').showModal();});
   async function requestSuggestion(action) {
     if(['layout','hierarchy','custom'].includes(action))return requestTemplateMatches();
     if(!editorReady() || editor.suggesting)return;
@@ -310,7 +332,7 @@ Logo：[本次不使用，或注明已提供的素材]
       }
       children.push(node('span','chat-template-label',label));container.replaceChildren(...children);
     }
-    $('template-suggestion-text').textContent=name?label:slide?'想换个排法？根据这页内容选一个样式。':'先确认内容；设计案例帮助确定视觉方向。';
+    $('template-suggestion-text').textContent=name?label:slide?'想换个排法？根据这页内容选一个样式。':'先选一个喜欢的样子，再放入你的内容。';
   }
 
   function renderState(force = false) {
@@ -1249,7 +1271,7 @@ Logo：[本次不使用，或注明已提供的素材]
     const grid=$('template-grid');
     const roles=$('template-roles');roles.replaceChildren();
     const available=design.templates.filter(template=>!template.legacy && !template.archived);
-    const source=available.filter(t=>(design.filter==='reference'?t.reference:true) && (design.role==='all'||t.roles?.includes(design.role)));
+    const source=available.filter(t=>(design.filter==='reference'?t.reference:design.filter==='all'?!t.reference:true) && (design.role==='all'||t.roles?.includes(design.role)));
     const categories=new Map([['all','全部用途'],...available.slice().sort((a,b)=>a.browseCategoryOrder-b.browseCategoryOrder).map(t=>[t.browseCategory,t.browseCategoryName])]);
     categories.forEach((title,id)=>{const count=id==='all'?source.length:source.filter(t=>t.browseCategory===id).length;const button=node('button','',`${title} · ${count}`);button.type='button';button.dataset.category=id;button.disabled=count===0;button.setAttribute('aria-pressed',String(design.category===id));button.addEventListener('click',()=>{design.category=id;renderTemplates();});roles.append(button);});
     const terms=design.query.trim().toLowerCase().split(/\s+/).filter(Boolean);
@@ -1282,10 +1304,9 @@ Logo：[本次不使用，或注明已提供的素材]
     });
     }
     const templates=isUser?(design.userTemplates||[]):design.filter==='recommended'?uniqueTemplateLayouts(ranked.filter(t=>design.category!=='all'||design.role!=='all'||t.roles?.includes(currentPageRole()))):ranked;
-    let countNote=$('template-count');if(!countNote){countNote=node('p','dialog-note');countNote.id='template-count';grid.before(countNote);}countNote.textContent=isUser?`我的上传 · ${templates.length} 页`: `精选案例 · ${categories.get(design.category)} · 当前展示 ${templates.length} 项`;
-    $('templates-title').textContent=isUser?'我的上传模板':'精选设计案例';
-    document.querySelector('[data-template-filter="all"]').textContent=`精选案例 · ${available.length}`;
-    document.querySelector('[data-template-filter="reference"]').textContent='精选案例';
+    let countNote=$('template-count');if(!countNote){countNote=node('p','dialog-note');countNote.id='template-count';grid.before(countNote);}countNote.textContent=isUser?`我的模板 · ${templates.length} 页，一张图片一页` :design.filter==='recommended'?((design.tasteSummary?`根据你过往的设计偏好：${design.tasteSummary}。`:'')+`按本页内容匹配 ${templates.length} 项，可先预览；进一步调整可使用右侧 AI 助手。`):`${design.filter==='reference'?'原稿参考':'可编辑样式'} · ${categories.get(design.category)} · 当前展示 ${templates.length} 项`;
+    document.querySelector('[data-template-filter="all"]').textContent=`可编辑样式 · ${available.filter(t=>!t.reference).length}`;
+    document.querySelector('[data-template-filter="reference"]').textContent=`我的原稿 · ${available.filter(t=>t.reference).length} 页`;
     document.querySelector('[data-template-filter="user"]').textContent=`我的模板 · ${(design.userTemplates||[]).length}`;
     const gridKey=(isUser?'user':'')+JSON.stringify(templates.map(t=>[t.id,t.previewUrl,t.referencePreviewUrl]));
     if(grid.dataset.previewKey!==gridKey){
@@ -1300,13 +1321,13 @@ Logo：[本次不使用，或注明已提供的素材]
     templates.forEach((template,index)=>{
       const card=node('button','template-card');card.type='button';card.disabled=design.applying;
       const preview=node('div','template-card-preview'),frame=node(template.reference?'img':'iframe');if(template.reference){frame.alt=template.name+'原稿参考';}else{frame.title=template.name+'模板预览';frame.tabIndex=-1;frame.setAttribute('sandbox','allow-scripts');}lazyPreview(frame,template.reference?template.referencePreviewUrl:template.previewUrl);preview.append(frame);
-      const label=node('div','template-card-label');label.append(node('strong','',template.name),node('span','',template.referenceOnly?'查看案例':template.reference?'参考适配':'预览'));
+      const label=node('div','template-card-label');label.append(node('strong','',template.name),node('span','',template.reference?'参考适配':'预览'));
       card.append(preview,label,node('p','',template.description));
       if(template.sourceLabel)card.append(node('small','',template.sourceLabel));
       if(template.capacityLabel)card.append(node('small','',template.capacityLabel));
       if(template.tasteMatch)card.append(node('small','taste-tag','贴近你的风格'));
       const detail=node('details','template-rules'),summary=node('summary','','适用场景与规则');detail.append(summary,node('p','',template.use || template.description));
-      if(template.reference && !template.userTemplate && !template.referenceOnly)detail.append(node('p','',`${template.source} · 第 ${template.sourcePage} 页；按原页结构生成内容适配预览`));
+      if(template.reference && !template.userTemplate)detail.append(node('p','',`${template.source} · 第 ${template.sourcePage} 页；按原页结构生成内容适配预览`));
       if(template.checks?.length){const list=node('ul');template.checks.forEach(check=>list.append(node('li','',check)));detail.append(list);}
       if(template.userTemplate){
         const tools=node('div','template-user-tools');
@@ -1331,7 +1352,7 @@ Logo：[本次不使用，或注明已提供的素材]
     $('template-smart-status').textContent='';
     loadRecommendations(key,slide?.id);
     $('template-position').value='all';
-    $('template-target').textContent=design.filter==='user'?'你的上传模板页，先预览再应用。':'共50套精选案例。把喜欢的名称告诉AI，确认文案后按内容排版。';
+    $('template-target').textContent=slide?`应用到第 ${slideIndex()+1} 页，保留现有文字。`:'选定后用于接下来生成的页面。';
     if(design.templates.length)renderTemplates();
   }
   async function loadRecommendations(key,slideId) {
@@ -1417,7 +1438,6 @@ Logo：[本次不使用，或注明已提供的素材]
     });
   }
   async function previewTemplate(template) {
-    if(template.referenceOnly){window.open(template.detailUrl,'_blank','noopener');return;}
     if(design.applying)return;
     if(design.dirty || design.saving){toast('请先保存当前文字修改，再预览样式。');return;}
     const sequence=++templatePreviewSequence,target=design.target?{...design.target}:null;

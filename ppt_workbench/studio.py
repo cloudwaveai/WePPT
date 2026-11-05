@@ -791,22 +791,21 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
             recommendation_page = copy.deepcopy(recommendation_page)
             recommendation_page["assets"] = list(recommendation_page.get("assets") or []) + assets
         recommended = []
-        # Built-in historical layouts are only for rendering saved documents.
+        if recommendation_page:
+            recommended = recommend_templates(recommendation_page.get("role", "content"), page=recommendation_page)
         from .semantic_planning import plan_page_expression
         expression = plan_page_expression(recommendation_page) if recommendation_page else None
         from .reference_templates import visual_guidance
-        guidance = {"selectedReference": None, "principles": ["使用精选设计案例，按本页文案重新排版。"]}
+        guidance = visual_guidance(scene["scene"].get("templateId") if scene else self.selected_template(), catalog())
         from .deck_design import MAX_AUTO_IMAGES
-        from . import curated_designs
         return {"creationContract": "content-led-v1" if not project["workspace"]["slides"] else None,
-                "templateContract": curated_designs.template_contract(self, payload),
-                "curatedDesignLibrary": curated_designs.planning_context() if payload.get("kind") != "deck_page" else None,
+                "templateContract": __import__("ppt_workbench.template_packs", fromlist=["contract"]).contract(self),
                 "imageMode": self.image_mode(), "autoImageLimit": MAX_AUTO_IMAGES,
                 "projectId": self.project_id, "projectRevision": project["revision"], "project": project["workspace"]["project"],
                 "pageExpression": expression, "visualGuidance": guidance,
                 "diagramDesign": __import__('ppt_workbench.diagram_design', fromlist=['guidance_for_page']).guidance_for_page(recommendation_page, expression),
                 "designExperiences": __import__('ppt_workbench.design_loop', fromlist=['experiences']).experiences(self, (expression or {}).get('relationship','general')),
-                "selectedTemplateId": None,
+                "selectedTemplateId": self.selected_template(),
                 "designDirection": __import__('ppt_workbench.design_direction', fromlist=['context']).context(),
                 "userPalette": self._user_palette_context(),
                 "styleReference": self._style_reference_context(),
@@ -819,7 +818,9 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
                 "currentPage": page, "scene": scene, "selectedObjectId": payload.get("objectId"),
                 "outline": [{"id": s["id"], "title": s["title"]} for s in project["workspace"]["slides"] if not s["archived"]],
                 "pageRoles": ["cover", "toc", "chapter", "content", "ending", "appendix"],
-                "templates": [],
+                "templates": [{"id": t["id"], "title": t["title"], "roles": t["roles"],
+                               "styleId": t.get("styleId"), "use": t.get("use", "")}
+                              for t in catalog() if not t.get("legacy")],
                 "conversation": list(reversed([dict(m) for m in history])), "userIntentHistory": intent, "attachments": assets,
                 "rules": ["用户原话与附件是内容依据，不能捏造业务数据或用户认可。", "每轮最多修改或新增一页。选中对象时只允许scene_patch该对象。",
                           "初稿缺少可选事实或素材时使用明确占位并继续生成；仅在无法确定任务或目标范围时询问，最多三个问题。", "新建页的user_intent会由服务端绑定本次用户原话。",

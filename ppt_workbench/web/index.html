@@ -71,8 +71,7 @@
       </div>
       <button id="diagram-image" class="ribbon-more" type="button" hidden>换成 AI 图解</button>
       <button id="ribbon-palette" class="ribbon-more" type="button" aria-haspopup="dialog">配色</button>
-      <button id="ribbon-packs" class="ribbon-more" type="button" aria-haspopup="dialog" hidden>整套模板</button>
-      <a class="ribbon-more" href="/curated-designs.html" target="_blank" rel="noopener">精选设计案例</a>
+      <button id="ribbon-packs" class="ribbon-more" type="button" aria-haspopup="dialog">整套模板</button>
       <button id="ribbon-style" class="ribbon-more" type="button" aria-haspopup="dialog">对标风格<span id="style-badge" class="style-badge" hidden></span></button>
       <button id="ribbon-audience" class="ribbon-more" type="button" aria-haspopup="dialog">受众版本</button>
       <button id="ribbon-logo" class="ribbon-more" type="button" aria-haspopup="dialog">Logo</button>
@@ -93,10 +92,10 @@
       <div class="panel-heading"><div><p class="eyebrow">跟随你的选择</p><h1 id="chat-heading">AI 助手</h1></div><button id="close-assistant" type="button" class="icon-button" aria-label="收起 AI 助手">×</button></div>
       <section class="quick-assistant" aria-label="模板推荐">
         <div class="quick-target"><strong id="ai-target">当前页</strong><span id="ai-mode"></span></div>
-        <div class="quick-actions"><button type="button" data-ai-action="layout">参考设计案例</button><button id="template-match-all" type="button">浏览案例库</button></div>
+        <div class="quick-actions"><button type="button" data-ai-action="layout">找合适模板</button><button id="template-match-all" type="button">浏览模板库</button></div>
         <div class="quick-custom"><input id="ai-instruction" maxlength="4000" placeholder="想表达什么？例如：问题与解决方案对照" aria-label="模板匹配要求"><button id="ai-custom" type="button">找模板</button></div>
         <details class="quick-text-tools"><summary>文字工具</summary><div class="quick-actions"><button type="button" data-ai-action="concise">精简文字</button><button type="button" data-ai-action="headline">提炼标题</button><button type="button" data-ai-action="polish">润色表达</button></div></details>
-        <p id="ai-status" role="status">先讨论并确认文案，再由 AI 参考设计案例排版。</p>
+        <p id="ai-status" role="status">先从模板库选版，确认后再让 AI 适配。</p>
       </section>
       <section id="template-matches" class="template-matches" aria-label="当前页推荐模板" hidden>
         <div class="template-matches-heading"><strong>适合这页的模板</strong><button id="template-match-close" type="button">返回对话</button></div>
@@ -164,8 +163,8 @@
   <dialog id="templates-panel" class="templates-dialog" aria-labelledby="templates-title">
     <div class="dialog-heading"><h2 id="templates-title">页面样式</h2><button id="close-templates" class="icon-button" type="button" aria-label="关闭样式筛选">×</button></div>
           <p id="template-target"></p>
-          <div class="template-filters" role="group" aria-label="案例筛选"><button type="button" data-template-filter="recommended" aria-pressed="true">为你推荐</button><button type="button" data-template-filter="all" aria-pressed="false">精选50套</button><button type="button" data-template-filter="reference" aria-pressed="false" hidden>精选案例</button><button type="button" data-template-filter="user" aria-pressed="false">我的上传 · 0</button></div>
-          <div class="template-smart-row" hidden><button id="template-smart" type="button" class="button secondary" disabled>智能选版</button><span id="template-smart-status" role="status" aria-live="polite"></span></div>
+          <div class="template-filters" role="group" aria-label="模板筛选"><button type="button" data-template-filter="recommended" aria-pressed="true">为你推荐</button><button type="button" data-template-filter="all" aria-pressed="false">全部样式</button><button type="button" data-template-filter="reference" aria-pressed="false">我的原稿 · 44 页</button><button type="button" data-template-filter="user" aria-pressed="false">我的模板 · 0</button></div>
+          <div class="template-smart-row"><button id="template-smart" type="button" class="button secondary" disabled>智能选版</button><span id="template-smart-status" role="status" aria-live="polite"></span></div>
           <div id="template-roles" class="template-roles" role="group" aria-label="内容用途"></div>
           <div class="template-search"><input id="template-search" type="search" placeholder="搜索用途、样式名称" aria-label="搜索模板"><select id="template-position" aria-label="页面位置"><option value="all">页面位置：不限</option><option value="cover">封面</option><option value="toc">目录</option><option value="chapter">章节页</option><option value="content">正文页</option><option value="ending">结束页</option><option value="appendix">附录页</option></select></div>
           <div id="template-grid" class="template-grid" aria-live="polite"></div><input id="user-template-input" type="file" accept="image/png,image/jpeg,.pptx,application/vnd.openxmlformats-officedocument.presentationml.presentation" multiple hidden><p id="template-error" role="alert" hidden></p>

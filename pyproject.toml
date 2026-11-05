@@ -21,4 +21,4 @@ ppt-mcp = "ppt_workbench.mcp_server:main"
 include = ["ppt_workbench*"]
 
 [tool.setuptools.package-data]
-ppt_workbench = ["data/*.json", "data/template-packs/*.json", "data/page-kits/*", "data/opening-templates/*.json", "data/opening-templates/scenes/*.json", "data/opening-templates/assets/*", "data/design-map-scenes/*.json", "*.mjs", "web/*", "web/curated-covers/*.jpg", "web/reference-library/*.json", "web/reference-library/previews/*.png"]
+ppt_workbench = ["data/*.json", "data/template-packs/*.json", "data/page-kits/*", "data/opening-templates/*.json", "data/opening-templates/scenes/*.json", "data/opening-templates/assets/*", "data/design-map-scenes/*.json", "*.mjs", "web/*", "web/reference-library/*.json", "web/reference-library/previews/*.png"]

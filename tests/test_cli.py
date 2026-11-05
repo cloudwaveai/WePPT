@@ -41,15 +41,6 @@ class CliTests(unittest.TestCase):
             "title": "演示", "purpose": "report", "audience": "管理者", "logoPolicy": "none",
         })
 
-    def test_template_public_commands_expose_only_curated_references(self):
-        result = self.run_cli('template', 'list')
-        self.assertEqual(len(result['templates']), 50)
-        self.assertTrue(all(t['id'].startswith('curated-') for t in result['templates']))
-        detail = self.run_cli('template', 'get', 'curated-129')
-        self.assertEqual(detail['template']['id'], 'curated-129')
-        retired = self.run_cli('template', 'get', 'cover', expected=1)
-        self.assertEqual(retired['error']['code'], 'INVALID_DESIGN_REFERENCE')
-
     def add_slide(self, title="当前页", intent="这是用户提供的想法"):
         return self.run_cli("slide", "add", "demo", "--title", title, "--intent", intent)
 

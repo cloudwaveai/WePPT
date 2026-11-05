@@ -6,7 +6,7 @@ from .core import EngineError
 
 STRATEGY_FIELDS = ('audience', 'outcome', 'storyArc', 'visualLanguage', 'typography',
                    'imagePolicy', 'rhythm', 'alternatives', 'selectedDirection', 'selectionReason')
-STRATEGY_OPTIONAL = ('signatureMotif', 'scaleContrast', 'curatedReferenceId')
+STRATEGY_OPTIONAL = ('signatureMotif', 'scaleContrast')
 BRIEF_FIELDS = ('claim', 'visualForm', 'visualReason', 'evidence', 'readingPath', 'density', 'continuity')
 BRIEF_OPTIONAL = ('layoutArchetype', 'focalElement', 'backgroundTreatment', 'imagePrompt')
 LAYOUT_ARCHETYPES = ('hero-statement', 'big-number', 'split-asymmetric', 'full-bleed-band', 'grid-cards',
@@ -39,9 +39,6 @@ def validate_strategy(value):
     ids = [c['id'] for c in choices]
     if len(set(ids)) != len(ids) or value['selectedDirection'] not in ids:
         raise EngineError('INVALID_DESIGN_BRIEF', '选定方向必须对应唯一的候选方向。')
-    if value.get('curatedReferenceId'):
-        from .curated_designs import get
-        get(value['curatedReferenceId'])
     return copy.deepcopy(value)
 
 
@@ -260,9 +257,15 @@ def review_plan(studio, job, proposal, context, mode, runner):
 def generation_context(studio, deck, page_index):
     """Carry design decisions and actual preceding geometry, without image bytes."""
     import json
+    from .templates import recommend_templates
     plan = json.loads(deck['plan'])
     pages = plan['pages']
     page = pages[page_index]
+    from .reference_templates import visual_guidance
+    from .templates import catalog
+    references = recommend_templates(page['role'], page={**page,
+        'keyPoints': '\n'.join(b['heading'] + '\n' + b['body']
+            for b in page.get('composition', {}).get('blocks', []))}, limit=3)
     recent = []
     with studio.wb._connection() as db:
         rows = db.execute('SELECT slide_id FROM studio_deck_pages WHERE deck_id=? AND page_index<? '
@@ -275,16 +278,14 @@ def generation_context(studio, deck, page_index):
                                    for o in scene['objects']]})
     from .content_capacity import page_capacity
     from .design_exemplars import for_page, archetype_for
-    from .curated_designs import for_page as curated_for_page
     previous = archetype_for(pages[page_index - 1]) if page_index else None
     return {'deckStrategy': plan.get('strategy'),
             'contentCapacity': page_capacity(page),
             'designRoster': [{'index': i + 1, 'title': p['title'],
                               'designBrief': p.get('designBrief')} for i, p in enumerate(pages)],
             'previousPageDesigns': recent,
-            'designReferences': [],
+            'designReferences': [visual_guidance(t['id'], catalog()) for t in references],
             'designExemplar': for_page(page, previous),
-            'curatedDesignReferences': curated_for_page(page, plan.get('strategy')),
             'designInstruction': '按内容选择表达方式；参考库提供构图原则。结合相邻页安排节奏，'
                                  '通过主次、密度与图文比例组织节奏，连续证据允许复用构图；不能用装饰配额代替设计。'
                                  '用户原文、事实、图片和同页要求保持。'}

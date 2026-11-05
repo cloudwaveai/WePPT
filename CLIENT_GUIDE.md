@@ -180,7 +180,7 @@ pptctl --root PATH chat send main --scope deck --client-message-id ANSWER_ID --r
 
 ## 7. 素材与渲染能力
 
-Scene 为 1280 × 720，支持 text、rect、line、image。公开设计案例库为50套精选参考；旧内置模板目录已移除，不再作为新稿候选。案例提供视觉语言与适配建议，不是可一键套用的母版。历史文档所需渲染规则继续保留。不存在任意 PPTX 无损导入、原生数据图表、复杂 SVG 编辑或全能自动美术。
+Scene 为 1280 × 720，支持 text、rect、line、image。内置 54 条模板知识，程序化基础布局只有八类。不存在任意 PPTX 无损导入、原生数据图表、复杂 SVG 编辑或全能自动美术。
 
 图片可用 `asset:ID`；保留既有图片时可用上下文中的 `scene-image:页ID/对象ID`。这些是素材引用，不能当作真实外部 URL，也不能凭文件名宣称已经读懂图像。PNG/JPEG 保留真实文件内容，缺素材应明确待补。
 

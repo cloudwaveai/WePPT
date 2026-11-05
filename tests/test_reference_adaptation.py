@@ -37,8 +37,7 @@ class ReferenceAdaptationTests(unittest.TestCase):
         self.studio.select_template('reference-01-01', self.sid, current['sceneRevision'])
         actual = self.studio.get_scene(self.sid)
         self.assertEqual(actual['scene'], preview['scene'])
-        self.assertIsNone(self.studio.context()['visualGuidance']['selectedReference'])
-        self.assertEqual(self.studio.context()['currentSceneTemplateId'], 'reference-01-01')
+        self.assertEqual(self.studio.context()['visualGuidance']['selectedReference']['id'], 'reference-01-01')
         original_text = {o['id']: o['text'] for o in before['scene']['objects'] if o['type'] == 'text'}
         for tid in ('reference-04-09', 'reference-03-05', 'reference-01-01', 'compare'):
             scene = apply_template(actual['scene'], tid)
