@@ -22,15 +22,19 @@ MAX_IMAGE_BYTES = 8 * 1024 * 1024
 MAGIC = {"image/png": b"\x89PNG\r\n\x1a\n", "image/jpeg": b"\xff\xd8\xff"}
 HEX = re.compile(r"#[0-9a-fA-F]{6}")
 
-ANALYZE_PROMPT = """读取 renderedPreview 中拼合的 3 页对标 PPT（从左到右依次为第 1、2、3 页），提炼可以迁移到其他内容的设计风格。只描述设计，不抄写其中的文字、数据、Logo、人物或品牌名称。actions 返回 []。reply 只输出一个 JSON 对象，不要输出其他文字。字段如下，每项用具体、可执行的中文描述，尽量给出比例、字号层级、颜色十六进制等可度量信息：
+ANALYZE_PROMPT = """读取 renderedPreview 中的 1–3 页参考 PPT（按从左到右顺序），提炼可以迁移到其他内容的设计风格。只描述设计，不抄写其中的文字、数据、Logo、人物或品牌名称。分析结果使用下列 JSON 风格档案结构，不生成页面操作。普通文字字段不超过400字；spatial的每个字段是文字字符串，不是数组或对象，不超过2400字；secondary严格1–2种十六进制颜色，keywords为3–6个字符串，avoid为2–5个字符串。每项用具体、可执行的中文描述，尽量给出比例、字号层级、颜色十六进制等可度量信息：
 {"summary":"一句话风格定位",
 "ui":{"grid":"版面网格、分栏与对齐方式","whitespace":"留白与信息密度","hierarchy":"标题、正文、数字的层级与字号对比","containers":"卡片、容器、圆角、描边与阴影的用法"},
 "elements":{"shapes":"常用几何图形与装饰元素","lines":"线条、分隔与连接方式","imagery":"图片、插画或图标的使用方式","dataViz":"数字与图表的呈现方式"},
 "typography":{"title":"标题字体风格、字重、大致字号","body":"正文字体、字号与行距","accent":"强调方式"},
 "color":{"background":"#RRGGBB","ink":"#RRGGBB","primary":"#RRGGBB","secondary":["#RRGGBB"],"usage":"各颜色的使用比例与位置"},
 "designStyle":{"keywords":["3–6 个风格关键词"],"mood":"整体气质","pageRhythm":"封面、章节页、正文页之间的节奏差异"},
-"avoid":["迁移时不应出现的做法，2–5 条"]}
-看不清或无法确认的项写"未能从对标页确认"，不要编造。"""
+"avoid":["迁移时不应出现的做法，2–5 条"],
+"spatial":{"observation":"实际可见的构图、前后层级、遮挡关系与主要空间机制","estimates":"位置比例使用百分比[x,y,宽,高]，注明截图估算，无法确认不编造","reproduction":"应保留的空间关系、材质、透明方式、投影或自身暗面、边缘厚度、裁切出血的实现建议"}}
+看不清或无法确认的项写"未能从对标页确认"，不要编造。只有1张时不推断整稿节奏。排除平台界面和重复页脚；不把浅色当透明，不把物体暗面当投影。"""
+
+from .design_direction import DESIGN_RULES
+ANALYZE_PROMPT += "\n" + DESIGN_RULES
 
 STYLE_INSTRUCTION = ("用户提供的对标风格：按 profile 迁移版面网格、元素、字体层级、配色和页面节奏；"
                      "只迁移设计，不复制对标页的文字、数据、Logo 或人物；用户内容和事实保持不变。"
@@ -101,6 +105,14 @@ def validate_profile(value):
     cleaned = _clean_section(value, PROFILE_SHAPE)
     if cleaned is None:
         fail("INVALID_STYLE_PROFILE", "风格档案需要完整的 UI、元素、字体、配色、风格与避免字段。")
+    if "spatial" in value:
+        spatial = value["spatial"]
+        keys = {"observation", "estimates", "reproduction"}
+        if not isinstance(spatial, dict) or not spatial or not set(spatial) <= keys or any(
+            not isinstance(v, str) or not 0 < len(v.strip()) <= 2400 for v in spatial.values()
+        ):
+            fail("INVALID_STYLE_PROFILE", "空间分析须分别填写观察、估算或复刻建议，每项不超过 2400 字。")
+        cleaned["spatial"] = {k: v.strip() for k, v in spatial.items()}
     return cleaned
 
 
@@ -116,7 +128,37 @@ def parse_profile_reply(reply):
         value = json.loads(text[start:end + 1])
     except (ValueError, TypeError):
         return None
-    return _clean_section(value, PROFILE_SHAPE)
+    try:
+        return validate_profile(value)
+    except EngineError:
+        return None
+
+
+def profile_errors(reply):
+    """Return only invalid field paths, without leaking the model's raw response."""
+    if not isinstance(reply, str):
+        return ['JSON: expected object text']
+    try:
+        value=json.loads(reply[reply.index('{'):reply.rindex('}')+1])
+    except (ValueError, TypeError):
+        return ['JSON: invalid or incomplete object']
+    errors=[]
+    def visit(value, shape, prefix=''):
+        for key, rule in shape.items():
+            path=prefix+key
+            item=value.get(key) if isinstance(value,dict) else None
+            if isinstance(rule,dict):
+                visit(item,rule,path+'.')
+            elif _clean_section({key:item},{key:rule}) is None:
+                expected='nonempty string, max 400 characters' if rule is str else str(rule)
+                errors.append(path+': '+expected)
+    visit(value,PROFILE_SHAPE)
+    if isinstance(value,dict) and 'spatial' in value:
+        try:
+            validate_profile(value)
+        except EngineError:
+            if not errors:errors.append('spatial: observation/estimates/reproduction must be nonempty strings, max 2400 characters each')
+    return errors
 
 
 def _directory(studio, template_id=None):
@@ -289,8 +331,8 @@ def upload(studio, kind, files):
         fail("INVALID_UPLOAD", "请提供图片文件列表。")
     if kind == "page" and not 1 <= len(files) <= 5:
         fail("INVALID_UPLOAD", "一次上传 1–5 张图片，每张成为一页模板。")
-    if kind == "style" and len(files) != 3:
-        fail("INVALID_UPLOAD", "对标风格需要恰好 3 页 PNG 或 JPEG。")
+    if kind == "style" and not 1 <= len(files) <= 3:
+        fail("INVALID_UPLOAD", "参考风格支持 1–3 张 PNG 或 JPEG。")
     if kind == "page" and any(isinstance(f, dict) and f.get("mime") == PPTX_MIME for f in files):
         if len(files) != 1:
             fail("INVALID_UPLOAD", "PPTX 模板请单独上传，一次一个文件。")
@@ -304,6 +346,7 @@ def upload(studio, kind, files):
             tid = "u" + uuid.uuid4().hex[:12]
             folder = _directory(studio, tid)
             folder.mkdir(parents=True)
+            (folder / ("original.png" if mime == "image/png" else "original.jpg")).write_bytes(data)
             png = _normalise(studio, mime, data, folder, "page")
             (folder / "page.png").write_bytes(png)
             body = {"sha256": hashlib.sha256(png).hexdigest(), "sourceMime": mime,
@@ -319,11 +362,12 @@ def upload(studio, kind, files):
         folder.mkdir(parents=True)
         pages, objects = [], []
         for index, (filename, mime, data) in enumerate(decoded):
+            (folder / (f"original-{index + 1}.png" if mime == "image/png" else f"original-{index + 1}.jpg")).write_bytes(data)
             png = _normalise(studio, mime, data, folder, f"page-{index + 1}")
             (folder / f"page-{index + 1}.png").write_bytes(png)
             pages.append({"sha": hashlib.sha256(png).hexdigest(), "filename": Path(filename).name})
             objects.append({"id": f"benchmark-{index + 1}", "type": "image",
-                            "x": 20 + index * 420, "y": 247, "w": 400, "h": 225,
+                            "x": 20 + index * (1240 / len(decoded)), "y": 30, "w": 1200 / len(decoded), "h": 660,
                             "src": _data_url("image/png", png), "fit": "contain"})
         contact_sha = None
         try:
@@ -428,25 +472,41 @@ def analyze_style(studio, template_id):
         fail("TEMPLATE_NEEDS_VISION", "这个模板是图片，需要支持看图的模型；请在右上角切换模型后重试。")
     contact = _directory(studio, template_id) / "contact.png"
     if not contact.is_file():
-        fail("STYLE_CONTACT_MISSING", "这套对标稿缺少拼图预览，请重新上传 3 页。")
+        fail("STYLE_CONTACT_MISSING", "这套参考缺少预览，请重新上传。")
     workdir = studio.wb.project_dir(studio.project_id)
     staged = workdir / "style-analysis" / template_id / "contact.png"
     staged.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(contact, staged)
     from .agent_bridge import run_turn
     context = {"generationTask": {"kind": "style_analysis"},
-               "previewPurpose": "三页对标 PPT 拼图（从左到右为第1、2、3页），只用于提炼设计风格。"}
+               "previewPurpose": f"{len(body.get('pages', []))}页参考 PPT，按从左到右顺序，只用于提炼设计风格。"}
     profile = None
+    analysis_id = uuid.uuid4().hex
+    invalid_fields = []
     for attempt in range(2):
-        plan = run_turn(mode, ANALYZE_PROMPT, context, timeout=150, workdir=workdir,
-                        preview_png=staged, model_binding=chosen)
+        try:
+            plan = run_turn(mode, ANALYZE_PROMPT, context, timeout=150, workdir=workdir,
+                            preview_png=staged, model_binding=chosen)
+        except EngineError as exc:
+            if exc.code not in {'INVALID_AGENT_OUTPUT','MODEL_OUTPUT_TRUNCATED'}:
+                raise
+            (staged.parent / f"{analysis_id}-attempt-{attempt+1}.json").write_text(
+                json.dumps({'error':exc.to_dict()},ensure_ascii=False,indent=2),encoding='utf-8')
+            invalid_fields = ['JSON: '+exc.code]
+            context['revisionCorrection'] = {'instruction':'上次输出不是完整 JSON。请简洁描述，保持所有必填字段，返回完整风格档案对象。','invalidFields':invalid_fields}
+            continue
+        # Owner-scoped project evidence, retained even when parsing fails.
+        (staged.parent / f"{analysis_id}-attempt-{attempt+1}.json").write_text(
+            json.dumps(plan, ensure_ascii=False, indent=2), encoding="utf-8")
         profile = parse_profile_reply(plan.get("reply"))
         if profile is not None:
             break
+        invalid_fields = profile_errors(plan.get('reply'))
         context["revisionCorrection"] = {
-            "instruction": "上次输出不是要求的 JSON 结构。只返回 reply 为该 JSON 对象，字段齐全。"}
+            "instruction": "请纠正列出的字段，按要求输出完整风格档案对象。不要生成页面操作。",
+            "invalidFields": invalid_fields}
     if profile is None:
-        fail("STYLE_ANALYSIS_FAILED", "两次尝试都没有得到可用的风格档案，请稍后再试。")
+        fail("STYLE_ANALYSIS_FAILED", "参考图已保留，但模型未完成有效的风格分析。可更换看图模型后重试。", {'invalidFields':invalid_fields})
     body["profile"] = profile
     body["analyzedBy"] = (chosen or {}).get("label") or mode
     with studio.wb.atomic() as db:
@@ -477,6 +537,7 @@ def select_style(studio, template_id):
         if template_id is None:
             db.execute("DELETE FROM studio_style_preferences WHERE project_id=?", (studio.project_id,))
         else:
+            db.execute("DELETE FROM studio_pack_preferences WHERE project_id=?", (studio.project_id,))
             db.execute("INSERT OR REPLACE INTO studio_style_preferences VALUES (?,?)",
                        (studio.project_id, template_id))
         studio._touch(db)

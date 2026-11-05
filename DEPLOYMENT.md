@@ -2,11 +2,30 @@
 
 2026-10-29 按用户授权，`https://ppt.bbstack.date/` 已从静态页切换到 WePPT 开发工作台。此授权替代此前“不覆盖模板站”的部署限制。
 
-## 当前服务
+## 阿里云部署点（2026-11-04，最终状态）
 
-- 主机：`ubuntu@43.153.76.85`，使用既有严格 known_hosts SSH；接入前读取 Mac 本地 production-access 记忆。
-- 发布目录：`/opt/weppt/releases/20261103-editor-68`。
-- 镜像：`weppt-dev:20261103-editor-68`；配置：`compose.dev.yaml`。
+美国链路访问差，部署目标改为 **Webuddy 工单平台**迁阿里云 `8.141.121.22`（ssh 别名 `zct-server`，用户 `Liyibin`，rootful Docker，无 sudo）。曾短暂部署 WePPT（editor-68）并已按用户要求拆除、回退 DNS；**WePPT 仍只在腾讯云 43 运行**（`https://ppt.bbstack.date`，Caddy 与 ORIGIN 已恢复原状，过渡名 ppt-cn/ppt-us 均已清理）。
+
+**Webuddy @ 阿里云**：入口 `https://webuddy.bbstack.date`，镜像 `webuddy:d8f0c0f`（基于 weppt-dev:20261103-editor-68 加 git/openssh-client，含 codex-cli 0.162.1 / node 22 / python 3.11）。源码 `~/webuddy/build/app`（= `/opt/webuddy/releases/d8f0c0f340ab-agent-pick-20261104`），compose `~/webuddy/compose.yaml`，env `~/webuddy/webuddy.env`（= 43 的 /etc/webuddy.env，0600）。容器挂 `webuddy_data`（985M 全量，platform.db 为 sqlite backup 一致性快照）、`webuddy_repos`（228M）、`webuddy_codex`（= 43 的 ~/.codex 配置）、docker.sock + /usr/bin/docker。宿主端口 127.0.0.1:8890（8790 被该机既有 webuddy-log 占用），公网走 `companions-zct-20261007` tunnel ingress `http://webuddy:8790`，DNS 为 tunnel CNAME。腾讯云 `webuddy.service` 保持运行，域名改为 `https://webuddy-us.bbstack.date`（Caddy 站点已改名，A 记录 DNS-only），数据已分叉。
+
+- 宿主机 codex：`codex-cli 0.166.0` 于 `~/.local/bin`（npm 用户级前缀），`~/.codex/config.toml` 与 43 完全一致（aiseat provider、bearer token、websockets、生图/搜索头）；`~/.bashrc` source `~/weppt/config/model.env`（WePPT 已拆但该文件仍供 codex 用）。`codex exec` 真实调用已验证（56,984 tokens 完成项目架构分析）。
+- 传输通道：旧机（美区）直连 ~10kB/s；经 `dmit`（179.253.247.206）中转 ~1.6–2.7MB/s。镜像、数据、密钥均走 SSH 管道，密钥未落聊天或中间盘。
+- 回切：DNS `webuddy` 改回 A 43.153.76.85、43 上 Caddy `webuddy-us` 改回 `webuddy` 即可。
+
+原 WePPT→阿里云过程要点（已回退，留作参考）：`docker save | gzip -1` 经 dmit `docker load`；数据卷解包需 `--user root` 解 tar 后 chown 1100；`access-token` 需 0600 否则 `INVALID_TOKEN_FILE`。
+
+- 镜像：`weppt-dev:20261103-editor-68`，由旧机 `docker save | gzip -1` 经 dmit 中转 `docker load`，与线上一致（codex-cli 0.162.1 / python 3.11.2 / claude-code 2.1.314 / weppt uid 1100）。旧机→dmit 约 2.7MB/s、dmit→新机约 1.6MB/s，远快于直连（约 10kB/s）。
+- 数据：`docker save` 之外的三个 tar 包经同一路径迁移并校验 sha256——数据卷（排除 `/data/backups` 旧回滚备份与活动库文件，以容器内 sqlite backup 一致性快照 `migration-20261104` 作为 `workbench.sqlite`）、codex 卷（排除 `.tmp`、`shell_snapshots`）、config 卷（model-profiles.json + access-token，access-token 需 0600 否则 `INVALID_TOKEN_FILE`）。解包后卷内文件 chown 1100。
+- 密钥：`model.env`、`commandcode.env`、`deepseek.env` 经 SSH 管道写入 `~/weppt/config/`（0600），未落聊天或中间盘。Compose 为 `~/weppt/compose.aliyun.yaml`（env_file 路径与 `WEPPT_PUBLIC_ORIGIN` 不同于腾讯云版本，网络多挂 `companions_tunnel`）。
+- 验证：容器 up、公网 `/` 200、`/api/state` 显示 9 个模型配置全 available、`imageMode=auto`；容器内真实 Codex 调用返回“连接成功”（14.31s）。迁移库无排队/运行中任务，不会自动消耗模型。
+- 宿主机 codex：`codex-cli 0.166.0` 装于 `~/.local/bin`（npm 用户级前缀，无 sudo），`~/.codex/config.toml` 指向同一 `ai.cloudwaveai.cn` 网关（`env_key=WEPPT_CODEX_API_KEY`，`~/.bashrc` 末尾自动 source `~/weppt/config/model.env`）；`codex exec` 真实调用已验证。容器内 WePPT 仍用镜像固定的 0.162.1。
+- 注意：阿里云侧 WePPT 容器/数据卷/tunnel 路由已拆除；腾讯云侧 Caddy、`WEPPT_PUBLIC_ORIGIN` 与 DNS 已回退至迁移前状态。Caddyfile 备份 `/opt/weppt/backups/Caddyfile.before-ppt-us-20261104`。发布源码在 `~/weppt/releases/20261103-editor-68`（阿里云，仅存档）。
+
+## 当前服务（腾讯云）
+
+- 主机：`ubuntu@43.153.76.85`，使用既有严格 known_hosts SSH；接入前读取 Mac 本地 production-access 记忆。入口 `https://ppt.bbstack.date`。
+- 发布目录：`/opt/weppt/releases/20261105-editor-70-page-library`。
+- 镜像：`weppt-dev:20261105-editor-70-page-library`；配置：`compose.dev.yaml`。
 - 容器：`weppt-dev-weppt-1`；rootless Docker；UID 1100；只读根目录、移除 capabilities、禁止提权。
 - 网络：Caddy HTTPS → 宿主 `127.0.0.1:8766` → 容器端口 8766。容器监听地址显式配置，不开放宿主公网端口。
 - 持久卷：`weppt-dev_data`、`weppt-dev_codex`、`weppt-dev_config`。升级或回滚不得删除卷。
@@ -304,3 +323,25 @@ Mac/Linux 各 34 项相关后端检查、42 项 JS 检查通过。线上独立�
 发布：仅上传 28 个变更文件，在服务器上由 editor-67 组装，270 个文件按清单校验无差异、无多余文件。核对：发布前无运行中任务（另有 4 个自 11-02 13:48 起排队未运行的反馈任务，重启不影响）；备份 `/data/backups/before-editor-68.sqlite` 完整性 ok、计数一致；Linux 镜像内 Python 506 项 OK（9 项可选依赖跳过）、JS 47 项通过；205 个运行文件与清单一致；本机与公网 HTTP 200；数据库完整性 ok。
 
 真实模型实测（隔离容器、deepseek-flash，测后已删除容器与卷）：对标风格解析 37 秒得到完整结构化描述；示例项目生成“客户版”5 页（原 3 页 + 案例待补充页 + 报价方案页），未编造案例、数字或价格，整稿完成。回滚锚点 editor-67、editor-58。
+
+
+## Office 操作与空间模板接入（2026-11-05 editor-69-spatial）
+
+2026-11-05 13:35 CST 从 editor-68 切换到 `weppt-dev:20261105-editor-69-spatial`，入口 https://ppt.bbstack.date 。镜像 `sha256:b5bfd52e693b09ef6f5a74bb8d854227e4358c2daef01be132dcefc8b3bfc88f`。用户明确要求同步更新测试网站。本轮累计本地 Office 操作、PPTX保留原件导入、参考图/后台副本、整套模板与内容适配一并进入此测试版本。
+
+主入口为字图穿插、跨界错位、透叠层面、同心浮雕，默认跨界错位；AI组织composition，服务端在同套母版中按内容与原图适配。保留旧模板ID和旧稿绑定，原文、原图、备注、版本与空间归属保护继续执行。设计能力与未迁移的摄影/材质边界见 `docs/product/template-packs.md`，不以发布代表审美验收。
+
+发布：增量66文件，服务器复制上一发布目录后解包。289个发布文件逐项SHA/长度验证，无额外源文件；上一目录遗留build.log/tests.log转存独立日志目录，原发布目录保持。Linux镜像568项检查OK（9项可选依赖跳过）、47项JS通过；Mac568项零跳过、3个相关浏览器脚本通过。首轮Linux测试因测试容器/tmp禁止执行夹具而失败，修正为测试专用exec临时目录后重跑；现役容器安全配置未放宽。
+
+切换前无queued/running/pending任务。备份 `/data/backups/before-editor-69-spatial.sqlite`，原41表4315行，备份完整性与源库一致。切换后integrity_check=ok，原表schema和原行保留；仅主工作区studio_state运行版本107→108，符合启动时set_agent_mode的触发。公网验证创建的独立空白检查项目为新增数据。216个运行文件匹配发布清单，回环与公网HTTP200、9个模型配置均available；Caddy、凭据、其他服务保持。
+
+真实模型隔离试稿3/3完成，105.79秒，attempts均1，人工重试0，两处开发中保留；整稿审查仍needs_attention，包含模型审查格式错误，未改判通过。32页产品编译验样、PPTX/PDF实物渲染、原图字节校验与公网检查见 `validation/spatial-integration-2026-11-05/README.md`。回滚锚点为editor-68，仅切程序，不用旧数据库覆盖新写入。
+
+
+## 2026-11-05 14:34 CST · editor-70 默认页面样式库
+
+用户确认“全部”，延续同步测试网站授权。由 editor-69 更新为 `20261105-editor-70-page-library`，293 发布文件、218 运行文件核对一致；镜像 `sha256:a2fa711f794bf6c93ee58714f04478dec19b4ea7cebe569a62915604c3746993`。默认页面样式/推荐切换为 16 个当前入口，旧稿可直接预览、应用、撤销，历史 ID 与原稿/上传模板仍兼容。四套整稿模板未变化。
+
+切换前无活动任务，一致性备份 `/data/backups/before-editor-70-spatial.sqlite`。原47表4370行保留，主运行版本115→116为预期启动更新。Linux574项通过（9项可选跳过）、47项JS通过；公网实际样式预览/应用/精确撤销通过。HTTP200、9配置available。保留editor-69作为程序回滚锚点，卷/Caddy/凭据不变，不能恢复旧库覆盖新写入。
+
+证据：`validation/page-library-refresh-2026-11-05/`，含32页同内容对照、实际Office渲染与全文/原图片读回。复杂图形整体保留，容量不足拒绝；视觉仍待用户评审，原卡rework保持。

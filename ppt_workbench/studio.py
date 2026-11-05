@@ -38,6 +38,10 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
         self.wb = Workbench(root)
         self.root = self.wb.root
         self.project_id = self.wb._project_id(project_id)
+        from .document_editing import initialize as initialize_document_editing
+        initialize_document_editing(self)
+        from .background_tasks import initialize as initialize_background_tasks
+        initialize_background_tasks(self)
         if agent not in {None, "manual", "claude", "codex", "outline", "api"}:
             fail("INVALID_AGENT", "请选择 manual、claude、codex 或 outline。")
         try:
@@ -51,6 +55,10 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
             CREATE TABLE IF NOT EXISTS studio_state (
                 project_id TEXT PRIMARY KEY, version INTEGER NOT NULL DEFAULT 1,
                 selected_slide_id TEXT, demo INTEGER NOT NULL DEFAULT 0);
+            CREATE TABLE IF NOT EXISTS studio_pack_bindings (
+                project_id TEXT PRIMARY KEY, pack_id TEXT NOT NULL, sha256 TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS studio_pack_preferences (
+                project_id TEXT PRIMARY KEY, pack_id TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS studio_template_preferences (
                 project_id TEXT PRIMARY KEY, template_id TEXT NOT NULL);
             CREATE TABLE IF NOT EXISTS studio_image_preferences (
@@ -154,6 +162,7 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
     def state(self):
         from .agent_bridge import diagnose
         from .image_generation import ImageJobs
+        from . import background_tasks, document_editing, presentation_import
         ImageJobs(self)
         with self.wb.atomic() as db:
             project = self.wb.get_project(self.project_id)
@@ -196,13 +205,20 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
             deck_state = self.deck_state()
             delivery_state = self.delivery_state()
             quality_state = self.quality_state()
-        return {"projectId": self.project_id, "project": project["workspace"]["project"], "slides": slides,
+            document_history = document_editing.history(self)
+            background_state = background_tasks.state(self)
+            palette_state = self.palette()
+        return {"projectId": self.project_id, "projectRevision": project["revision"],
+                "importSource": presentation_import.source_info(self),
+                "backgroundTasks": background_state,
+                "documentHistory": document_history,
+                "project": project["workspace"]["project"], "slides": slides,
                 "selectedSlideId": selected, "messages": messages, "jobs": [{k:j[k] for k in ('id','status','message_id','created_at')} | {"slideId": json.loads(j['payload']).get('slideId')} for j in jobs],
                 "assets": [dict(a) for a in assets], "imageBatches": [dict(b) for b in image_batches], "agent": diagnose(self.agent_mode), "demo": bool(meta["demo"]),
                 "version": int(meta["version"]) + int(event), "deck": deck_state,
                 "delivery": delivery_state, "quality": quality_state,
                 "selectedTemplateId": self.selected_template(), "imageMode": self.image_mode(), "imageModeLocked": self.image_mode_locked(),
-                "palette": self.palette(), "palettePresets": self.palette_presets(),
+                "palette": palette_state, "palettePresets": self.palette_presets(),
                 "styleReference": self._style_reference_public(),
                 "logo": self._logo_public(), "derivedFrom": self._derived_from(),
                 **self.model_state()}
@@ -254,9 +270,9 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
         set_palette(self, value)
         return self.state()
 
-    def apply_palette(self, scope="page", slide_id=None, scene_revision=None):
+    def apply_palette(self, scope="page", slide_id=None, scene_revision=None, palette_value=None, project_revision=None):
         from .palette import apply_palette
-        return apply_palette(self, scope, slide_id, scene_revision)
+        return apply_palette(self, scope, slide_id, scene_revision, palette_value, project_revision)
 
     def select_template(self, template_id, slide_id=None, scene_revision=None):
         if not isinstance(template_id, str) or template_id not in {t["id"] for t in catalog()}:
@@ -783,12 +799,14 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
         guidance = visual_guidance(scene["scene"].get("templateId") if scene else self.selected_template(), catalog())
         from .deck_design import MAX_AUTO_IMAGES
         return {"creationContract": "content-led-v1" if not project["workspace"]["slides"] else None,
+                "templateContract": __import__("ppt_workbench.template_packs", fromlist=["contract"]).contract(self),
                 "imageMode": self.image_mode(), "autoImageLimit": MAX_AUTO_IMAGES,
                 "projectId": self.project_id, "projectRevision": project["revision"], "project": project["workspace"]["project"],
                 "pageExpression": expression, "visualGuidance": guidance,
                 "diagramDesign": __import__('ppt_workbench.diagram_design', fromlist=['guidance_for_page']).guidance_for_page(recommendation_page, expression),
                 "designExperiences": __import__('ppt_workbench.design_loop', fromlist=['experiences']).experiences(self, (expression or {}).get('relationship','general')),
                 "selectedTemplateId": self.selected_template(),
+                "designDirection": __import__('ppt_workbench.design_direction', fromlist=['context']).context(),
                 "userPalette": self._user_palette_context(),
                 "styleReference": self._style_reference_context(),
                 "userTasteProfile": self._user_taste_context(),
@@ -1052,6 +1070,8 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
 
     def recover_interrupted_jobs(self):
         """Only the server holding ProjectServerLock may call this startup recovery."""
+        from .background_tasks import recover
+        recover(self)
         with self.wb.atomic() as db:
             rows = db.execute("SELECT id,message_id FROM studio_jobs WHERE project_id=? AND status='running'", (self.project_id,)).fetchall()
             for row in rows:
@@ -1074,7 +1094,8 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
                 if not self._job_available(db, candidate):
                     continue
                 payload = candidate["payload"]
-                local = payload.get("kind") in {"deck_page", "feedback_page"} and payload.get("execution") == "outline"
+                from .template_packs import is_local_job
+                local = (payload.get("kind") in {"deck_page", "feedback_page"} and payload.get("execution") == "outline") or is_local_job(self, payload)
                 if local or payload.get("modelBinding") or available:
                     job = candidate
                     break
@@ -1117,7 +1138,10 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
                 if self.job(job_id)["status"] in {"queued", "running"}:
                     self.fail_job(job_id, EngineError("LOCAL_FEEDBACK_UNSUPPORTED", "本地排版只支持明确的标题、文字、字号或背景修改；这条要求需要真实模型执行器。"))
                 return True
-            if job["payload"].get("kind") == "deck_page" and job["payload"].get("execution") == "outline":
+            if is_local_job(self, job["payload"]):
+                from .template_packs import page_job
+                plan = page_job(self, job["payload"])
+            elif job["payload"].get("kind") == "deck_page" and job["payload"].get("execution") == "outline":
                 plan = self._local_deck_plan(job["payload"])
             else:
                 correction = None
@@ -1133,18 +1157,27 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
                                         selected_ids=selected_ids, asset_records=records)
                         if context.get('creationContract') and job['payload'].get('kind') != 'deck_page':
                             from .deck_design import review_plan
-                            plan = review_plan(self, job, plan, context, mode, runner)
+                            if not correction or correction.get("code") != "TEMPLATE_CAPACITY":
+                                plan = review_plan(self, job, plan, context, mode, runner)
+                            from .template_packs import default_plan
+                            plan = default_plan(plan, context)
                         if job['payload'].get('kind') == 'deck_page' and len(plan.get('actions', [])) == 1:
                             from .design_review import review_new_page
                             plan = review_new_page(self, job, plan, context, mode, runner)
                         self.apply_plan(job_id, plan)
                         break
                     except EngineError as exc:
+                        if exc.code == 'TEMPLATE_CAPACITY' and context.get('creationContract'):
+                            if attempt == 2:
+                                raise
+                            correction = {'code':exc.code, 'message':exc.message, 'draft':plan,
+                                          'instruction':'保持页数、标题、全部原文和限定词，仅重新分组或选择同套可读容量更大的版式。不能删字、缩写、合并限定对象或擅自拆页。确实装不下时保留内容并说明冲突。'}
+                            continue
                         if exc.code in {'INVALID_AGENT_OUTPUT', 'INVALID_DESIGN_BRIEF', 'INVALID_PROJECT_FIELDS', 'INVALID_COMPOSITION'}:
                             if attempt == 2:
                                 raise
                             from .core import PATCH_FIELDS
-                            correction = {'code':exc.code, 'message':exc.message,
+                            correction = {'code':exc.code, 'message':exc.message, 'details':exc.details,
                                 'allowedSlidePatchPaths':['/' + field for field in sorted(PATCH_FIELDS)],
                                 'instruction':'仅纠正输出协议，重新返回完整计划。arguments_json 是不含 type 的 JSON 字符串。slide_patch 只能使用列出的顶层路径；精确修改可见文字时用 scene_patch，使用当前对象 ID、properties.text 和 scene.sceneRevision。保留原修改范围、所有未要求修改的内容及视觉属性。不得把受保护字段换个路径提交。'}
                             continue

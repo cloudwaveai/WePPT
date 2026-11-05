@@ -37,7 +37,7 @@
       document.querySelectorAll('[data-align]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.align===object.align)));
     }
     const same=editor.history?.sceneRevision===activeSlide()?.sceneRevision;
-    $('undo-button').disabled=!ready || !same || !editor.history?.canUndo;
+    $('undo-button').disabled=!(ui.connected && ui.state?.documentHistory?.canUndo && !editor.busy) && (!ready || !same || !editor.history?.canUndo);
     $('redo-button').disabled=!ready || !same || !editor.history?.canRedo;
     $('ai-target').textContent=object?`所选${text?'文字':object.type==='image'?'图片':'对象'}`:activeSlide()?`第 ${slideIndex()+1} 页`:'生成初稿后可推荐';
     const mode=ui.state?.agent?.mode;
@@ -79,6 +79,7 @@
     finally{editor.busy=false;renderEditorTools();}
   }
   async function editorHistory(action) {
+    if(action==='undo' && ui.state?.documentHistory?.canUndo && !design.dirty)return documentAction('undo');
     if(!editorReady())return;
     if(design.dirty){toast('请先保存文字；正在输入时可使用系统撤销。');return;}
     const slide=activeSlide();editor.busy=true;renderEditorTools();
@@ -362,7 +363,7 @@ Logo：[本次不使用，或注明已提供的素材]
     $('review-button').classList.toggle('reviewed', !!reviewed);
     $('review-button').querySelector('span').textContent = reviewed ? '本页已认可' : '认可这一页';
     $('review-button').disabled = ui.reviewBusy || !slide?.hasPreview || !!slide?.stale || reviewed;
-    updateAgent(); renderDelivery(); renderDeckProgress(); renderQuality(); renderRelease(); renderMessages(force); renderSlides(force); renderPreview(); renderStyleBadge(); renderDerivedLine(); $('style-derive').hidden=!ui.state.styleReference;$('style-restyle').hidden=!ui.state.styleReference; updateJobStatus(); updateSend(); updateConnectionDialog(); updateReviewDialog(); fitCanvas(); scheduleMeasurements(); syncEditor();
+    updateAgent(); renderDelivery(); renderDeckProgress(); renderQuality(); renderRelease(); renderMessages(force); renderSlides(force); renderPreview(); renderDocumentTools(); renderBackgroundTasks(); renderSourceStatus(); restoreComposerDraft(); renderStyleBadge(); renderDerivedLine(); $('style-derive').hidden=!ui.state.styleReference;$('style-restyle').hidden=!ui.state.styleReference; updateJobStatus(); updateSend(); updateConnectionDialog(); updateReviewDialog(); fitCanvas(); scheduleMeasurements(); syncEditor();
   }
 
   function updateAgent() {
@@ -913,6 +914,33 @@ Logo：[本次不使用，或注明已提供的素材]
     strip.scrollLeft = oldScroll;
   }
 
+  let documentBusy=false;
+  function renderDocumentTools(){
+    const index=slideIndex(),count=ui.state?.slides?.length||0,busy=documentBusy||!ui.connected||(ui.state?.jobs||[]).some(isBusy);
+    for(const id of ['slide-add','ribbon-add-slide'])$(id).disabled=busy;
+    for(const id of ['slide-copy','slide-remove'])$(id).disabled=busy||index<0;
+    $('slide-up').disabled=busy||index<=0;$('slide-down').disabled=busy||index<0||index>=count-1;
+  }
+  async function documentAction(action,extra={}){
+    if(documentBusy)return;
+    if(design.dirty){toast('请先保存正在编辑的文字。');return;}
+    documentBusy=true;renderDocumentTools();
+    try{
+      const result=await api('/api/document','POST',{action,projectRevision:ui.state.projectRevision,slideId:activeSlide()?.id,...extra});
+      ui.pinnedSlideId=result.state.selectedSlideId;ui.object=null;editor.key='';applyState(result.state);await syncEditor();
+      toast(action==='undo'?'已撤销。':action==='remove'?'已删除，可用撤销恢复。':action==='insert'?'已在所选位置新建幻灯片。':'已更新页面。');
+    }catch(error){toast(error.message);await refreshState(true);}
+    finally{documentBusy=false;renderDocumentTools();}
+  }
+  function renderBackgroundTasks(){
+    const host=$('background-status'),task=ui.state?.backgroundTasks?.[0];host.replaceChildren();host.hidden=!task;
+    if(!task)return;
+    host.append(node('span','',task.status==='failed'?(task.error?.message||'任务未完成'):task.stage));
+    if(['queued','running'].includes(task.status))host.append(node('span','background-note','可以离开，任务会在后台继续'));
+    if(task.result?.projectId){const link=node('button','button quiet compact','打开改版稿');link.type='button';link.addEventListener('click',()=>openProject(task.result.projectId));host.append(link);}
+    const drafts=node('button','button quiet compact','我的草稿');drafts.type='button';drafts.addEventListener('click',openProjects);host.append(drafts);
+  }
+
   function renderPreview() {
     const slide = activeSlide();
     const hasPreview = !!slide?.hasPreview;
@@ -927,8 +955,8 @@ Logo：[本次不使用，或注明已提供的素材]
       ui.activeFrame?.remove(); ui.activeFrame = null;
       $('empty-preview').hidden = false;
       setOverflow([]);
-      $('empty-preview').querySelector('h3').textContent = slide ? '这一页的内容已记录' : '这一页，等你的第一个想法';
-      $('empty-preview').querySelector('p').textContent = slide ? '等待生成页面预览。你可以继续补充原话和资料，或在 Coding Agent 中继续制作。' : '在对话里讲内容，预览会在这里更新。\n选中页面里的对象，再说出你想改的地方。';
+      $('empty-preview').querySelector('h3').textContent = slide ? '这一页的内容已记录' : '从内容开始，或打开已有 PPT';
+      $('empty-preview').querySelector('p').textContent = slide ? '等待生成页面预览。你可以继续补充原话和资料，或在 Coding Agent 中继续制作。' : '粘贴内容即可生成整稿；也可以点击“打开 PPT”继续编辑。';
       $('empty-demo-button').hidden = !!slide;
       return;
     }
@@ -1043,7 +1071,7 @@ Logo：[本次不使用，或注明已提供的素材]
       const result = await api('/api/chat','POST',payload);
       local.accepted=true; local.jobId=result.jobId; local.status=result.status==='complete'?'complete':'queued';
       if (text === undefined && loadedGuideHandoff) { try { localStorage.removeItem(loadedGuideHandoff); } catch {} loadedGuideHandoff = null; }
-      if (!options.retry) { ui.uploads=[]; renderUploads(); }
+      if (!options.retry) { ui.uploads=[]; renderUploads(); saveComposerDraft(); }
       await refreshState(true);
     } catch (error) { local.status='failed'; local.error=error.message; renderMessages(true); }
     finally { ui.posting=false; updateSend(); $('message-input').focus(); }
@@ -1141,7 +1169,7 @@ Logo：[本次不使用，或注明已提供的素材]
       for(const p of profiles){const option=node('option','',`${p.label}${p.available?'':' · 未配置'}`);option.value=p.id;option.disabled=!p.available;$('model-profile').append(option);}
       $('model-profile').value=chosen?.id || ''; $('model-profile').dataset.signature=signature;
     }
-    const busy=ui.agentBusy || !ui.connected || ui.state?.jobs?.some(j=>['queued','running'].includes(j.status));
+    const busy=ui.agentBusy || !ui.connected || ui.state?.jobs?.some(j=>['queued','running'].includes(j.status)) || ui.state?.backgroundTasks?.some(j=>['queued','running'].includes(j.status));
     $('model-profile').disabled=!!busy;$('choose-model').disabled=!!busy;
     $('image-mode').checked=(ui.state?.imageMode || 'auto')==='auto';$('image-mode').disabled=!!ui.agentBusy || !ui.connected || !!ui.state?.imageModeLocked;
     $('image-mode').title=ui.state?.imageModeLocked?'服务器已关闭自动配图':'';
@@ -1242,7 +1270,7 @@ Logo：[本次不使用，或注明已提供的素材]
     $('template-smart').textContent=design.smartBusy?'正在选版…':'智能选版';
     const grid=$('template-grid');
     const roles=$('template-roles');roles.replaceChildren();
-    const available=design.templates.filter(template=>!template.legacy);
+    const available=design.templates.filter(template=>!template.legacy && !template.archived);
     const source=available.filter(t=>(design.filter==='reference'?t.reference:design.filter==='all'?!t.reference:true) && (design.role==='all'||t.roles?.includes(design.role)));
     const categories=new Map([['all','全部用途'],...available.slice().sort((a,b)=>a.browseCategoryOrder-b.browseCategoryOrder).map(t=>[t.browseCategory,t.browseCategoryName])]);
     categories.forEach((title,id)=>{const count=id==='all'?source.length:source.filter(t=>t.browseCategory===id).length;const button=node('button','',`${title} · ${count}`);button.type='button';button.dataset.category=id;button.disabled=count===0;button.setAttribute('aria-pressed',String(design.category===id));button.addEventListener('click',()=>{design.category=id;renderTemplates();});roles.append(button);});
@@ -1252,7 +1280,7 @@ Logo：[本次不使用，或注明已提供的素材]
     const strip=$('template-strip');
     const chips=$('template-categories');chips.replaceChildren();
     STRIP_CATEGORIES.forEach(([id,label])=>{
-      const count=id==='recommended'?null:available.filter(STRIP_FILTERS[id]).length;
+      const count=id==='recommended'?null:available.filter(t=>t.current && STRIP_FILTERS[id](t)).length;
       const chip=node('button','',count===null?label:`${label} · ${count}`);chip.type='button';chip.disabled=count===0;
       chip.setAttribute('aria-pressed',String(design.stripCategory===id));
       chip.addEventListener('click',()=>{design.stripCategory=id;renderTemplates();});chips.append(chip);
@@ -1262,7 +1290,7 @@ Logo：[本次不使用，或注明已提供的素材]
       chip.setAttribute('aria-pressed',String(design.stripCategory==='user'));
       chip.addEventListener('click',()=>{design.stripCategory='user';renderTemplates();});chips.append(chip);
     }
-    const stripPool=design.stripCategory==='recommended'?available.filter(template=>template.roles?.includes(currentPageRole())):design.stripCategory==='user'?(design.userTemplates||[]):available.filter(STRIP_FILTERS[design.stripCategory]);
+    const stripPool=design.stripCategory==='recommended'?available.filter(template=>template.current && template.roles?.includes(currentPageRole())):design.stripCategory==='user'?(design.userTemplates||[]):available.filter(t=>t.current && STRIP_FILTERS[design.stripCategory](t));
     const recommendations=uniqueTemplateLayouts(stripPool.sort((a,b)=>templateScore(b)-templateScore(a)),design.stripCategory==='recommended'?6:8);
     updateStripNav();
     const stripKey=JSON.stringify(recommendations.map(t=>[t.id,t.previewUrl,t.referencePreviewUrl]));
@@ -1394,7 +1422,7 @@ Logo：[本次不使用，或注明已提供的素材]
     if(pptx)toast('正在导入 PPTX 页面，请稍候…');
     try{const result=await api('/api/user-templates','POST',{kind,files:items});await refreshUserTemplates();
       if(pptx)toast(`已导入 ${result.templates.length} 页模板${result.slideCount>result.importedLimit?`（共 ${result.slideCount} 页，只导入前 ${result.importedLimit} 页）`:''}${result.skippedPages?.length?`；第 ${result.skippedPages.join('、')} 页无法导入`:''}。`,6000);
-      else if(kind==='page')toast('已保存我的模板页。');}
+      else if(kind==='page')toast('已保存我的模板页。');return result;}
     catch(error){toast(error.message);throw error;}
   }
   let templateProposal=null,templatePreviewSequence=0;
@@ -1422,11 +1450,26 @@ Logo：[本次不使用，或注明已提供的素材]
     $('template-after-label').textContent=target?'当前页面 · 等待适配':'版式示例 · 尚未选定';
     $('template-original').hidden=!template.reference;$('template-before').hidden=!!template.reference;
     if(template.reference)$('template-original').src=template.referencePreviewUrl;
-    $('template-adaptation-controls').hidden=!target;$('template-generate').disabled=!target;$('template-adaptation-approach').disabled=false;
+    $('template-adaptation-controls').hidden=!target || !!template.current;$('template-generate').disabled=!target;$('template-adaptation-approach').disabled=false;
     $('template-preview-apply').textContent=target?'应用这版':'选为新页设计参考';
     $('template-preview-status').textContent=target?'选择适配方式，让 AI 按模板重新组织当前页。原稿在确认前保持不变。':'选定后作为新页面的设计参考。';
     if(!$('template-preview-dialog').open)$('template-preview-dialog').showModal();
     try{
+      if(target && template.current){
+        const original=new URL('/api/preview/'+encodeURIComponent(target.slideId),location.origin);
+        original.searchParams.set('project',ui.state.projectId);original.searchParams.set('rev',target.sceneRevision);
+        $('template-before-label').textContent='当前页面';
+        $('template-after-label').textContent='换版预览 · 尚未应用';
+        await loadTemplateFrame('template-before',null,original.href);
+        const result=await api('/api/templates/preview?'+new URLSearchParams({template:template.id,format:'json',...target}));
+        if(sequence!==templatePreviewSequence)return;
+        await loadTemplateFrame('template-after',result.html);
+        if(sequence!==templatePreviewSequence || !$('template-preview-dialog').open)return;
+        $('template-preview-status').textContent='核对预览后应用；原文、原图与图表保留。';
+        $('template-preview-note').textContent='可撤销。需要进一步调整时，可使用 AI 助手。';
+        $('template-preview-apply').disabled=false;
+        return;
+      }
       if(!template.reference || !target){
         const result=await api('/api/templates/preview?'+new URLSearchParams({template:template.id,format:'json'}));
         if(sequence!==templatePreviewSequence)return;
@@ -1475,6 +1518,7 @@ Logo：[本次不使用，或注明已提供的素材]
     if(proposal.key!==design.targetKey){$('template-preview-status').textContent='页面或版本已变化，请重新预览。';$('template-preview-apply').disabled=true;return;}
     $('template-preview-apply').disabled=true;
     if(!proposal.target){const applied=await applyTemplate(proposal.template,null);if(applied)closeTemplatePreview();return;}
+    if(proposal.template.current){const applied=await applyTemplate(proposal.template,proposal.target);if(applied)closeTemplatePreview();return;}
     if(!proposal.proposalId){$('template-preview-status').textContent='请先生成适配预览。';return;}
     design.applying=true;
     try{await api('/api/templates/apply','POST',{proposalId:proposal.proposalId});await refreshState(true);closeTemplatePreview();toast('已应用刚才的适配预览，可撤销。');}
@@ -1513,7 +1557,8 @@ Logo：[本次不使用，或注明已提供的素材]
     });
     $('palette-secondary-add').disabled=paletteDraft.secondary.length>=2 || paletteDraft.busy;
     $('palette-apply-page').disabled=paletteDraft.busy || !activeSlide()?.hasPreview;
-    $('palette-apply-deck').disabled=paletteDraft.busy || !(ui.state?.slides||[]).length;
+    $('palette-apply-deck').disabled=paletteDraft.busy;
+    $('palette-apply-deck').textContent=(ui.state?.slides||[]).length?'应用到整稿':'使用此配色';
     $('palette-save').disabled=paletteDraft.busy;$('palette-clear').disabled=paletteDraft.busy || !ui.state?.palette;
     renderPalettePreview();
   }
@@ -1532,9 +1577,8 @@ Logo：[本次不使用，或注明已提供的素材]
     if(!value){$('palette-error').textContent='请选择一个主色和 1–2 个互不相同的辅色。';$('palette-error').hidden=false;return;}
     paletteDraft.busy=true;$('palette-error').hidden=true;renderPaletteDialog();
     try{
-      applyState(await api('/api/palette','POST',value));
-      if(!apply){toast('配色已保存，之后生成的新页面会使用它。');$('palette-dialog').close();return;}
-      const slide=activeSlide(),result=await api('/api/palette/apply','POST',apply==='deck'?{scope:'deck'}:{scope:'page',slideId:slide.id,sceneRevision:slide.sceneRevision});
+      if(!apply || !ui.state.slides.length){applyState(await api('/api/palette','POST',value));toast('配色已保存，生成时自动使用。');$('palette-dialog').close();return;}
+      const slide=activeSlide(),result=await api('/api/palette/apply','POST',{palette:value,projectRevision:ui.state.projectRevision,...(apply==='deck'?{scope:'deck'}:{scope:'page',slideId:slide.id,sceneRevision:slide.sceneRevision})});
       if(result?.state)applyState(result.state);else await refreshState(true);
       const skipped=(result?.skipped||[]).length;
       toast(`已为 ${result?.changedSlides?.length||0} 页应用配色，可撤销。${skipped?`另有 ${skipped} 页未变化或需要先更新预览。`:''}`,6000);
@@ -1565,14 +1609,14 @@ Logo：[本次不使用，或注明已提供的素材]
       const actions=node('div','style-actions');
       const analyze=node('button','button quiet compact',t.profile?'重新解析':'解析风格');analyze.type='button';analyze.disabled=style.busy;
       analyze.addEventListener('click',()=>analyzeStyle(t));
-      const use=node('button','button quiet compact',ref?.id===t.id?'取消使用':'用于本项目');use.type='button';use.disabled=style.busy||!t.profile;
-      use.addEventListener('click',()=>selectStyle(ref?.id===t.id?null:t.id));
+      const use=node('button','button primary compact',ui.state?.slides?.length?'整稿改版':'使用此风格');use.type='button';use.disabled=style.busy;
+      use.addEventListener('click',()=>startStyleWorkflow(t.id));
       const del=node('button','button quiet compact','删除');del.type='button';del.disabled=style.busy;
       del.addEventListener('click',async()=>{await api('/api/user-templates/delete','POST',{id:t.id}).catch(e=>toast(e.message));await refreshUserTemplates();renderStyleList();});
       actions.append(analyze,use,del);item.append(thumbs,info,actions);host.append(item);
       if(style.editing===t.id){const edit=node('button','button quiet compact','编辑档案');edit.type='button';edit.addEventListener('click',()=>{style.profile=JSON.parse(JSON.stringify(t.profile));renderStyleForm();});actions.prepend(edit);}
     }
-    if(!style.list.length)host.append(node('p','','还没有对标风格，先上传 3 页对标稿。'));
+    if(!style.list.length)host.append(node('p','','上传或粘贴参考图，即可使用它的设计风格。'));
   }
   function renderStyleForm(){
     const form=$('style-form');form.replaceChildren();$('style-editor').hidden=false;
@@ -1600,6 +1644,39 @@ Logo：[本次不使用，或注明已提供的素材]
     profile.color.secondary=[...$('style-form').querySelectorAll('input[data-secondary]')].map(i=>i.value.toUpperCase()).slice(0,2);
     return profile;
   }
+  async function openPacks() {
+    const dialog=$('packs-dialog'),host=$('packs-list'),status=$('packs-status');
+    host.replaceChildren();status.textContent='正在加载模板';dialog.showModal();
+    const revision=ui.state.projectRevision;
+    try {
+      const data=await api('/api/template-packs');
+      status.textContent='';
+      const hasSlides=(ui.state?.slides||[]).length>0;
+      for(const pack of data.packs){
+        const card=node('section','pack-card');card.dataset.packId=pack.id;
+        const heading=node('div','pack-heading');heading.append(node('h3','',pack.name));
+        const button=node('button','button',hasSlides?'生成整套改版副本':data.selectedPack===pack.id?'已选择':'使用这套');button.type='button';
+        heading.append(button);card.append(heading);
+        const previews=node('div','pack-previews');
+        for(const [role,label] of [['cover','封面'],['chapter','章节标题'],['content','正文']]){
+          const figure=node('figure','');const frame=document.createElement('iframe');frame.title=pack.name+' · '+label;
+          frame.src='/api/template-packs/preview?pack='+encodeURIComponent(pack.id)+'&role='+role+'&project='+encodeURIComponent(ui.state.projectId);
+          frame.setAttribute('sandbox','allow-scripts');frame.setAttribute('loading','lazy');
+          figure.append(frame,node('figcaption','',label));previews.append(figure);
+        }
+        card.append(previews);host.append(card);
+        button.addEventListener('click',async()=>{
+          host.querySelectorAll('button').forEach(b=>b.disabled=true);status.textContent=hasSlides?'正在创建改版副本':'正在应用模板';
+          try{
+            const result=await api(hasSlides?'/api/template-packs/apply':'/api/template-packs/select','POST',{packId:pack.id,projectRevision:revision});
+            if(result.projectId){openProject(result.projectId);return;}
+            dialog.close();toast('已选择「'+pack.name+'」，输入大纲即可生成整套。');
+          }catch(error){status.textContent=error.message;host.querySelectorAll('button').forEach(b=>b.disabled=false);}
+        });
+      }
+    }catch(error){status.textContent=error.message;}
+  }
+
   async function openStyle(){
     style.busy=false;$('style-error').hidden=true;$('style-editor').hidden=true;
     await refreshUserTemplates();style.list=design.styleTemplates||[];renderStyleList();$('style-dialog').showModal();
@@ -1710,8 +1787,42 @@ Logo：[本次不使用，或注明已提供的素材]
     finally{design.saving=false;$('save-object-text').disabled=false;$('object-text').disabled=false;}
   }
 
+  let restoredDraftProject=null,presentationBusy=false;
+  function saveComposerDraft(){
+    if(!ui.state?.projectId)return;
+    try{localStorage.setItem('weppt-draft:'+ui.state.projectId,JSON.stringify({text:$('message-input').value,target:currentMessageTarget(),uploads:ui.uploads.filter(a=>a.status==='ready')}));}catch{}
+  }
+  function restoreComposerDraft(){
+    if(!ui.state?.projectId||restoredDraftProject===ui.state.projectId)return;
+    restoredDraftProject=ui.state.projectId;
+    try{const saved=JSON.parse(localStorage.getItem('weppt-draft:'+ui.state.projectId)||'null');if(saved&&(!$('message-input').value)&&((saved.text||'').length||(saved.uploads||[]).length)){$('message-input').value=saved.text||'';ui.draftTarget=saved.target||null;ui.uploads=(saved.uploads||[]).filter(a=>(ui.state.assets||[]).some(b=>b.assetId===a.assetId));resizeComposer();renderUploads();renderComposerScope();updateSend();}}catch{}
+    if(new URL(location.href).searchParams.get('action')==='audience'){openAudience();const url=new URL(location.href);url.searchParams.delete('action');history.replaceState(null,'',url);}
+  }
+  function renderSourceStatus(){
+    const host=$('source-status'),source=ui.state?.importSource;host.replaceChildren();host.hidden=!source;if(!source)return;
+    const link=node('a','',source.filename);const url=new URL('/api/source',location.origin);url.searchParams.set('project',ui.state.projectId);link.href=url.href;link.textContent='下载原稿 · '+source.filename;host.append(link);
+    if(source.warnings){const details=node('details');details.append(node('summary','',`导入说明 · ${source.warnings} 项`));const list=node('ul');for(const page of source.pages||[])for(const item of page.limitations||[])list.append(node('li','',`第 ${page.page} 页：${item.detail}`));details.append(list);host.append(details);}
+  }
+  async function openPresentation(file,audience=false){
+    if(!file||presentationBusy)return;
+    if(!/\.pptx$/i.test(file.name)){toast('请选择 .pptx 文件。');return;}
+    if(file.size>20*1024*1024){toast('PPTX 文件上限为 20 MB；原文件不会被压缩。');return;}
+    presentationBusy=true;$('ribbon-open').disabled=true;toast('正在打开完整 PPT，原文件会保留。',60000);saveComposerDraft();
+    try{const encoded=await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(String(r.result).split(',')[1]);r.onerror=()=>reject(Error('无法读取文件'));r.readAsDataURL(file);});
+      const result=await api('/api/projects/import','POST',{filename:file.name,base64:encoded});const url=new URL(location.href);url.searchParams.set('project',result.projectId);url.searchParams.delete('token');if(audience)url.searchParams.set('action','audience');location.assign(url);
+    }catch(error){toast(error.message,12000);}finally{presentationBusy=false;$('ribbon-open').disabled=false;}
+  }
+  let importForAudience=false;
+  $('ribbon-open').addEventListener('click',()=>{importForAudience=false;$('presentation-input').click();});
+  $('audience-open-file').addEventListener('click',()=>{importForAudience=true;$('presentation-input').click();});
+  $('presentation-input').addEventListener('change',()=>{openPresentation($('presentation-input').files[0],importForAudience);$('presentation-input').value='';});
+  $('message-input').addEventListener('input',saveComposerDraft);
+  window.addEventListener('pagehide',saveComposerDraft);
+
   function openProject(projectId) {
-    if(hasComposerDraft()){ $('projects-error').textContent='请先发送或保存输入框中的内容，再切换项目。';$('projects-error').hidden=false;return; }
+    if(ui.uploads.some(a=>a.status==='uploading')){toast('资料正在上传，完成后即可切换。');return;}
+    if(design.dirty){toast('请先保存正在编辑的文字。');return;}
+    saveComposerDraft();
     const url=new URL(location.href);url.searchParams.set('project',projectId);url.searchParams.delete('token');location.assign(url);
   }
 
@@ -1728,7 +1839,7 @@ Logo：[本次不使用，或注明已提供的素材]
         if(group&&group!==section){section=group;$('projects-list').append(node('p','projects-section',group));}
         const button=node('button','project-item');button.type='button';
         const current=project.projectId===ui.state?.projectId;button.setAttribute('aria-current',String(current));
-        const label=node('span','',project.title);label.append(node('small','',`${project.slideCount} 页 · ${new Date(project.updatedAt).toLocaleDateString('zh-CN')}`));
+        const label=node('span','',project.title);label.append(node('small','',`${project.slideCount} 页 · ${project.activity||'已保存'} · ${new Date(project.updatedAt).toLocaleDateString('zh-CN')}`));
         button.append(label,node('b','',current?'当前项目':'打开'));button.addEventListener('click',()=>{if(current)$('projects-dialog').close();else openProject(project.projectId);});$('projects-list').append(button);
       });
     } catch(error){$('projects-list').textContent='';$('projects-error').textContent=error.message;$('projects-error').hidden=false;}
@@ -1742,7 +1853,7 @@ Logo：[本次不使用，或注明已提供的素材]
     catch(error){$('projects-error').textContent=error.message;$('projects-error').hidden=false;}
   });
   async function createProject(event) {
-    event.preventDefault();if(hasComposerDraft()){ $('projects-error').textContent='请先发送或保存输入框中的内容，再新建项目。';$('projects-error').hidden=false;return; }
+    event.preventDefault();saveComposerDraft();
     $('create-project-button').disabled=true;$('projects-error').hidden=true;
     try{const result=await api('/api/projects','POST',{title:$('new-project-title').value});openProject(result.projectId);}
     catch(error){$('projects-error').textContent=error.message;$('projects-error').hidden=false;}
@@ -1786,6 +1897,11 @@ Logo：[本次不使用，或注明已提供的素材]
       selectRibbonTab(ribbonTabs[next]); ribbonTabs[next].focus();
     });
   });
+  for(const id of ['slide-add','ribbon-add-slide'])$(id).addEventListener('click',()=>documentAction('insert',{afterId:activeSlide()?.id||null}));
+  $('slide-copy').addEventListener('click',()=>documentAction('duplicate',{afterId:activeSlide()?.id||null}));
+  $('slide-remove').addEventListener('click',()=>documentAction('remove'));
+  $('slide-up').addEventListener('click',()=>{const i=slideIndex();if(i>0)documentAction('move',{afterId:i>1?ui.state.slides[i-2].id:null});});
+  $('slide-down').addEventListener('click',()=>{const i=slideIndex();if(i<ui.state.slides.length-1)documentAction('move',{afterId:ui.state.slides[i+1].id});});
   $('ribbon-new').addEventListener('click', () => { openProjects(); $('new-project-title').focus(); });
   $('ribbon-page').addEventListener('click', () => {
     if ($('scope-page').disabled) { toast('请先选择页面，并完成或发送当前输入。'); return; }
@@ -1808,12 +1924,31 @@ Logo：[本次不使用，或注明已提供的素材]
   $('template-strip').addEventListener('scroll',updateStripNav);
   $('user-template-input').addEventListener('change',async()=>{await uploadUserTemplates($('user-template-input').files);$('user-template-input').value='';});
   $('ribbon-style').addEventListener('click',openStyle);
+  $('ribbon-packs').addEventListener('click',openPacks);
+  $('packs-close').addEventListener('click',()=>$('packs-dialog').close());
   $('style-close').addEventListener('click',()=>$('style-dialog').close());
   $('style-upload').addEventListener('click',()=>$('style-file-input').click());
-  $('style-file-input').addEventListener('change',async()=>{
-    if(($('style-file-input').files||[]).length!==3){toast('对标风格需要恰好 3 张图片。');$('style-file-input').value='';return;}
-    try{await uploadUserTemplates($('style-file-input').files,'style');style.list=design.styleTemplates||[];renderStyleList();toast('已保存 3 页对标稿，点击“解析风格”提炼设计。');}
-    catch{}finally{$('style-file-input').value='';}
+  async function startStyleWorkflow(id){
+    style.busy=true;renderStyleList();
+    try{const result=await api('/api/style-templates/start','POST',{id,projectRevision:ui.state.projectRevision});applyState(result.state);$('style-dialog').close();toast('已开始处理，完成后可打开改版稿。');}
+    catch(error){$('style-error').textContent=error.message;$('style-error').hidden=false;}
+    finally{style.busy=false;renderStyleList();}
+  }
+  async function uploadStyleReferences(files){
+    if(style.busy)return;
+    const images=[...files].filter(f=>['image/png','image/jpeg'].includes(f.type));
+    if(images.length<1||images.length>3){toast('请添加 1–3 张 PNG 或 JPEG 参考图。');return;}
+    style.busy=true;renderStyleList();$('style-error').hidden=true;
+    try{const result=await uploadUserTemplates(images,'style');style.list=design.styleTemplates||[];if(result?.templates?.[0])await startStyleWorkflow(result.templates[0].id);}
+    catch(error){$('style-error').textContent=error.message;$('style-error').hidden=false;}
+    finally{style.busy=false;renderStyleList();}
+  }
+  $('style-file-input').addEventListener('change',async()=>{await uploadStyleReferences($('style-file-input').files);$('style-file-input').value='';});
+  document.addEventListener('paste',event=>{
+    const files=[...(event.clipboardData?.files||[])];if(!files.length)return;
+    if($('style-dialog').open){event.preventDefault();uploadStyleReferences(files);}
+    else if($('templates-panel').open){event.preventDefault();uploadUserTemplates(files);}
+    else if(document.activeElement===$('message-input')){event.preventDefault();uploadFiles(files);}
   });
   $('style-save').addEventListener('click',async()=>{
     if(!style.editing||!style.profile)return;style.busy=true;
@@ -1822,11 +1957,7 @@ Logo：[本次不使用，或注明已提供的素材]
     finally{style.busy=false;}
   });
   $('style-use').addEventListener('click',async()=>{if(style.editing)await selectStyle(ui.state?.styleReference?.id===style.editing?null:style.editing);});
-  $('style-derive').addEventListener('click',async()=>{
-    const ref=ui.state?.styleReference;if(!ref){$('style-error').textContent='请先「用于本项目」选定一个已解析的对标风格。';$('style-error').hidden=false;return;}
-    const error=await derive('restyle',{styleId:ref.id});
-    if(error){$('style-error').textContent=error;$('style-error').hidden=false;}
-  });
+  $('style-derive').addEventListener('click',()=>{if(ui.state?.styleReference)startStyleWorkflow(ui.state.styleReference.id);});
   const restyle={queue:[],index:0,proposal:null,token:0,busy:false};
   async function restyleNext(){
     const token=restyle.token,ref=ui.state?.styleReference;
@@ -1977,7 +2108,7 @@ Logo：[本次不使用，或注明已提供的素材]
   window.addEventListener('dragenter',event=>{if(event.dataTransfer?.types?.includes('Files')){event.preventDefault();ui.dragDepth++;$('drop-overlay').hidden=false;}});
   window.addEventListener('dragover',event=>{if(event.dataTransfer?.types?.includes('Files'))event.preventDefault();});
   window.addEventListener('dragleave',event=>{if(event.dataTransfer?.types?.includes('Files')){event.preventDefault();ui.dragDepth=Math.max(0,ui.dragDepth-1);if(!ui.dragDepth)$('drop-overlay').hidden=true;}});
-  window.addEventListener('drop',event=>{if(event.dataTransfer?.files?.length){event.preventDefault();ui.dragDepth=0;$('drop-overlay').hidden=true;uploadFiles(event.dataTransfer.files);}});
+  window.addEventListener('drop',event=>{if(event.dataTransfer?.files?.length){event.preventDefault();ui.dragDepth=0;$('drop-overlay').hidden=true;if($('style-dialog').open)uploadStyleReferences(event.dataTransfer.files);else if($('templates-panel').open)uploadUserTemplates(event.dataTransfer.files);else {const pptx=[...event.dataTransfer.files].find(f=>/\.pptx$/i.test(f.name));if(pptx)openPresentation(pptx);else uploadFiles(event.dataTransfer.files);}}});
   window.addEventListener('focus',()=>refreshState());
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshState();});
   if (globalThis.ResizeObserver) new ResizeObserver(fitCanvas).observe(document.querySelector('.preview-center'));

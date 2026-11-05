@@ -172,6 +172,8 @@ def propose(studio, template_id, sid, revision, approach='creative'):
             if visual:image,_=render_candidate(example,folder/'reference')
         if context.get('referenceReadMode') not in ('image-only','image-and-profile','profile-only'):
             context['referenceReadMode']='image-and-layout' if image else 'layout-only'
+        from .design_direction import context as design_context
+        context['designDirection'] = design_context()
         context['requiredContent']=[{k:o[k] for k in ('id','type','text','binding') if k in o} |
             ({'src':'scene-image:'+sid+'/'+o['id'],'alt':o.get('alt','')} if o['type']=='image' else {})
             for o in _content(current['scene']).values()]

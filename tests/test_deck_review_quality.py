@@ -141,19 +141,18 @@ class RunReviewTests(unittest.TestCase):
         scene["objects"].append(text("num", "7", 64, 560, w=40, h=40, size=30))
         return scene
 
-    def test_boost_applied_and_saved(self):
+    def test_numeric_quota_does_not_mutate_finished_pages(self):
         job = self.ready(mutate=self.with_num)
         with patch("ppt_workbench.deck_review.contact_sheets", side_effect=self.sheets()):
             run_review(self.studio, job, "claude", lambda *a, **k: dict(reply="PASS\n好", actions=[]))
         scene = self.studio.get_scene("S001")["scene"]
         num = next(o for o in scene["objects"] if o["id"] == "num")
-        self.assertEqual(num["fontSize"], 72)
-        self.assertEqual(num["lineHeight"], 1)
+        self.assertEqual(num["fontSize"], 30)
         review = self.studio.deck_state()["designReview"]
-        self.assertIn("S001", review["repairedPages"])
+        self.assertNotIn("S001", review["repairedPages"])
         self.assertEqual(review["status"], "reviewed")
 
-    def test_overflow_reverts_boost(self):
+    def test_overflow_does_not_trigger_numeric_enlargement(self):
         job = self.ready(mutate=self.with_num)
         with patch("ppt_workbench.deck_review.contact_sheets",
                    side_effect=self.sheets(overflow_ids=["num"])):
@@ -166,7 +165,8 @@ class RunReviewTests(unittest.TestCase):
         with self.studio.wb._connection() as db:
             row = db.execute("SELECT result FROM studio_jobs WHERE client_message_id LIKE 'deck-review:%'").fetchone()
         report = json.loads(row["result"])["deckDesignReview"]
-        self.assertEqual(report["anchorBoostReverted"], [{"slideId": "S001", "objectId": "num"}])
+        self.assertEqual(report["anchorBoosts"], [])
+        self.assertEqual(report["anchorPolicy"], "content-led-review")
 
     def big_deck(self, pages, mutate=None):
         plan = deck_plan()
@@ -255,7 +255,8 @@ class RunReviewTests(unittest.TestCase):
             run_review(self.studio, job, "claude", runner)
         self.assertIn("待补充", prompts[0])
         self.assertIn("anchorBoosts", contexts[0])
-        self.assertIn("系统已先自动放大", prompts[0])
+        self.assertIn("参考 anchorBoosts，检查实际主次", prompts[0])
+        self.assertIn("图片或图解也可以是焦点", prompts[0])
 
 
 if __name__ == "__main__":

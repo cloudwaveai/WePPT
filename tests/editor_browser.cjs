@@ -23,15 +23,24 @@ const output=process.env.PPT_BROWSER_OUTPUT || '/tmp/weppt-editor-browser';
     const current=async()=>(await scene()).scene.objects.find(o=>o.id===object.id);
     async function ready(){
       const saved=await scene();
-      await page.waitForFunction(({sid,revision})=>{
+      await page.waitForFunction(async({sid})=>{
+        // An asynchronous measurement/save may advance the scene after the first read.
+        const latest=await(await fetch(`/api/scene?slide=${sid}`,{cache:'no-store'})).json();
+        const revision=latest.sceneRevision;
         const frame=document.querySelector('.page-frame.active');
         return frame?.dataset.interactive==='true' && !frame.inert
           && frame.dataset.previewKey.startsWith(`${sid}:${revision}:`)
-          && !document.querySelector('.page-frame:not(.active)');
-      },{sid,revision:saved.sceneRevision});
+          && document.querySelectorAll('.page-frame').length===1;
+      },{sid,revision:saved.sceneRevision}).catch(async error=>{
+        console.error('Expected preview:',sid,saved.sceneRevision,'latest:',(await scene()).sceneRevision);
+        console.error('Preview readiness:',JSON.stringify(await page.locator('.page-frame').evaluateAll(frames=>frames.map(f=>({dataset:{...f.dataset},inert:f.inert,classes:f.className})))));
+        console.error('Page errors:',errors);
+        await page.screenshot({path:`${output}/editor-readiness-failure.png`,fullPage:true});
+        throw error;
+      });
     }
     async function waitValue(key,value){await page.waitForFunction(async({sid,id,key,value})=>{const r=await(await fetch(`/api/scene?slide=${sid}`)).json();return r.scene.objects.find(o=>o.id===id)[key]===value;},{sid,id:object.id,key,value});await ready();}
-    const target=()=>page.frameLocator('.page-frame.active').locator(`[data-object-id="${object.id}"]`);
+    const target=()=>page.frameLocator('.page-frame.active[data-interactive="true"]').locator(`[data-object-id="${object.id}"]`);
     await page.waitForFunction(()=>document.querySelector('#editor-save-state').textContent==='已保存');
     await target().click({position:{x:10,y:10}});await page.locator('#font-size').waitFor({state:'visible'});await page.waitForFunction(()=>!document.querySelector('#text-format').disabled);
     const nextSize=object.fontSize===42?44:42;
@@ -48,11 +57,12 @@ const output=process.env.PPT_BROWSER_OUTPUT || '/tmp/weppt-editor-browser';
     await page.waitForFunction(async({sid,id,x})=>{const r=await(await fetch(`/api/scene?slide=${sid}`)).json();return r.scene.objects.find(o=>o.id===id).x!==x;},{sid,id:object.id,x:prior.x});await ready();
     const moved=await current();assert(moved.x>prior.x);assert.equal(moved.text,prior.text);
     console.log('PASS object dragging changes geometry without altering text');
-    await target().click({position:{x:10,y:10}});const handle=page.frameLocator('.page-frame.active').locator('.resize-handle.se');await handle.waitFor({state:'visible'});
+    await target().click({position:{x:10,y:10}});const handle=page.frameLocator('.page-frame.active[data-interactive="true"]').locator('.resize-handle.se');await handle.waitFor({state:'visible'});
     const handleBox=await handle.boundingBox();await page.mouse.move(handleBox.x+5,handleBox.y+5);await page.mouse.down();await page.mouse.move(handleBox.x+30,handleBox.y+18,{steps:6});await page.mouse.up();
     await page.waitForFunction(async({sid,id,w})=>{const r=await(await fetch(`/api/scene?slide=${sid}`)).json();return r.scene.objects.find(o=>o.id===id).w!==w;},{sid,id:object.id,w:moved.w});await ready();
     console.log('PASS resize handle persists the text box size');
-    await target().dblclick({position:{x:10,y:10}});await page.locator('#text-editor').waitFor({state:'visible'});
+    await page.waitForFunction(()=>!document.querySelector('#text-format').disabled);
+    await target().dblclick();await page.locator('#text-editor').waitFor({state:'visible'});
     const content=target().locator('.text-content');await content.fill('熟悉的编辑方式，随时获得 AI 建议');await page.waitForFunction(()=>document.querySelector('#object-text').value==='熟悉的编辑方式，随时获得 AI 建议');
     await page.locator('#save-object-text').click();await waitValue('text','熟悉的编辑方式，随时获得 AI 建议');
     console.log('PASS inline text editing saves and updates the actual scene');

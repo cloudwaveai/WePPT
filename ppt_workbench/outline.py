@@ -66,7 +66,7 @@ def validate_deck_plan(plan, *, error_code="INVALID_DECK_PLAN"):
     if not isinstance(clean["pages"], list) or not MIN_DECK_PAGES <= len(clean["pages"]) <= MAX_DECK_PAGES:
         _error(f"整稿需要 {MIN_DECK_PAGES} 至 {MAX_DECK_PAGES} 页。", error_code)
     required = {"title", "user_intent", "role"}
-    optional = {"template_id", "takeaway", "key_points", "diagram", "composition", "designBrief"}
+    optional = {"template_id", "takeaway", "key_points", "diagram", "composition", "designBrief", "template_images"}
     for number, page in enumerate(clean["pages"], 1):
         if not isinstance(page, dict) or not required.issubset(page) or set(page) - required - optional:
             extra = sorted(set(page) - required - optional) if isinstance(page, dict) else []
@@ -75,9 +75,13 @@ def validate_deck_plan(plan, *, error_code="INVALID_DECK_PLAN"):
         text(page["user_intent"], f"第 {number} 页 user_intent")
         if not isinstance(page["role"], str) or page["role"] not in ROLES - {""}:
             _error(f"第 {number} 页 role 无效。", error_code)
-        for field in optional - {"diagram", "composition", "designBrief"}:
+        for field in optional - {"diagram", "composition", "designBrief", "template_images"}:
             if field in page:
                 text(page[field], f"第 {number} 页 {field}", required=False)
+        if "template_images" in page:
+            ids = page['template_images']
+            if not isinstance(ids, list) or len(ids) > 3 or any(not isinstance(a, str) or not a or len(a) > 100 for a in ids):
+                _error(f"第 {number} 页 template_images 需要最多 3 个本项目图片 ID。", error_code)
         if "composition" in page:
             from .page_design import validate_composition
             validate_composition(page["composition"])

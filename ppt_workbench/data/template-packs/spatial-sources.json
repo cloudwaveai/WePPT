@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "references": {
+    "R44-01": {
+      "pageId": "R44-01",
+      "sourceUrl": "https://www.canva.cn/templates/EAG6meH2JMY/",
+      "sourceTitle": "灰粉墨绿色清新招聘文化艺术演示文稿（16:9）",
+      "role": "cover",
+      "sha256": "3c2ec011613950af6e6a03663e415a5bf966881e748895e81a27f082f361df70",
+      "observation": "后方绿色巨字被照片遮挡，前方浅色巨字又覆盖照片下部。",
+      "preserve": "三层遮挡实际可见，露出的字形仍支持识读。",
+      "failure": "遮住脸、姓名或关键结论即失效；只设置图层但没有可见穿插没有意义。",
+      "basis": "可见截图关系分析与人工适配验样；并非精确原生还原或审美认可"
+    },
+    "R20-04": {
+      "pageId": "R20-04",
+      "sourceUrl": "https://www.canva.cn/templates/EAHJgajvCsU/",
+      "sourceTitle": "蓝白色简约风产品介绍演示文稿（16:9）",
+      "role": "body",
+      "sha256": "f0eb19f81943b34fd5b13177e61439e2ceafc7303eeaf2bc873dba7b181730aa",
+      "observation": "左侧三条文字，右侧大竖图与较小照片错位重叠，小图外有白色边缘。",
+      "preserve": "前后大小与遮挡明确，左侧阅读区不被侵入。",
+      "failure": "随机两张图片只会变成装饰；前图不能遮掉后图关键证据。",
+      "basis": "可见截图关系分析与人工适配验样；并非精确原生还原或审美认可"
+    },
+    "R42-05": {
+      "pageId": "R42-05",
+      "sourceUrl": "https://www.canva.cn/templates/EAHO962rjMY/",
+      "sourceTitle": "蓝金色商务风锥形图演示文稿结构页",
+      "role": "other",
+      "sha256": "8ec502340b3981b6e0af3f1731fd9e64621f10a1ed201c797eb7e443d6a8b97e",
+      "observation": "淡锥形轮廓内部放四个椭圆层面，后方轮廓仍可辨认，左右标签对齐各层。",
+      "preserve": "外壳与内部层面的区别、椭圆远近和上下间隔建立空间。",
+      "failure": "截图不能确认原始透明度；层面积不能被误读为未经提供的数值。",
+      "basis": "可见截图关系分析与人工适配验样；并非精确原生还原或审美认可"
+    },
+    "S201-01": {
+      "pageId": "S201-01",
+      "sourceUrl": "https://www.canva.cn/templates/EAF9UItJIkE/",
+      "sourceTitle": "绿色简约杂志风工作汇报PPT模板",
+      "role": "cover",
+      "sha256": "7bf2a11fa67c93e551c417e0947f7fb39c6de023679ae1ac5b425553e8a3a2b9",
+      "observation": "右侧森林竖图盖在深绿底板前，底板在右边与上方露出，左侧标题独立。",
+      "preserve": "照片与底板的错位露边构成前后，森林自身透视提供纵深。",
+      "failure": "不能只剩绿色矩形；原图年份、署名及装饰英文不自动保留。",
+      "basis": "可见截图关系分析与人工适配验样；并非精确原生还原或审美认可"
+    },
+    "S201-04": {
+      "pageId": "S201-04",
+      "sourceUrl": "https://www.canva.cn/templates/EAF9UItJIkE/",
+      "sourceTitle": "绿色简约杂志风工作汇报PPT模板",
+      "role": "body",
+      "sha256": "a4c7b8058dbefac118ea5195f4c61e11388ffdf0bb76476b85768f6892cfd612",
+      "observation": "中间细长森林图贯穿，四组文字左右交错，半透观感浅绿箭头从文字侧压过照片边缘。",
+      "preserve": "照片形成共同轴线，说明与箭头绑定且左右分布。",
+      "failure": "箭头容易暗示流向，不能把互不相关的四项强行连成流程。",
+      "basis": "可见截图关系分析与人工适配验样；并非精确原生还原或审美认可"
+    },
+    "S350-01": {
+      "pageId": "S350-01",
+      "sourceUrl": "https://www.chuangkit.com/odyssey/createDesign?t=476397",
+      "sourceTitle": "简约微立体风月度工作汇报通用PPT模板",
+      "role": "other",
+      "sha256": "97f0a6d0e742c172c80620d0d4f996dad01bd4f8311ad9ecf51b08a603360c84",
+      "observation": "左侧绿色圆环叠在多层白色同心盘上，盘边浅影可见，标题在右侧。",
+      "preserve": "同向边缘光影让白色层面从背景分离，绿环提供焦点。",
+      "failure": "圆环无真实数值时不能称为完成率；泛加阴影不能代替同心结构。",
+      "basis": "可见截图关系分析与人工适配验样；并非精确原生还原或审美认可"
+    },
+    "S627-01": {
+      "pageId": "S627-01",
+      "sourceUrl": "https://www.chuangkit.com/odyssey/createDesign?t=518112",
+      "sourceTitle": "拟态风互联网工作汇报PPT模板",
+      "role": "other",
+      "sha256": "e65c5292390bfb2287355ec1355ac785d08c7a09b5db5624b0915f925b0ee869",
+      "observation": "浅色大板轻微浮起，左侧圆形肖像外有多层同色环，一段蓝色粗弧突出。",
+      "preserve": "同色凹凸边缘形成轻空间，蓝弧提供单一焦点。",
+      "failure": "蓝弧若无数值含义就不应像进度条；极浅边缘需检查显示效果。",
+      "basis": "可见截图关系分析与人工适配验样；并非精确原生还原或审美认可"
+    }
+  }
+}

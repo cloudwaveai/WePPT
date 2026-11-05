@@ -1,7 +1,7 @@
 // Run all *.cjs browser tests against a fresh local demo studio.
 // Usage: node tests/run_browser_tests.mjs (set WEPPT_CHROMIUM to a Chrome binary).
 import {spawn, spawnSync} from 'node:child_process';
-import {mkdtempSync, readdirSync} from 'node:fs';
+import {mkdtempSync, readdirSync, mkdirSync, writeFileSync} from 'node:fs';
 import {join} from 'node:path';
 import {tmpdir} from 'node:os';
 
@@ -15,7 +15,7 @@ const url=await new Promise((res,rej)=>{
   server.on('exit',()=>rej(new Error('studio exited: '+buf)));
   setTimeout(()=>rej(new Error('studio start timeout: '+buf)),30000);
 });
-console.log('studio:',url,'root:',root);
+console.log('studio:',new URL(url).origin,'root:',root);
 const files=readdirSync('tests').filter(f=>f.endsWith('browser.cjs')).sort();
 const extra=process.argv.slice(2);
 const targets=extra.length?files.filter(f=>extra.some(x=>f.includes(x))):files;
@@ -23,8 +23,10 @@ const env={...process.env,PPT_STUDIO_TEST_URL:url,PPT_PLAYWRIGHT_MODULE:'playwri
   PPT_BROWSER_OUTPUT:process.env.PPT_BROWSER_OUTPUT||'/tmp/weppt-browser-tests',
   WEPPT_CHROMIUM:process.env.WEPPT_CHROMIUM||(process.platform==='darwin'?'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome':'chromium')};
 const results=[];
+mkdirSync(env.PPT_BROWSER_OUTPUT,{recursive:true});
 for(const file of targets){
   const r=spawnSync('node',['tests/'+file],{env,encoding:'utf8',timeout:Number(process.env.PPT_BROWSER_TIMEOUT||180000)});
+  writeFileSync(join(env.PPT_BROWSER_OUTPUT,file+'.log'),(r.stdout||'')+'\n'+(r.stderr||'')+(r.error?'\n'+r.error.message:''));
   const tail=(r.stdout+'\n'+r.stderr).trim().split('\n').slice(-3).join(' | ');
   results.push({file,ok:r.status===0,tail});
   console.log((r.status===0?'PASS':'FAIL'),file,'—',tail.slice(0,300));

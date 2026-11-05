@@ -75,3 +75,20 @@
 .matching-templates .chat-feed,.matching-templates .composer,.matching-templates .chat-footnote{display:none}
 
 .template-match-card img[data-preview-state="waiting"]{visibility:hidden}
+
+/* Direct document tools follow the selected thumbnail, like a desktop editor. */
+.slide-tools{display:flex;gap:4px;padding:0 8px 10px;justify-content:space-between}
+.slide-tools button{border:0;border-radius:5px;background:transparent;color:#354052;min-width:26px;height:30px;font:inherit;white-space:nowrap;cursor:pointer;flex-shrink:0}
+.slide-tools button:hover{background:#e1e6ed}.slide-tools button:disabled{opacity:.35;cursor:default}
+.slide-tools button:first-child{font-size:24px;background:#fff;border:1px solid #cdd5df}
+.background-status{display:flex;align-items:center;gap:14px;padding:8px 18px;background:#edf3f8;color:#263a50;font-size:13px;border-bottom:1px solid #d8e2ec}
+.background-status[hidden]{display:none}.background-note{color:#64758a;margin-right:auto}
+.secondary-options{margin-right:auto}.secondary-options summary,.style-details summary{cursor:pointer;padding:8px;color:#647084;font-size:12px}
+.style-details{margin:12px 0}.style-upload-row>span{font-size:12px;color:#647084}
+@media(max-width:760px){.background-status{flex-wrap:wrap;gap:6px}.slide-tools{justify-content:flex-start}.slide-tools button{min-width:38px}}
+
+/* A whole family is chosen by its actual three page roles. */
+.packs-dialog{width:min(1080px,94vw);max-height:90vh;border:1px solid var(--border,#d7dce2);border-radius:14px;padding:24px;overflow:auto}
+.pack-card{padding:18px 0;border-top:1px solid #e1e4e8}.pack-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}.pack-heading h3{margin:0;font-size:18px}
+.pack-previews{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.pack-previews figure{margin:0;min-width:0}.pack-previews iframe{display:block;width:100%;aspect-ratio:16/9;border:1px solid #d9dde3;border-radius:4px;pointer-events:none}.pack-previews figcaption{font-size:13px;margin-top:7px;color:#586274}
+@media(max-width:600px){.packs-dialog{padding:14px}.pack-previews{grid-template-columns:1fr}.pack-heading{align-items:flex-start}.pack-heading .button{font-size:13px}}

@@ -25,6 +25,30 @@ const singleParagraphProperties = xml => xml.replace(/<a:p>[\s\S]*?<\/a:p>/g, pa
   return paragraph.replace(paragraphProperties, match => (seen ? '' : (seen = true, match)));
 });
 
+// Read dimensions only. Preserve the original encoding and all media bytes.
+function imageDimensions(src) {
+  const b=Buffer.from(src.slice(src.indexOf(',')+1),'base64');
+  if(b.length>=24 && b.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10])))
+    return [b.readUInt32BE(16),b.readUInt32BE(20)];
+  if(b[0]===255 && b[1]===216){
+    let i=2;
+    while(i+4<=b.length){
+      if(b[i++]!==255)continue;
+      while(b[i]===255)i++;
+      const marker=b[i++];
+      if(marker===217||marker===218)break;
+      if(marker===216||marker===1||(marker>=208&&marker<=215))continue;
+      if(i+2>b.length)break;
+      const n=b.readUInt16BE(i);
+      if(n<2||i+n>b.length)break;
+      if([192,193,194,195,197,198,199,201,202,203,205,206,207].includes(marker) && n>=7)
+        return [b.readUInt16BE(i+5),b.readUInt16BE(i+3)];
+      i+=n;
+    }
+  }
+  throw new Error('图片原始尺寸无法读取，未导出拉伸的替代图片。');
+}
+
 try {
   const input = JSON.parse(fs.readFileSync(0, 'utf8'));
   const output = process.argv[2];
@@ -100,8 +124,17 @@ try {
         slide.addShape(pptx.ShapeType.line,{...box,line:{color:rgb(obj.stroke),width:obj.strokeWidth*points,transparency,
           beginArrowType:obj.startArrow?'triangle':'none',endArrowType:obj.endArrow?'triangle':'none'}});
       } else if (obj.type === 'image') {
-        slide.addImage({...box,data:obj.src,sizing:{type:obj.fit,w:box.w,h:box.h},
-          altText:obj.id+' — '+obj.alt,transparency});
+        const [iw,ih]=imageDimensions(obj.src);
+        if(!iw||!ih)throw new Error('图片原始尺寸无效。');
+        let placement={...box};
+        if(obj.fit==='contain'){
+          const ratio=Math.min(box.w/iw,box.h/ih),w=iw*ratio,h=ih*ratio;
+          placement={x:box.x+(box.w-w)/2,y:box.y+(box.h-h)/2,w,h};
+        }else if(obj.fit==='cover'){
+          // PptxGenJS uses w/h as the intrinsic ratio when sizing is supplied.
+          placement={...box,w:iw/96,h:ih/96,sizing:{type:'cover',w:box.w,h:box.h}};
+        }
+        slide.addImage({...placement,data:obj.src,altText:obj.id+' — '+obj.alt,transparency});
       }
     }
     slide.addNotes('Slide ID: '+scene.slideId+'\n'+(scene.notes||''));

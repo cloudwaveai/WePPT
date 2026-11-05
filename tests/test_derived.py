@@ -41,12 +41,35 @@ class DeriveTests(unittest.TestCase):
                                     "w": 10, "h": 10, "text": "LOGO"})
         scene["objects"].append({"id": "arrow", "type": "text", "x": 0, "y": 0,
                                  "w": 10, "h": 10, "text": "→"})
+        for index in range(2):
+            scene['objects'].append({'id':f'status-{index}','type':'text','x':100+index*200,'y':500,
+                                     'w':100,'h':40,'text':'开发中'})
         self.s.put_scene(sid, current["contentRevision"], scene, "测试")
         pages = mod._source_pages(self.s)
         self.assertTrue(len(pages) >= 1)
         self.assertFalse(any("LOGO" in t for t in pages[0]["texts"]))
         self.assertNotIn("→", pages[0]["texts"])
-        self.assertEqual(len(pages[0]["texts"]), len(set(pages[0]["texts"])))
+        self.assertEqual(pages[0]['texts'].count('开发中'),2)
+
+    def test_restyle_rejects_lost_repeated_status_at_plan_and_render(self):
+        source=[{'title':'已有内容复用','texts':['已有内容复用','开发中','打开 PPTX','开发中','风格副本']}]
+        path=self.s.wb.project_dir(self.s.project_id)/'restyle-source.json'
+        path.write_text(json.dumps(source,ensure_ascii=False))
+        plan={'title':'改版','pages':[{'title':'已有内容复用','role':'content','user_intent':'原文改版',
+              'composition':{'blocks':[{'id':'a','heading':'打开 PPTX','body':'开发中'},
+                                       {'id':'b','heading':'风格副本','body':'开发中'}]}}]}
+        mod.validate_restyle_plan(self.s,plan)
+        plan['pages'][0]['composition']['blocks'][1]['body']=''
+        self.error('INVALID_COMPOSITION',mod.validate_restyle_plan,self.s,plan)
+        # Integration entry must reject before saving a deck too.
+        plan['pages'][0].pop('composition')
+        plan['pages'] *= 2  # Decks require at least two pages.
+        path.write_text(json.dumps(source*2,ensure_ascii=False))
+        self.error('INVALID_COMPOSITION',self.s.create_deck,plan,'保留源稿',execution='outline')
+        scene={'objects':[{'type':'text','text':t} for t in source[0]['texts']]}
+        mod.validate_restyle_page(self.s,0,scene)
+        scene['objects'].pop(3)
+        self.error('INVALID_COMPOSITION',mod.validate_restyle_page,self.s,0,scene)
 
     def test_audience_derive_creates_project_and_job(self):
         self.s.set_palette({"primary": "#1F4E9E", "secondary": ["#2BB3C0"]})
@@ -137,7 +160,7 @@ class DeriveTests(unittest.TestCase):
         current = self.s.get_scene(sid)
         scene = current["scene"]
         with patch.object(mod, "_source_pages", return_value=[{"index": 1, "id": sid,
-                "role": "content", "title": "长页", "texts": [huge], "scene": scene}]):
+                "role": "content", "title": "长页", "texts": [huge], "scene": scene}] * len(self.s.state()["slides"])):
             self.error("DERIVE_TOO_LONG", mod.derive, self.s, "audience", audience="customer")
 
 

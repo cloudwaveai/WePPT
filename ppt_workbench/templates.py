@@ -10,7 +10,7 @@ from .core import EngineError
 from .rendering import validate_scene
 from .template_content import fit_text
 from .template_categories import annotate_category
-from . import design_map, opening_templates, semantic_planning, reference_templates
+from . import design_map, opening_templates, semantic_planning, reference_templates, page_kits
 
 
 _TEMPLATES = (
@@ -77,6 +77,9 @@ def catalog():
                                 use=description, inputs=[], checks=[], legacy=True))
     entries += reference_templates.catalog(entries)
     for entry in entries:
+        if not entry.get("reference"):entry["archived"]=True
+    entries = page_kits.catalog() + entries
+    for entry in entries:
         annotate_category(entry)
         if entry["id"] in _REFERENCE:
             entry["sourceLabel"] = "本地新增版式" if entry.get("local") else "设计地图 · 原版布局"
@@ -88,7 +91,9 @@ def recommend_templates(role, text="", limit=6, *, page=None, taste=None):
     """Rank role-compatible layouts; optionally supply a structured slide as page."""
     role = role if role in _ROLES else "content"
     plan = semantic_planning.plan_page_expression(page, text=text)
-    matching = [t for t in catalog() if not t.get("legacy") and role in t.get("roles", [])]
+    matching = [t for t in catalog() if not t.get("legacy") and not t.get("archived") and role in t.get("roles", [])]
+    current=[t for t in matching if t.get("current")]
+    if current:matching=current
     features = (taste or {}).get("features") or {}
     def taste_bonus(template):
         value = 0
@@ -131,6 +136,10 @@ def recover_generated_template(template_id, role, *, page=None, known_ids=None):
 
 def template_for_role(template_id, role):
     """Adapt a deck preference to a page role without changing legacy themes."""
+    kit=page_kits.recipe(template_id)
+    if kit:
+        if kit[3]==role:return template_id
+        return next((t['id'] for t in page_kits.catalog() if role in t['roles'] and t['spatialMethod']==kit[4]), next((t['id'] for t in page_kits.catalog() if role in t['roles']),template_id))
     if reference_templates.base_id(template_id):
         entry = next(t for t in catalog() if t["id"] == template_id)
         if role in entry["roles"]:
@@ -162,6 +171,7 @@ def apply_template(scene, template_id):
     Long content is retained verbatim; browser quality measurement remains the
     authority on overflow. No data or chart objects are introduced.
     """
+    if page_kits.recipe(template_id):return page_kits.apply(scene,template_id)
     from .template_content import strip_template_decoration, reflow_overlapping_text
     base = reference_templates.base_id(template_id)
     if base:
@@ -403,6 +413,7 @@ def _apply_reference(scene, entry):
 
 
 def sample_scene(template_id):
+    if page_kits.recipe(template_id):return page_kits.sample(template_id)
     base = reference_templates.base_id(template_id)
     if base:
         result = sample_scene(base)

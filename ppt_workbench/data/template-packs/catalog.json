@@ -1,0 +1,4225 @@
+{
+  "schema": "weppt-template-packs",
+  "version": 1,
+  "packs": [
+    {
+      "id": "spatial-type-weave-v1",
+      "version": 1,
+      "name": "字图穿插",
+      "spatialMethod": {
+        "id": "type-weave",
+        "invariants": [
+          "以字体尺度和字图前后关系建立主次，保护标题和证据完整。",
+          "长文使用大标题侧栏与独立阅读轴，不退回等大卡片。"
+        ],
+        "limitations": "摄影、人物、复杂材质与精确原生图层未导入；只使用本项目真实原图和独立原生文字图形。"
+      },
+      "description": "以字体尺度和字图前后关系建立主次，保护标题和证据完整。",
+      "principles": [
+        "以字体尺度和字图前后关系建立主次，保护标题和证据完整。",
+        "长文使用大标题侧栏与独立阅读轴，不退回等大卡片。"
+      ],
+      "sources": [
+        {
+          "pageId": "R44-01",
+          "sourceUrl": "https://www.canva.cn/templates/EAG6meH2JMY/",
+          "sourceTitle": "灰粉墨绿色清新招聘文化艺术演示文稿（16:9）",
+          "role": "cover",
+          "sha256": "3c2ec011613950af6e6a03663e415a5bf966881e748895e81a27f082f361df70",
+          "observation": "后方绿色巨字被照片遮挡，前方浅色巨字又覆盖照片下部。",
+          "preserve": "三层遮挡实际可见，露出的字形仍支持识读。",
+          "failure": "遮住脸、姓名或关键结论即失效；只设置图层但没有可见穿插没有意义。",
+          "basis": "可见截图关系分析与人工适配验样；并非精确原生还原或审美认可"
+        }
+      ],
+      "rendererSHA256": "b5454fd2710c012158d6535620b33e66424df8fae463929d9c32967b11e63098",
+      "colors": {
+        "paper": "#E9B8C3",
+        "ink": "#164C39",
+        "accent": "#164C39",
+        "surface": "#FFF5DB",
+        "secondary": "#FFF5DB",
+        "inverse": "#FFFFFF",
+        "muted": "#164C39"
+      },
+      "masters": {
+        "cover": {
+          "role": "cover",
+          "roles": [
+            "cover"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "relationships": [
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R44-01"
+            ]
+          }
+        },
+        "chapter": {
+          "role": "chapter",
+          "roles": [
+            "chapter"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "relationships": [
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R44-01"
+            ]
+          }
+        },
+        "ending": {
+          "role": "ending",
+          "roles": [
+            "ending"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "relationships": [
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R44-01"
+            ]
+          }
+        },
+        "body-columns": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "columns",
+          "capacity": [
+            2,
+            4
+          ],
+          "relationships": [
+            "parallel",
+            "comparison"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R44-01"
+            ]
+          }
+        },
+        "body-rows": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "rows",
+          "capacity": [
+            1,
+            6
+          ],
+          "relationships": [
+            "parallel",
+            "comparison",
+            "evidence",
+            "summary",
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R44-01"
+            ]
+          }
+        },
+        "body-process": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "process",
+          "capacity": [
+            2,
+            6
+          ],
+          "relationships": [
+            "process"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R44-01"
+            ]
+          }
+        },
+        "body-photo": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "photo",
+          "capacity": [
+            1,
+            3
+          ],
+          "relationships": [
+            "evidence",
+            "parallel",
+            "comparison",
+            "summary",
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R44-01"
+            ]
+          }
+        },
+        "body-layers": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "layers",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "layers"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R44-01"
+            ]
+          }
+        },
+        "body-hub": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "hub",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "hub"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R44-01"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "spatial-offset-crossing-v1",
+      "version": 1,
+      "name": "跨界错位",
+      "spatialMethod": {
+        "id": "offset-crossing",
+        "invariants": [
+          "主体跨过深浅分界，底板错位露边；没有原图时使用完整文字构图，不生成空图框。",
+          "按真实关系选择错位并列、顺序宽行、层级或中心连接，不能只因数量相同就替换关系。"
+        ],
+        "limitations": "摄影、人物、复杂材质与精确原生图层未导入；只使用本项目真实原图和独立原生文字图形。"
+      },
+      "description": "主体跨过深浅分界，底板错位露边；没有原图时使用完整文字构图，不生成空图框。",
+      "principles": [
+        "主体跨过深浅分界，底板错位露边；没有原图时使用完整文字构图，不生成空图框。",
+        "按真实关系选择错位并列、顺序宽行、层级或中心连接，不能只因数量相同就替换关系。"
+      ],
+      "sources": [
+        {
+          "pageId": "S201-01",
+          "sourceUrl": "https://www.canva.cn/templates/EAF9UItJIkE/",
+          "sourceTitle": "绿色简约杂志风工作汇报PPT模板",
+          "role": "cover",
+          "sha256": "7bf2a11fa67c93e551c417e0947f7fb39c6de023679ae1ac5b425553e8a3a2b9",
+          "observation": "右侧森林竖图盖在深绿底板前，底板在右边与上方露出，左侧标题独立。",
+          "preserve": "照片与底板的错位露边构成前后，森林自身透视提供纵深。",
+          "failure": "不能只剩绿色矩形；原图年份、署名及装饰英文不自动保留。",
+          "basis": "可见截图关系分析与人工适配验样；并非精确原生还原或审美认可"
+        },
+        {
+          "pageId": "S201-04",
+          "sourceUrl": "https://www.canva.cn/templates/EAF9UItJIkE/",
+          "sourceTitle": "绿色简约杂志风工作汇报PPT模板",
+          "role": "body",
+          "sha256": "a4c7b8058dbefac118ea5195f4c61e11388ffdf0bb76476b85768f6892cfd612",
+          "observation": "中间细长森林图贯穿，四组文字左右交错，半透观感浅绿箭头从文字侧压过照片边缘。",
+          "preserve": "照片形成共同轴线，说明与箭头绑定且左右分布。",
+          "failure": "箭头容易暗示流向，不能把互不相关的四项强行连成流程。",
+          "basis": "可见截图关系分析与人工适配验样；并非精确原生还原或审美认可"
+        },
+        {
+          "pageId": "R20-04",
+          "sourceUrl": "https://www.canva.cn/templates/EAHJgajvCsU/",
+          "sourceTitle": "蓝白色简约风产品介绍演示文稿（16:9）",
+          "role": "body",
+          "sha256": "f0eb19f81943b34fd5b13177e61439e2ceafc7303eeaf2bc873dba7b181730aa",
+          "observation": "左侧三条文字，右侧大竖图与较小照片错位重叠，小图外有白色边缘。",
+          "preserve": "前后大小与遮挡明确，左侧阅读区不被侵入。",
+          "failure": "随机两张图片只会变成装饰；前图不能遮掉后图关键证据。",
+          "basis": "可见截图关系分析与人工适配验样；并非精确原生还原或审美认可"
+        }
+      ],
+      "rendererSHA256": "b5454fd2710c012158d6535620b33e66424df8fae463929d9c32967b11e63098",
+      "colors": {
+        "paper": "#F4F2E8",
+        "ink": "#263C2A",
+        "accent": "#849A3D",
+        "surface": "#CCD5B8",
+        "secondary": "#A0B65F",
+        "inverse": "#FFFFFF",
+        "muted": "#263C2A"
+      },
+      "masters": {
+        "cover": {
+          "role": "cover",
+          "roles": [
+            "cover"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "relationships": [
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S201-01",
+              "S201-04",
+              "R20-04"
+            ]
+          }
+        },
+        "chapter": {
+          "role": "chapter",
+          "roles": [
+            "chapter"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "relationships": [
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S201-01",
+              "S201-04",
+              "R20-04"
+            ]
+          }
+        },
+        "ending": {
+          "role": "ending",
+          "roles": [
+            "ending"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "relationships": [
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S201-01",
+              "S201-04",
+              "R20-04"
+            ]
+          }
+        },
+        "body-columns": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "columns",
+          "capacity": [
+            2,
+            4
+          ],
+          "relationships": [
+            "parallel",
+            "comparison"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S201-01",
+              "S201-04",
+              "R20-04"
+            ]
+          }
+        },
+        "body-rows": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "rows",
+          "capacity": [
+            1,
+            6
+          ],
+          "relationships": [
+            "parallel",
+            "comparison",
+            "evidence",
+            "summary",
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S201-01",
+              "S201-04",
+              "R20-04"
+            ]
+          }
+        },
+        "body-process": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "process",
+          "capacity": [
+            2,
+            6
+          ],
+          "relationships": [
+            "process"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S201-01",
+              "S201-04",
+              "R20-04"
+            ]
+          }
+        },
+        "body-photo": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "photo",
+          "capacity": [
+            1,
+            3
+          ],
+          "relationships": [
+            "evidence",
+            "parallel",
+            "comparison",
+            "summary",
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S201-01",
+              "S201-04",
+              "R20-04"
+            ]
+          }
+        },
+        "body-layers": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "layers",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "layers"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S201-01",
+              "S201-04",
+              "R20-04"
+            ]
+          }
+        },
+        "body-hub": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "hub",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "hub"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S201-01",
+              "S201-04",
+              "R20-04"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "spatial-translucent-planes-v1",
+      "version": 1,
+      "name": "透叠层面",
+      "spatialMethod": {
+        "id": "translucent-planes",
+        "invariants": [
+          "后层在透明板下保持可见，文字保持实色，透明观感不冒充玻璃材质。",
+          "信息增加时把透叠集中到边缘，完整保留阅读区；流程不能强加为四层结构。"
+        ],
+        "limitations": "摄影、人物、复杂材质与精确原生图层未导入；只使用本项目真实原图和独立原生文字图形。"
+      },
+      "description": "后层在透明板下保持可见，文字保持实色，透明观感不冒充玻璃材质。",
+      "principles": [
+        "后层在透明板下保持可见，文字保持实色，透明观感不冒充玻璃材质。",
+        "信息增加时把透叠集中到边缘，完整保留阅读区；流程不能强加为四层结构。"
+      ],
+      "sources": [
+        {
+          "pageId": "R42-05",
+          "sourceUrl": "https://www.canva.cn/templates/EAHO962rjMY/",
+          "sourceTitle": "蓝金色商务风锥形图演示文稿结构页",
+          "role": "other",
+          "sha256": "8ec502340b3981b6e0af3f1731fd9e64621f10a1ed201c797eb7e443d6a8b97e",
+          "observation": "淡锥形轮廓内部放四个椭圆层面，后方轮廓仍可辨认，左右标签对齐各层。",
+          "preserve": "外壳与内部层面的区别、椭圆远近和上下间隔建立空间。",
+          "failure": "截图不能确认原始透明度；层面积不能被误读为未经提供的数值。",
+          "basis": "可见截图关系分析与人工适配验样；并非精确原生还原或审美认可"
+        }
+      ],
+      "rendererSHA256": "b5454fd2710c012158d6535620b33e66424df8fae463929d9c32967b11e63098",
+      "colors": {
+        "paper": "#E9ECF5",
+        "ink": "#172C61",
+        "accent": "#4763B5",
+        "surface": "#D7DEF1",
+        "secondary": "#97B7D5",
+        "inverse": "#FFFFFF",
+        "muted": "#172C61"
+      },
+      "masters": {
+        "cover": {
+          "role": "cover",
+          "roles": [
+            "cover"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "relationships": [
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R42-05"
+            ]
+          }
+        },
+        "chapter": {
+          "role": "chapter",
+          "roles": [
+            "chapter"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "relationships": [
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R42-05"
+            ]
+          }
+        },
+        "ending": {
+          "role": "ending",
+          "roles": [
+            "ending"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "relationships": [
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R42-05"
+            ]
+          }
+        },
+        "body-columns": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "columns",
+          "capacity": [
+            2,
+            4
+          ],
+          "relationships": [
+            "parallel",
+            "comparison"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R42-05"
+            ]
+          }
+        },
+        "body-rows": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "rows",
+          "capacity": [
+            1,
+            6
+          ],
+          "relationships": [
+            "parallel",
+            "comparison",
+            "evidence",
+            "summary",
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R42-05"
+            ]
+          }
+        },
+        "body-process": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "process",
+          "capacity": [
+            2,
+            6
+          ],
+          "relationships": [
+            "process"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R42-05"
+            ]
+          }
+        },
+        "body-photo": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "photo",
+          "capacity": [
+            1,
+            3
+          ],
+          "relationships": [
+            "evidence",
+            "parallel",
+            "comparison",
+            "summary",
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R42-05"
+            ]
+          }
+        },
+        "body-layers": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "layers",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "layers"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R42-05"
+            ]
+          }
+        },
+        "body-hub": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "hub",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "hub"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "R42-05"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "spatial-concentric-relief-v1",
+      "version": 1,
+      "name": "同心浮雕",
+      "spatialMethod": {
+        "id": "concentric-relief",
+        "invariants": [
+          "共心层面与统一边缘明暗建立浅浮雕，不用圆弧假装完成率或指标。",
+          "只有明确的中心关系才把内容围绕中心；并列和流程采用独立阅读区，圆形母题退向边缘。"
+        ],
+        "limitations": "摄影、人物、复杂材质与精确原生图层未导入；只使用本项目真实原图和独立原生文字图形。"
+      },
+      "description": "共心层面与统一边缘明暗建立浅浮雕，不用圆弧假装完成率或指标。",
+      "principles": [
+        "共心层面与统一边缘明暗建立浅浮雕，不用圆弧假装完成率或指标。",
+        "只有明确的中心关系才把内容围绕中心；并列和流程采用独立阅读区，圆形母题退向边缘。"
+      ],
+      "sources": [
+        {
+          "pageId": "S350-01",
+          "sourceUrl": "https://www.chuangkit.com/odyssey/createDesign?t=476397",
+          "sourceTitle": "简约微立体风月度工作汇报通用PPT模板",
+          "role": "other",
+          "sha256": "97f0a6d0e742c172c80620d0d4f996dad01bd4f8311ad9ecf51b08a603360c84",
+          "observation": "左侧绿色圆环叠在多层白色同心盘上，盘边浅影可见，标题在右侧。",
+          "preserve": "同向边缘光影让白色层面从背景分离，绿环提供焦点。",
+          "failure": "圆环无真实数值时不能称为完成率；泛加阴影不能代替同心结构。",
+          "basis": "可见截图关系分析与人工适配验样；并非精确原生还原或审美认可"
+        },
+        {
+          "pageId": "S627-01",
+          "sourceUrl": "https://www.chuangkit.com/odyssey/createDesign?t=518112",
+          "sourceTitle": "拟态风互联网工作汇报PPT模板",
+          "role": "other",
+          "sha256": "e65c5292390bfb2287355ec1355ac785d08c7a09b5db5624b0915f925b0ee869",
+          "observation": "浅色大板轻微浮起，左侧圆形肖像外有多层同色环，一段蓝色粗弧突出。",
+          "preserve": "同色凹凸边缘形成轻空间，蓝弧提供单一焦点。",
+          "failure": "蓝弧若无数值含义就不应像进度条；极浅边缘需检查显示效果。",
+          "basis": "可见截图关系分析与人工适配验样；并非精确原生还原或审美认可"
+        }
+      ],
+      "rendererSHA256": "b5454fd2710c012158d6535620b33e66424df8fae463929d9c32967b11e63098",
+      "colors": {
+        "paper": "#F0F3F0",
+        "ink": "#243D31",
+        "accent": "#3F845A",
+        "surface": "#D6E1D3",
+        "secondary": "#8CB59A",
+        "inverse": "#FFFFFF",
+        "muted": "#243D31"
+      },
+      "masters": {
+        "cover": {
+          "role": "cover",
+          "roles": [
+            "cover"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "relationships": [
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S350-01",
+              "S627-01"
+            ]
+          }
+        },
+        "chapter": {
+          "role": "chapter",
+          "roles": [
+            "chapter"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "relationships": [
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S350-01",
+              "S627-01"
+            ]
+          }
+        },
+        "ending": {
+          "role": "ending",
+          "roles": [
+            "ending"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "relationships": [
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S350-01",
+              "S627-01"
+            ]
+          }
+        },
+        "body-columns": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "columns",
+          "capacity": [
+            2,
+            4
+          ],
+          "relationships": [
+            "parallel",
+            "comparison"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S350-01",
+              "S627-01"
+            ]
+          }
+        },
+        "body-rows": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "rows",
+          "capacity": [
+            1,
+            6
+          ],
+          "relationships": [
+            "parallel",
+            "comparison",
+            "evidence",
+            "summary",
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S350-01",
+              "S627-01"
+            ]
+          }
+        },
+        "body-process": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "process",
+          "capacity": [
+            2,
+            6
+          ],
+          "relationships": [
+            "process"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S350-01",
+              "S627-01"
+            ]
+          }
+        },
+        "body-photo": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "photo",
+          "capacity": [
+            1,
+            3
+          ],
+          "relationships": [
+            "evidence",
+            "parallel",
+            "comparison",
+            "summary",
+            "hero"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S350-01",
+              "S627-01"
+            ]
+          }
+        },
+        "body-layers": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "layers",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "layers"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S350-01",
+              "S627-01"
+            ]
+          }
+        },
+        "body-hub": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "hub",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "hub"
+          ],
+          "provenance": {
+            "basis": "source-derived-spatial-adaptation",
+            "sourcePages": [
+              "S350-01",
+              "S627-01"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "crimson-grid-v1",
+      "version": 1,
+      "name": "绛红方格",
+      "description": "大面积纸白与绛红建立主次；封面网格提供秩序，正文采用红色标题带与完整说明区。",
+      "principles": [
+        "大面积纸白与绛红建立主次；封面网格提供秩序，正文采用红色标题带与完整说明区。",
+        "封面居中，章节复用标题区域，正文按内容在分栏与宽行之间匹配。"
+      ],
+      "sources": [
+        {
+          "file": "02-cover-58e13253-c4fa-4517-9dc6-6507e7dc828b.jpg",
+          "title": "深红淡黄色简约品牌介绍演示文稿（16:9）",
+          "sourceUrl": "https://www.canva.cn/templates/EAHDQZGHlVY/",
+          "sha256": "0d1d2e88be2b58054435df013b5ecb1ae5bbe9f6132b3904c03999b899f7b33e",
+          "role": "cover"
+        },
+        {
+          "file": "02-body-1772c236-3f6e-4f77-9a95-ed6c527db19c.jpg",
+          "title": "深红淡黄色简约品牌介绍演示文稿（16:9）",
+          "sourceUrl": "https://www.canva.cn/templates/EAHDQZGHlVY/",
+          "sha256": "eeb1b837a14dfd9b57130694ce7aaac86cce6016fad40719a96abab36f2d7b5d",
+          "role": "body"
+        }
+      ],
+      "extraction": {
+        "observed": [
+          "大面积纸白与绛红建立主次；封面网格提供秩序，正文采用红色标题带与完整说明区。",
+          "封面居中，章节复用标题区域，正文按内容在分栏与宽行之间匹配。"
+        ],
+        "estimated": "1280×720 页面；从截图估算可见分区与对齐，不声称获得原生对象参数。",
+        "fixed": [
+          "整套色彩角色",
+          "标题基线",
+          "正文阅读区",
+          "图文层级"
+        ],
+        "adaptable": [
+          "按关系选择正文变体",
+          "按真实组数重复内容模块",
+          "长文改宽行",
+          "已有图片的位置与说明"
+        ],
+        "notImported": [
+          "参考原文与品牌",
+          "参考摄影与截图",
+          "无法确认的透明度、渐变与内部图层"
+        ]
+      },
+      "colors": {
+        "paper": "#F7F5F1",
+        "ink": "#651F16",
+        "accent": "#651F16",
+        "surface": "#EEE8E2",
+        "muted": "#66564D",
+        "inverse": "#FFFFFF"
+      },
+      "masters": {
+        "cover": {
+          "role": "cover",
+          "roles": [
+            "cover"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "provenance": {
+            "referenceRole": "cover",
+            "basis": "visible-screenshot-estimate",
+            "changes": "去除示例品牌、英文眉题、署名与口号；标题高度适应中文换行。"
+          },
+          "fixed": [
+            {
+              "id": "master.corner.1",
+              "type": "rect",
+              "x": 0,
+              "y": 0,
+              "w": 72,
+              "h": 40,
+              "fill": "#651F16"
+            },
+            {
+              "id": "master.corner.2",
+              "type": "rect",
+              "x": 1208,
+              "y": 680,
+              "w": 72,
+              "h": 40,
+              "fill": "#651F16"
+            },
+            {
+              "id": "master.grid.x0",
+              "type": "line",
+              "x": 0,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x1",
+              "type": "line",
+              "x": 40,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x2",
+              "type": "line",
+              "x": 80,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x3",
+              "type": "line",
+              "x": 120,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x4",
+              "type": "line",
+              "x": 160,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x5",
+              "type": "line",
+              "x": 200,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x6",
+              "type": "line",
+              "x": 240,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x7",
+              "type": "line",
+              "x": 280,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x8",
+              "type": "line",
+              "x": 320,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x9",
+              "type": "line",
+              "x": 360,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x10",
+              "type": "line",
+              "x": 400,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x11",
+              "type": "line",
+              "x": 440,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x12",
+              "type": "line",
+              "x": 480,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x13",
+              "type": "line",
+              "x": 520,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x14",
+              "type": "line",
+              "x": 560,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x15",
+              "type": "line",
+              "x": 600,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x16",
+              "type": "line",
+              "x": 640,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x17",
+              "type": "line",
+              "x": 680,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x18",
+              "type": "line",
+              "x": 720,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x19",
+              "type": "line",
+              "x": 760,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x20",
+              "type": "line",
+              "x": 800,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x21",
+              "type": "line",
+              "x": 840,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x22",
+              "type": "line",
+              "x": 880,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x23",
+              "type": "line",
+              "x": 920,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x24",
+              "type": "line",
+              "x": 960,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x25",
+              "type": "line",
+              "x": 1000,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x26",
+              "type": "line",
+              "x": 1040,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x27",
+              "type": "line",
+              "x": 1080,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x28",
+              "type": "line",
+              "x": 1120,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x29",
+              "type": "line",
+              "x": 1160,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x30",
+              "type": "line",
+              "x": 1200,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x31",
+              "type": "line",
+              "x": 1240,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x32",
+              "type": "line",
+              "x": 1280,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y0",
+              "type": "line",
+              "x": 0,
+              "y": 192,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y1",
+              "type": "line",
+              "x": 0,
+              "y": 232,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y2",
+              "type": "line",
+              "x": 0,
+              "y": 272,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y3",
+              "type": "line",
+              "x": 0,
+              "y": 312,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y4",
+              "type": "line",
+              "x": 0,
+              "y": 352,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y5",
+              "type": "line",
+              "x": 0,
+              "y": 392,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y6",
+              "type": "line",
+              "x": 0,
+              "y": 432,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y7",
+              "type": "line",
+              "x": 0,
+              "y": 472,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y8",
+              "type": "line",
+              "x": 0,
+              "y": 512,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y9",
+              "type": "line",
+              "x": 0,
+              "y": 552,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 88,
+            "y": 208,
+            "w": 1104,
+            "h": 192,
+            "fontSize": 82,
+            "color": "#651F16",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15,
+            "align": "center"
+          },
+          "contentRegion": {
+            "x": 120,
+            "y": 432,
+            "w": 1040,
+            "h": 214
+          }
+        },
+        "chapter": {
+          "role": "chapter",
+          "roles": [
+            "chapter"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "provenance": {
+            "referenceRole": "cover",
+            "basis": "derived-from-cover",
+            "changes": "去除示例品牌、英文眉题、署名与口号；标题高度适应中文换行。"
+          },
+          "fixed": [
+            {
+              "id": "master.corner.1",
+              "type": "rect",
+              "x": 0,
+              "y": 0,
+              "w": 72,
+              "h": 40,
+              "fill": "#651F16"
+            },
+            {
+              "id": "master.corner.2",
+              "type": "rect",
+              "x": 1208,
+              "y": 680,
+              "w": 72,
+              "h": 40,
+              "fill": "#651F16"
+            },
+            {
+              "id": "master.grid.x0",
+              "type": "line",
+              "x": 0,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x1",
+              "type": "line",
+              "x": 40,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x2",
+              "type": "line",
+              "x": 80,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x3",
+              "type": "line",
+              "x": 120,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x4",
+              "type": "line",
+              "x": 160,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x5",
+              "type": "line",
+              "x": 200,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x6",
+              "type": "line",
+              "x": 240,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x7",
+              "type": "line",
+              "x": 280,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x8",
+              "type": "line",
+              "x": 320,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x9",
+              "type": "line",
+              "x": 360,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x10",
+              "type": "line",
+              "x": 400,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x11",
+              "type": "line",
+              "x": 440,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x12",
+              "type": "line",
+              "x": 480,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x13",
+              "type": "line",
+              "x": 520,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x14",
+              "type": "line",
+              "x": 560,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x15",
+              "type": "line",
+              "x": 600,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x16",
+              "type": "line",
+              "x": 640,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x17",
+              "type": "line",
+              "x": 680,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x18",
+              "type": "line",
+              "x": 720,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x19",
+              "type": "line",
+              "x": 760,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x20",
+              "type": "line",
+              "x": 800,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x21",
+              "type": "line",
+              "x": 840,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x22",
+              "type": "line",
+              "x": 880,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x23",
+              "type": "line",
+              "x": 920,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x24",
+              "type": "line",
+              "x": 960,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x25",
+              "type": "line",
+              "x": 1000,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x26",
+              "type": "line",
+              "x": 1040,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x27",
+              "type": "line",
+              "x": 1080,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x28",
+              "type": "line",
+              "x": 1120,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x29",
+              "type": "line",
+              "x": 1160,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x30",
+              "type": "line",
+              "x": 1200,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x31",
+              "type": "line",
+              "x": 1240,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x32",
+              "type": "line",
+              "x": 1280,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y0",
+              "type": "line",
+              "x": 0,
+              "y": 192,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y1",
+              "type": "line",
+              "x": 0,
+              "y": 232,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y2",
+              "type": "line",
+              "x": 0,
+              "y": 272,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y3",
+              "type": "line",
+              "x": 0,
+              "y": 312,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y4",
+              "type": "line",
+              "x": 0,
+              "y": 352,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y5",
+              "type": "line",
+              "x": 0,
+              "y": 392,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y6",
+              "type": "line",
+              "x": 0,
+              "y": 432,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y7",
+              "type": "line",
+              "x": 0,
+              "y": 472,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y8",
+              "type": "line",
+              "x": 0,
+              "y": 512,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y9",
+              "type": "line",
+              "x": 0,
+              "y": 552,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 88,
+            "y": 208,
+            "w": 1104,
+            "h": 192,
+            "fontSize": 70,
+            "color": "#651F16",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15,
+            "align": "center"
+          },
+          "contentRegion": {
+            "x": 120,
+            "y": 432,
+            "w": 1040,
+            "h": 214
+          }
+        },
+        "ending": {
+          "role": "ending",
+          "roles": [
+            "ending"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "provenance": {
+            "referenceRole": "cover",
+            "basis": "derived-from-cover",
+            "changes": "去除示例品牌、英文眉题、署名与口号；标题高度适应中文换行。"
+          },
+          "fixed": [
+            {
+              "id": "master.corner.1",
+              "type": "rect",
+              "x": 0,
+              "y": 0,
+              "w": 72,
+              "h": 40,
+              "fill": "#651F16"
+            },
+            {
+              "id": "master.corner.2",
+              "type": "rect",
+              "x": 1208,
+              "y": 680,
+              "w": 72,
+              "h": 40,
+              "fill": "#651F16"
+            },
+            {
+              "id": "master.grid.x0",
+              "type": "line",
+              "x": 0,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x1",
+              "type": "line",
+              "x": 40,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x2",
+              "type": "line",
+              "x": 80,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x3",
+              "type": "line",
+              "x": 120,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x4",
+              "type": "line",
+              "x": 160,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x5",
+              "type": "line",
+              "x": 200,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x6",
+              "type": "line",
+              "x": 240,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x7",
+              "type": "line",
+              "x": 280,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x8",
+              "type": "line",
+              "x": 320,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x9",
+              "type": "line",
+              "x": 360,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x10",
+              "type": "line",
+              "x": 400,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x11",
+              "type": "line",
+              "x": 440,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x12",
+              "type": "line",
+              "x": 480,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x13",
+              "type": "line",
+              "x": 520,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x14",
+              "type": "line",
+              "x": 560,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x15",
+              "type": "line",
+              "x": 600,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x16",
+              "type": "line",
+              "x": 640,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x17",
+              "type": "line",
+              "x": 680,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x18",
+              "type": "line",
+              "x": 720,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x19",
+              "type": "line",
+              "x": 760,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x20",
+              "type": "line",
+              "x": 800,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x21",
+              "type": "line",
+              "x": 840,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x22",
+              "type": "line",
+              "x": 880,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x23",
+              "type": "line",
+              "x": 920,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x24",
+              "type": "line",
+              "x": 960,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x25",
+              "type": "line",
+              "x": 1000,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x26",
+              "type": "line",
+              "x": 1040,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x27",
+              "type": "line",
+              "x": 1080,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x28",
+              "type": "line",
+              "x": 1120,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x29",
+              "type": "line",
+              "x": 1160,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x30",
+              "type": "line",
+              "x": 1200,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x31",
+              "type": "line",
+              "x": 1240,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.x32",
+              "type": "line",
+              "x": 1280,
+              "y": 192,
+              "w": 0,
+              "h": 360,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y0",
+              "type": "line",
+              "x": 0,
+              "y": 192,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y1",
+              "type": "line",
+              "x": 0,
+              "y": 232,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y2",
+              "type": "line",
+              "x": 0,
+              "y": 272,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y3",
+              "type": "line",
+              "x": 0,
+              "y": 312,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y4",
+              "type": "line",
+              "x": 0,
+              "y": 352,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y5",
+              "type": "line",
+              "x": 0,
+              "y": 392,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y6",
+              "type": "line",
+              "x": 0,
+              "y": 432,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y7",
+              "type": "line",
+              "x": 0,
+              "y": 472,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y8",
+              "type": "line",
+              "x": 0,
+              "y": 512,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            },
+            {
+              "id": "master.grid.y9",
+              "type": "line",
+              "x": 0,
+              "y": 552,
+              "w": 1280,
+              "h": 0,
+              "stroke": "#E1DDD7",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 88,
+            "y": 208,
+            "w": 1104,
+            "h": 192,
+            "fontSize": 70,
+            "color": "#651F16",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15,
+            "align": "center"
+          },
+          "contentRegion": {
+            "x": 120,
+            "y": 432,
+            "w": 1040,
+            "h": 214
+          }
+        },
+        "body-columns": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "columns",
+          "capacity": [
+            2,
+            4
+          ],
+          "relationships": [
+            "parallel",
+            "compare",
+            "comparison"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "visible-screenshot-estimate",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.top",
+              "type": "rect",
+              "x": 0,
+              "y": 0,
+              "w": 1280,
+              "h": 12,
+              "fill": "#651F16"
+            },
+            {
+              "id": "master.bottom",
+              "type": "rect",
+              "x": 0,
+              "y": 708,
+              "w": 1280,
+              "h": 12,
+              "fill": "#651F16"
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#651F16",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#651F16",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#651F16",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": true,
+            "headingBand": true,
+            "rule": false
+          }
+        },
+        "body-rows": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "rows",
+          "capacity": [
+            1,
+            6
+          ],
+          "relationships": [
+            "parallel",
+            "summary",
+            "argument",
+            "evidence",
+            "general",
+            "cause",
+            "product",
+            "structure"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.top",
+              "type": "rect",
+              "x": 0,
+              "y": 0,
+              "w": 1280,
+              "h": 12,
+              "fill": "#651F16"
+            },
+            {
+              "id": "master.bottom",
+              "type": "rect",
+              "x": 0,
+              "y": 708,
+              "w": 1280,
+              "h": 12,
+              "fill": "#651F16"
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#651F16",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#651F16",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#651F16",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": true,
+            "headingBand": true,
+            "rule": false
+          }
+        },
+        "body-process": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "process",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "process",
+            "timeline",
+            "cycle"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.top",
+              "type": "rect",
+              "x": 0,
+              "y": 0,
+              "w": 1280,
+              "h": 12,
+              "fill": "#651F16"
+            },
+            {
+              "id": "master.bottom",
+              "type": "rect",
+              "x": 0,
+              "y": 708,
+              "w": 1280,
+              "h": 12,
+              "fill": "#651F16"
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#651F16",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#651F16",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#651F16",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": true,
+            "headingBand": true,
+            "rule": false
+          }
+        },
+        "body-photo": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "photo",
+          "capacity": [
+            1,
+            3
+          ],
+          "relationships": [
+            "evidence",
+            "product",
+            "parallel"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.top",
+              "type": "rect",
+              "x": 0,
+              "y": 0,
+              "w": 1280,
+              "h": 12,
+              "fill": "#651F16"
+            },
+            {
+              "id": "master.bottom",
+              "type": "rect",
+              "x": 0,
+              "y": 708,
+              "w": 1280,
+              "h": 12,
+              "fill": "#651F16"
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#651F16",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#651F16",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#651F16",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": true,
+            "headingBand": true,
+            "rule": false
+          }
+        },
+        "body-layers": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "layers",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "layers"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.top",
+              "type": "rect",
+              "x": 0,
+              "y": 0,
+              "w": 1280,
+              "h": 12,
+              "fill": "#651F16"
+            },
+            {
+              "id": "master.bottom",
+              "type": "rect",
+              "x": 0,
+              "y": 708,
+              "w": 1280,
+              "h": 12,
+              "fill": "#651F16"
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#651F16",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#651F16",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#651F16",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": true,
+            "headingBand": true,
+            "rule": false
+          }
+        },
+        "body-hub": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "hub",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "hub"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.top",
+              "type": "rect",
+              "x": 0,
+              "y": 0,
+              "w": 1280,
+              "h": 12,
+              "fill": "#651F16"
+            },
+            {
+              "id": "master.bottom",
+              "type": "rect",
+              "x": 0,
+              "y": 708,
+              "w": 1280,
+              "h": 12,
+              "fill": "#651F16"
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#651F16",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#651F16",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#651F16",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": true,
+            "headingBand": true,
+            "rule": false
+          }
+        }
+      }
+    },
+    {
+      "id": "blue-editorial-v1",
+      "version": 1,
+      "name": "蓝白图文",
+      "description": "从原页保留左文右图、上下层次和同一基线；真实图片充当主视觉。",
+      "principles": [
+        "从原页保留左文右图、上下层次和同一基线；真实图片充当主视觉。",
+        "没有用户图片时选文字变体，不生成空图框或装饰圆来代替图片。"
+      ],
+      "sources": [
+        {
+          "file": "20-cover-381ff291-9791-4a60-9911-512d4ac3b378.jpg",
+          "title": "蓝白色简约风产品介绍演示文稿（16:9）",
+          "sourceUrl": "https://www.canva.cn/templates/EAHJgajvCsU/",
+          "sha256": "1bb38a7798fd632251bba747c79d7381cbf0ebb8feeb91e46c97182574b2ac8d",
+          "role": "cover"
+        },
+        {
+          "file": "20-body-cce37028-357a-43bc-bb6f-e0cf06c79cb5.jpg",
+          "title": "蓝白色简约风产品介绍演示文稿（16:9）",
+          "sourceUrl": "https://www.canva.cn/templates/EAHJgajvCsU/",
+          "sha256": "f0eb19f81943b34fd5b13177e61439e2ceafc7303eeaf2bc873dba7b181730aa",
+          "role": "body"
+        }
+      ],
+      "extraction": {
+        "observed": [
+          "从原页保留左文右图、上下层次和同一基线；真实图片充当主视觉。",
+          "没有用户图片时选文字变体，不生成空图框或装饰圆来代替图片。"
+        ],
+        "estimated": "1280×720 页面；从截图估算可见分区与对齐，不声称获得原生对象参数。",
+        "fixed": [
+          "整套色彩角色",
+          "标题基线",
+          "正文阅读区",
+          "图文层级"
+        ],
+        "adaptable": [
+          "按关系选择正文变体",
+          "按真实组数重复内容模块",
+          "长文改宽行",
+          "已有图片的位置与说明"
+        ],
+        "notImported": [
+          "参考原文与品牌",
+          "参考摄影与截图",
+          "无法确认的透明度、渐变与内部图层"
+        ]
+      },
+      "colors": {
+        "paper": "#F4F7FB",
+        "ink": "#293F61",
+        "accent": "#5578A8",
+        "surface": "#E3EBF6",
+        "muted": "#475D79",
+        "inverse": "#FFFFFF"
+      },
+      "masters": {
+        "cover": {
+          "role": "cover",
+          "roles": [
+            "cover"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "provenance": {
+            "referenceRole": "cover",
+            "basis": "visible-screenshot-estimate",
+            "changes": "去除示例品牌、英文眉题、署名与口号；标题高度适应中文换行。"
+          },
+          "fixed": [
+            {
+              "id": "master.cover.rule",
+              "type": "line",
+              "x": 72,
+              "y": 146,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#5578A8",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 88,
+            "y": 208,
+            "w": 1104,
+            "h": 192,
+            "fontSize": 82,
+            "color": "#293F61",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15,
+            "align": "left"
+          },
+          "contentRegion": {
+            "x": 120,
+            "y": 432,
+            "w": 1040,
+            "h": 214
+          }
+        },
+        "chapter": {
+          "role": "chapter",
+          "roles": [
+            "chapter"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "provenance": {
+            "referenceRole": "cover",
+            "basis": "derived-from-cover",
+            "changes": "去除示例品牌、英文眉题、署名与口号；标题高度适应中文换行。"
+          },
+          "fixed": [
+            {
+              "id": "master.cover.rule",
+              "type": "line",
+              "x": 72,
+              "y": 146,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#5578A8",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 88,
+            "y": 208,
+            "w": 1104,
+            "h": 192,
+            "fontSize": 70,
+            "color": "#293F61",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15,
+            "align": "left"
+          },
+          "contentRegion": {
+            "x": 120,
+            "y": 432,
+            "w": 1040,
+            "h": 214
+          }
+        },
+        "ending": {
+          "role": "ending",
+          "roles": [
+            "ending"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "provenance": {
+            "referenceRole": "cover",
+            "basis": "derived-from-cover",
+            "changes": "去除示例品牌、英文眉题、署名与口号；标题高度适应中文换行。"
+          },
+          "fixed": [
+            {
+              "id": "master.cover.rule",
+              "type": "line",
+              "x": 72,
+              "y": 146,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#5578A8",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 88,
+            "y": 208,
+            "w": 1104,
+            "h": 192,
+            "fontSize": 70,
+            "color": "#293F61",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15,
+            "align": "left"
+          },
+          "contentRegion": {
+            "x": 120,
+            "y": 432,
+            "w": 1040,
+            "h": 214
+          }
+        },
+        "body-columns": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "columns",
+          "capacity": [
+            2,
+            4
+          ],
+          "relationships": [
+            "parallel",
+            "compare",
+            "comparison"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.rule",
+              "type": "line",
+              "x": 72,
+              "y": 130,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#B8C8DF",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#293F61",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#293F61",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#293F61",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": false,
+            "headingBand": false,
+            "rule": true
+          }
+        },
+        "body-rows": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "rows",
+          "capacity": [
+            1,
+            6
+          ],
+          "relationships": [
+            "parallel",
+            "summary",
+            "argument",
+            "evidence",
+            "general",
+            "cause",
+            "product",
+            "structure"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.rule",
+              "type": "line",
+              "x": 72,
+              "y": 130,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#B8C8DF",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#293F61",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#293F61",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#293F61",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": false,
+            "headingBand": false,
+            "rule": true
+          }
+        },
+        "body-process": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "process",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "process",
+            "timeline",
+            "cycle"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.rule",
+              "type": "line",
+              "x": 72,
+              "y": 130,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#B8C8DF",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#293F61",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#293F61",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#293F61",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": false,
+            "headingBand": false,
+            "rule": true
+          }
+        },
+        "body-photo": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "photo",
+          "capacity": [
+            1,
+            3
+          ],
+          "relationships": [
+            "evidence",
+            "product",
+            "parallel"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "visible-screenshot-estimate",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.rule",
+              "type": "line",
+              "x": 72,
+              "y": 130,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#B8C8DF",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#293F61",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#293F61",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#293F61",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": false,
+            "headingBand": false,
+            "rule": true
+          }
+        },
+        "body-layers": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "layers",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "layers"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.rule",
+              "type": "line",
+              "x": 72,
+              "y": 130,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#B8C8DF",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#293F61",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#293F61",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#293F61",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": false,
+            "headingBand": false,
+            "rule": true
+          }
+        },
+        "body-hub": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "hub",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "hub"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.rule",
+              "type": "line",
+              "x": 72,
+              "y": 130,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#B8C8DF",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#293F61",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#293F61",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#293F61",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": false,
+            "headingBand": false,
+            "rule": true
+          }
+        }
+      }
+    },
+    {
+      "id": "forest-editorial-v1",
+      "version": 1,
+      "name": "墨绿编辑",
+      "description": "保留深色底、醒目文字和横向分割；有图片时使用分区图文，不复制参考品牌与摄影。",
+      "principles": [
+        "保留深色底、醒目文字和横向分割；有图片时使用分区图文，不复制参考品牌与摄影。",
+        "内容之间用留白与细线分层，不把所有信息装进同样的卡片。"
+      ],
+      "sources": [
+        {
+          "file": "00-cover-82933862-264f-4098-b47d-db20fbaf2f87.jpg",
+          "title": "黑绿色简约高级感香薰蜡烛产品品牌提案演示文稿（16:9）",
+          "sourceUrl": "https://www.canva.cn/templates/EAHDDwUDijk/",
+          "sha256": "8c915c3cd04234ef0d0ab79786ef700bc6ed3a11148bfa10635b466ee5fd332c",
+          "role": "cover"
+        },
+        {
+          "file": "00-body-40b04584-7da4-403e-802c-0713f7fb7b83.jpg",
+          "title": "黑绿色简约高级感香薰蜡烛产品品牌提案演示文稿（16:9）",
+          "sourceUrl": "https://www.canva.cn/templates/EAHDDwUDijk/",
+          "sha256": "5b68f5e65579dd75452d70e557db743b56afeb0ac39d79f646fe91eed9cebe84",
+          "role": "body"
+        }
+      ],
+      "extraction": {
+        "observed": [
+          "保留深色底、醒目文字和横向分割；有图片时使用分区图文，不复制参考品牌与摄影。",
+          "内容之间用留白与细线分层，不把所有信息装进同样的卡片。"
+        ],
+        "estimated": "1280×720 页面；从截图估算可见分区与对齐，不声称获得原生对象参数。",
+        "fixed": [
+          "整套色彩角色",
+          "标题基线",
+          "正文阅读区",
+          "图文层级"
+        ],
+        "adaptable": [
+          "按关系选择正文变体",
+          "按真实组数重复内容模块",
+          "长文改宽行",
+          "已有图片的位置与说明"
+        ],
+        "notImported": [
+          "参考原文与品牌",
+          "参考摄影与截图",
+          "无法确认的透明度、渐变与内部图层"
+        ]
+      },
+      "colors": {
+        "paper": "#111713",
+        "ink": "#F1F2E8",
+        "accent": "#A8BA83",
+        "surface": "#253328",
+        "muted": "#C8D0C0",
+        "inverse": "#111713"
+      },
+      "masters": {
+        "cover": {
+          "role": "cover",
+          "roles": [
+            "cover"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "provenance": {
+            "referenceRole": "cover",
+            "basis": "visible-screenshot-estimate",
+            "changes": "去除示例品牌、英文眉题、署名与口号；标题高度适应中文换行。"
+          },
+          "fixed": [
+            {
+              "id": "master.cover.rule",
+              "type": "line",
+              "x": 72,
+              "y": 146,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#A8BA83",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 88,
+            "y": 208,
+            "w": 1104,
+            "h": 192,
+            "fontSize": 82,
+            "color": "#F1F2E8",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15,
+            "align": "left"
+          },
+          "contentRegion": {
+            "x": 120,
+            "y": 432,
+            "w": 1040,
+            "h": 214
+          }
+        },
+        "chapter": {
+          "role": "chapter",
+          "roles": [
+            "chapter"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "provenance": {
+            "referenceRole": "cover",
+            "basis": "derived-from-cover",
+            "changes": "去除示例品牌、英文眉题、署名与口号；标题高度适应中文换行。"
+          },
+          "fixed": [
+            {
+              "id": "master.cover.rule",
+              "type": "line",
+              "x": 72,
+              "y": 146,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#A8BA83",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 88,
+            "y": 208,
+            "w": 1104,
+            "h": 192,
+            "fontSize": 70,
+            "color": "#F1F2E8",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15,
+            "align": "left"
+          },
+          "contentRegion": {
+            "x": 120,
+            "y": 432,
+            "w": 1040,
+            "h": 214
+          }
+        },
+        "ending": {
+          "role": "ending",
+          "roles": [
+            "ending"
+          ],
+          "form": "hero",
+          "capacity": [
+            0,
+            3
+          ],
+          "provenance": {
+            "referenceRole": "cover",
+            "basis": "derived-from-cover",
+            "changes": "去除示例品牌、英文眉题、署名与口号；标题高度适应中文换行。"
+          },
+          "fixed": [
+            {
+              "id": "master.cover.rule",
+              "type": "line",
+              "x": 72,
+              "y": 146,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#A8BA83",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 88,
+            "y": 208,
+            "w": 1104,
+            "h": 192,
+            "fontSize": 70,
+            "color": "#F1F2E8",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15,
+            "align": "left"
+          },
+          "contentRegion": {
+            "x": 120,
+            "y": 432,
+            "w": 1040,
+            "h": 214
+          }
+        },
+        "body-columns": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "columns",
+          "capacity": [
+            2,
+            4
+          ],
+          "relationships": [
+            "parallel",
+            "compare",
+            "comparison"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.rule",
+              "type": "line",
+              "x": 72,
+              "y": 130,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#A8BA83",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#F1F2E8",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#F1F2E8",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#F1F2E8",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": false,
+            "headingBand": false,
+            "rule": true
+          }
+        },
+        "body-rows": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "rows",
+          "capacity": [
+            1,
+            6
+          ],
+          "relationships": [
+            "parallel",
+            "summary",
+            "argument",
+            "evidence",
+            "general",
+            "cause",
+            "product",
+            "structure"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.rule",
+              "type": "line",
+              "x": 72,
+              "y": 130,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#A8BA83",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#F1F2E8",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#F1F2E8",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#F1F2E8",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": false,
+            "headingBand": false,
+            "rule": true
+          }
+        },
+        "body-process": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "process",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "process",
+            "timeline",
+            "cycle"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.rule",
+              "type": "line",
+              "x": 72,
+              "y": 130,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#A8BA83",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#F1F2E8",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#F1F2E8",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#F1F2E8",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": false,
+            "headingBand": false,
+            "rule": true
+          }
+        },
+        "body-photo": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "photo",
+          "capacity": [
+            1,
+            3
+          ],
+          "relationships": [
+            "evidence",
+            "product",
+            "parallel"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.rule",
+              "type": "line",
+              "x": 72,
+              "y": 130,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#A8BA83",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#F1F2E8",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#F1F2E8",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#F1F2E8",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": false,
+            "headingBand": false,
+            "rule": true
+          }
+        },
+        "body-layers": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "layers",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "layers"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.rule",
+              "type": "line",
+              "x": 72,
+              "y": 130,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#A8BA83",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#F1F2E8",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#F1F2E8",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#F1F2E8",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": false,
+            "headingBand": false,
+            "rule": true
+          }
+        },
+        "body-hub": {
+          "role": "content",
+          "roles": [
+            "content",
+            "toc",
+            "appendix"
+          ],
+          "form": "hub",
+          "capacity": [
+            2,
+            5
+          ],
+          "relationships": [
+            "hub"
+          ],
+          "provenance": {
+            "referenceRole": "body",
+            "basis": "derived-variant",
+            "changes": "按同套标题基线、色彩角色和分组方式形成变体；原页数量不是固定槽位，保留每组标题与正文的对应关系。"
+          },
+          "fixed": [
+            {
+              "id": "master.rule",
+              "type": "line",
+              "x": 72,
+              "y": 130,
+              "w": 1136,
+              "h": 0,
+              "stroke": "#A8BA83",
+              "strokeWidth": 1
+            }
+          ],
+          "title": {
+            "x": 72,
+            "y": 42,
+            "w": 1136,
+            "h": 74,
+            "fontSize": 44,
+            "color": "#F1F2E8",
+            "bold": true,
+            "fontFamily": "Microsoft YaHei",
+            "lineHeight": 1.15
+          },
+          "contentRegion": {
+            "x": 72,
+            "y": 174,
+            "w": 1136,
+            "h": 470
+          },
+          "headingStyle": {
+            "fontSize": 30,
+            "bold": true,
+            "color": "#F1F2E8",
+            "lineHeight": 1.2
+          },
+          "bodyStyle": {
+            "fontSize": 24,
+            "color": "#F1F2E8",
+            "lineHeight": 1.4
+          },
+          "groupStyle": {
+            "panel": false,
+            "headingBand": false,
+            "rule": true
+          }
+        }
+      }
+    }
+  ]
+}

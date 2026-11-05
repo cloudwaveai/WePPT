@@ -1,0 +1,2759 @@
+{
+  "samples": [
+    {
+      "file": "00-cover-82933862-264f-4098-b47d-db20fbaf2f87.jpg",
+      "title": "黑绿色简约高级感香薰蜡烛产品品牌提案演示文稿（16:9）",
+      "sourceUrl": "https://www.canva.cn/templates/EAHDDwUDijk/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "cover",
+      "sha256": "8c915c3cd04234ef0d0ab79786ef700bc6ed3a11148bfa10635b466ee5fd332c"
+    },
+    {
+      "file": "00-body-40b04584-7da4-403e-802c-0713f7fb7b83.jpg",
+      "title": "黑绿色简约高级感香薰蜡烛产品品牌提案演示文稿（16:9）",
+      "sourceUrl": "https://www.canva.cn/templates/EAHDDwUDijk/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "body",
+      "sha256": "5b68f5e65579dd75452d70e557db743b56afeb0ac39d79f646fe91eed9cebe84"
+    },
+    {
+      "file": "02-cover-58e13253-c4fa-4517-9dc6-6507e7dc828b.jpg",
+      "title": "深红淡黄色简约品牌介绍演示文稿（16:9）",
+      "sourceUrl": "https://www.canva.cn/templates/EAHDQZGHlVY/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "cover",
+      "sha256": "0d1d2e88be2b58054435df013b5ecb1ae5bbe9f6132b3904c03999b899f7b33e"
+    },
+    {
+      "file": "02-body-1772c236-3f6e-4f77-9a95-ed6c527db19c.jpg",
+      "title": "深红淡黄色简约品牌介绍演示文稿（16:9）",
+      "sourceUrl": "https://www.canva.cn/templates/EAHDQZGHlVY/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "body",
+      "sha256": "eeb1b837a14dfd9b57130694ce7aaac86cce6016fad40719a96abab36f2d7b5d"
+    },
+    {
+      "file": "03-cover-1161879b-d32e-4330-b4a8-7952beace20f.jpg",
+      "title": "米咖色高级简约风品牌介绍演示文稿（16:9）",
+      "sourceUrl": "https://www.canva.cn/templates/EAHMP0DYB5Y/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "cover",
+      "sha256": "1c60bad059e3e86510ce0a7ababb326de5667ab5f91c5a9dbf61e5847c1d8762"
+    },
+    {
+      "file": "03-body-a89962b4-68b0-4051-9213-03f2307f2428.jpg",
+      "title": "米咖色高级简约风品牌介绍演示文稿（16:9）",
+      "sourceUrl": "https://www.canva.cn/templates/EAHMP0DYB5Y/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "body",
+      "sha256": "e176c1e8d86d1ba8d734edb76b3cfa5b9736a4c33aee3bab3ac9b632060a2fdb"
+    },
+    {
+      "file": "09-cover-a3291fda-6366-4b40-b142-723dab299535.webp",
+      "title": "蓝色商务风年度工作总结汇报演示文稿",
+      "sourceUrl": "https://www.canva.cn/templates/EAG4W1hGPEY/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "cover",
+      "sha256": "1b66478c499fc616dadd65ae2edba01ff116d942d645dfa59a55c3f717bf841b"
+    },
+    {
+      "file": "09-body-dee4b39e-a4a6-4454-b71c-70f98149326b.jpg",
+      "title": "蓝色商务风年度工作总结汇报演示文稿",
+      "sourceUrl": "https://www.canva.cn/templates/EAG4W1hGPEY/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "body",
+      "sha256": "256d40bdee2d5c08e5e35d39e90f0121b42210b521c3c547ca60a44aaf778365"
+    },
+    {
+      "file": "20-cover-381ff291-9791-4a60-9911-512d4ac3b378.jpg",
+      "title": "蓝白色简约风产品介绍演示文稿（16:9）",
+      "sourceUrl": "https://www.canva.cn/templates/EAHJgajvCsU/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "cover",
+      "sha256": "1bb38a7798fd632251bba747c79d7381cbf0ebb8feeb91e46c97182574b2ac8d"
+    },
+    {
+      "file": "20-body-cce37028-357a-43bc-bb6f-e0cf06c79cb5.jpg",
+      "title": "蓝白色简约风产品介绍演示文稿（16:9）",
+      "sourceUrl": "https://www.canva.cn/templates/EAHJgajvCsU/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "body",
+      "sha256": "f0eb19f81943b34fd5b13177e61439e2ceafc7303eeaf2bc873dba7b181730aa"
+    },
+    {
+      "file": "27-cover-dd3983f3-4778-41c5-be98-7d5309b04003.jpg",
+      "title": "蓝黑色简约高级科技互联网演示文稿",
+      "sourceUrl": "https://www.canva.cn/templates/EAGxmlpJNYg/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "cover",
+      "sha256": "d690f21258fb263c6a7d804e2ccda4b19a10cddd0b64b34ed704ae7d86dfec93"
+    },
+    {
+      "file": "27-body-9f42ff95-ecb0-4773-9745-8dd688f1430c.jpg",
+      "title": "蓝黑色简约高级科技互联网演示文稿",
+      "sourceUrl": "https://www.canva.cn/templates/EAGxmlpJNYg/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "body",
+      "sha256": "afa6dc1cc6f2514575206545b626ea509d949b333011e9dc417783ae51bcd411"
+    },
+    {
+      "file": "31-cover-ea9d0dc2-720a-4fbd-98f2-1462772e29c4.jpg",
+      "title": "银黑色酸性简约风设计作品集演示文稿（16:9）",
+      "sourceUrl": "https://www.canva.cn/templates/EAHJoOnfEGQ/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "cover",
+      "sha256": "db8ff749cf36b3d4da2a0705340ac87e9e2a25991f1b2210aaf4432e591149a1"
+    },
+    {
+      "file": "31-body-34adb598-37cb-421f-b545-ef92e9740ce4.jpg",
+      "title": "银黑色酸性简约风设计作品集演示文稿（16:9）",
+      "sourceUrl": "https://www.canva.cn/templates/EAHJoOnfEGQ/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "body",
+      "sha256": "8ce8f0cdd44bae34152708f0b186763b505e1c3ad8983230c8fd9236f0ae95be"
+    },
+    {
+      "file": "44-cover-f1120b0f-698a-4987-bc52-0174c67c208b.jpg",
+      "title": "灰粉墨绿色清新招聘文化艺术演示文稿（16:9）",
+      "sourceUrl": "https://www.canva.cn/templates/EAG6meH2JMY/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "cover",
+      "sha256": "3c2ec011613950af6e6a03663e415a5bf966881e748895e81a27f082f361df70"
+    },
+    {
+      "file": "44-body-0094de94-95a0-4c31-bb9b-bfafb115ce75.jpg",
+      "title": "灰粉墨绿色清新招聘文化艺术演示文稿（16:9）",
+      "sourceUrl": "https://www.canva.cn/templates/EAG6meH2JMY/",
+      "reviewCounts": {
+        "selected": 1
+      },
+      "role": "body",
+      "sha256": "879904681737b4edab370847cbe8856c57e4675c5b6e9171d79f5f02ae3afc70"
+    }
+  ],
+  "reviewSelected": {
+    "revision": 1598,
+    "total": 645,
+    "selected": [
+      {
+        "id": "fa8c95fd-d611-47c6-961f-c7b7946c6635",
+        "sourceId": "www.canva.cn:templates:EAHDDwUDijk",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHDDwUDijk/",
+        "designUrl": "",
+        "title": "黑绿色简约高级感香薰蜡烛产品品牌提案演示文稿（16:9）",
+        "images": [
+          {
+            "id": "c54dfde3-69f9-4032-8e16-addd183c03d8",
+            "url": "/api/assets/82933862-264f-4098-b47d-db20fbaf2f87.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "8a5fe18e-2db8-468a-8924-3831a1c94395",
+            "url": "/api/assets/700da005-bd47-4759-b779-5d6c000577af.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "868950cd-5d62-485d-ac86-59afa26efe09",
+            "url": "/api/assets/56890f0d-dff5-4b09-a5f6-8e2f19f378d0.jpg",
+            "role": "section"
+          },
+          {
+            "id": "50208d20-ee2d-4fc4-a40a-265d2e72a5ff",
+            "url": "/api/assets/962388f1-feea-4604-8689-182b669a8b1e.jpg",
+            "role": "section"
+          },
+          {
+            "id": "e324d08a-7e82-4f83-9266-880badd5f913",
+            "url": "/api/assets/40b04584-7da4-403e-802c-0713f7fb7b83.jpg",
+            "role": "body"
+          },
+          {
+            "id": "f94e244f-7c67-4801-81b1-93d29f8f0741",
+            "url": "/api/assets/d18a9165-4f72-4401-be01-0ee8b3e719d8.jpg",
+            "role": "body"
+          },
+          {
+            "id": "96bcf8c8-6525-4b90-be6d-6419ebc210fa",
+            "url": "/api/assets/08f3048a-aede-48a1-9fa1-427e26ea86ed.jpg",
+            "role": "body"
+          },
+          {
+            "id": "30ff9f6c-52df-4b6a-acdf-84d697c6de0a",
+            "url": "/api/assets/e709925d-50b8-4310-801c-a21a43f470f5.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-02T12:10:45.778Z:40aa5c14",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "5d00f245-fbc3-40c6-93b2-2fac7597992e",
+        "sourceId": "www.canva.cn:templates:EAGv8ZB04Rk",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAGv8ZB04Rk/",
+        "designUrl": "",
+        "title": "艺术冷淡风简约艺术展活动策划演示文稿Hot",
+        "images": [
+          {
+            "id": "e25fb7b1-a37b-49cd-9ea0-1c57612dae8b",
+            "url": "/api/assets/fa53aff0-a6a4-4491-aa8b-be5e3f0459c2.webp",
+            "role": "cover"
+          },
+          {
+            "id": "2d3ad050-2f80-47e6-92e2-f1ce63c35e74",
+            "url": "/api/assets/882db086-88cb-4258-9331-a0016a5b03fb.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "f91de091-4ef3-4041-90c8-13f50d6fe729",
+            "url": "/api/assets/ece25fad-850a-4119-a75e-701af44c0184.jpg",
+            "role": "section"
+          },
+          {
+            "id": "fd12a98b-d2a6-4ded-ad9a-16a478828617",
+            "url": "/api/assets/a72d9667-cd34-4cc4-b941-4e83a71f479c.jpg",
+            "role": "body"
+          },
+          {
+            "id": "f0152be2-146d-4877-af7f-345a67051227",
+            "url": "/api/assets/654c8363-576e-4f3a-b4df-eb1d8b511f26.jpg",
+            "role": "body"
+          },
+          {
+            "id": "3794ba29-7031-480f-a512-a735310f5f54",
+            "url": "/api/assets/c396085e-f152-4020-8aa2-100f8f35840f.jpg",
+            "role": "body"
+          },
+          {
+            "id": "9c653c32-0d5a-4151-a2b5-d92b1019ffae",
+            "url": "/api/assets/17bdc6e5-3b1f-4281-a58e-1e2ec75fa20f.jpg",
+            "role": "body"
+          },
+          {
+            "id": "b975048a-d168-434c-b23b-29af954e14b9",
+            "url": "/api/assets/700e1507-d108-4702-8db1-2c4d99ec5c38.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-02T12:10:49.070Z:ede53dcc",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "fa91fd04-dc48-4f74-bb06-2d726899340f",
+        "sourceId": "www.canva.cn:templates:EAHDQZGHlVY",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHDQZGHlVY/",
+        "designUrl": "",
+        "title": "深红淡黄色简约品牌介绍演示文稿（16:9）",
+        "images": [
+          {
+            "id": "3ca7f112-8017-4f46-9a75-ae2cbf9fae60",
+            "url": "/api/assets/58e13253-c4fa-4517-9dc6-6507e7dc828b.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "0820ca28-1d54-4563-98bd-d25290d26aff",
+            "url": "/api/assets/1582a8f6-fabf-41de-a918-5c73cada912a.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "ce89f3cf-a192-4be9-adeb-ca5f2ed82444",
+            "url": "/api/assets/0f313732-9faf-4204-b3b8-75799816ea25.jpg",
+            "role": "section"
+          },
+          {
+            "id": "00f41bb8-cfd9-4929-9f0c-a75a144e2a72",
+            "url": "/api/assets/1772c236-3f6e-4f77-9a95-ed6c527db19c.jpg",
+            "role": "body"
+          },
+          {
+            "id": "759f964f-b15c-4cbd-9a8e-347a9ed674f8",
+            "url": "/api/assets/750aa047-d031-4c70-aec1-2f6fb4cf64f0.jpg",
+            "role": "section"
+          },
+          {
+            "id": "d2e0d78d-0ad2-4ae1-831d-9793637a40f2",
+            "url": "/api/assets/f50db12c-0f6e-4677-b0d4-a1e8b0d32ca2.jpg",
+            "role": "body"
+          },
+          {
+            "id": "55550bb5-2243-49f4-aac8-59522c9bbc45",
+            "url": "/api/assets/7aa41ebe-0819-4460-9973-141d222363e6.jpg",
+            "role": "body"
+          },
+          {
+            "id": "f2edf184-a0fa-46d3-b70d-674bc3a55562",
+            "url": "/api/assets/802a81f7-fc18-4e8d-b33a-c12dbbe4eebb.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-02T12:10:51.629Z:f74c582c",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "25384201-3243-40ce-b41c-31fa73a95a6c",
+        "sourceId": "www.canva.cn:templates:EAHMP0DYB5Y",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHMP0DYB5Y/",
+        "designUrl": "",
+        "title": "米咖色高级简约风品牌介绍演示文稿（16:9）",
+        "images": [
+          {
+            "id": "07481a5a-c487-4a76-b776-4cec49daa124",
+            "url": "/api/assets/1161879b-d32e-4330-b4a8-7952beace20f.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "7b0f75de-4bea-4a87-ac8c-42cae23aebb3",
+            "url": "/api/assets/aa7f329f-b3fe-4a8d-9e4f-dd90e6e6e880.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "06a1c79c-6d97-4510-8da3-e4f56bcd9178",
+            "url": "/api/assets/59a83c44-050b-4e86-a8fd-19e43404291f.jpg",
+            "role": "section"
+          },
+          {
+            "id": "2b379ca3-c554-4912-8578-ff4c49059885",
+            "url": "/api/assets/a89962b4-68b0-4051-9213-03f2307f2428.jpg",
+            "role": "body"
+          },
+          {
+            "id": "75983c5c-169a-468e-bcd7-162ffe0933da",
+            "url": "/api/assets/497d9bda-69c4-413f-b8f9-e8f94a1e9df8.jpg",
+            "role": "section"
+          },
+          {
+            "id": "5cccf676-3235-4155-99f0-e59b9df1f398",
+            "url": "/api/assets/a01311f4-fac5-4d78-8a2e-34b3f9861ea8.jpg",
+            "role": "body"
+          },
+          {
+            "id": "cd7a549e-0e8c-48c2-9190-ca4a4327e800",
+            "url": "/api/assets/ea9f2c52-ad38-4cf1-a27d-7ec546e097a0.jpg",
+            "role": "body"
+          },
+          {
+            "id": "fc2165f2-d5c7-4510-b05a-d3850ef793b8",
+            "url": "/api/assets/9de69e19-3083-44ee-be27-f14e1789cf10.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-02T12:10:56.829Z:95972a84",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "d69d231e-e974-4180-8abe-9dd37eaa1603",
+        "sourceId": "www.canva.cn:templates:EAHT6aRc7D4",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHT6aRc7D4/",
+        "designUrl": "",
+        "title": "白灰色简约风设计作品集演示文稿（16:9）",
+        "images": [
+          {
+            "id": "2abb78c8-5a14-459c-9b2e-2b43e71bc810",
+            "url": "/api/assets/ab66eb0c-7f35-4a72-8242-e2c8aaff84da.webp",
+            "role": "cover"
+          },
+          {
+            "id": "f88eeb90-d558-4f1c-855e-7ef7497bcc68",
+            "url": "/api/assets/54ab71c4-ea4e-43f4-b1a5-548f76d4fd82.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "9b5f353f-b0fc-40a6-842a-d7880a8408aa",
+            "url": "/api/assets/c6edff9f-969f-4ab8-8c32-6645d9a9d170.jpg",
+            "role": "section"
+          },
+          {
+            "id": "fb486935-71a3-46a7-94bb-fc481da3e0b7",
+            "url": "/api/assets/c6e7d45e-e340-4115-80e0-0dff1d48c43f.jpg",
+            "role": "body"
+          },
+          {
+            "id": "bb33a071-200a-4b1d-91a7-ca50d94fdb1d",
+            "url": "/api/assets/abcd5ab8-ee8c-439b-b33d-a61e1342067c.jpg",
+            "role": "section"
+          },
+          {
+            "id": "485dc25b-a15d-408c-b4bb-fe4d72505e26",
+            "url": "/api/assets/b7ff6309-e204-4b33-acf6-6b5dd446d999.jpg",
+            "role": "body"
+          },
+          {
+            "id": "a5a3cef7-ebe5-4227-89d7-535ad819cbe4",
+            "url": "/api/assets/94484ba9-a5db-4145-807e-9999d8c0b98d.jpg",
+            "role": "body"
+          },
+          {
+            "id": "f53d5a57-f060-49d6-92e1-9b704ae6e096",
+            "url": "/api/assets/68ba88af-db91-49f7-8df5-959e7264b864.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-02T12:11:06.109Z:4e7bf060",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "7cdebc53-36b9-4adc-a23a-acdfb97c82ae",
+        "sourceId": "www.canva.cn:templates:EAHLrjtyDgY",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHLrjtyDgY/",
+        "designUrl": "",
+        "title": "棕咖色松弛感老钱风品牌策划演示文稿（16:9）",
+        "images": [
+          {
+            "id": "c401e6d6-35f3-4d91-978f-daa3834cad07",
+            "url": "/api/assets/fee749d2-23ef-4cd7-af4d-3e8d8d25a0c7.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "53869f78-5e19-41fa-8948-a3b87d74ae98",
+            "url": "/api/assets/a7ff7c91-870b-444b-a734-98640ddcf6b0.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "44608e89-6e79-4af2-86d9-a09d9b9dfcd4",
+            "url": "/api/assets/7851ff32-20e0-496f-8d48-1ea602069f27.jpg",
+            "role": "section"
+          },
+          {
+            "id": "9a1d3513-9bf7-4466-8796-f4a3a96f80cb",
+            "url": "/api/assets/f501c93c-74fb-435d-bcdf-c7b821dab7ee.jpg",
+            "role": "body"
+          },
+          {
+            "id": "ea189956-7c41-484f-b6ca-6836c848ae53",
+            "url": "/api/assets/a254a8c1-285f-4fa1-b916-6a6168e026be.jpg",
+            "role": "body"
+          },
+          {
+            "id": "6f4a580a-26ff-4120-8eb5-83feddb9d030",
+            "url": "/api/assets/57317e99-426a-4cf2-b52b-61c4452444af.jpg",
+            "role": "section"
+          },
+          {
+            "id": "c12c6a99-7856-4d67-8c55-6d0acf76b7be",
+            "url": "/api/assets/4aeae14a-9d8e-4a90-a1f6-48414651e59e.jpg",
+            "role": "body"
+          },
+          {
+            "id": "f399d4af-5b80-486c-b87a-7e0c326be2c8",
+            "url": "/api/assets/dac3fcda-d90a-4d5e-8f1e-753fd5de01bb.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:16:48.483Z:7a9b1a5d",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "67903ece-d684-4aef-aa0f-007c6164338d",
+        "sourceId": "www.canva.cn:templates:EAGxapMuQjM",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAGxapMuQjM/",
+        "designUrl": "",
+        "title": "黑白色简约风摄影作品集演示文稿",
+        "images": [
+          {
+            "id": "f202d741-f971-43b6-8614-985bcc597342",
+            "url": "/api/assets/155ece9e-4b40-41b5-9057-89b505401e93.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "f0fce039-e7b8-4fc6-b114-852263bc2153",
+            "url": "/api/assets/462904df-2a2a-4784-8e94-981900b98519.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "7d6a0b3a-88be-4357-ad94-a47b2f237888",
+            "url": "/api/assets/8bf8cf71-149c-4343-9976-c6cf82d5ef4c.jpg",
+            "role": "section"
+          },
+          {
+            "id": "881b9034-3850-4fa8-81f5-ed8ade9755ce",
+            "url": "/api/assets/40bd4870-eefb-4e4a-8edd-eb470e56af14.jpg",
+            "role": "body"
+          },
+          {
+            "id": "c9079730-99a6-4776-a44c-2776d18633b1",
+            "url": "/api/assets/6c8b1bc5-0a0a-4230-886c-386f74e83e8a.jpg",
+            "role": "section"
+          },
+          {
+            "id": "222495d7-8544-4212-8582-e804d1371822",
+            "url": "/api/assets/72b69fa7-4f84-451a-94f6-b43c37a570d6.jpg",
+            "role": "body"
+          },
+          {
+            "id": "6ad2d8a6-9f5c-4fba-b64f-b43f334a1493",
+            "url": "/api/assets/abe8cce7-0813-4be9-9eda-b55f62650046.jpg",
+            "role": "body"
+          },
+          {
+            "id": "39784b52-6b6f-48d6-8e1a-5a6ea90ec1cd",
+            "url": "/api/assets/46511d25-b956-4d46-989e-3ea2d2139fcb.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:16:52.451Z:ca775a9d",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "b3c8bcf8-0322-4c8d-8875-e7012195feb6",
+        "sourceId": "www.canva.cn:templates:EAHAz54tQAo",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHAz54tQAo/",
+        "designUrl": "",
+        "title": "黑粉色创意摄影作品集展示演示文稿（16:9）",
+        "images": [
+          {
+            "id": "a54da835-33a7-4638-a49c-401d2b95d13f",
+            "url": "/api/assets/678adda5-c19c-43b7-a8af-66e17d5a3de0.webp",
+            "role": "cover"
+          },
+          {
+            "id": "0f273143-160d-4b82-a4e7-aad848ec6b92",
+            "url": "/api/assets/2645262b-a753-43db-adab-e916fbaee613.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "fe142f84-1b28-43f4-b99d-df93f99b3f77",
+            "url": "/api/assets/7000a247-8bcb-404b-b2d3-64b6a5c170a8.jpg",
+            "role": "section"
+          },
+          {
+            "id": "483ecda5-bef6-49a8-88ce-c202c9db48c7",
+            "url": "/api/assets/21f8c5b0-a8f3-4108-8b6b-cd24c9ac283d.jpg",
+            "role": "body"
+          },
+          {
+            "id": "8c0ad06e-f744-48ed-8b84-e5edb652dced",
+            "url": "/api/assets/ae1a381a-7778-46c1-86cc-36e9321b9dab.jpg",
+            "role": "body"
+          },
+          {
+            "id": "16a3e091-ee70-466d-92a4-1703ba07c3da",
+            "url": "/api/assets/71902dac-ae14-4c37-885f-3dbbf12be39c.jpg",
+            "role": "body"
+          },
+          {
+            "id": "362c6563-6e75-4906-9064-cf5e6fb77026",
+            "url": "/api/assets/ab05cf2f-6a60-4757-affe-dd8ce72092f1.jpg",
+            "role": "body"
+          },
+          {
+            "id": "b3132c5e-9aa8-4505-a4fc-99541ab30ff1",
+            "url": "/api/assets/fbdb298c-ccdb-4bde-9801-8f8a60f0f6d4.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:16:55.604Z:0b91048f",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "cc314c59-8720-41a3-8056-af32c9118f5f",
+        "sourceId": "www.canva.cn:templates:EAHHYt6uWc0",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHHYt6uWc0/",
+        "designUrl": "",
+        "title": "米色简约风摄影作品集演示文稿",
+        "images": [
+          {
+            "id": "4683e95f-a082-4eaa-973c-47e7a73d4c2c",
+            "url": "/api/assets/61e3f3f1-0fe7-4465-9a64-6dee9c079d4a.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "83987d54-b9b0-4070-8211-e32026d4438e",
+            "url": "/api/assets/e4229443-6a17-4d01-87e8-fd756a812778.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "676458a1-7c77-4486-a391-300f1f5106a8",
+            "url": "/api/assets/966254ef-978f-44da-adb1-c676d7a496a5.jpg",
+            "role": "section"
+          },
+          {
+            "id": "193d5c4c-95ab-4d75-8def-87d8f2294d1a",
+            "url": "/api/assets/92f8168b-ea58-4c58-9b43-66cd6023a485.jpg",
+            "role": "body"
+          },
+          {
+            "id": "f6020229-f765-4b00-b48b-27680a7e959c",
+            "url": "/api/assets/cb0d7a28-06fe-493d-8c54-4283072572e6.jpg",
+            "role": "section"
+          },
+          {
+            "id": "1468a20d-7839-4d4a-8f0c-83401ac5881c",
+            "url": "/api/assets/ec730bc7-05fc-4b52-9755-3f6d28f57c81.jpg",
+            "role": "body"
+          },
+          {
+            "id": "17aa65c1-a1bd-4016-85ab-ebefcf2b6492",
+            "url": "/api/assets/78600501-8f1d-4c40-9970-dc6ccddf647d.jpg",
+            "role": "body"
+          },
+          {
+            "id": "a8e8cfc5-5370-44f4-a2b6-1a83b3d8253d",
+            "url": "/api/assets/120bab24-e2b1-43d9-8d8b-7aa4624d3918.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:16:58.042Z:c7451dec",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "e6251f44-2533-48fe-9128-d2a0a1157839",
+        "sourceId": "www.canva.cn:templates:EAG4W1hGPEY",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAG4W1hGPEY/",
+        "designUrl": "",
+        "title": "蓝色商务风年度工作总结汇报演示文稿",
+        "images": [
+          {
+            "id": "93fc6b34-fba3-4f40-bddf-cb73497a5a5a",
+            "url": "/api/assets/a3291fda-6366-4b40-b142-723dab299535.webp",
+            "role": "cover"
+          },
+          {
+            "id": "b0e5f1ab-9817-4daa-a7fe-7ca91de76456",
+            "url": "/api/assets/4474c564-76b1-4963-b8ca-d979b049b300.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "acc39a35-ab86-4d87-ac60-8fe9f9195b68",
+            "url": "/api/assets/4861a701-c174-4490-9f7b-8ddc34ab73f5.jpg",
+            "role": "section"
+          },
+          {
+            "id": "8457dfb9-dc0c-4344-8c74-eab799a054af",
+            "url": "/api/assets/dee4b39e-a4a6-4454-b71c-70f98149326b.jpg",
+            "role": "body"
+          },
+          {
+            "id": "510d92e9-8cbd-4a58-a968-9f07b79275bb",
+            "url": "/api/assets/c92835f9-9e1d-47f3-b0c9-019c04c4dd35.jpg",
+            "role": "section"
+          },
+          {
+            "id": "c2b9e457-1d61-491e-8f9c-94589173161c",
+            "url": "/api/assets/c96d1ae9-9688-42c2-8325-d832edd22440.jpg",
+            "role": "body"
+          },
+          {
+            "id": "5be6f438-9c5f-4e5b-ba29-e4705c2b2384",
+            "url": "/api/assets/3ed2a3ae-acb8-496a-baf3-86072390807c.jpg",
+            "role": "body"
+          },
+          {
+            "id": "29d25a27-1754-4a4c-89c7-95619474c2d6",
+            "url": "/api/assets/cf50fa5e-038e-4288-b783-041dd8063e8a.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:04.366Z:761687cd",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "ecb62a73-9f4d-4cea-8e91-b723300e1e96",
+        "sourceId": "www.canva.cn:templates:EAGXwPTFLDA",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAGXwPTFLDA/",
+        "designUrl": "",
+        "title": "灰褐色简约宣传教育培训演示文稿",
+        "images": [
+          {
+            "id": "70040c09-7444-47cf-8c07-68b0835d17f4",
+            "url": "/api/assets/2f9a524e-e6e1-4f15-bce7-551be69cd82f.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "39a9e68c-4387-463e-9f21-93c2fa553692",
+            "url": "/api/assets/d4fb5b1a-1b16-4703-9318-105bc777c5bd.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "cdbb9f63-dc38-4d13-9b5f-32c35f4357b7",
+            "url": "/api/assets/6d334422-89b5-41ee-806e-ebb14f553024.jpg",
+            "role": "section"
+          },
+          {
+            "id": "6203f876-595f-4df0-af55-c864c28fb5e7",
+            "url": "/api/assets/c0c785f6-e8e6-414d-8e73-3e85ff05cd7f.jpg",
+            "role": "body"
+          },
+          {
+            "id": "db75fb5e-0277-411c-a048-e6765f2a8854",
+            "url": "/api/assets/6ad0fa8a-a802-42c1-9c38-d986ac39297d.jpg",
+            "role": "body"
+          },
+          {
+            "id": "5fd25271-de7f-4985-b01a-92cd182f7dec",
+            "url": "/api/assets/06deef2f-4b31-4e0a-be46-a65cd53cae42.jpg",
+            "role": "body"
+          },
+          {
+            "id": "28a8198a-49ac-4c0d-9f27-d67090b95d45",
+            "url": "/api/assets/faffc78c-193d-4e6b-90b9-6066bee34afb.jpg",
+            "role": "body"
+          },
+          {
+            "id": "db97ee3d-28f6-41ae-8d8e-91ddb9cd9a52",
+            "url": "/api/assets/98725b40-21b1-465c-ad13-6e4d96dda397.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:07.217Z:85e0424e",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "7f067db6-21a0-4655-96a0-d0e8de47d867",
+        "sourceId": "www.canva.cn:templates:EAHUyxfzcXs",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHUyxfzcXs/",
+        "designUrl": "",
+        "title": "灰白红色像素风设计作品集演示文稿（16:9）",
+        "images": [
+          {
+            "id": "f87a6588-edf1-4a65-86fd-87bc9a3eaf18",
+            "url": "/api/assets/2647e45c-5dac-47b2-afc3-721a63bdc700.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "9174566b-c3e0-4a99-8910-65d6307c0221",
+            "url": "/api/assets/8408f9d5-79fb-41b4-a4f1-85b71675d4a6.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "f0a99db2-7677-4ea4-a7fa-18299d3b9d66",
+            "url": "/api/assets/a96bf465-e1b8-4cca-9ae4-8ab0e5476afb.jpg",
+            "role": "section"
+          },
+          {
+            "id": "b9437530-392e-4035-9b25-ccf75f7d58f7",
+            "url": "/api/assets/b4255a30-6da5-44bf-9c62-1f1f40520d08.jpg",
+            "role": "body"
+          },
+          {
+            "id": "2f0f04ea-761f-495d-9640-29197d898f6c",
+            "url": "/api/assets/82a76358-adfc-4b00-9c3b-567611dce773.jpg",
+            "role": "section"
+          },
+          {
+            "id": "d5460cbc-a8ed-4913-a9fd-0dc7a89d5a2d",
+            "url": "/api/assets/17daf8b4-da40-4911-a144-8817f94ca165.jpg",
+            "role": "body"
+          },
+          {
+            "id": "b9288be7-14b0-4a3c-89da-0132fe870fc2",
+            "url": "/api/assets/c0bdbb45-2be6-4680-b3f0-bba987bab0d0.jpg",
+            "role": "body"
+          },
+          {
+            "id": "cf22bbd9-e9cb-4115-b942-90012a3f32a0",
+            "url": "/api/assets/81ff55f9-4d05-4140-9694-93c70ce4123d.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:09.033Z:b3c5b361",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "b309ca4b-c79b-436c-969a-a25aaef4f83a",
+        "sourceId": "www.canva.cn:templates:EAGDVey8xZE",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAGDVey8xZE/",
+        "designUrl": "",
+        "title": "蓝白色简约大学生课堂展示教育教学通用课件ppt演示文稿",
+        "images": [
+          {
+            "id": "3af0d3ef-4184-4438-9a47-d2a62ae4e690",
+            "url": "/api/assets/23c6c9c5-ccd0-4094-a28d-475c03c07d89.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "8b4bdee3-af1f-4bbb-906c-54f4b77c980c",
+            "url": "/api/assets/277a34cb-d4b7-46fe-be1f-949908b8dabf.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "616ddacc-2b7d-4f5f-b215-7a14210ab1b2",
+            "url": "/api/assets/c661aa67-1b8e-451f-b144-b912c92cf089.jpg",
+            "role": "section"
+          },
+          {
+            "id": "7e60c3e3-b972-4b4b-8359-5e52306e127a",
+            "url": "/api/assets/379422d8-7038-4d84-9224-2d79d6147d26.jpg",
+            "role": "body"
+          },
+          {
+            "id": "91dd51e9-6e24-4a48-8996-6f0b45b11326",
+            "url": "/api/assets/f467a974-3d74-4a1e-b8f3-637ce9ec4f2d.jpg",
+            "role": "section"
+          },
+          {
+            "id": "6bcc0b4f-5b82-4639-b492-2374ebc4df7c",
+            "url": "/api/assets/316db43b-1988-447d-804b-b597bae2a6d7.jpg",
+            "role": "body"
+          },
+          {
+            "id": "03b4fd01-c6e5-44cd-b528-09b06e1358ad",
+            "url": "/api/assets/6266023f-5187-411f-80af-12520ce146e9.jpg",
+            "role": "body"
+          },
+          {
+            "id": "689a0c8e-2e83-4618-8c32-9fcf22ba5f1a",
+            "url": "/api/assets/510b8e0e-de80-454b-896e-fbaa452c092c.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:10.550Z:7ed64df3",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "0cffef60-8adf-4c36-9c81-b9101af7f8ea",
+        "sourceId": "www.canva.cn:templates:EAHCm3ZtBm4",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHCm3ZtBm4/",
+        "designUrl": "",
+        "title": "蓝色学术风毕业课题研究报告演示文稿",
+        "images": [
+          {
+            "id": "b716ea89-0073-49ae-b888-d11f3498e8b0",
+            "url": "/api/assets/27b798db-901d-4a59-91d8-b6917f7cb186.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "7cc0be21-096d-4105-9732-89eb88638b98",
+            "url": "/api/assets/0e6a83b6-2c17-4be0-9f2b-7f641882b108.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "bde777f1-565d-47c2-8e02-1507cf7b53a1",
+            "url": "/api/assets/c2a0bdd0-78e5-4e27-8bbc-e217d94ffbe1.jpg",
+            "role": "section"
+          },
+          {
+            "id": "5dbb3196-c29f-4e62-9849-0fb4a5e8b160",
+            "url": "/api/assets/932ea893-24dc-49b7-b582-e8bd2d65bfbf.jpg",
+            "role": "body"
+          },
+          {
+            "id": "f31b279a-6478-479e-b371-0a1c56a1db40",
+            "url": "/api/assets/6b73d981-f24f-4322-a2c6-706099ce8f21.jpg",
+            "role": "body"
+          },
+          {
+            "id": "f7476e3e-96d4-4b0c-ad67-30f77bc3da82",
+            "url": "/api/assets/61a63588-2b90-4e04-9b3f-60ee17835085.jpg",
+            "role": "body"
+          },
+          {
+            "id": "752b0e53-1bac-4494-9ec6-845d083e7d40",
+            "url": "/api/assets/17bd7f44-bb6d-4d6e-bfd9-3b70960cfd21.jpg",
+            "role": "body"
+          },
+          {
+            "id": "b9474378-ecb6-43fb-9d05-6a39b6b591df",
+            "url": "/api/assets/3e54355c-8819-42de-aea8-68ff96d5e597.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:12.186Z:9523c884",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "c54499b1-d4e3-4465-804a-915418c2acb4",
+        "sourceId": "www.canva.cn:templates:EAHEwpC44jI",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHEwpC44jI/",
+        "designUrl": "",
+        "title": "灰色简约风大学生开题报告毕业答辩演示文稿（16:9）",
+        "images": [
+          {
+            "id": "1c63d388-3ce7-4193-9c92-e47441ba5353",
+            "url": "/api/assets/83d5cfd2-8574-4c2c-a2d4-90cd93e23961.webp",
+            "role": "cover"
+          },
+          {
+            "id": "780db36c-cc2c-457f-baf2-525d4171fd42",
+            "url": "/api/assets/0c0adbd9-95be-4c40-b722-060f6ac17e48.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "21cdd8f2-5f63-4b89-ac73-2891ca2eb04e",
+            "url": "/api/assets/931eb94c-b32a-4e30-8b00-b629c8548aa5.jpg",
+            "role": "section"
+          },
+          {
+            "id": "fd86a607-fb99-41a9-b87a-8af726b83894",
+            "url": "/api/assets/9b113ca4-2889-4b37-8a60-639dc79f2f73.jpg",
+            "role": "body"
+          },
+          {
+            "id": "0260086f-043e-490c-a5ee-e3eff7731efd",
+            "url": "/api/assets/920c32a7-7a10-427a-8860-93a19a4097a6.jpg",
+            "role": "body"
+          },
+          {
+            "id": "c3114296-b1f9-41d6-b915-6ea84209c51c",
+            "url": "/api/assets/292ddec6-bda4-4568-b4be-f9709b9c0c49.jpg",
+            "role": "section"
+          },
+          {
+            "id": "97d3c5c5-40fe-43b4-954e-5f6e74456320",
+            "url": "/api/assets/6f9016fa-9ba8-44dc-9017-addec412b0f2.jpg",
+            "role": "body"
+          },
+          {
+            "id": "0a4e7a22-bb00-4555-97e7-107b81b95585",
+            "url": "/api/assets/073176fe-5c99-4874-9ba3-107d25325ef1.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:13.506Z:40dd617c",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "1ddbf22a-5dc7-4eb3-969d-16a531b542a9",
+        "sourceId": "www.canva.cn:templates:EAHX3rGBAdU",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHX3rGBAdU/",
+        "designUrl": "",
+        "title": "红白色极简风大学生毕业答辩演示文稿（16:9）",
+        "images": [
+          {
+            "id": "cf83e266-9cc7-4841-9b61-2b310bd78c6a",
+            "url": "/api/assets/66ba859f-c11d-45b4-bb92-075faeb8e91f.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "1393eb7a-da07-4f0d-86d2-5c0249681cb1",
+            "url": "/api/assets/2041e13e-9b14-45c6-b1d7-c99c2148c24a.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "56b204e9-8b67-4ce1-b9b2-ab1934cdba75",
+            "url": "/api/assets/0aeb5f42-fb1c-4715-aadf-8fbef272e8ff.jpg",
+            "role": "section"
+          },
+          {
+            "id": "5ebcaf4e-11ba-403d-b116-31ac4f0fab3e",
+            "url": "/api/assets/b685957a-424b-437c-9e96-295d5821c33b.jpg",
+            "role": "body"
+          },
+          {
+            "id": "4088a738-752e-42b5-bdbe-af1da7b6e168",
+            "url": "/api/assets/872d7fe0-c3c9-4e2d-9f49-9be1535fa64a.jpg",
+            "role": "body"
+          },
+          {
+            "id": "c8fb8dd3-37f7-4ff7-84f1-db55602481e3",
+            "url": "/api/assets/ae49e3ad-4336-494a-85df-af397b909607.jpg",
+            "role": "section"
+          },
+          {
+            "id": "ca3672e6-841e-43ae-af17-e980dc2c142f",
+            "url": "/api/assets/559abbd3-c1fb-4530-85af-0a9d73c8cbdd.jpg",
+            "role": "body"
+          },
+          {
+            "id": "074cdf0d-c109-46cf-8ea7-71426708ac5b",
+            "url": "/api/assets/fce3cb7d-3166-4601-bd30-390e6123fc20.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:15.186Z:8ef324fc",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "882125fa-8315-4252-84c4-dfc85403f2f5",
+        "sourceId": "www.canva.cn:templates:EAHNj12HaeA",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHNj12HaeA/",
+        "designUrl": "",
+        "title": "绿白色简约风大学生毕业答辩通用演示文稿（16:9）",
+        "images": [
+          {
+            "id": "9468bcba-47e4-4d01-bcbc-e69b1bf41c80",
+            "url": "/api/assets/d3d73651-e56e-404b-acf6-147a47d24114.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "f1a63ce0-a6e4-4dc4-ab30-903b50266d78",
+            "url": "/api/assets/d80886dd-9ea8-4502-9fcd-13323968840f.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "b76ffdd0-cac5-433c-991f-5dc09d738a09",
+            "url": "/api/assets/63d03ffe-6747-40e9-9800-2aae58c7a130.jpg",
+            "role": "section"
+          },
+          {
+            "id": "ad6153b5-0f4e-4d91-8ab7-db3de793d5ba",
+            "url": "/api/assets/5a55b0fa-0e31-4e24-9818-a18a1b023347.jpg",
+            "role": "body"
+          },
+          {
+            "id": "b5b40be8-181d-4292-9c1a-d69bf343975e",
+            "url": "/api/assets/921701b6-8fb9-4169-ae97-bd9878263594.jpg",
+            "role": "body"
+          },
+          {
+            "id": "23246ef2-150a-4636-992d-6ebb5705c01e",
+            "url": "/api/assets/7405e19c-6818-4151-83a8-b172f85dc0e4.jpg",
+            "role": "section"
+          },
+          {
+            "id": "1980a075-6c2e-4da3-99a3-d9985eb83851",
+            "url": "/api/assets/20e2e5c7-ead3-4b01-81b6-36b734ff2e1a.jpg",
+            "role": "body"
+          },
+          {
+            "id": "d367418b-1c43-4cbb-8bba-21a1fc4f5e71",
+            "url": "/api/assets/1f3aac57-d710-47e3-b8ab-0449a7a05421.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:16.816Z:bcef5e42",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "6321fdda-2980-41ef-902e-89cd4ea5ad3f",
+        "sourceId": "www.canva.cn:templates:EAG90vx84tQ",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAG90vx84tQ/",
+        "designUrl": "",
+        "title": "绿白色简约风毕业答辩通用演示文稿（16:9）",
+        "images": [
+          {
+            "id": "4f3f1216-56b3-470a-96ba-77c569175ab6",
+            "url": "/api/assets/91f076ff-559d-4c2c-a89f-d8bc5f69ac65.webp",
+            "role": "cover"
+          },
+          {
+            "id": "7dfe9fc2-cb55-4d7f-971b-1015b803deea",
+            "url": "/api/assets/44cf7912-1b03-4eaf-b52b-4fd98fc8f337.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "1ac8dbbf-0079-4bc9-af7e-5dc499903647",
+            "url": "/api/assets/71dbbb6d-d9a2-462f-871d-4682031be275.jpg",
+            "role": "section"
+          },
+          {
+            "id": "793441c5-1305-41dd-a95b-749fd8ffd431",
+            "url": "/api/assets/8ac76cc9-c86e-423b-8ece-49a6764f6fca.jpg",
+            "role": "body"
+          },
+          {
+            "id": "44fe5248-2a6d-48b6-8c36-cec1fe608307",
+            "url": "/api/assets/e3f7dff4-1dc1-48aa-b265-0e39a088db6b.jpg",
+            "role": "body"
+          },
+          {
+            "id": "9db6596a-9a25-4651-8075-254c64c16e40",
+            "url": "/api/assets/7ed2987f-ddfa-48cc-be98-5fe2d8bb09a3.jpg",
+            "role": "section"
+          },
+          {
+            "id": "7ac28b52-c3a5-48aa-a5ff-64f7269144a2",
+            "url": "/api/assets/f4340e2d-406b-40f5-95ee-e49b0923a32a.jpg",
+            "role": "body"
+          },
+          {
+            "id": "0de63bb7-5237-49b9-8d48-6dcce452c127",
+            "url": "/api/assets/94b631a9-3f60-444f-8037-d879ca314128.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:21.931Z:9660e79f",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "d65f0f82-7dee-408d-a2b0-986814e82376",
+        "sourceId": "www.canva.cn:templates:EAG36A2aGV0",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAG36A2aGV0/",
+        "designUrl": "",
+        "title": "灰白色极简学术风毕业论文答辩演示文稿",
+        "images": [
+          {
+            "id": "6a8bd7a7-0c71-47e1-88a2-5af3992a0e56",
+            "url": "/api/assets/dbf6967b-33a2-40a5-a680-cff761d4363e.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "b3f7272e-2a97-47fb-ab95-3046a1203628",
+            "url": "/api/assets/fdc3a286-a2f4-447e-8b5a-19eefc36bc5a.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "af513cdd-eeb4-463a-b619-9d5cef014cf3",
+            "url": "/api/assets/0cf6a2e0-efe9-47da-b46d-0ee6d4bdf100.jpg",
+            "role": "section"
+          },
+          {
+            "id": "c7675c99-6ed8-4507-b2ac-caee17676060",
+            "url": "/api/assets/8ead2a24-b6b8-4961-a331-1d602aa30128.jpg",
+            "role": "body"
+          },
+          {
+            "id": "fd1e084b-a489-4701-ab7e-0f04487f453f",
+            "url": "/api/assets/4838192c-2821-41f9-af36-10a3582691cc.jpg",
+            "role": "body"
+          },
+          {
+            "id": "a9d05669-b2bb-4196-81bd-69e21757362a",
+            "url": "/api/assets/15885e0a-d0b9-4eef-914c-9abc3346d918.jpg",
+            "role": "section"
+          },
+          {
+            "id": "ade67255-49c4-412e-a7ea-10609d0a93d7",
+            "url": "/api/assets/e3a6611a-f796-41cb-a61c-21c0c139131d.jpg",
+            "role": "body"
+          },
+          {
+            "id": "11228534-1232-4c00-b13f-2ece031585eb",
+            "url": "/api/assets/7b71b6c5-0c34-4782-b695-db4ceaa0abbc.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:23.480Z:1d84c587",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "14a9a03c-96e5-4be2-8f5b-09ab7054facc",
+        "sourceId": "www.canva.cn:templates:EAHKqpcf1PM",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHKqpcf1PM/",
+        "designUrl": "",
+        "title": "白色几何风大学生毕业开题答辩通用演示文稿",
+        "images": [
+          {
+            "id": "16d962c1-cc22-45dd-9136-3e33f2a4ef57",
+            "url": "/api/assets/fe7ee45f-eb69-4e7c-8bd6-30a1b5a42077.webp",
+            "role": "cover"
+          },
+          {
+            "id": "b4f518e4-671b-46cf-a865-cedd0746094b",
+            "url": "/api/assets/f6796cd0-9203-456c-bf22-ff4d177ec2a3.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "d3e3f280-cb0e-499b-a5c7-307a3a942b6e",
+            "url": "/api/assets/a2b11a4d-c8f5-4491-91be-c45b43504968.jpg",
+            "role": "section"
+          },
+          {
+            "id": "60c139f4-bd67-4487-a66a-3a84afebb741",
+            "url": "/api/assets/933d5234-0fc3-4a8e-8c77-673a3d73dfd8.jpg",
+            "role": "body"
+          },
+          {
+            "id": "ea673280-1cfc-4d8b-b43a-a282173b7c4e",
+            "url": "/api/assets/cb4d9bba-0928-4073-a8cb-fed422ca80cf.jpg",
+            "role": "section"
+          },
+          {
+            "id": "573d3d7b-046d-4fb3-8a76-f2905cd1ef37",
+            "url": "/api/assets/d77f2216-9a72-468a-820a-efd9be68ec7c.jpg",
+            "role": "body"
+          },
+          {
+            "id": "042c6783-df71-41f0-84f3-2a27091da025",
+            "url": "/api/assets/3c9e9f15-02bf-4819-bda4-49e0d65b6951.jpg",
+            "role": "body"
+          },
+          {
+            "id": "caf7cb64-56d1-4759-b4c9-dc21a8f1e8fb",
+            "url": "/api/assets/5498f016-69d0-463e-b375-6e5bb1a93dd0.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:24.881Z:8837aaa8",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "0f224c7f-fb51-4f18-99ee-ee0f9e3e26c2",
+        "sourceId": "www.canva.cn:templates:EAHJgajvCsU",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHJgajvCsU/",
+        "designUrl": "",
+        "title": "蓝白色简约风产品介绍演示文稿（16:9）",
+        "images": [
+          {
+            "id": "78fb202a-1509-4a13-943b-3f8cc9402c53",
+            "url": "/api/assets/381ff291-9791-4a60-9911-512d4ac3b378.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "97a02f5e-2c83-45e2-9246-fdfc4e296dfc",
+            "url": "/api/assets/1cc0275b-df81-4ad8-80ac-8eb148d46bd0.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "c9403615-2170-4975-854c-7cac3aeac4ad",
+            "url": "/api/assets/22441281-d9e6-4ec3-91b0-bf63340aece7.jpg",
+            "role": "section"
+          },
+          {
+            "id": "7bd42b2c-cac6-419c-a50b-00635bce1bb8",
+            "url": "/api/assets/cce37028-357a-43bc-bb6f-e0cf06c79cb5.jpg",
+            "role": "body"
+          },
+          {
+            "id": "805762ea-c468-41b9-bf46-a68ac6327746",
+            "url": "/api/assets/a58bfdb4-a24e-4e38-bb9b-3fadd36ef37d.jpg",
+            "role": "section"
+          },
+          {
+            "id": "5106de92-bfd1-4beb-b47c-a427e9b23bcc",
+            "url": "/api/assets/a2acb790-b699-40c2-ac57-78f491461eee.jpg",
+            "role": "body"
+          },
+          {
+            "id": "03eb6d0d-091a-41f7-b1d7-6f07abf468e4",
+            "url": "/api/assets/e7844640-a488-4209-bc76-9d5c9bb83beb.jpg",
+            "role": "body"
+          },
+          {
+            "id": "59bdaa2a-1e83-43a1-af4c-bc8c4ff9a9ff",
+            "url": "/api/assets/827449f7-2fe7-4ea7-9cfa-a0351971166f.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:27.391Z:a6a5167b",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "015c9e96-aeb3-4413-9c88-1def8af3b3e7",
+        "sourceId": "www.canva.cn:templates:EAG4M543x1I",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAG4M543x1I/",
+        "designUrl": "",
+        "title": "深蓝色学术风国家奖学金答辩演示文稿",
+        "images": [
+          {
+            "id": "07fe4b6a-dc16-4fd3-97ff-6a5dfc015745",
+            "url": "/api/assets/c78dabb6-d2d7-467e-8540-6ce6869d62de.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "f0934e75-0f73-4823-a87a-ef435af12ba1",
+            "url": "/api/assets/6fb0fe14-2fc3-40e7-a42d-4589fa95e1ce.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "d507dc47-6917-4142-8b39-d050114475e6",
+            "url": "/api/assets/abf72128-0a7a-42c8-a529-3d8d176fc225.jpg",
+            "role": "section"
+          },
+          {
+            "id": "d09ecb3e-5f67-438b-bbe8-476a8baae21d",
+            "url": "/api/assets/e32e5f86-f2a7-4c54-8255-4592006c7788.jpg",
+            "role": "body"
+          },
+          {
+            "id": "c9f166da-a658-455f-b8bb-541505290dc6",
+            "url": "/api/assets/975f77c1-1e4d-4727-ad59-1f99e0579ef7.jpg",
+            "role": "section"
+          },
+          {
+            "id": "aa70dfe1-fc95-4a59-ab37-9eed655b20fb",
+            "url": "/api/assets/baa2ddda-aedf-4d14-9752-a7ede06384cf.jpg",
+            "role": "body"
+          },
+          {
+            "id": "bb3345d1-7f21-4431-986b-dc2c61f84b81",
+            "url": "/api/assets/283b3b9b-fa4c-4fe7-b809-5178726660dd.jpg",
+            "role": "body"
+          },
+          {
+            "id": "92a6e65e-69ab-45c9-9633-0979843fe644",
+            "url": "/api/assets/0595570d-60b8-4cb0-8d1c-346af4086424.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:28.778Z:8e2f6b7e",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "068f54b8-c3b4-41a0-ab2c-580ea07d4b7d",
+        "sourceId": "www.canva.cn:templates:EAG2bGXJHeQ",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAG2bGXJHeQ/",
+        "designUrl": "",
+        "title": "蓝色简约几何风大学生毕业论文答辩演示文稿",
+        "images": [
+          {
+            "id": "275d9eb0-74bb-4185-887c-f2bbca7a65f7",
+            "url": "/api/assets/e952ae8d-4bfb-4878-944a-3fce1d757d68.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "86ee02e8-1429-48cf-be07-90f9ec678777",
+            "url": "/api/assets/f7b51812-7b5b-498f-ab04-cd925a435896.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "ad2fc2d5-4bbb-4a7a-a613-e6a7a66c4d31",
+            "url": "/api/assets/86eefbb2-43d8-4d3e-98d3-bcb676f2176d.jpg",
+            "role": "section"
+          },
+          {
+            "id": "ca6cf5b7-5122-4b3f-a7f0-0f67f88dd424",
+            "url": "/api/assets/feb26e95-950f-458e-848e-75ab48d7c1e7.jpg",
+            "role": "body"
+          },
+          {
+            "id": "d65051af-32cd-426c-bdb7-b384bd58ddb6",
+            "url": "/api/assets/795d3d4c-78cb-47f6-bbfa-d9bd24f4fbb4.jpg",
+            "role": "body"
+          },
+          {
+            "id": "6316ce04-137d-47ec-aaf8-5ce5e87b7a33",
+            "url": "/api/assets/60d48091-cd17-42c3-8d51-22e6ecbdb797.jpg",
+            "role": "section"
+          },
+          {
+            "id": "7efccb00-d688-41ea-bab7-fba24da23a73",
+            "url": "/api/assets/1cf95a47-d153-42ae-8d5e-be4a7d8c3c81.jpg",
+            "role": "body"
+          },
+          {
+            "id": "0ab705f5-f996-4d13-8e50-fbefd8ad1a42",
+            "url": "/api/assets/90a64cee-8404-459e-974c-75d6f605f972.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:30.899Z:0182c79b",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "251ef641-bb43-41e1-99e9-f04c2d3654e3",
+        "sourceId": "www.canva.cn:templates:EAG1o408HuI",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAG1o408HuI/",
+        "designUrl": "",
+        "title": "蓝色清新简约风大学生毕业论文答辩演示文稿",
+        "images": [
+          {
+            "id": "1c0ccd1e-9066-47f9-87c4-218a8187295e",
+            "url": "/api/assets/a705a820-d25e-4895-89da-847fd4d107b0.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "751f0465-e99e-4fc9-8106-275794f4b5b2",
+            "url": "/api/assets/f0ef5a0e-0926-40b8-8ead-e841f25479d7.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "202bb255-e2eb-4138-9722-8c6e755bbb12",
+            "url": "/api/assets/b32043a2-ddc3-47bc-80a0-f52384521976.jpg",
+            "role": "section"
+          },
+          {
+            "id": "44bcd487-4549-4eba-b430-02de3d78aab7",
+            "url": "/api/assets/98ba4cd7-7f52-4d98-b2e0-800a582daedc.jpg",
+            "role": "body"
+          },
+          {
+            "id": "f4237a56-f4a7-4b64-a087-68d82a39bd04",
+            "url": "/api/assets/89c7d2d6-2ee8-4403-b2ae-4104fa29e05c.jpg",
+            "role": "section"
+          },
+          {
+            "id": "9fefd020-0fd0-4a3e-9cdf-4545bff69ca6",
+            "url": "/api/assets/b1c181c5-d996-44a2-8c22-48fdcd3a7f8e.jpg",
+            "role": "body"
+          },
+          {
+            "id": "0c451818-303b-4e3a-b252-0b45263387ac",
+            "url": "/api/assets/73f38f8e-4b2d-45ee-a5ee-2b2614eafadc.jpg",
+            "role": "body"
+          },
+          {
+            "id": "8d657902-394c-4d53-8430-ec29bfe8e7ae",
+            "url": "/api/assets/6d475140-4414-4c8f-b0c4-92793b0f09f2.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:33.823Z:10e5bd88",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "74193477-5319-4366-9f2d-a9a396477227",
+        "sourceId": "www.canva.cn:templates:EAG1qQOJ9_0",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAG1qQOJ9_0/",
+        "designUrl": "",
+        "title": "蓝白色简洁大学生开题报告毕业论文答辩演示文稿",
+        "images": [
+          {
+            "id": "a3e239f2-cfc9-4a37-922b-a9608e7b00f2",
+            "url": "/api/assets/10b70913-b6fd-4998-92df-2b2c02013256.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "637b0f1c-f713-4cf6-bc75-8107323942b8",
+            "url": "/api/assets/34978276-6a80-411c-8f89-b432f832705b.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "eea2b275-9edb-4c50-a048-1001108e7a38",
+            "url": "/api/assets/82894439-1bdc-4583-87f8-a8a66f4dad74.jpg",
+            "role": "section"
+          },
+          {
+            "id": "87d079bf-e480-4e3e-8db6-5ab77d1e6b66",
+            "url": "/api/assets/c9882188-b680-45bd-8f24-03f16dc394da.jpg",
+            "role": "body"
+          },
+          {
+            "id": "d0cd4551-21c6-4bb7-bcb3-3fd9b3be790d",
+            "url": "/api/assets/44781858-c737-46d8-b702-385be0eebae0.jpg",
+            "role": "body"
+          },
+          {
+            "id": "40eacf2d-f497-4af9-9878-9ccbc584e553",
+            "url": "/api/assets/9845fe0d-f585-4b16-91eb-13dfba8a5e4e.jpg",
+            "role": "section"
+          },
+          {
+            "id": "b93a8628-9581-4ede-a5ca-086b19e66a16",
+            "url": "/api/assets/47b2da6b-d76f-4a4f-8706-db7978524c56.jpg",
+            "role": "body"
+          },
+          {
+            "id": "93575384-30c8-4170-a9bf-7b47c52fb7d0",
+            "url": "/api/assets/3ee1be37-c0b0-4c8c-b05e-3f6ae13821db.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:35.004Z:628fc355",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "b019c2e6-0470-4e8b-a0c4-a57b9517f1a8",
+        "sourceId": "www.canva.cn:templates:EAHFUXyuZrY",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHFUXyuZrY/",
+        "designUrl": "",
+        "title": "粉绿色清新可爱风艺术作品集展示演示文稿",
+        "images": [
+          {
+            "id": "6a076d24-36b8-4e11-bf45-0dc0f4aa2e85",
+            "url": "/api/assets/a4dc79cf-9dbe-47d4-974d-bf428d63d676.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "718862c0-f0ab-4a83-a145-72b1898bb2f8",
+            "url": "/api/assets/28862503-2a6c-49ad-9692-4401f6e5aa34.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "3d15cfc2-cd37-4681-a1f3-97a3a928d0c8",
+            "url": "/api/assets/670e5566-b37c-4205-bd3e-7a4550c282fc.jpg",
+            "role": "section"
+          },
+          {
+            "id": "900693dd-8f5a-4d87-b72f-80413b224ad8",
+            "url": "/api/assets/a85ce63f-d189-4a7f-94d3-bb9f88776ac3.jpg",
+            "role": "body"
+          },
+          {
+            "id": "9f4acad3-a320-427a-9fe8-1bde8c8157c9",
+            "url": "/api/assets/99816f5c-7cf9-4878-aa8e-6dd10ff0e93c.jpg",
+            "role": "body"
+          },
+          {
+            "id": "e61ee707-61df-4bf1-9382-083415d8f408",
+            "url": "/api/assets/57dc5705-0e91-4f6b-9157-251422626b78.jpg",
+            "role": "body"
+          },
+          {
+            "id": "f1602e11-8059-4648-8c25-3a346f60b587",
+            "url": "/api/assets/7ee2288f-38a5-420f-ad4f-6c9d1c1a33b4.jpg",
+            "role": "body"
+          },
+          {
+            "id": "c6974a08-4574-425e-88f1-6bd651d67c0c",
+            "url": "/api/assets/303209c1-c2ec-4ed3-b06a-0a9348167ba5.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:39.545Z:7ca60d38",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "bee7d37a-c3ae-447e-8627-0ad1f4782f58",
+        "sourceId": "www.canva.cn:templates:EAGXWnMKSjY",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAGXWnMKSjY/",
+        "designUrl": "",
+        "title": "黑金色奢华酷炫商务风企业年终工作总结演示文稿",
+        "images": [
+          {
+            "id": "a13af920-71da-4321-8aa5-6d50f7e6a0d7",
+            "url": "/api/assets/c07adfaa-fb6f-4d27-99a4-112a3858bf0e.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "ae6c6204-05cf-4f0e-8d44-89652ecd96cf",
+            "url": "/api/assets/a8ed28fd-b5c3-47e9-9653-915dcb53389e.jpg",
+            "role": "body"
+          },
+          {
+            "id": "adbea538-61d8-46fd-abee-af00aad01025",
+            "url": "/api/assets/5ee36278-3610-4355-9497-894b1ea189ff.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "ba9efce0-e05f-4fc3-824a-e936c6005b72",
+            "url": "/api/assets/b0c66794-1a48-4c0a-8e00-826575bf3c3f.jpg",
+            "role": "body"
+          },
+          {
+            "id": "08387b60-9cb0-4ecb-b8ff-580fec057ce3",
+            "url": "/api/assets/8cc501a8-4efb-4dd1-9426-cdb98499b40c.jpg",
+            "role": "body"
+          },
+          {
+            "id": "4c8a06df-c9af-43b6-83d3-2515043b9397",
+            "url": "/api/assets/7e372d45-0656-499c-9a1c-e3c665bd7a38.jpg",
+            "role": "section"
+          },
+          {
+            "id": "b792ba16-e4da-4567-8749-e8c60d12bda1",
+            "url": "/api/assets/b2ff00c0-a9d9-4bbf-9313-6bc08321b51a.jpg",
+            "role": "body"
+          },
+          {
+            "id": "5b410112-33d9-44c5-9e18-d61be4404cf1",
+            "url": "/api/assets/20dbd60d-da8f-42e5-bb5d-23e242af76c2.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:41.982Z:9e892e7d",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "dd454029-d34f-43ae-bef8-3073ffa69f4f",
+        "sourceId": "www.canva.cn:templates:EAGxmlpJNYg",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAGxmlpJNYg/",
+        "designUrl": "",
+        "title": "蓝黑色简约高级科技互联网演示文稿",
+        "images": [
+          {
+            "id": "09885f64-d46d-4305-86f9-5fb25a514a06",
+            "url": "/api/assets/dd3983f3-4778-41c5-be98-7d5309b04003.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "18ba6660-981a-4d0b-a95d-dff9b7ce1b4b",
+            "url": "/api/assets/2b60d5ae-41ab-4320-8dab-21b4b73b94f2.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "25cc2cf8-1c85-4b4b-a95e-2b331517e15e",
+            "url": "/api/assets/c932c731-d3be-4aad-afa3-8e3712d832c7.jpg",
+            "role": "section"
+          },
+          {
+            "id": "b1d4dba3-81df-41e9-bf5a-705e8f0c9e36",
+            "url": "/api/assets/9f42ff95-ecb0-4773-9745-8dd688f1430c.jpg",
+            "role": "body"
+          },
+          {
+            "id": "7cbfd2ea-f486-44be-be44-91fd72f712a7",
+            "url": "/api/assets/2574378a-a22a-4f20-925b-0a6e959297e9.jpg",
+            "role": "section"
+          },
+          {
+            "id": "d019e28b-3b23-4ee0-85ab-0f57831436be",
+            "url": "/api/assets/7855b80a-a5e3-42e4-97a1-40909cc2a5f0.jpg",
+            "role": "body"
+          },
+          {
+            "id": "07f20585-5145-4614-ae84-15177fefc5dc",
+            "url": "/api/assets/844323b0-56da-4c5b-be9e-cb1b9691d01f.jpg",
+            "role": "section"
+          },
+          {
+            "id": "4849394d-bc2c-4885-b5e5-54127a78f253",
+            "url": "/api/assets/dae7c720-fa1e-441f-a4fe-16ab3a94d632.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:43.293Z:e75e8e40",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "91c3aa15-559d-4c19-a8ac-dfa7cd26a09c",
+        "sourceId": "www.canva.cn:templates:EAGSQAvH3n8",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAGSQAvH3n8/",
+        "designUrl": "",
+        "title": "黑金色扁平宣传金融保险演示文稿",
+        "images": [
+          {
+            "id": "774834d9-af8c-411f-a3ec-afa22be7eba4",
+            "url": "/api/assets/66363c19-8ee6-4205-a7ef-324b8342106d.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "ba7f5141-34c2-49bb-80ea-7de57e81442c",
+            "url": "/api/assets/6fa064b0-435b-44da-80de-77e069c3c99c.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "38423a2b-f34c-4182-b887-44fedafb3e1f",
+            "url": "/api/assets/a8f3e281-2a78-48e0-9740-4f60a984189f.jpg",
+            "role": "section"
+          },
+          {
+            "id": "620c650c-e4ae-4693-adfb-ad4b2836a520",
+            "url": "/api/assets/8e958054-7dd2-478d-8cc9-2484394ce27a.jpg",
+            "role": "body"
+          },
+          {
+            "id": "9d6053ba-1a22-45d7-a909-d3c5731ec773",
+            "url": "/api/assets/40b3f124-a85b-4eee-a88a-943fc64a11ca.jpg",
+            "role": "body"
+          },
+          {
+            "id": "1183c186-f6ab-4417-b23c-4411ad2d79f9",
+            "url": "/api/assets/2af4ab51-4f96-4fe7-9609-4eda98ecbbb7.jpg",
+            "role": "body"
+          },
+          {
+            "id": "f07bee6e-16c3-4f4e-95a9-126fed34b28a",
+            "url": "/api/assets/9f9e9441-c4d0-4856-a879-492821f34d09.jpg",
+            "role": "body"
+          },
+          {
+            "id": "2b809930-0da2-46c6-a7cf-157bc7884c6b",
+            "url": "/api/assets/39c6df4e-08c0-445a-8ae2-b5eb634dca6d.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:56.790Z:48e2fac4",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "e15ac4e7-2738-4062-8ad0-68a64e7a73b6",
+        "sourceId": "www.canva.cn:templates:EAHSsQLKN48",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHSsQLKN48/",
+        "designUrl": "",
+        "title": "黑金色奢华风企业庆祝活动演示文稿（16:9）",
+        "images": [
+          {
+            "id": "eeb19a0b-46c3-4b12-a739-b2604c554927",
+            "url": "/api/assets/c5e645d9-5ea9-4c5f-9982-a8bdf302d5c5.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "327c26bd-2aa8-4f15-a16b-ada743d0d4fc",
+            "url": "/api/assets/2ebcf61f-d66b-49b0-8f78-6e39a643a910.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "7dfbdd36-6ed2-413b-ab69-16fabf2ed03d",
+            "url": "/api/assets/d5a5f3db-6451-49f5-ac1d-fac500c2bcd5.jpg",
+            "role": "section"
+          },
+          {
+            "id": "12707e82-faa8-40da-a16c-116982eff3e7",
+            "url": "/api/assets/f8bdba33-f020-4f76-b75e-48ee7a44f70a.jpg",
+            "role": "body"
+          },
+          {
+            "id": "b2fa019c-56a6-457f-8486-9be7b1987530",
+            "url": "/api/assets/10b28644-d18c-4bd9-b571-78931417d673.jpg",
+            "role": "section"
+          },
+          {
+            "id": "802f8128-cf6e-436b-abde-0b5f7e2d2bb5",
+            "url": "/api/assets/bead9b2d-614e-45a8-9e13-25e675c3feea.jpg",
+            "role": "body"
+          },
+          {
+            "id": "36542d87-8771-40bd-ba2c-e59519007c47",
+            "url": "/api/assets/acdd97e9-6f8d-4d30-a662-441114e189af.jpg",
+            "role": "body"
+          },
+          {
+            "id": "9635429f-d14b-4a1a-9071-72a76b2e916c",
+            "url": "/api/assets/662e8ec2-9115-46cf-8f4b-4b89724b5ece.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:17:58.459Z:0f898c59",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "7a687870-4ce4-4b38-91ea-dd0fa5ebd1ea",
+        "sourceId": "www.canva.cn:templates:EAG-qT49Db8",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAG-qT49Db8/",
+        "designUrl": "",
+        "title": "浅灰色高级感复古艺术作品集演示文稿（16:9）",
+        "images": [
+          {
+            "id": "3bb7df9b-badd-4c23-b4ce-c3fc1b2d923d",
+            "url": "/api/assets/b4de825c-e9eb-4637-8179-6b4a0e1c51fe.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "c396a686-32b5-42e1-80f5-ff918730fad4",
+            "url": "/api/assets/824acfab-b264-4d85-a1bb-263fd71b050f.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "83033ac5-c14e-43c1-bf48-c0c933afa026",
+            "url": "/api/assets/164f6f47-2c45-446d-a3e1-9a02d20496f9.jpg",
+            "role": "section"
+          },
+          {
+            "id": "feea4195-af20-4f85-b788-e389a11a8b4b",
+            "url": "/api/assets/abd75596-4a1c-4f6c-9b70-9ff33a58e9ea.jpg",
+            "role": "body"
+          },
+          {
+            "id": "7c653fe1-4a15-4d1e-99ef-3aa315a685e0",
+            "url": "/api/assets/298e3722-a9f1-4135-a1c5-b29b827fab7d.jpg",
+            "role": "body"
+          },
+          {
+            "id": "a7726a50-97f2-464b-a3e4-c63379c87e71",
+            "url": "/api/assets/45d601d5-a52d-42de-be40-9733a95482b2.jpg",
+            "role": "body"
+          },
+          {
+            "id": "b7bbc355-4896-415e-871f-45755ad6a844",
+            "url": "/api/assets/ffaee980-0848-4d0b-af53-2b89ffa6c8a3.jpg",
+            "role": "body"
+          },
+          {
+            "id": "77cb2259-3ef6-433c-ab4b-05e19d577f63",
+            "url": "/api/assets/a7e82607-dd29-47e0-8c18-f0498794b888.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:18:05.929Z:ee976ef3",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "c1ad8167-1431-432d-b3ac-29a5849f21eb",
+        "sourceId": "www.canva.cn:templates:EAHJoOnfEGQ",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHJoOnfEGQ/",
+        "designUrl": "",
+        "title": "银黑色酸性简约风设计作品集演示文稿（16:9）",
+        "images": [
+          {
+            "id": "3424b55c-a4c6-4e67-8ff0-200df3e6db17",
+            "url": "/api/assets/ea9d0dc2-720a-4fbd-98f2-1462772e29c4.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "6f6d80a4-2309-45a2-b059-1bc6bf2126f8",
+            "url": "/api/assets/058d0b66-8b4b-4998-9668-97e3e521a6c8.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "7198c38f-a278-4118-9b87-1c71730e7174",
+            "url": "/api/assets/8ef65777-9f22-4b50-8375-1d66183d44f8.jpg",
+            "role": "section"
+          },
+          {
+            "id": "7d866206-6417-41d9-be9b-4accd669b6c1",
+            "url": "/api/assets/34adb598-37cb-421f-b545-ef92e9740ce4.jpg",
+            "role": "body"
+          },
+          {
+            "id": "965fe695-2d61-46ed-92eb-926f8ec8bd93",
+            "url": "/api/assets/2b6d4d7c-6e39-4e79-bc0b-72eb145c75d4.jpg",
+            "role": "section"
+          },
+          {
+            "id": "c3ae8c73-9476-4860-953c-b71942613120",
+            "url": "/api/assets/0f74fd9a-93d3-4d84-b31d-9f557776d697.jpg",
+            "role": "body"
+          },
+          {
+            "id": "fbc011bf-14a9-4e32-8280-b5dee44e8fdb",
+            "url": "/api/assets/5c4ee944-48b1-4154-bc15-46e7ca359bc6.jpg",
+            "role": "body"
+          },
+          {
+            "id": "0a0c3e57-ee5c-412d-ad61-fc4ea8843630",
+            "url": "/api/assets/14400930-8057-4614-9bba-7030b19cd65d.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:18:10.844Z:7560c839",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "7e97c9d6-befc-49b1-b258-5e2f3e90838f",
+        "sourceId": "www.canva.cn:templates:EAGZiPiv3ZM",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAGZiPiv3ZM/",
+        "designUrl": "",
+        "title": "黑金色高级简约风讲座论坛演讲发布会学术演讲通用模板演示文稿",
+        "images": [
+          {
+            "id": "641f8d7b-1d3d-4b8c-b802-03a0d4298bbf",
+            "url": "/api/assets/d7038dca-431f-4b7a-97c1-15ece9187fa0.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "1b6556c6-af20-46fa-b46d-9174524c4989",
+            "url": "/api/assets/082f0d1f-a69d-4905-b8fb-1c145fa4a271.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "53c34671-a308-4ccc-ad0f-aa10aa7208e5",
+            "url": "/api/assets/0dd06503-a1d2-444a-a4d3-0a3f440a20c3.jpg",
+            "role": "section"
+          },
+          {
+            "id": "0c2225f6-afdb-4cbb-9f34-5f866866cb07",
+            "url": "/api/assets/53935033-33e5-4de7-a2ad-ed1b3415ed75.jpg",
+            "role": "body"
+          },
+          {
+            "id": "1c4a0dae-3017-4dbe-97b5-6b99ad3c4dcd",
+            "url": "/api/assets/0d79fca9-02ba-464f-bca4-560d186ea74b.jpg",
+            "role": "section"
+          },
+          {
+            "id": "78e6f9d7-49fa-4039-a5b0-00155b4d9234",
+            "url": "/api/assets/8367fd14-49f4-4c50-aac6-7f6e384f2bbe.jpg",
+            "role": "body"
+          },
+          {
+            "id": "cd289935-59c5-40bc-ac6c-3a8a837559a5",
+            "url": "/api/assets/bb7cb44b-cc6a-4039-9fee-57919ba6cec6.jpg",
+            "role": "body"
+          },
+          {
+            "id": "aa28ddad-5635-4243-a7ae-bd383a73a448",
+            "url": "/api/assets/d9f05ae3-385b-4c9f-8299-bf6ba21a7618.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:18:14.986Z:dd1a0cc8",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "5f1b8681-d4ab-4c9d-9be5-e5be8094cdbe",
+        "sourceId": "www.canva.cn:templates:EAG6mVr1Q7M",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAG6mVr1Q7M/",
+        "designUrl": "",
+        "title": "黑金色简约质感图片风餐饮品牌营销报告ppt演示文稿",
+        "images": [
+          {
+            "id": "627047f3-8295-4346-9d73-935274785baf",
+            "url": "/api/assets/4b5e7654-3f17-4e47-bd03-cfa4361311a1.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "575c318b-bef9-46ad-ab41-1c70e395c0d2",
+            "url": "/api/assets/dd4252ff-d295-4e21-b7df-3259ddc92e94.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "940cd3e6-ae97-4e99-afb5-4ab306a4c95a",
+            "url": "/api/assets/9a179d3f-5460-4c55-ae1a-b34333d6239f.jpg",
+            "role": "section"
+          },
+          {
+            "id": "37eef458-5f9b-4aac-b9e7-7c1e5266e01e",
+            "url": "/api/assets/7e180777-6cd9-4df0-8a41-58a2eca3db08.jpg",
+            "role": "body"
+          },
+          {
+            "id": "560044ff-69e1-4946-a92d-43a6756c2820",
+            "url": "/api/assets/5c87e0d3-b8f8-4be4-b44d-e56a7429a32a.jpg",
+            "role": "section"
+          },
+          {
+            "id": "efd42eb4-17b0-4172-b7e3-6f83f2cc7f67",
+            "url": "/api/assets/cda68830-eee3-40eb-ab73-8f547b4e9fbe.jpg",
+            "role": "body"
+          },
+          {
+            "id": "e85d2aff-5653-43ad-95dc-dd2afce4d49f",
+            "url": "/api/assets/1e0b4ccc-6611-4021-a918-eff4d4a8916b.jpg",
+            "role": "body"
+          },
+          {
+            "id": "9d1bd4b1-03f9-46d2-bee9-e66087ded1c0",
+            "url": "/api/assets/7e5c2263-8f48-4f73-8ef8-9c0a0f8b58d6.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:18:17.532Z:f8866f45",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "b75a8e44-7b81-483e-9340-cf5fc46a3533",
+        "sourceId": "www.canva.cn:templates:EAG5aTqQ8VY",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAG5aTqQ8VY/",
+        "designUrl": "",
+        "title": "黑金商务风企业年终总结演示文稿",
+        "images": [
+          {
+            "id": "a72614d1-5610-41cc-9c37-790eb212bb07",
+            "url": "/api/assets/a94eba31-9596-4e26-9198-efd7ac6515a9.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "6663e20c-f3e9-47d2-a012-8e85b0ca3818",
+            "url": "/api/assets/97f51731-fe7c-4cd6-bb0f-d534948f2eb3.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "c2a575f8-c55b-4c63-8da9-e34f76f4fc33",
+            "url": "/api/assets/d784894d-591c-422e-9109-9183ec747b37.jpg",
+            "role": "section"
+          },
+          {
+            "id": "f73afde5-be4d-4edb-bb7a-6b6a8011c781",
+            "url": "/api/assets/1a26c0e6-0331-4a16-bb4c-99a35186c5da.jpg",
+            "role": "body"
+          },
+          {
+            "id": "554ea204-29bf-4b2e-9c66-9c8f4dd8c408",
+            "url": "/api/assets/0a5ad56e-3019-4b62-9b6f-4c2687635ab3.jpg",
+            "role": "section"
+          },
+          {
+            "id": "15ba8a26-9209-4040-8525-d6846a85294c",
+            "url": "/api/assets/2f1bca8b-a923-4c13-bf73-c0d200364f42.jpg",
+            "role": "body"
+          },
+          {
+            "id": "9ef6652b-3939-4d7f-8ce9-edfa65e873bb",
+            "url": "/api/assets/91807fbf-2d45-40dc-b6e9-88f69d0dc025.jpg",
+            "role": "body"
+          },
+          {
+            "id": "b7de609c-e065-4427-9508-84d06e65ee21",
+            "url": "/api/assets/396c348b-d44c-42f9-bde5-58357e78b845.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:18:20.728Z:4810a7d5",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "519bfa18-5525-4af7-a54b-0fb739f99386",
+        "sourceId": "www.canva.cn:templates:EAHG46IU3Bg",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHG46IU3Bg/",
+        "designUrl": "",
+        "title": "深蓝色大气商务风金融服务PPT演示文稿（16:9）",
+        "images": [
+          {
+            "id": "93e86163-c350-4a4a-93c2-8038e10574a7",
+            "url": "/api/assets/c0bf24c5-4a62-4253-b6d1-c3d5a75b6867.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "089b4874-13e3-46c4-b25e-66efe1cf3c45",
+            "url": "/api/assets/3f174f7f-2e4c-47ad-a478-7c5d1708630f.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "99939674-4fed-40b1-8309-8ffc945a19e5",
+            "url": "/api/assets/80e54cec-9210-437e-af23-8b853108370b.jpg",
+            "role": "section"
+          },
+          {
+            "id": "6df5a40c-52bb-4e64-b427-35df656dd2cd",
+            "url": "/api/assets/ac485a03-0c19-4fde-a932-d2c74309f2c8.jpg",
+            "role": "body"
+          },
+          {
+            "id": "dd16806b-0569-467c-a202-9f296ffd148a",
+            "url": "/api/assets/2ed122c3-75e8-484f-9857-543e4603b01c.jpg",
+            "role": "section"
+          },
+          {
+            "id": "68550dd8-9f46-4992-89c2-968c98e3459f",
+            "url": "/api/assets/37e5e21f-eba0-4a0a-bc87-87b768832043.jpg",
+            "role": "body"
+          },
+          {
+            "id": "b831ec22-9633-4e98-8eac-f929d8af1d17",
+            "url": "/api/assets/35204a5b-bd8b-497f-b0d9-cd5637f20394.jpg",
+            "role": "body"
+          },
+          {
+            "id": "6c6c003b-5ee4-4916-a329-88a34e2b9873",
+            "url": "/api/assets/dfa03033-8bba-4649-a061-6de3acac9b61.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:18:22.894Z:f69d7919",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "7f723037-8d7b-43ae-9e94-1690c5586dc1",
+        "sourceId": "www.canva.cn:templates:EAHTBuk25Pc",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHTBuk25Pc/",
+        "designUrl": "",
+        "title": "黑金色奢华风年度盛典演示文稿",
+        "images": [
+          {
+            "id": "dc284314-93f4-4308-893d-d3bc4d43d3e5",
+            "url": "/api/assets/51a94946-f1c0-4f36-a28c-5f30de90bfa8.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "eaaaf609-d785-4080-bfd5-8b68d0440c01",
+            "url": "/api/assets/927b41f3-a41a-422b-b323-03030cca6fad.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "4ee9451b-9243-475d-84ca-488b19416f41",
+            "url": "/api/assets/ed80d68b-cb7c-4a33-812b-9582c107976b.jpg",
+            "role": "section"
+          },
+          {
+            "id": "7e88714a-854b-4c6b-9d4e-efa7a2b4e4c9",
+            "url": "/api/assets/e83a6a4b-ba2f-422e-a4c7-4ca8606c0916.jpg",
+            "role": "body"
+          },
+          {
+            "id": "5ab85cc3-5959-437e-ac9e-4a2f470e8f18",
+            "url": "/api/assets/d600f06c-8fa5-4a4d-ace6-ea5844ac00dc.jpg",
+            "role": "section"
+          },
+          {
+            "id": "f2d32a98-7180-412c-808e-61e4b340a726",
+            "url": "/api/assets/c183e6e7-0e5e-43f9-814c-2713dd49f253.jpg",
+            "role": "body"
+          },
+          {
+            "id": "cf77f364-f085-4044-8e04-a6a1c520c677",
+            "url": "/api/assets/a490a775-fa7c-46d4-93e5-ccd3a0770a5f.jpg",
+            "role": "body"
+          },
+          {
+            "id": "3b4ad561-e68d-48f7-a552-db8f0b9a63b4",
+            "url": "/api/assets/aff637b2-3516-4656-93ca-b5fda706f23a.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:18:25.634Z:e62d2045",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "2b8fc33e-3a27-4838-ab59-4caa8eeb2f71",
+        "sourceId": "www.canva.cn:templates:EAGujdpGgTQ",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAGujdpGgTQ/",
+        "designUrl": "",
+        "title": "黑金创意工作总结演示文稿",
+        "images": [
+          {
+            "id": "a76948e7-1e09-4ff2-afae-2930b54d150a",
+            "url": "/api/assets/da53afaa-1970-4e16-81b9-28a076dc600e.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "eca842e9-5717-4ac3-a404-01599da5ce07",
+            "url": "/api/assets/b9eb5232-5cfd-4032-81cd-604c90e08283.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "8c21393d-93d1-47d2-9e8f-9b6cfd90dc37",
+            "url": "/api/assets/d27f1454-e203-4b3f-acf2-ba7f94994ccf.jpg",
+            "role": "section"
+          },
+          {
+            "id": "12e60b96-c1b0-45ab-a1f6-fe25dbe0b95a",
+            "url": "/api/assets/9daa5cce-a488-4e10-bef5-8b9bdbee9f25.jpg",
+            "role": "body"
+          },
+          {
+            "id": "5ba1784f-eb38-45e8-a16e-476be36c64d5",
+            "url": "/api/assets/b6ba95c4-aa9e-4fcd-bd08-3b5ec329ca1a.jpg",
+            "role": "body"
+          },
+          {
+            "id": "95cb7d17-921a-4585-bc4a-fcd48384c196",
+            "url": "/api/assets/fe1af10e-4c63-41be-a9a1-7b11563511e9.jpg",
+            "role": "body"
+          },
+          {
+            "id": "3b28cd49-9a29-46ba-87d5-3c29dc2c6d94",
+            "url": "/api/assets/83026af9-0277-4237-8395-8f0a5b8a7c08.jpg",
+            "role": "body"
+          },
+          {
+            "id": "a70c4655-5be0-4d83-a43d-6be2748bf4c9",
+            "url": "/api/assets/37afe9f8-e33b-4b0a-9c40-117935bdd7b6.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:18:27.832Z:d8e16be6",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "08ccd813-bbac-41d5-91fb-033cb61cf256",
+        "sourceId": "www.canva.cn:templates:EAG79cZEFPg",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAG79cZEFPg/",
+        "designUrl": "",
+        "title": "黑白色简约风工作总结汇报PPT演示文稿",
+        "images": [
+          {
+            "id": "60e77c47-b57b-43db-86e7-236dd47d14af",
+            "url": "/api/assets/fde36406-01a2-4a2f-9684-7535052a57ad.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "68858657-7bc8-4f24-9bce-8d5186d3ede6",
+            "url": "/api/assets/b6b22828-a035-4640-a920-a935d228b9ea.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "5353fe6f-62d1-4939-b81f-72f8cec47de3",
+            "url": "/api/assets/84f65b07-bdfb-422f-b2f9-50dc76176b5b.jpg",
+            "role": "section"
+          },
+          {
+            "id": "9b8c4c80-073c-4f96-a742-59f79aa9e7f4",
+            "url": "/api/assets/93663fb2-c9d6-4b74-9374-1b7393e10ee5.jpg",
+            "role": "body"
+          },
+          {
+            "id": "dc24da19-2f6c-4c40-a950-39c6b223cbb1",
+            "url": "/api/assets/1c577e98-f5f0-4c4b-b105-71be79fb3ec9.jpg",
+            "role": "section"
+          },
+          {
+            "id": "ca5ebce4-71a9-4f02-8c3b-e59ad8ac4790",
+            "url": "/api/assets/d4954883-0d01-45fe-a71a-64960c9b5661.jpg",
+            "role": "body"
+          },
+          {
+            "id": "c7d80358-6860-46d3-a082-b7539ae18241",
+            "url": "/api/assets/b8dd3103-ea77-4521-b2f7-dee8a6158565.jpg",
+            "role": "body"
+          },
+          {
+            "id": "56b23bca-6489-4da5-accc-91847f285156",
+            "url": "/api/assets/f0b3660c-ca6b-43e0-b049-274da9a1ad7e.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:18:30.079Z:53a37534",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "b2d8d27a-b88c-4548-990b-436cc3ac1bc0",
+        "sourceId": "www.canva.cn:templates:EAG5ZJW1JWY",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAG5ZJW1JWY/",
+        "designUrl": "",
+        "title": "黑金商务风年终总结汇报演示文稿",
+        "images": [
+          {
+            "id": "883aeaa3-0b1e-4477-a7ad-b1f504da3584",
+            "url": "/api/assets/73190a32-89dd-45eb-9ba6-13ef1a751e80.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "c2ff0dfe-7784-4676-8427-11a0f3cce657",
+            "url": "/api/assets/ed1b67fa-69a8-4f70-a292-518d7638eb4d.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "dde69fb2-85e2-48d5-bb97-713198275c49",
+            "url": "/api/assets/fd71e2f3-81f2-4a22-ab3f-731cca8094be.jpg",
+            "role": "section"
+          },
+          {
+            "id": "046715a7-9ff9-4b09-91f8-7dd235b30f0a",
+            "url": "/api/assets/63da7352-799a-42d7-a2f9-598405ee9f4f.jpg",
+            "role": "body"
+          },
+          {
+            "id": "9441796c-2f5f-44b0-a919-fa834aa4aa49",
+            "url": "/api/assets/47a33c6a-a5c3-49ce-9b80-9fb72f1dcae3.jpg",
+            "role": "section"
+          },
+          {
+            "id": "f04e0b08-4ec8-4a70-8f1b-575866ed4d88",
+            "url": "/api/assets/74b578ff-5a4d-49a6-89a1-8bca6b193497.jpg",
+            "role": "body"
+          },
+          {
+            "id": "d7c73f89-c4ac-4f0f-bd2c-7da50737a4c7",
+            "url": "/api/assets/d4888fc4-e136-4342-97e3-3d0cd0ad52a0.jpg",
+            "role": "body"
+          },
+          {
+            "id": "fae6e735-358c-43e2-bcb0-991f8fff29a4",
+            "url": "/api/assets/1cda7395-1d4f-41f5-ac9c-d236eaba2faa.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:18:34.330Z:31345cff",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "ef877fc0-0439-4216-9fd8-9744841af93f",
+        "sourceId": "www.canva.cn:templates:EAHTew_-JZw",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHTew_-JZw/",
+        "designUrl": "",
+        "title": "白灰色简约风自我介绍演示文稿（16:9）",
+        "images": [
+          {
+            "id": "b4dcdaf5-688e-4fa9-a5f8-8ea01f90533a",
+            "url": "/api/assets/6033bb02-88cb-4978-8d85-08dcd4a9e433.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "636a3b60-c9ab-41de-aa36-fa53ef30c845",
+            "url": "/api/assets/9b9b8e81-5962-46cc-8bc9-f206239c0fff.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "dff23642-ba01-485c-b9dd-565b2c15ddfd",
+            "url": "/api/assets/b949a3cd-25e2-41a4-a802-af93b54b872c.jpg",
+            "role": "section"
+          },
+          {
+            "id": "8672f6f8-f3d3-485a-ac45-b208a38b71d1",
+            "url": "/api/assets/a14a9de4-40e0-4270-a45f-ce720714c8e6.jpg",
+            "role": "body"
+          },
+          {
+            "id": "aaf0b9c9-09f6-40bc-9bb4-9c86f85147c4",
+            "url": "/api/assets/e8474605-8ae2-4f59-a754-a5326cce28c7.jpg",
+            "role": "section"
+          },
+          {
+            "id": "b18617aa-f7a3-43e2-b3ab-9f856992a988",
+            "url": "/api/assets/6f740589-effc-4a52-b5f0-cddcee2a5fdb.jpg",
+            "role": "body"
+          },
+          {
+            "id": "d1c5a710-c5dc-4a53-b24a-3ba0a3fae20a",
+            "url": "/api/assets/abd7e963-11a3-4e1c-939b-4f45dbdf9058.jpg",
+            "role": "body"
+          },
+          {
+            "id": "d2bf888b-0ce6-4a72-a080-afeb7bfde79b",
+            "url": "/api/assets/c5e5f9e8-8230-4bea-9913-5369379f43ad.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:18:36.665Z:b8813bd1",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "b3aa6379-db35-44ac-8686-429c28f4a399",
+        "sourceId": "www.canva.cn:templates:EAGmXrLK8r4",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAGmXrLK8r4/",
+        "designUrl": "",
+        "title": "商务风黑金创业商业计划书演示文稿",
+        "images": [
+          {
+            "id": "78c9b494-c330-4908-9091-8880f881c96f",
+            "url": "/api/assets/648bfa49-7605-4ec8-bb53-42d91a837acc.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "1b478ffb-8eb7-42a7-b26d-5c315c8df2ca",
+            "url": "/api/assets/e104ffd9-781a-4810-ad06-73d824b69917.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "6f363cbd-6e8d-419e-9057-82ba6da8b857",
+            "url": "/api/assets/b8bc9b84-c8c6-4372-a808-91195047dabd.jpg",
+            "role": "section"
+          },
+          {
+            "id": "2e4f17d6-dfc9-4cb8-bd86-f05c75b1b536",
+            "url": "/api/assets/8e3cdc36-3c02-4135-977f-799f92739e6c.jpg",
+            "role": "body"
+          },
+          {
+            "id": "fea48c7e-cd64-478c-8770-5998158be781",
+            "url": "/api/assets/8a84a23a-5272-44f0-8aa9-88d01c15c79b.jpg",
+            "role": "section"
+          },
+          {
+            "id": "90f57a42-5ad1-43cd-8fbb-c9584b0a64a1",
+            "url": "/api/assets/8feed6ce-1a01-49b2-9573-4120d951b71a.jpg",
+            "role": "body"
+          },
+          {
+            "id": "bdf880a7-8cb9-4cdf-ac2f-685462c27893",
+            "url": "/api/assets/c63e55f8-1126-4026-b736-4775387c1770.jpg",
+            "role": "body"
+          },
+          {
+            "id": "d7870598-6b9d-404c-95e1-0c9207b4d178",
+            "url": "/api/assets/4bd1e773-e243-4c56-8940-5916353d61b3.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:18:38.082Z:760555bc",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "d395db9d-74d6-4f32-9992-669497db9801",
+        "sourceId": "www.canva.cn:templates:EAHO962rjMY",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAHO962rjMY/",
+        "designUrl": "",
+        "title": "蓝金色商务风锥形图演示文稿结构页",
+        "images": [
+          {
+            "id": "018fb610-6ead-47eb-947d-98db28bf92de",
+            "url": "/api/assets/fff90edf-11d3-4b79-9b54-e9bff37b3a35.jpg",
+            "role": "other"
+          },
+          {
+            "id": "948ad64d-b03c-45b7-bd67-9b161aea4022",
+            "url": "/api/assets/313e5776-2268-47c0-8930-5bcf8f1c5be3.jpg",
+            "role": "other"
+          },
+          {
+            "id": "cef12de6-240d-465c-bd30-a72867e29fa9",
+            "url": "/api/assets/725e52db-1a6b-46bb-9496-64238f31ed42.jpg",
+            "role": "other"
+          },
+          {
+            "id": "c6418aad-ac4a-4339-bbbf-a21a94e70c86",
+            "url": "/api/assets/ff4f9299-1316-4501-9854-07759812c77f.jpg",
+            "role": "other"
+          },
+          {
+            "id": "2829f0cf-e084-42cb-a308-f7915099227d",
+            "url": "/api/assets/38efa118-929a-4b43-b7e4-5078c0ee0dc8.jpg",
+            "role": "other"
+          },
+          {
+            "id": "342ac8d5-76df-4a73-9252-4eaff70dd4d7",
+            "url": "/api/assets/6f57d968-65f6-40f5-b735-ce92f0089990.jpg",
+            "role": "other"
+          },
+          {
+            "id": "92697ae8-cb76-4c2c-8696-93df8d68de8e",
+            "url": "/api/assets/2aa1b966-2310-46d9-bb7b-bf5e22794321.jpg",
+            "role": "other"
+          },
+          {
+            "id": "09be96bc-9077-40d5-a73f-ff741f4c1ef0",
+            "url": "/api/assets/3ad46023-27d0-4706-bb6f-1c0516012925.jpg",
+            "role": "other"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-04T09:58:19.877Z:4ae66d81",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "dd491166-412c-4782-ba67-5e14f20d91cb",
+        "sourceId": "www.canva.cn:templates:EAF0e7BUY00",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAF0e7BUY00/",
+        "designUrl": "",
+        "title": "蓝金色简约清新商务风企业年度总结演示文稿",
+        "images": [
+          {
+            "id": "6b5a6729-14ce-472a-8aff-7cc657de7371",
+            "url": "/api/assets/3d59c700-513f-4a23-9eb5-50027272e245.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "c91e58bf-cae8-4eeb-965c-920df20b8195",
+            "url": "/api/assets/e9be9c2a-cbd9-4780-b3d1-e067554fa7a8.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "9dcaedc8-4ff2-4ba0-9fa6-f4631c921c2d",
+            "url": "/api/assets/5edec7c8-be29-4f45-b0e8-111abc0ec387.jpg",
+            "role": "section"
+          },
+          {
+            "id": "34c23bbe-c98e-4a93-bef5-cb807a936b81",
+            "url": "/api/assets/f9c9d97d-6593-4a10-a606-a9910bea055f.jpg",
+            "role": "section"
+          },
+          {
+            "id": "bfe589f3-4e86-4a49-bf69-38968635d1c0",
+            "url": "/api/assets/3be23869-1579-4751-9c97-62868b03da03.jpg",
+            "role": "body"
+          },
+          {
+            "id": "58107066-9ada-48fe-a567-89c6759821fb",
+            "url": "/api/assets/e62e48e2-52c6-4cbd-8f8c-728b21862dbc.jpg",
+            "role": "body"
+          },
+          {
+            "id": "608503c0-a91b-4bf8-90d1-13d2e6e76372",
+            "url": "/api/assets/46c7e1d7-552c-40f9-b8ca-ee6d613fd148.jpg",
+            "role": "section"
+          },
+          {
+            "id": "ab9f86a3-02b0-4bfc-bad5-7b11ab50b9b2",
+            "url": "/api/assets/40843b8e-1ea8-4f26-88b8-ddcffa5d8a29.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-03T09:18:42.492Z:f0c8b2ab",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "c6b9eddb-e4c4-48a3-aa53-8a947cd046f6",
+        "sourceId": "www.canva.cn:templates:EAG6meH2JMY",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAG6meH2JMY/",
+        "designUrl": "",
+        "title": "灰粉墨绿色清新招聘文化艺术演示文稿（16:9）",
+        "images": [
+          {
+            "id": "3a76f277-1b0d-44c9-8afd-b9b552b9e998",
+            "url": "/api/assets/f1120b0f-698a-4987-bc52-0174c67c208b.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "cc4cb368-b726-4756-a2dc-118ed85be089",
+            "url": "/api/assets/d6db3594-5eb6-420d-b33c-b4e1a11195dd.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "156c881d-3ae3-42b6-b4c6-2e1e124ab3df",
+            "url": "/api/assets/e684c3a8-c228-4a38-aec4-c8acf9c00313.jpg",
+            "role": "section"
+          },
+          {
+            "id": "ff4d6cb0-77f7-489b-8bc3-ba8278b4e725",
+            "url": "/api/assets/0094de94-95a0-4c31-bb9b-bfafb115ce75.jpg",
+            "role": "body"
+          },
+          {
+            "id": "e966e3f3-c979-4c0c-bd9d-3b31f9155b41",
+            "url": "/api/assets/06d6aca1-1ff6-4668-8cef-687bdc7685d1.jpg",
+            "role": "section"
+          },
+          {
+            "id": "2443cbc7-c76f-4218-98b4-07b5bd0e6252",
+            "url": "/api/assets/fd6737a9-8fd1-43c1-8634-6904995c0c8f.jpg",
+            "role": "body"
+          },
+          {
+            "id": "5061ece6-d598-42e2-a749-8b04bd065948",
+            "url": "/api/assets/6e78171d-3d66-4212-ba04-6f039838fb1e.jpg",
+            "role": "body"
+          },
+          {
+            "id": "ae7fe565-7c2c-4b32-8ed5-120ab20ada35",
+            "url": "/api/assets/1396c2ae-d43b-4bfc-b6d2-d55409918246.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-04T09:58:24.076Z:3b84fe98",
+        "reviewCounts": {
+          "selected": 1
+        }
+      },
+      {
+        "id": "c1781f64-611c-466b-843e-c627cfbe4aaf",
+        "sourceId": "www.canva.cn:templates:EAGQoUyWw7w",
+        "source": "canva",
+        "url": "https://www.canva.cn/templates/EAGQoUyWw7w/",
+        "designUrl": "",
+        "title": "白色复古文艺课堂展示汇报演示文稿",
+        "images": [
+          {
+            "id": "f29a79f5-40b7-4d70-b5ad-05489413f204",
+            "url": "/api/assets/a8e72e25-c3a7-41a8-860d-94c81cb6ffe4.jpg",
+            "role": "cover"
+          },
+          {
+            "id": "848e3f20-256e-4340-9c6c-274e175c8f45",
+            "url": "/api/assets/e8e81f76-2fdd-4f9f-921f-aec116306538.jpg",
+            "role": "contents"
+          },
+          {
+            "id": "1f9bb163-d8db-4239-91c5-bc4956417271",
+            "url": "/api/assets/24bce20c-ee76-4f65-9247-15351938bf22.jpg",
+            "role": "section"
+          },
+          {
+            "id": "5bd60e13-84c8-4202-bdcc-4b7cbb20527f",
+            "url": "/api/assets/43769e5e-0125-4f61-8bb0-2aedd3408a93.jpg",
+            "role": "body"
+          },
+          {
+            "id": "db6d78c7-b56c-4f23-af0f-4a60b5086092",
+            "url": "/api/assets/0904506f-9ff0-4ae8-bce5-d9305de279a4.jpg",
+            "role": "body"
+          },
+          {
+            "id": "1eb727d6-189e-4e02-aa7d-5c101af831b7",
+            "url": "/api/assets/e36b075a-c5b2-4c07-85a6-1aa560550552.jpg",
+            "role": "body"
+          },
+          {
+            "id": "b9bc2fab-3c1e-4d52-8fd0-2aeb06d2e5df",
+            "url": "/api/assets/8ff426b6-899e-4ee3-9c27-d4b9c66fc755.jpg",
+            "role": "body"
+          },
+          {
+            "id": "260911f1-10ad-4a29-a364-b1a7ef9937ba",
+            "url": "/api/assets/1e0be8b1-dc0a-4fa8-ba2d-d1c2e61cffb7.jpg",
+            "role": "ending"
+          }
+        ],
+        "choice": "selected",
+        "published": true,
+        "updatedAt": "2026-11-04T09:58:31.670Z:845b2795",
+        "reviewCounts": {
+          "selected": 1
+        }
+      }
+    ],
+    "itemKeys": [
+      "id",
+      "sourceId",
+      "source",
+      "url",
+      "designUrl",
+      "title",
+      "images",
+      "choice",
+      "published",
+      "updatedAt",
+      "reviewCounts"
+    ]
+  }
+}

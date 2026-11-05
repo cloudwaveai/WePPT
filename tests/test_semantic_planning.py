@@ -20,22 +20,22 @@ class SemanticPlanningTests(unittest.TestCase):
         self.assertEqual(plan_page_expression({"evidence": [{"id": "e1"}]})["relationship"], "evidence")
         self.assertEqual(plan_page_expression({"title": "市场概况"})["relationship"], "general")
 
-    def test_number_of_points_selects_parallel_variant(self):
-        for count, expected in [(2, "parallel-two"), (3, "parallel-three"), (4, "parallel-four")]:
+    def test_number_of_points_uses_adaptive_current_parallel_layout(self):
+        for count in (2, 3, 4):
             page = {"keyPoints": ["独立观点" + str(i) for i in range(count)]}
-            self.assertEqual(recommend_templates("content", page=page)[0]["id"], expected)
+            self.assertEqual(recommend_templates("content", page=page)[0]["id"], "pagekit-compare-v1")
 
     def test_real_assets_and_density_change_ranking(self):
         no_image = {"title": "产品演示", "assets": []}
         with_image = {"title": "产品演示", "assets": [{"reference": "screen.png"}]}
         no_ids = [x["id"] for x in recommend_templates("content", page=no_image, limit=60)]
         image_ids = [x["id"] for x in recommend_templates("content", page=with_image, limit=60)]
-        self.assertLess(image_ids.index("demo"), no_ids.index("demo"))
+        self.assertLess(image_ids.index("pagekit-product-v1"), no_ids.index("pagekit-product-v1"))
         self.assertIsNone(plan_page_expression(text="产品演示")["assets"]["imageCount"])
         self.assertEqual(plan_page_expression(no_image)["assets"]["imageCount"], 0)
         dense = {"keyPoints": ["观点" * 100] * 3}
         self.assertEqual(plan_page_expression(dense)["content"]["density"], "high")
-        self.assertNotEqual(recommend_templates("content", page=dense)[0]["id"], "parallel-three")
+        self.assertEqual(recommend_templates("content", page=dense)[0]["id"], "pagekit-editorial-v1")
 
     def test_legacy_text_api_and_role_filter(self):
         self.assertIn("compare", [t["family"] for t in recommend_templates("content", "竞品对比", 3)])

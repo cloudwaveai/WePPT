@@ -165,6 +165,25 @@ class RenderingTests(unittest.TestCase):
                 self.assertIn("logo.original", slide)
                 self.assertIn("实际测试原图", slide)
 
+    def test_image_pptx_contain_keeps_intrinsic_aspect_and_original_bytes(self):
+        import base64, struct, zlib
+        import xml.etree.ElementTree as ET
+        # Real 4:2 PNG with original encoding, displayed in a square slot.
+        def chunk(t,d):return struct.pack('>I',len(d))+t+d+struct.pack('>I',zlib.crc32(t+d)&0xffffffff)
+        raw=b'\x89PNG\r\n\x1a\n'+chunk(b'IHDR',struct.pack('>IIBBBBB',4,2,8,2,0,0,0))+chunk(b'IDAT',zlib.compress((b'\x00'+b'\xff\x00\x00'*4)*2))+chunk(b'IEND',b'')
+        scene=copy.deepcopy(self.scene)
+        scene['objects'].append(dict(id='original',type='image',x=100,y=100,w=200,h=200,src='data:image/png;base64,'+base64.b64encode(raw).decode(),fit='contain'))
+        with tempfile.TemporaryDirectory() as d:
+            out=Path(d)/'fit.pptx';export_pptx([scene],out)
+            with zipfile.ZipFile(out) as z:
+                self.assertIn(raw,[z.read(n) for n in z.namelist() if n.startswith('ppt/media/')])
+                xml=ET.fromstring(z.read('ppt/slides/slide1.xml'))
+                ns={'p':'http://schemas.openxmlformats.org/presentationml/2006/main','a':'http://schemas.openxmlformats.org/drawingml/2006/main'}
+                size=xml.find('.//p:pic/p:spPr/a:xfrm/a:ext',ns)
+                self.assertAlmostEqual(int(size.get('cx'))/int(size.get('cy')),2,places=4)
+                off=xml.find('.//p:pic/p:spPr/a:xfrm/a:off',ns)
+                self.assertGreater(int(off.get('y')),int(off.get('x')))
+
 
 if __name__ == "__main__":
     unittest.main()

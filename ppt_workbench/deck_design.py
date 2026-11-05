@@ -110,13 +110,13 @@ def plan_rhythm(plan, image_mode='off'):
                if briefs[i].get('layoutArchetype') and briefs[i].get('layoutArchetype') == briefs[i + 1].get('layoutArchetype')]
     if repeats:
         findings.append({'code': 'ARCHETYPE_REPEAT', 'pages': repeats,
-                         'message': '相邻页使用了相同的版式骨架；为其中一页选择不同的 layoutArchetype 并同步 visualForm。'})
+                         'message': '相邻页使用相同骨架；结合内容判断是否单调，连续证据可以保持同一布局。'})
     if count >= 4:
         toned = [i + 1 for i, b in enumerate(briefs) if b.get('backgroundTreatment') in ('inverse', 'split')]
         required = max(1, math.ceil(count * .2))
         if len(toned) < required:
             findings.append({'code': 'TONE_FLAT', 'pages': toned, 'required': required,
-                             'message': f'深色（inverse）或分割（split）底页至少 {required} 页，目前 {len(toned)} 页；封面、章节、关键论断或结尾页适合反白。'})
+                             'message': f'当前深色或分割底页为 {len(toned)} 页；检查疏密和主次节奏，统一浅色风格不必补深色页。'})
     images = [i + 1 for i, b in enumerate(briefs) if b.get('imagePrompt')]
     if image_mode == 'auto' and len(images) > MAX_AUTO_IMAGES:
         findings.append({'code': 'IMAGE_PAGES_EXCEED', 'pages': images,
@@ -207,8 +207,8 @@ def review_plan(studio, job, proposal, context, mode, runner):
             '模型自行撰写的标题、组标题与正文应各自增加信息；不要把同一句话换词重复，'
             '不要添加“不是X而是Y”的口号、页底导读或收尾填充。用户明确提供的原文和必要边界仍须完整保留。'
             '不能为凑模板省略事实、缩成小字或擅自拆分用户指定的同页内容。不要编造素材或引用。'
-            '再核对视觉节奏：rhythmFindings 是按 designBrief 机械计算的证据，非空时必须逐项修正——'
-            '相邻页 layoutArchetype 不重复，深色或分割底页达到要求，自动配图不超过限额；改版式时同步 visualForm 与 focalElement。'
+            '再核对视觉节奏：rhythmFindings 是机械提示，结合统一设计规则判断，不为消除告警强改合理布局或添加深色页。'
+            '自动配图不超过限额；改版式时同步 visualForm 与 focalElement。'
             '选择理由不能是"更安全""更少装饰"，必须说明该方向如何制造视觉焦点。'
             'metric 只能是用户材料中原样出现的数字或数量，否则删除该字段；模型撰写的正文保持一句话一个要点。'
             '合理时 reply 第一行 PASS，actions=[]；需要修正时第一行 REVISE，仅返回一个 deck_plan_patch，'
@@ -287,5 +287,5 @@ def generation_context(studio, deck, page_index):
             'designReferences': [visual_guidance(t['id'], catalog()) for t in references],
             'designExemplar': for_page(page, previous),
             'designInstruction': '按内容选择表达方式；参考库提供构图原则。结合相邻页安排节奏，'
-                                 '相邻两页不使用相同的版式骨架；清晰度与视觉张力同时满足，单调同样是需要修正的问题。'
+                                 '通过主次、密度与图文比例组织节奏，连续证据允许复用构图；不能用装饰配额代替设计。'
                                  '用户原文、事实、图片和同页要求保持。'}

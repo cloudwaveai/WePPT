@@ -41,6 +41,7 @@ RESTYLE_MESSAGE = """【对标风格重排】按本项目选定的对标风格�
 1. 保持源稿的页数、页序、每页标题和全部正文文字不变，不删减、不改写、不新增事实。
 2. 只改变版式、构图、配色、字体层级和装饰元素，让整套页面符合对标风格的 UI、元素和设计风格。
 3. 相邻页面保持节奏变化，不把每页都套成同一种骨架。
+4. 重复出现的状态和限定词分别属于原稿中的不同内容，不得去重。每一处原文都必须出现在对应页的可见正文，保持限定对象；不能移到备注或只在一处统一标注。
 {images}源稿内容（按页）：
 {pages}"""
 
@@ -67,16 +68,15 @@ def _source_pages(studio):
             continue
         if not current or not current.get("scene"):
             continue
-        texts, seen = [], set()
+        texts = []
         objects = sorted((o for o in current["scene"].get("objects", [])
                           if o["type"] == "text" and o["id"] != "brand-logo"
                           and not connector_glyph(o)),
                          key=lambda o: (o.get("y", 0), o.get("x", 0)))
         for obj in objects:
             text = (obj.get("text") or "").strip()
-            if text and text not in seen:
+            if text:
                 texts.append(text)
-                seen.add(text)
         pages.append({"index": index, "id": item["id"], "role": item.get("role", "content"),
                       "title": item.get("title", ""), "texts": texts,
                       "scene": current["scene"]})
@@ -134,15 +134,34 @@ def _copy_images(studio, target, pages):
     return assets, dropped
 
 
-def derive(studio, mode, audience=None, note=None, style_id=None):
+def derive(studio, mode, audience=None, note=None, style_id=None, source_revision=None):
     """Create a derived project and enqueue its regeneration job."""
     from .model_profiles import selected, resolve
-    if mode not in {"audience", "restyle"}:
+    if mode not in {"audience", "restyle", "template"}:
         raise EngineError("INVALID_REQUEST", "生成方式只能是受众版本或对标风格。")
-    project = studio.wb.get_project(studio.project_id)
-    pages = _source_pages(studio)
+    with studio.wb.atomic():
+        project = studio.wb.get_project(studio.project_id)
+        if source_revision is not None:
+            studio.wb._revision(project["revision"], source_revision)
+        pages = _source_pages(studio)
     if not pages:
         raise EngineError("DERIVE_EMPTY", "原稿还没有可读取的页面。")
+    if len(pages) != sum(not p['archived'] for p in project['workspace']['slides']):
+        raise EngineError("DERIVE_INCOMPLETE", "原稿还有页面没有可读取的预览，完成后再改版；不会跳过这些页面。")
+    images = set()
+    for page in pages:
+        if mode == 'template' and sum(o['type'] == 'image' and o['id'] != 'brand-logo' for o in page['scene']['objects']) > 3:
+            raise EngineError('TEMPLATE_CAPACITY', '该页超过模板支持的 3 张图片，未创建缺图副本。')
+        for obj in page['scene'].get('objects', []):
+            if obj.get('type') != 'image' or obj['id'] == 'brand-logo':
+                continue
+            found = _image_bytes(studio, page['scene'], obj['id'])
+            if not found:
+                raise EngineError('DERIVE_IMAGE_MISSING', '原稿有图片暂时无法读取，未创建缺图副本。')
+            _, data = found
+            images.add(hashlib.sha256(data).hexdigest())
+            if len(data) > MAX_IMAGE_BYTES or len(images) > MAX_IMAGES:
+                raise EngineError('DERIVE_IMAGE_CAPACITY', '原稿图片超过当前模型附件容量（10 张，每张 8 MB），未压缩或删图。请保留原稿，分批处理。')
     with studio.wb._connection() as db:
         if db.execute("SELECT 1 FROM studio_jobs WHERE project_id=? AND status IN ('queued','running') LIMIT 1",
                       (studio.project_id,)).fetchone():
@@ -160,6 +179,11 @@ def derive(studio, mode, audience=None, note=None, style_id=None):
         note = str(note or "").strip()[:500]
         note_block = f"用户补充要求：{note}\n" if note else ""
         style_row = None
+    elif mode == "template":
+        from .template_packs import get
+        pack = get(style_id)
+        label, rule, target_label, note_block = pack['name'], '', pack['name'], ''
+        style_row = {'name': pack['name']}
     else:
         from .user_templates import selected_style as _sel, _get as _tget
         row = _tget(studio, style_id, "style")
@@ -172,6 +196,7 @@ def derive(studio, mode, audience=None, note=None, style_id=None):
         style_row = row
     pages_block = "\n\n".join(
         f"第{p['index']}页｜{p['role']}｜{p['title']}\n" + "\n".join(p["texts"])
+        + ("\n讲者备注：" + p['scene']['notes'] if p['scene'].get('notes') else '')
         for p in pages)
     def build(has_images):
         if mode == "audience":
@@ -185,6 +210,8 @@ def derive(studio, mode, audience=None, note=None, style_id=None):
     new_id = "project-" + secrets.token_hex(8)
     new_title = f"{title} · {label}"[:120]
     studio.wb.create_project(new_id, {"title": new_title})
+    from .owners import claim_project
+    claim_project(studio.wb, new_id)
     from .studio import Studio as _Studio
     opened = _Studio(studio.wb.root, new_id)
     try:
@@ -201,7 +228,10 @@ def derive(studio, mode, audience=None, note=None, style_id=None):
         opened.set_palette(palette)
     from .user_templates import selected_style
     style = selected_style(studio)
-    if style and mode == "restyle":
+    if mode == "template":
+        from .template_packs import select as select_pack
+        select_pack(opened, style_id, opened.wb.get_project(new_id)['revision'])
+    elif mode == "restyle":
         from .user_templates import select_style
         select_style(opened, style_id)
     elif style:
@@ -219,7 +249,28 @@ def derive(studio, mode, audience=None, note=None, style_id=None):
             shutil.copyfile(png, target_brand / png.name)
         save_logo_record(opened, logo["body"], logo["settings"])
     assets, dropped = _copy_images(studio, opened, pages)
+    if mode in {'restyle', 'template'}:
+        # Freeze the source at submission, so later edits cannot change what the
+        # new version must preserve. Include repeated labels, not just unique text.
+        (opened.wb.project_dir(new_id) / 'restyle-source.json').write_text(
+            _json([{'title':p['title'],'texts':p['texts'],'notes':p['scene'].get('notes','')} for p in pages]),encoding='utf-8')
+    if mode == 'template':
+        # Freeze each image occurrence on its original page, including duplicates.
+        by_hash = {opened.asset(a)['sha256']: a for a in assets}
+        image_pages = []
+        for page in pages:
+            refs = []
+            for obj in page['scene']['objects']:
+                if obj['type'] == 'image' and obj['id'] != 'brand-logo':
+                    _, raw = _image_bytes(studio, page['scene'], obj['id'])
+                    refs.append(by_hash[hashlib.sha256(raw).hexdigest()])
+            image_pages.append(refs)
+        (opened.wb.project_dir(new_id) / 'template-source-images.json').write_text(_json(image_pages), encoding='utf-8')
     message = build(bool(assets))
+    if mode == 'template':
+        message = message.replace('【对标风格重排】', '【整套模板适配】')
+        message += '\n使用 templateContract 中已选择的整套模板与可执行母版。AI 只组织原文的分组和版式映射，不重新设计场景。'
+
     if dropped:
         message = message.replace("源稿内容（按页）：",
                                   f"注意：源稿还有 {dropped} 张图片因数量或大小限制未随附件复制，对应页面如需图片请明确标注“待补充”，不得虚构图片内容。\n源稿内容（按页）：")
@@ -231,13 +282,51 @@ def derive(studio, mode, audience=None, note=None, style_id=None):
     return {"projectId": new_id, "jobId": job["jobId"], "audienceLabel": label, "title": new_title}
 
 
+def _restyle_source(studio):
+    path = studio.wb.project_dir(studio.project_id) / 'restyle-source.json'
+    return json.loads(path.read_text(encoding='utf-8')) if path.is_file() else None
+
+
+def _require_text_occurrences(source, texts, page_index):
+    from collections import Counter
+    # Ignore whitespace-only reflow; preserve wording and repeated occurrences.
+    normalize = lambda text: ''.join(text.split())
+    expected = Counter(normalize(t) for t in source['texts'] if normalize(t))
+    visible = [normalize(t) for t in texts if isinstance(t,str)]
+    missing = [{'text':t,'required':count,'actual':sum(v.count(t) for v in visible)}
+               for t,count in expected.items() if sum(v.count(t) for v in visible)<count]
+    if missing:
+        raise EngineError('INVALID_COMPOSITION',f'第 {page_index+1} 页改版遗漏了原文或重复限定词；必须保留每一处。',
+                          {'page':page_index+1,'missing':missing})
+
+
+def validate_restyle_plan(studio, plan):
+    source = _restyle_source(studio)
+    if source is None:return
+    if len(plan['pages']) != len(source):
+        raise EngineError('INVALID_COMPOSITION','风格改版必须保持原稿页数与页序。')
+    for index,(original,page) in enumerate(zip(source,plan['pages'])):
+        if page['title'] != original['title']:
+            raise EngineError('INVALID_COMPOSITION',f'第 {index+1} 页改版必须保留原标题与页序。')
+        texts=[page['title']]
+        for block in (page.get('composition') or {}).get('blocks',[]):
+            texts.extend(block.get(k,'') for k in ('heading','body','kicker','metric'))
+        _require_text_occurrences(original,texts,index)
+
+
+def validate_restyle_page(studio, page_index, scene):
+    source = _restyle_source(studio)
+    if source is not None:
+        _require_text_occurrences(source[page_index],[o['text'] for o in scene['objects'] if o['type']=='text'],page_index)
+
+
 def provenance(studio):
     with studio.wb._connection() as db:
         row = db.execute("SELECT * FROM studio_derived_projects WHERE project_id=?",
                          (studio.project_id,)).fetchone()
     if not row:
         return None
-    label = AUDIENCES.get(row["audience"], (None,))[0] if row["mode"] == "audience" else "对标风格"
+    label = AUDIENCES.get(row["audience"], (None,))[0] if row["mode"] == "audience" else "整套模板" if row["mode"] == "template" else "对标风格"
     try:
         source_title = studio.wb.get_project(row["source_project_id"]).get("title", row["source_project_id"])
     except EngineError:

@@ -194,9 +194,9 @@ def _mapping_for(studio, db, scene, chosen):
     return {old: new for old, new in zip(detected, targets)}
 
 
-def apply_palette(studio, scope="page", slide_id=None, scene_revision=None):
+def apply_palette(studio, scope="page", slide_id=None, scene_revision=None, palette_value=None, project_revision=None):
     """Recolour one page or the whole deck; unchanged and stale pages are skipped."""
-    chosen = palette(studio)
+    chosen = normalize_palette(palette_value) if palette_value is not None else palette(studio)
     if chosen is None:
         fail("PALETTE_MISSING", "请先选择配色，再应用到页面。")
     from .editor import _history, _save_history
@@ -207,6 +207,13 @@ def apply_palette(studio, scope="page", slide_id=None, scene_revision=None):
     targets = [slide_id] if scope == "page" else [s["id"] for s in studio.state()["slides"]]
     changed, skipped = [], []
     with studio.wb.atomic() as db:
+        if project_revision is not None:
+            studio.wb._revision(studio.wb.get_project(studio.project_id)['revision'],project_revision)
+        from .document_editing import _snapshot
+        batch_before = _snapshot(studio.wb.get_project(studio.project_id)["workspace"])
+        batch_before["scenes"] = {}
+        batch_before["appliedPalette"] = applied_palette(studio)
+        batch_before["palettePreference"] = palette(studio)
         for sid in targets:
             try:
                 current = studio.get_scene(sid)
@@ -232,11 +239,16 @@ def apply_palette(studio, scope="page", slide_id=None, scene_revision=None):
                 continue
             undo.append({"before": current["scene"], "after": result["scene"]})
             _save_history(studio, db, sid, result["sceneRevision"], undo, [])
+            batch_before["scenes"][sid] = current["scene"]
             changed.append(sid)
         db.execute("INSERT OR REPLACE INTO studio_palette_preferences VALUES (?,?)",
                    (studio.project_id, _json(chosen)))
         if changed:
             db.execute("INSERT OR REPLACE INTO studio_palette_applied VALUES (?,?)",
                        (studio.project_id, _json(chosen)))
+        if changed and scope == "deck":
+            revision = studio.wb.get_project(studio.project_id)["revision"]
+            db.execute("INSERT OR REPLACE INTO studio_document_history VALUES (?,?,?)",
+                       (studio.project_id, revision, _json(batch_before)))
         studio._touch(db)
     return {"changedSlides": changed, "skipped": skipped, "state": studio.state()}

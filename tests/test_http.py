@@ -314,8 +314,8 @@ class HTTPTests(unittest.TestCase):
         for path in ("/api/templates", "/api/templates/preview?template=clean", "/api/scene?slide=S001"):
             self.assertEqual(self.request("GET", path, authorized=False)[0], 401)
         cards = json.loads(self.request("GET", "/api/templates")[2])["templates"]
-        self.assertEqual(len(cards), 131)
-        self.assertEqual(sum(not card.get("legacy", False) for card in cards), 122)
+        self.assertEqual(len(cards), 147)
+        self.assertEqual(sum(not card.get("legacy", False) for card in cards), 138)
         self.assertEqual(sum(bool(card.get("opening")) for card in cards), 7)
         for card in cards:
             response = self.request("GET", card["previewUrl"])

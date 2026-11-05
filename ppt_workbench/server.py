@@ -146,6 +146,13 @@ class StudioHTTPServer(ThreadingHTTPServer):
         if self.worker_thread and self.worker_thread.is_alive():
             return
 
+        # Reopen durable work even when its browser never returns after restart.
+        with self.studio.wb._connection() as db:
+            pending = db.execute("""SELECT project_id FROM studio_background_tasks WHERE status IN ('queued','running')
+                UNION SELECT project_id FROM studio_jobs WHERE status IN ('queued','running')""").fetchall()
+        for row in pending:
+            self.open_project(row['project_id'])
+
         def work():
             while not self.stop_event.is_set():
                 try:
@@ -155,6 +162,12 @@ class StudioHTTPServer(ThreadingHTTPServer):
                     for studio in studios:
                         if self.stop_event.is_set():
                             break
+                        from .background_tasks import run_pending as run_background
+                        background_result = run_background(studio)
+                        if background_result is not None:
+                            processed = True
+                            if background_result.get("projectId"):
+                                self.open_project(background_result["projectId"])
                         processed = studio.run_pending() or processed
                         if not getattr(studio, '_image_worker', None) or not studio._image_worker.is_alive():
                             from .image_generation import ImageJobs
@@ -310,8 +323,15 @@ class StudioHandler(BaseHTTPRequestHandler):
             project_id = self.headers.get("X-WePPT-Project") or query.get("project", [None])[0]
             studio = self._project_studio(project_id, path)
             if path == "/api/projects":
-                self._json({"projects": owners.list_projects(studio.wb), "activeProjectId": studio.project_id,
+                from .background_tasks import project_activity
+                projects = [{**p, "activity": project_activity(studio.wb, p["projectId"])} for p in owners.list_projects(studio.wb)]
+                self._json({"projects": projects, "activeProjectId": studio.project_id,
                             "personalSpace": owners.current() is not None})
+            elif path == "/api/source":
+                source = studio.wb.project_dir(studio.project_id) / "import/source.pptx"
+                if not source.is_file():
+                    raise EngineError("NOT_FOUND", "当前项目没有导入的原稿。")
+                self._send(source.read_bytes(), "application/vnd.openxmlformats-officedocument.presentationml.presentation", headers={"Content-Disposition": 'attachment; filename="original.pptx"'})
             elif path == "/api/me":
                 self._json({"personalSpace": owners.current() is not None, "code": self._owner_token})
             elif path == "/api/state":
@@ -350,6 +370,13 @@ class StudioHandler(BaseHTTPRequestHandler):
             elif path == "/api/derive/mapping":
                 from .derived import mapping
                 self._json(mapping(studio))
+            elif path == "/api/template-packs":
+                from .template_packs import cards
+                self._json(cards(studio))
+            elif path == "/api/template-packs/preview":
+                from .template_packs import preview
+                scene = preview(query.get('pack', [None])[0], query.get('role', ['content'])[0])
+                self._send(render_html(scene, interactive=False).encode(), 'text/html; charset=utf-8')
             elif path == "/api/user-templates":
                 from .user_templates import list_templates
                 self._json({"templates": list_templates(studio)})
@@ -456,6 +483,10 @@ class StudioHandler(BaseHTTPRequestHandler):
                 else:
                     opened.set_agent_mode(studio.agent_mode)
                 result = {"projectId": project_id}
+            elif path == "/api/projects/import":
+                from .presentation_import import import_presentation
+                result = import_presentation(studio, body.get("filename"), body.get("base64"))
+                self.server.open_project(result["projectId"])
             elif path == "/api/me/adopt":
                 code = body.get("code")
                 if not owners.current() or not owners.valid(code):
@@ -468,6 +499,13 @@ class StudioHandler(BaseHTTPRequestHandler):
                                         scope=body.get("scope", "page"), auto_resume=body.get("autoResume", False))
             elif path in {"/api/guide/draft", "/api/guide/experience"}:
                 result = guide_store.save(studio, path.rsplit("/", 1)[-1], body.get("revision"), body.get("document"))
+            elif path == "/api/template-packs/select":
+                from .template_packs import select
+                result = select(studio, body.get('packId'), body.get('projectRevision'))
+            elif path == "/api/template-packs/apply":
+                from .derived import derive
+                result = derive(studio, 'template', style_id=body.get('packId'), source_revision=body.get('projectRevision'))
+                self.server.open_project(result['projectId'])
             elif path == "/api/templates/match":
                 from .template_matching import match
                 result = match(studio, body.get("slideId"), body.get("sceneRevision"), body.get("instruction", ""))
@@ -487,6 +525,9 @@ class StudioHandler(BaseHTTPRequestHandler):
             elif path == "/api/diagram/image":
                 from .diagram_design import submit_fallback
                 result = submit_fallback(studio, body.get('slideId'), body.get('sceneRevision'), body.get('requestId'))
+            elif path == "/api/document":
+                from .document_editing import operate
+                result = operate(studio, body.get("action"), body.get("projectRevision"), body.get("slideId"), body.get("afterId"))
             elif path == "/api/edit":
                 result = studio.edit_scene(body.get("slideId"), body.get("sceneRevision"), body.get("changes"))
             elif path == "/api/editor/history":
@@ -521,7 +562,7 @@ class StudioHandler(BaseHTTPRequestHandler):
             elif path == "/api/palette":
                 result = studio.set_palette(None if body.get("clear") is True else {"primary": body.get("primary"), "secondary": body.get("secondary")})
             elif path == "/api/palette/apply":
-                result = studio.apply_palette(body.get("scope", "page"), body.get("slideId"), body.get("sceneRevision"))
+                result = studio.apply_palette(body.get("scope", "page"), body.get("slideId"), body.get("sceneRevision"), body.get("palette"), body.get("projectRevision"))
             elif path == "/api/user-templates":
                 from .user_templates import upload
                 result = upload(studio, body.get("kind"), body.get("files"))
@@ -531,6 +572,9 @@ class StudioHandler(BaseHTTPRequestHandler):
             elif path == "/api/user-templates/delete":
                 from .user_templates import delete
                 result = delete(studio, body.get("id"))
+            elif path == "/api/style-templates/start":
+                from .background_tasks import submit_style
+                result = submit_style(studio, body.get("id"), body.get("projectRevision"))
             elif path == "/api/style-templates/analyze":
                 from .user_templates import analyze_style
                 result = analyze_style(studio, body.get("id"))

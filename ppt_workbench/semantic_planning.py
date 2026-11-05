@@ -81,6 +81,20 @@ def template_score(template, plan):
         "parallel": {"parallel", "pillar-cards", "parallel-two", "parallel-three", "parallel-four", "parallel-long"},
     }
     families = {"compare": "compare", "cause": "argument", "process": "process", "evidence": "proof", "data": "data", "structure": "structure", "product": "product", "parallel": "compare"}
+    if template.get("current"):
+        desired = {"compare":"compare", "cause":"editorial", "process":"process",
+                   "evidence":"case", "data":"data", "structure":"layers",
+                   "product":"product", "parallel":"compare", "general":"editorial"}.get(relation)
+        score = 16 if tid == f"pagekit-{desired}-v1" else 0
+        images = plan["assets"]["imageCount"]
+        if template.get("master") == "body-photo" and images is not None:
+            score += 10 if images else -24
+        if plan["content"]["density"] == "high":
+            if template.get("master") == "body-rows": score += 30
+            elif template.get("master") in {"body-columns", "body-hub", "body-photo"}: score -= 16
+        # A generic hierarchy cue does not establish a common center.
+        if template.get("master") == "body-hub": score -= 8
+        return score
     score = 12 if tid in preferred.get(relation, set()) else 0
     if family == families.get(relation):
         score += 5

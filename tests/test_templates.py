@@ -37,7 +37,7 @@ class TemplateTests(unittest.TestCase):
         from ppt_workbench.template_categories import CATEGORIES
         cards = {t['id']: t for t in catalog() if not t.get('legacy')}
         counts = Counter(t['browseCategory'] for t in cards.values())
-        self.assertEqual(sum(counts.values()), 122)
+        self.assertEqual(sum(counts.values()), 138)
         self.assertEqual(set(counts), set(CATEGORIES))
         self.assertLess(max(counts.values()), 30)
         expected = {'reference-01-06': 'people', 'reference-03-08': 'case',
@@ -86,7 +86,7 @@ class TemplateTests(unittest.TestCase):
         structure = json.loads((data / "bbstack-structure.json").read_text())
         cards = {entry["id"]: entry for entry in catalog()}
         self.assertEqual(len(source["templates"]), 54)
-        self.assertEqual(len(cards), 131)
+        self.assertEqual(len(cards), 147)
         self.assertEqual(sum(bool(c.get("variantOf")) for c in cards.values()), 7)
         self.assertEqual(sum(c["legacy"] for c in cards.values()), 9)
         self.assertEqual(sum(bool(c.get("local")) for c in cards.values()), 14)

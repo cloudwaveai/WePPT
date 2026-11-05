@@ -9,7 +9,7 @@ from .core import EngineError, _json, _now
 from .design_loop import review_candidate, scene_for_model, semantic_source, patch_candidate, vision_available, review_verdict
 from .design_review import render_candidate, _inventory
 from .rendering import validate_scene
-from .quality import audit_scene, boost_anchors, deck_rhythm
+from .quality import audit_scene, deck_rhythm
 
 # Model-side failures of a review call: the finished pages stay as they are.
 REVIEW_MODEL_FAILURES = {'AGENT_TIMEOUT', 'AGENT_FAILED', 'MODEL_OUTPUT_TRUNCATED', 'INVALID_AGENT_OUTPUT',
@@ -98,6 +98,8 @@ def run_review(studio, job, mode, runner):
         rows = db.execute('SELECT slide_id FROM studio_deck_pages WHERE deck_id=? ORDER BY page_index',
                           (deck['id'],)).fetchall()
     plan = json.loads(deck['plan'])
+    from .template_packs import split
+    template_bound = all(split(p.get('template_id')) for p in plan['pages'])
     original = [studio.get_scene(row['slide_id']) for row in rows]
     scenes = [copy.deepcopy(row['scene']) for row in original]
     project_revision = studio.wb.get_project(studio.project_id)['revision']
@@ -143,26 +145,18 @@ def run_review(studio, job, mode, runner):
             report.setdefault('modelFailures', []).append(exc.code)
             return {'reply': f'NEEDS_ATTENTION\n自动检查未完成（{exc.code}），页面保持原样。', 'actions': []}
 
-    report['anchorBoosts'] = boost_anchors(scenes, plan)
-    boosted_ids = {b['slideId']: b for b in report['anchorBoosts']}
+    # Geometry metrics are review evidence, never a quota that mutates user pages.
+    report['anchorBoosts'] = []
+    report['anchorPolicy'] = 'template-preserving-review' if template_bound else 'content-led-review'
 
     def inspect(stage, allow_repairs=True):
+        allow_repairs = allow_repairs and not template_bound
         sheets, measurements = contact_sheets(scenes, folder / stage)
-        reverted = len(report.get('anchorBoostReverted', []))
-        # A boosted anchor that now overflows is restored; later passes re-measure.
-        for scene, measure in zip(scenes, measurements):
-            boost = boosted_ids.get(scene['slideId'])
-            if boost and boost['objectId'] in set(measure.get('overflow') or []):
-                obj = next((o for o in scene['objects'] if o['id'] == boost['objectId']), None)
-                if obj:
-                    obj.update(boost['before'])
-                    report.setdefault('anchorBoostReverted', []).append({'slideId': scene['slideId'], 'objectId': boost['objectId']})
-        if len(report.get('anchorBoostReverted', [])) > reverted:
-            sheets, measurements = contact_sheets(scenes, folder / (stage + '-reverted'))
         rhythm = deck_rhythm(scenes)
         edits, passed = {}, True
         for start, count, png in sheets:
             context = {'generationTask': {'kind': 'deck_review'}, 'reviewStage': stage,
+                       'templatePolicy': '固定套系，仅检查，不改写模板几何；一致的母版不是单调缺陷。' if template_bound else None,
                        'sourceRequest': deck['source_message'], 'deckStrategy': plan['strategy'],
                        'designRoster': plan['pages'],
                        'sheetReadingOrder': '左上、右上、左下、右下；空白格不属于幻灯片。',
@@ -171,14 +165,15 @@ def run_review(studio, job, mode, runner):
                                   'visualStats': rhythm['pages'][i]} for i in range(start, start + count)],
                        'deckRhythmFindings': rhythm['findings'],
                        'anchorBoosts': report['anchorBoosts'],
-                       'previousFindings': report['passes'][-1:]}
+                       'previousFindings': report['passes'][-1:],
+                       'designDirection': __import__('ppt_workbench.design_direction', fromlist=['context']).context()}
             result = call(mode,
                 '检查整套PPT的叙事与视觉节奏，结合完整设计清单及当前连续页面。核对是否兑现原始需求、'
                 '证据边界、层级、可读性及图解关系。指出不服务内容的重复卡片；合理的连续图解可以保留。'
-                '连续两页版式骨架相同、整稿缺少深浅或疏密节奏、页面没有视觉焦点时，指出具体页面并给出修改方向；'
+                '结合内容识别单调、主次不清或空间关系混乱的具体页面；统一浅色稿和连续证据重复骨架本身不算错误；'
                 '单调同样是需要修正的问题。deckRhythmFindings 与 pages[].visualStats 是按几何计算的客观度量'
                 '（LAYOUT_MONOTONY、LOW_SCALE_CONTRAST、FLAT_PAGE、NO_TONAL_RHYTHM、FEW_ANCHORS），请结合截图判断；'
-                'FEW_ANCHORS 时，系统已先自动放大部分短序号或原文数字（见 anchorBoosts）；仍不足时，把已有的序号、kicker、原文数字或核心关键词放大到 72px 以上作为焦点，不新增文字；'
+                'FEW_ANCHORS 时参考 anchorBoosts，检查实际主次；图片或图解也可以是焦点，不为达标强加大数字或装饰；'
                 '原稿缺少的事实已用“待补充”等方式明确标注时，属于正常的内容缺口，不作为 NEEDS_ATTENTION 的理由，可在 reply 中提醒；只有视觉、可读性、层级、版式节奏或证据越界的问题才判 REVISE 或 NEEDS_ATTENTION。'
                 '对照 designRoster 中每页 layoutArchetype、focalElement、backgroundTreatment 核对计划是否兑现。'
                 'id 以 image-slot 开头的矩形是自动配图预留区，不要建议删除。只建议当前图片内具体问题页。'

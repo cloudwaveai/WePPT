@@ -76,9 +76,21 @@ class StyleTests(unittest.TestCase):
         self.assertIsNone(self.s.selected_template())
         self.assertEqual(self.s.get_scene("S001")["scene"]["background"], "#FAFAFA")
 
-    def test_exactly_three(self):
-        for files in ([file()], [file()] * 2, [file()] * 4):
+    def test_one_to_three_references_and_originals(self):
+        for files in ([], [file()] * 4):
             self.error("INVALID_UPLOAD", ut.upload, self.s, "style", files)
+        for count in (1, 2, 3):
+            with patch("ppt_workbench.design_review.render_candidate", side_effect=EngineError("DESIGN_RENDER_UNAVAILABLE", "no")):
+                template = ut.upload(self.s, "style", [file()] * count)["templates"][0]
+            self.assertEqual(len(template['previews']), count)
+            path, _ = ut.image(self.s, template['id'], 0)
+            self.assertEqual((path.parent / 'original-1.png').read_bytes(), base64.b64decode(PNG))
+
+    def test_spatial_observation_is_preserved_and_validated(self):
+        profile = {**PROFILE, 'spatial': {'observation': '标题遮挡图片', 'estimates': '标题约占上方三分之一', 'reproduction': '前景主体与后景文字分层'}}
+        self.assertEqual(ut.validate_profile(profile), profile)
+        profile['spatial'] = {'observation': ['bad']}
+        self.error('INVALID_STYLE_PROFILE', ut.validate_profile, profile)
 
     def test_upload_pages_and_contact(self):
         t = self.upload3()
@@ -104,6 +116,39 @@ class StyleTests(unittest.TestCase):
         self.assertEqual(calls[0][0][2]["generationTask"]["kind"], "style_analysis")
         self.assertEqual(result["template"]["profile"], PROFILE)
         self.assertEqual(result["template"]["analyzedBy"], "codex")
+
+    def test_invalid_field_is_named_without_dropping_extra_colours(self):
+        profile = json.loads(json.dumps(PROFILE))
+        profile['color']['secondary'] = ['#112233', '#223344', '#334455']
+        self.assertIsNone(ut.parse_profile_reply(json.dumps(profile)))
+        self.assertEqual(ut.profile_errors(json.dumps(profile)), ['color.secondary: hexlist'])
+
+    def test_api_analysis_uses_read_only_profile_without_edit_envelope(self):
+        from unittest.mock import MagicMock
+        from ppt_workbench.api_model_provider import run_api_turn
+        response=MagicMock()
+        response.__enter__.return_value.read.return_value=json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps(PROFILE)}}]}).encode()
+        profile={'model':'deepseek-flash','key_env':'TEST_KEY','base_url':'https://api.deepseek.com','vision':True}
+        with patch.dict('os.environ',{'TEST_KEY':'sentinel'}),patch('urllib.request.build_opener') as opener:
+            opener.return_value.open.return_value=response
+            result=run_api_turn(ut.ANALYZE_PROMPT,{'generationTask':{'kind':'style_analysis'}},profile,30)
+            self.assertEqual(ut.parse_profile_reply(result['reply']),PROFILE)
+            self.assertEqual(result['actions'],[])
+            sent=json.loads(opener.return_value.open.call_args.args[0].data)
+            self.assertEqual(sent['reasoning_effort'],'low')
+            self.assertNotIn('arguments_json',sent['messages'][0]['content'])
+            response.__enter__.return_value.read.return_value=json.dumps({'choices':[{'finish_reason':'stop','message':{'content':json.dumps(PROFILE),'tool_calls':[{}]}}]}).encode()
+            with self.assertRaises(EngineError):run_api_turn('',{'generationTask':{'kind':'style_analysis'}},profile,30)
+
+    def test_malformed_model_envelope_retries_once_and_records_failure(self):
+        tid=self.upload3()['id'];self.s.set_agent_mode('codex')
+        with patch('ppt_workbench.agent_bridge.run_turn',side_effect=[EngineError('INVALID_AGENT_OUTPUT','bad JSON'),{'reply':json.dumps(PROFILE),'actions':[]}]) as run:
+            result=ut.analyze_style(self.s,tid)
+        self.assertEqual(run.call_count,2)
+        self.assertEqual(result['template']['profile'],PROFILE)
+        files=list((self.s.wb.project_dir(self.s.project_id)/'style-analysis'/tid).glob('*attempt*.json'))
+        self.assertEqual(len(files),2)
+        self.assertTrue(any('error' in json.loads(p.read_text()) for p in files))
 
     def test_analyze_failure_after_retry(self):
         t = self.upload3()

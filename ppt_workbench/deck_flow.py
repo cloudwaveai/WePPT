@@ -213,6 +213,8 @@ class DeckFlow:
         proposed = copy.deepcopy(plan)
         proposed["execution"] = execution
         proposed = validate_deck_plan(proposed)
+        from .derived import validate_restyle_plan
+        validate_restyle_plan(self, proposed)
         if execution == "agent":
             from .page_design import drop_unsupported_metrics
             drop_unsupported_metrics(proposed, [source_message] + self._user_material_texts())
@@ -237,9 +239,11 @@ class DeckFlow:
                         if hex_ok(value):
                             proposed["design"][field] = value.upper()
         from .templates import recover_generated_template
+        from .template_packs import bind_plan, split
+        pack_bound = bind_plan(self, proposed) if execution == "agent" else False
         known = {t["id"] for t in self.wb.list_templates()["templates"]}
         for page in proposed["pages"]:
-            if "template_id" in page:
+            if "template_id" in page and not split(page["template_id"]):
                 if execution == "agent":
                     page["template_id"] = recover_generated_template(
                         page["template_id"], page["role"], page=page, known_ids=known)
@@ -262,6 +266,11 @@ class DeckFlow:
             intake = self._intake_from_round(db, mid, len(proposed["pages"]))
             with self._operation(round_id=round_id, generation=True, description="保存用户整稿标题"):
                 self.wb.update_project(self.project_id, project["revision"], {"title": proposed["title"], **intake["projectChanges"]})
+            if pack_bound:
+                from .template_packs import get
+                pid = split(proposed['pages'][0]['template_id'])[0]
+                db.execute('INSERT OR REPLACE INTO studio_pack_bindings VALUES (?,?,?)',
+                           (self.project_id, pid, _hash(get(pid))))
             deck_id = "D-" + uuid.uuid4().hex
             db.execute("INSERT INTO studio_decks VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)", (
                 deck_id, self.project_id, proposed["title"], "running", execution, source_message, mid,
@@ -271,6 +280,8 @@ class DeckFlow:
             for index, page in enumerate(proposed["pages"]):
                 db.execute("INSERT INTO studio_deck_pages VALUES (?,?,?,?,?,?,?,?)", (deck_id, index, _json(page), "pending", None, None, 0, None))
             mode_note = "本地大纲排版：使用已提交的逐页文字，不调用模型，也不补写业务事实。" if execution == "outline" else "已保存整稿计划，接下来逐页调用已连接的执行器生成。"
+            if pack_bound:
+                mode_note = "已保存内容计划，接下来按同一套模板适配各页并测量文字。"
             self._message(db, "assistant", f"{mode_note}\n共 {len(proposed['pages'])} 页，每页完成后显示预览并继续下一页。", deckId=deck_id, roundId=round_id)
             self._queue_next_deck_page(db, deck_id)
             return self.deck_state()
@@ -370,8 +381,19 @@ class DeckFlow:
             for field in ('takeaway','key_points'):
                 if field in planned:
                     actions[0].setdefault(field,planned[field])
-            if prepare_scene(actions[0], resolve_images=self._resolve_images) is None:
+            scene = prepare_scene(actions[0], resolve_images=self._resolve_images)
+            if scene is None:
                 raise EngineError('DESIGN_LAYOUT_REQUIRED', '结构化页面需要完整原生场景或图解。')
+            from .template_packs import split, scene_for_page
+            if split(planned.get('template_id')):
+                expected, _ = scene_for_page(self, planned, page['page_index'])
+                # Do not let an external executor redraw a bound template page.
+                candidate = copy.deepcopy(scene)
+                candidate['slideId'] = expected['slideId']
+                if candidate != expected:
+                    raise EngineError('TEMPLATE_LAYOUT_CHANGED', '此页已绑定整套模板，请由模板适配器生成；不能重画母版。')
+            from .derived import validate_restyle_page
+            validate_restyle_page(self, page['page_index'], scene)
         if deck["status"] == "blocked":
             db.execute("UPDATE studio_decks SET status='running',last_error=NULL,updated_at=? WHERE id=?", (_now(), deck["id"]))
 

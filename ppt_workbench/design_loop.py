@@ -149,6 +149,8 @@ def review_candidate(scene, folder, context, mode, runner, validate_action, acti
                       'reply 第一行必须是 PASS、REVISE、NEEDS_ATTENTION 之一，其余行用中文简述具体发现。'
                       'PASS 仅表示本次自动检查未发现问题；REVISE 必须附修正动作；NEEDS_ATTENTION 表示仍需用户检查。'
                       + ('本轮仅复核，不再改稿；仍有问题只在 reply 说明，返回空 actions。' if index else ''))
+            from .design_direction import DESIGN_RULES
+            prompt += '\n' + DESIGN_RULES
             remaining = deadline-time.monotonic()
             if remaining < 5:
                 report['status']='budget_exhausted';break

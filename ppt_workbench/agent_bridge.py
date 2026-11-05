@@ -191,9 +191,9 @@ DesignBrief is {"claim":string,"visualForm":string,"visualReason":string,"eviden
  "focalElement":optional string,"backgroundTreatment":optional "paper"|"surface"|"inverse"|"split","imagePrompt":optional string}.
 For a NEW agent deck always include strategy and a designBrief on EVERY page.
 Give EVERY designBrief a layoutArchetype, a focalElement naming the page's single visual
-focus, and a backgroundTreatment. Adjacent pages must use different layoutArchetypes.
-In decks of four or more pages, at least one page in five uses an inverse or split
-background (covers, section breaks, key claims and endings suit this). Give strategy a
+focus, and a backgroundTreatment. Vary reading density and composition when the content changes;
+continuous evidence may share a layout. Choose light/dark surfaces from the selected
+reference and content, never a quota. Give strategy a
 signatureMotif (one recurring visual motif, e.g. a bleed colour band with large pale
 numerals) and a scaleContrast (the concrete type sizes); design may add secondary,
 tertiary (the second secondary colour), surface and inverse colours. Keep every strategy and designBrief text field to one
@@ -232,6 +232,21 @@ Honor the page designBrief and interpret the reference's principles in this cont
 Use contentCapacity as advisory evidence, not a mandatory layout. It estimates
 the risk of narrow equal columns; actual fonts and line breaks need rendering.
 Allocate width to longer explanations and keep connectors in separate channels.
+When templateContract.mode is template-pack-v1, use the executable template library:
+choose ONE pack for the entire deck (selectedPack wins; otherwise choose a suitable
+pack or defaultPack). Every page must set template_id to one of that pack's master
+IDs and composition to the user's complete grouped content. Use cover/chapter/ending
+masters for those roles; use columns for short parallel/comparison content, rows
+for longer explanations, process for ordered steps, photo ONLY with real project
+images. Optional template_images is a list of up to 3 existing image asset IDs
+belonging on that page. Preserve source images and their page association. Do not
+insert reference photos, logos or facts. Never drop, truncate or move visible
+qualifications to notes to fit. Keep user-required same-page groups together.
+The server compiles editable scenes from these masters and checks text capacity.
+Do not author coordinates or a separate diagram in this planning path. designBrief
+must describe the chosen master's structure, not promise arbitrary free-form art.
+The following free-authoring deck_page rules apply to older/reference-style decks;
+template-bound pages are compiled locally and never ask you to redraw them.
 For new agent-generated decks, include one consistent design and a composition on
 EVERY planned page. Split information into meaningful groups (not semicolon lists).
 The plan must cover ALL requested qualifications and boundaries; never drop them.
@@ -278,17 +293,16 @@ Use context.deckDesign for a coherent visual language on a 1280x720 canvas.
 Visual toolbox: actively compose with color, scale, asymmetry and negative space.
 - Type scale: focal anchors (cover title, sourced big number, key claim) 72-140px;
   page titles 36-48px; subheads 24-30px; body 18-22px; short labels/kickers 14-16px.
-  Create a maximum-text-size / body-text-size ratio of at least 2.5 on EVERY page.
+  Make the hierarchy visible; a text-size ratio is a diagnostic, not a per-page quota.
   A focal title can use the anchor range. Use planned words or meaningful sequence
   labels for emphasis, not invented metrics. Keep labels brief; uppercase English
   or short Chinese can give a spaced-label feel without adding unsupported fields.
 - Color fields: use large filled rects covering 30-60% of the canvas to divide
   space, support content or establish focus, rather than relying only on thin rules.
-  At least half the pages should include a visible filled panel of at least 15%
-  of canvas area; size panels for the actual content, not to hide or replace it.
+  Size panels for actual content and spatial relationships; do not add panels to meet a quota.
 - Tonal rhythm: covers, section breaks, endings and key-claim pages may use dark
-  backgrounds with #FFFFFF or other high-contrast light text. Include at least one
-  non-light background in each group of 4-5 pages. Check text against its local fill.
+  backgrounds with #FFFFFF or other high-contrast light text when the chosen direction calls for it.
+  A coherent light deck is valid. Check text against its local fill.
 - Asymmetry: explore one-third/two-thirds splits, a large region paired with a
   smaller one, and edge-to-edge color fields kept WITHIN the canvas geometry.
   Avoid giving every page the same single left-aligned text-column skeleton.
@@ -391,6 +405,9 @@ provides a replacement asset. Do not invent image bytes or references, and do
 not claim to have inspected an image whose readStatus is not-inspected.
 """
 
+
+from .design_direction import DESIGN_RULES
+INSTRUCTIONS += '\n' + DESIGN_RULES + '\n'
 
 INSTRUCTIONS += "\nslide_patch changes.path must be exactly one of: " + ", ".join("/" + field for field in sorted(PATCH_FIELDS)) + ". Do not use /content/title, /slide/title, or scene object paths. For a visible title/text-only edit that must retain all styling, prefer scene_patch with the actual object ID and properties.text; this avoids rebuilding the template.\n"
 
