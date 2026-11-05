@@ -798,8 +798,10 @@ class Studio(DeliveryFlow, QualityFlow, DeckFlow):
         from .reference_templates import visual_guidance
         guidance = visual_guidance(scene["scene"].get("templateId") if scene else self.selected_template(), catalog())
         from .deck_design import MAX_AUTO_IMAGES
+        from . import curated_designs
         return {"creationContract": "content-led-v1" if not project["workspace"]["slides"] else None,
-                "templateContract": __import__("ppt_workbench.template_packs", fromlist=["contract"]).contract(self),
+                "templateContract": curated_designs.template_contract(self, payload),
+                "curatedDesignLibrary": curated_designs.planning_context() if payload.get("kind") != "deck_page" else None,
                 "imageMode": self.image_mode(), "autoImageLimit": MAX_AUTO_IMAGES,
                 "projectId": self.project_id, "projectRevision": project["revision"], "project": project["workspace"]["project"],
                 "pageExpression": expression, "visualGuidance": guidance,

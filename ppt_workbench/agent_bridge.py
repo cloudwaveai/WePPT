@@ -184,7 +184,7 @@ Design is {"background":"#RRGGBB","ink":"#RRGGBB","accent":"#RRGGBB","fontFamily
 Strategy is {"audience":string,"outcome":string,"storyArc":string,"visualLanguage":string,
  "typography":string,"imagePolicy":string,"rhythm":string,
  "alternatives":[{"id":string,"concept":string,"rationale":string}],
- "selectedDirection":string,"selectionReason":string,"signatureMotif":optional string,"scaleContrast":optional string}.
+ "selectedDirection":string,"selectionReason":string,"signatureMotif":optional string,"scaleContrast":optional string,"curatedReferenceId":optional string}.
 DesignBrief is {"claim":string,"visualForm":string,"visualReason":string,"evidence":string,
  "readingPath":string,"density":"anchor"|"dense"|"breathing","continuity":string,
  "layoutArchetype":optional "hero-statement"|"big-number"|"split-asymmetric"|"full-bleed-band"|"grid-cards"|"ordered-rows"|"timeline"|"diagram"|"quote"|"comparison",
@@ -232,6 +232,20 @@ Honor the page designBrief and interpret the reference's principles in this cont
 Use contentCapacity as advisory evidence, not a mandatory layout. It estimates
 the risk of narrow equal columns; actual fonts and line breaks need rendering.
 Allocate width to longer explanations and keep connectors in separate channels.
+For unbound new decks, context.curatedDesignLibrary contains 50 reviewed design
+references. Discuss and confirm the user's content before generating as required
+by creationContract. Choose one suitable reference (honour a named user choice),
+store its exact id in strategy.curatedReferenceId, and explain its visual rationale.
+References are visual vocabulary, not mandatory page slots. Recompose each page for
+its actual content and relationship while keeping the chosen deck language coherent.
+Use the observations, cautions and adaptation_proposal; preview URLs are for viewing,
+never project image assets. Reference sample facts, brands and photos must not enter
+the deck. User palette, uploaded style reference and explicitly selected packs win.
+On deck_page study context.curatedDesignReferences alongside designExemplar;
+material-heavy references can guide key pages without forcing every body page into
+a glass card. Do not invent precise source opacity or shadow measurements.
+When templateContract is null, do not choose a template-pack master: author native
+editable scenes using the content-led free-authoring path below.
 When templateContract.mode is template-pack-v1, use the executable template library:
 choose ONE pack for the entire deck (selectedPack wins; otherwise choose a suitable
 pack or defaultPack). Every page must set template_id to one of that pack's master
@@ -245,7 +259,7 @@ qualifications to notes to fit. Keep user-required same-page groups together.
 The server compiles editable scenes from these masters and checks text capacity.
 Do not author coordinates or a separate diagram in this planning path. designBrief
 must describe the chosen master's structure, not promise arbitrary free-form art.
-The following free-authoring deck_page rules apply to older/reference-style decks;
+The following free-authoring deck_page rules apply to unbound curated/older/reference-style decks;
 template-bound pages are compiled locally and never ask you to redraw them.
 For new agent-generated decks, include one consistent design and a composition on
 EVERY planned page. Split information into meaningful groups (not semicolon lists).

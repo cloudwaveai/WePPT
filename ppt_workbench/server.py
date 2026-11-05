@@ -436,7 +436,7 @@ class StudioHandler(BaseHTTPRequestHandler):
                         self._send(b'', mime, 304, headers)
                     else:
                         self._send(raw, mime, headers=headers)
-            elif path in {"/", "/index.html", "/app.js", "/preview-loader.js", "/style.css", "/editor.css", "/guide.html", "/guide.js", "/guide.css", "/guide-experience.json", "/reference-library.html", "/reference-library.js", "/reference-library.css"}:
+            elif path in {"/", "/index.html", "/app.js", "/preview-loader.js", "/style.css", "/editor.css", "/guide.html", "/guide.js", "/guide.css", "/guide-experience.json", "/reference-library.html", "/reference-library.js", "/reference-library.css", "/curated-designs.html"}:
                 file = Path(__file__).parent / "web" / ("index.html" if path in {"/", "/index.html"} else path[1:])
                 self._send(file.read_bytes(), {".html": "text/html; charset=utf-8", ".js": "application/javascript; charset=utf-8", ".css": "text/css; charset=utf-8", ".json": "application/json; charset=utf-8"}[file.suffix])
             elif path == "/favicon.ico":

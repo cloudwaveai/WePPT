@@ -332,7 +332,7 @@ Logo：[本次不使用，或注明已提供的素材]
       }
       children.push(node('span','chat-template-label',label));container.replaceChildren(...children);
     }
-    $('template-suggestion-text').textContent=name?label:slide?'想换个排法？根据这页内容选一个样式。':'先选一个喜欢的样子，再放入你的内容。';
+    $('template-suggestion-text').textContent=name?label:slide?'想换个排法？根据这页内容选一个样式。':'先确认内容；设计案例帮助确定视觉方向。';
   }
 
   function renderState(force = false) {
