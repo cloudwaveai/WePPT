@@ -1,0 +1,3378 @@
+{
+  "audit": {
+    "date": "2026-11-05",
+    "library_count": 645,
+    "cover_review_count": 645,
+    "candidate_count": 82,
+    "selected_count": 50,
+    "preview_count": 400,
+    "source_counts": {
+      "canva": 40,
+      "chuangkit": 10
+    },
+    "use_counts": {
+      "排版主库": 30,
+      "视觉增强": 20
+    },
+    "image_dimensions": {
+      "1600×900": 40,
+      "800×450": 300,
+      "395×222": 60
+    },
+    "identical_image_groups": [],
+    "scope": "每套8张已保存代表图；不是原始PPT逐页全检。透明度、阴影及材质判断为截图视觉判断；未验证可编辑性和素材授权。"
+  },
+  "templates": [
+    {
+      "rank": 1,
+      "catalog_index": 129,
+      "name": "紫绿金属·品牌运动",
+      "category": "品牌编辑",
+      "use": "排版主库",
+      "reason": "紫绿撞色、金属主视觉和大小字形成鲜明节奏，内页延续同一品牌语言。",
+      "caution": "强烈配色挑题材，小字不能沿用低对比组合。",
+      "adaptation_proposal": "保留配色与标题比例，按产品、观点、案例分别生成版式。",
+      "sourceId": "www.canva.cn:templates:EAHYDwueOdQ",
+      "source": "canva",
+      "original_title": "紫银色3D风潮流品牌宣传演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAHYDwueOdQ/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/26751c45-b4b8-44b3-9460-a0dfb1a43b4d.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5f908c00-4ad3-49b7-9a1d-c0ce869aff6f.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/435ae754-7877-42a2-8592-8918dfec7357.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a0079fcc-09f5-49f1-8ec0-f4a58a7a76a1.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/7bc48158-98ff-4804-a011-277aeed73dbd.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b5f0de11-b4a1-486b-a2e8-07351eff6038.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/348458b7-8dee-4ae2-aea5-8750501fe89b.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/bb47c89e-0e5a-4266-b2f9-5a6fc3044d9a.jpg"
+        }
+      ],
+      "catalog_id": "50741694-ade0-471a-adea-dbc57c61a0f9",
+      "id": "curated-129",
+      "preview_url": "/curated-designs.html#curated-129"
+    },
+    {
+      "rank": 2,
+      "catalog_index": 5,
+      "name": "暗色植物·WILD WHISPER",
+      "category": "品牌编辑",
+      "use": "排版主库",
+      "reason": "植物摄影、衬线字和深色底彼此支撑，品牌故事与色彩页衔接自然。",
+      "caution": "依赖高质量摄影，深底正文需要控制篇幅。",
+      "adaptation_proposal": "保留暗色章节与明亮信息页交替，长段落分成观点与证据。",
+      "sourceId": "www.canva.cn:templates:EAHDDwUDijk",
+      "source": "canva",
+      "original_title": "黑绿色简约高级感香薰蜡烛产品品牌提案演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAHDDwUDijk/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/82933862-264f-4098-b47d-db20fbaf2f87.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/700da005-bd47-4759-b779-5d6c000577af.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/56890f0d-dff5-4b09-a5f6-8e2f19f378d0.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/962388f1-feea-4604-8689-182b669a8b1e.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/40b04584-7da4-403e-802c-0713f7fb7b83.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/d18a9165-4f72-4401-be01-0ee8b3e719d8.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/08f3048a-aede-48a1-9fa1-427e26ea86ed.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/e709925d-50b8-4310-801c-a21a43f470f5.jpg"
+        }
+      ],
+      "catalog_id": "fa8c95fd-d611-47c6-961f-c7b7946c6635",
+      "id": "curated-005",
+      "preview_url": "/curated-designs.html#curated-005"
+    },
+    {
+      "rank": 3,
+      "catalog_index": 147,
+      "name": "暖灰粉·杂志叙事",
+      "category": "品牌编辑",
+      "use": "排版主库",
+      "reason": "不对称图片、浅色块与宽留白有明确主次，视觉节奏克制。",
+      "caution": "浅细字容易在投影时消失。",
+      "adaptation_proposal": "随图片数量调整栏数，保持宽页边距与一个主视觉。",
+      "sourceId": "www.canva.cn:templates:EAFnefEhWX0",
+      "source": "canva",
+      "original_title": "浅粉黑白大学生个人介绍作品集演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAFnefEhWX0/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/191e1a29-e20a-42e2-8b67-20bc1dfaa578.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/c01923f5-9b78-49f8-8606-3b9bc94c34b7.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/abd2509f-3c73-4f40-904d-f65cc3a1da24.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/584562d8-c31e-4b4b-8b80-b270ef74402e.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/18bd7fe3-9e33-4ff5-afbc-7bdb8a211dec.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b3276454-96e1-4583-abee-c67f209f1731.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ecb3f430-5784-4e6d-aa95-3e67a74b8d67.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/9ce8f09f-4531-428c-890b-42bdde32b226.jpg"
+        }
+      ],
+      "catalog_id": "0afd96c3-e72f-48f0-8fee-b4e0a8b478e5",
+      "id": "curated-147",
+      "preview_url": "/curated-designs.html#curated-147"
+    },
+    {
+      "rank": 4,
+      "catalog_index": 157,
+      "name": "白色居所·空间作品集",
+      "category": "品牌编辑",
+      "use": "排版主库",
+      "reason": "室内摄影裁切和留白让画面有呼吸，图文比变化仍保持统一。",
+      "caution": "图片质量决定效果，不能用大量小图填满留白。",
+      "adaptation_proposal": "一张主图配一句结论，多图案例拆为总览与细节。",
+      "sourceId": "www.canva.cn:templates:EAFnc0LtBA8",
+      "source": "canva",
+      "original_title": "黑白家居设计师大学生个人作品集演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAFnc0LtBA8/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/8878c937-4562-4605-bdeb-261c843f918a.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/4dc85d45-e078-4311-b0f8-551fae3f049c.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/2260b88f-30e4-4c30-9048-b8606c4f3f3b.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5b855b11-4bde-492a-9f4f-1f2b2cf06e5e.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ed61c25b-0fba-45d3-894b-72ca31bf1be8.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5ebed242-af94-4e0d-9e14-d8df612565fd.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/14862772-5a96-42f2-a53b-36e5b2f062ac.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/c8a22243-cbc3-4be8-9211-515fbce7a5a9.jpg"
+        }
+      ],
+      "catalog_id": "28143a47-07e5-4ae7-a6d8-2bd7d50a8c64",
+      "id": "curated-157",
+      "preview_url": "/curated-designs.html#curated-157"
+    },
+    {
+      "rank": 5,
+      "catalog_index": 1,
+      "name": "黑白灰·BRAND杂志",
+      "category": "品牌编辑",
+      "use": "排版主库",
+      "reason": "窄体大标题与黑白摄影形成清晰骨架，封面气质能延续到内容。",
+      "caution": "大写英文的效果不能直接等同于中文长标题。",
+      "adaptation_proposal": "中文标题重算行数与字宽，保留黑白对比和图片拼接关系。",
+      "sourceId": "www.canva.cn:templates:EAHMEsSK25s",
+      "source": "canva",
+      "original_title": "黑白灰高级杂志风品牌策划汇报演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAHMEsSK25s/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/d7e9aeda-0f19-4c32-b4df-9c3608b32692.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/c28686af-f910-422f-b119-e7c527a2669a.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/34227b91-1331-4002-bb55-c6b22307f501.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/dddce4d7-5b49-4da0-ae39-edbd0ef9a1f7.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/9b37dce6-6698-4234-a19b-e87f20652e3b.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a687f5e0-14f7-4565-b8ec-08ed1ad1d132.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ea01caa2-3c4a-437d-b979-906b23b6f6a5.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/889aed21-3b64-4c27-b73f-6fecf7c1912b.jpg"
+        }
+      ],
+      "catalog_id": "985ef2c9-38ef-4237-b2ff-439a931aa7b7",
+      "id": "curated-001",
+      "preview_url": "/curated-designs.html#curated-001"
+    },
+    {
+      "rank": 6,
+      "catalog_index": 68,
+      "name": "暖色虚焦·白框叙事",
+      "category": "品牌编辑",
+      "use": "排版主库",
+      "reason": "虚化照片退到背景，白色内容板与前景图片形成清楚的远近关系。",
+      "caution": "白框若每页相同会变成机械套版。",
+      "adaptation_proposal": "背景色调固定，内容板随图文量改变宽度与分区。",
+      "sourceId": "www.canva.cn:templates:EAHSDmkxalA",
+      "source": "canva",
+      "original_title": "棕黄色高级简约品牌策划汇报总结演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAHSDmkxalA/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/eea7333f-73a0-4310-b883-c0ae90bd60bb.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/e3cd3aae-f298-4e0b-8e42-f84682dc1e1a.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/4aaa5686-19bf-4957-a51a-1fefe51ca8bf.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/f0b0029f-83e7-40d9-8385-ffcee9a02cc0.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/2ca80a40-790f-4244-9bb0-72b6f3a1293e.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ed0bfaeb-1fad-458f-ad7e-b368b2e8267d.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/d8d499c6-271f-4c1d-ae69-3ffdd2eb344f.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/12262867-13a4-48b3-8b50-a07960ea7a9a.jpg"
+        }
+      ],
+      "catalog_id": "b49e69e0-96dc-4bba-bfef-2ad853a7f528",
+      "id": "curated-068",
+      "preview_url": "/curated-designs.html#curated-068"
+    },
+    {
+      "rank": 7,
+      "catalog_index": 139,
+      "name": "蓝色复古窗口",
+      "category": "创意拼贴",
+      "use": "排版主库",
+      "reason": "窗口前后遮挡把信息分层，目录与正文都有可延展的容器语言。",
+      "caution": "装饰拼音和窗口控件会占用正文空间。",
+      "adaptation_proposal": "窗口数量随信息组数变化，长文减少装饰控件。",
+      "sourceId": "www.canva.cn:templates:EAG7QejzRe8",
+      "source": "canva",
+      "original_title": "蓝黑白色酷炫工作总结演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAG7QejzRe8/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/03ab83f0-a9a5-4d4f-8741-14ae1a07cdf2.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/11cff682-77bd-4cb1-b947-c839e2e2d371.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/99ba7897-b735-4700-916b-9036591c53b5.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b1e9f221-1e67-477a-9c2d-69325e4f2b96.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/3e090902-db81-41d3-9cc3-956aa4bffd6b.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/79b6c8bc-c178-4d5a-90c8-f41ad8ca3650.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/8fb582fe-50cb-4c14-b3cf-67741c14632f.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/8dcab03b-18f1-4054-aaca-62034bec3cb3.jpg"
+        }
+      ],
+      "catalog_id": "4782aeca-f2e7-4bc2-a69d-0c1954452b12",
+      "id": "curated-139",
+      "preview_url": "/curated-designs.html#curated-139"
+    },
+    {
+      "rank": 8,
+      "catalog_index": 91,
+      "name": "黑白几何·实体与线框",
+      "category": "几何秩序",
+      "use": "排版主库",
+      "reason": "明暗几何面与线框产生体积，建筑图片和正文网格保持秩序。",
+      "caution": "线框密度过高会与图表线条混淆。",
+      "adaptation_proposal": "几何留在边缘或章节页，数据页保留简洁网格。",
+      "sourceId": "www.canva.cn:templates:EAGG-dC4ye4",
+      "source": "canva",
+      "original_title": "黑白灰色简约抽象几何工作汇报总结ppt",
+      "source_url": "https://www.canva.cn/templates/EAGG-dC4ye4/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/55f03968-d089-4fc4-9399-a5900616a427.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/2c7051dd-d5fa-4626-8876-6e5d3025ffad.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/7d68205c-f3e1-48a0-bbdd-dddffb9d789b.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/61a83a89-1c70-421e-acb7-7224194c8365.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/95887493-ca07-48b2-b673-e5620284e644.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5e21679f-c901-48b3-8999-dbe5d2133e3f.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b34e048a-fdc0-4b6b-a95b-9491ad5cae1e.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/48998bc5-f76f-4131-9ba4-a04cb650808a.jpg"
+        }
+      ],
+      "catalog_id": "95976ddf-9256-4016-9be2-b9f6014dcffc",
+      "id": "curated-091",
+      "preview_url": "/curated-designs.html#curated-091"
+    },
+    {
+      "rank": 9,
+      "catalog_index": 155,
+      "name": "窗影与叶影·白色空间",
+      "category": "材质光影",
+      "use": "视觉增强",
+      "reason": "自然投影让白底有空间感，不靠堆卡片也能建立层次。",
+      "caution": "阴影穿过小字会损害阅读，图片中无法还原原始阴影参数。",
+      "adaptation_proposal": "投影避开正文区，文字变多时降低背景纹理强度。",
+      "sourceId": "www.canva.cn:templates:EAFi-DD2VJk",
+      "source": "canva",
+      "original_title": "黑白简约风竞聘述职PPT演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAFi-DD2VJk/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/67d41a2b-a9ee-4674-9743-8203cb1e2004.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/e4fa08dc-b92e-4125-bdd1-a56577091d9b.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b0fbcbd5-8ef3-4db1-a28e-f347b7dad98c.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/54ef7c2b-bd7d-460c-9e0d-e9e65a116992.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/58559c9a-6d54-4d77-9787-8885370eed3c.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/47db3263-18cb-4f31-a41a-503c1a8fa902.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6a8444d3-3459-4c2a-bd11-b25780624826.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ad7c312d-c574-4366-b398-abf189feffab.jpg"
+        }
+      ],
+      "catalog_id": "d90699cb-75a3-4829-8ac8-7a04a5a3a5ca",
+      "id": "curated-155",
+      "preview_url": "/curated-designs.html#curated-155"
+    },
+    {
+      "rank": 10,
+      "catalog_index": 228,
+      "name": "蓝色玻璃·圆盘报告",
+      "category": "材质光影",
+      "use": "视觉增强",
+      "reason": "玻璃圆盘的透光、厚度和高光集中在主视觉，文字区保持干净。",
+      "caution": "内页布局相对常规，玻璃饼形不能冒充真实数据图。",
+      "adaptation_proposal": "将玻璃体作为装饰资产，真实图表独立按数据生成。",
+      "sourceId": "www.canva.cn:templates:EAGKXhc5awM",
+      "source": "canva",
+      "original_title": "蓝色渐变毛玻璃风通用工作汇报ppt演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAGKXhc5awM/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/176fe370-a437-4e99-88af-652101ceb2ab.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/f8ccc094-df16-4440-a44c-baab5a84b5dd.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6d6236bb-937e-4268-8e45-a196152ef6e7.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/66d94627-1977-4001-87d8-9a09ea477489.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/efac685c-f314-4774-a896-208c2f1a0027.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5b5650e0-f6dd-4908-907f-5e18bfed3a37.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/456229fe-1db9-4e7e-9466-8b828140dffb.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5c9ed6d5-be73-403b-9c57-fbfe77977b91.jpg"
+        }
+      ],
+      "catalog_id": "9ae51106-fdf8-4fef-903a-089eb78101c7",
+      "id": "curated-228",
+      "preview_url": "/curated-designs.html#curated-228"
+    },
+    {
+      "rank": 11,
+      "catalog_index": 235,
+      "name": "蓝黄建筑·交叠色带",
+      "category": "几何秩序",
+      "use": "排版主库",
+      "reason": "灰度城市照片与蓝黄色带穿插，遮挡关系明确，正文与图表沿用配色。",
+      "caution": "黄色区域承载白色小字时对比不足。",
+      "adaptation_proposal": "根据标题长度移动色带，数据图统一蓝黄但重算比例。",
+      "sourceId": "www.canva.cn:templates:EAFZ2zp0I4A",
+      "source": "canva",
+      "original_title": "蓝黄色大气简约工作汇报ppt演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAFZ2zp0I4A/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/bf8eff84-7f9c-4325-b877-622294ea5ec3.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/874bcb42-bb41-4059-9700-92210ae9d7d9.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/1b41b7eb-4265-45e8-8c14-48e68d81f42b.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ccc4033e-c57c-4329-a62b-878b4b1114a3.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a741b45c-02b5-449c-8691-a561a1d3549a.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/10ced998-d414-4105-ad40-68baa1f9ab58.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/45eef297-63f7-438d-9876-a01e242143d8.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/81c35c59-5d36-4673-89ff-b6354760d73d.jpg"
+        }
+      ],
+      "catalog_id": "5a2c054d-0055-4d1b-ad8a-67a6eae4f143",
+      "id": "curated-235",
+      "preview_url": "/curated-designs.html#curated-235"
+    },
+    {
+      "rank": 12,
+      "catalog_index": 501,
+      "name": "炭黑纸雕·红色细节",
+      "category": "材质光影",
+      "use": "视觉增强",
+      "reason": "深灰纸层与边缘明暗塑造安静的深度，少量红色提供焦点。",
+      "caution": "暗部投影可能糊在一起，部分通用示意图缺少明确语义。",
+      "adaptation_proposal": "纸雕用于封面和章节，正文换成对比清楚的信息区。",
+      "sourceId": "www.chuangkit.com:templates:34723",
+      "source": "chuangkit",
+      "original_title": "融资计划黑色商务PPT",
+      "source_url": "https://www.chuangkit.com/odyssey/createDesign?t=34723",
+      "previews": [
+        {
+          "position": 1,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/73f85bfd-1a07-46d6-99b4-36ebdaf5c8d6.jpg"
+        },
+        {
+          "position": 2,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/c0b974cb-e514-4282-a4ba-3d56b6197d66.jpg"
+        },
+        {
+          "position": 3,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/524f1ab7-3f68-42ee-bb7c-cdd7f998a63e.jpg"
+        },
+        {
+          "position": 4,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/54ff8ddc-69e5-4421-b135-4075ffd65342.jpg"
+        },
+        {
+          "position": 5,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/c5b393d4-cce9-4d03-a9f0-cd8e5d39307f.jpg"
+        },
+        {
+          "position": 6,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a6211359-5066-4bff-8e5c-ed9260e95c70.jpg"
+        },
+        {
+          "position": 7,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/1218e9ae-2995-4b69-b656-22bbb3c63177.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ad41c8e1-b459-4e8f-a895-db320a163ef6.jpg"
+        }
+      ],
+      "catalog_id": "c6a001de-0276-4f79-8e2b-dc450aa9f6cf",
+      "id": "curated-501",
+      "preview_url": "/curated-designs.html#curated-501"
+    },
+    {
+      "rank": 13,
+      "catalog_index": 6,
+      "name": "白色肌理·钴蓝胶带",
+      "category": "创意拼贴",
+      "use": "视觉增强",
+      "reason": "灰白涂抹肌理与蓝色胶带形成材质差，作品图像像贴在真实表面。",
+      "caution": "粗糙背景不适合承载小字号长段文字。",
+      "adaptation_proposal": "肌理留在外围，正文使用干净底板。",
+      "sourceId": "www.canva.cn:templates:EAGv8ZB04Rk",
+      "source": "canva",
+      "original_title": "艺术冷淡风简约艺术展活动策划演示文稿Hot",
+      "source_url": "https://www.canva.cn/templates/EAGv8ZB04Rk/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/fa53aff0-a6a4-4491-aa8b-be5e3f0459c2.webp"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/882db086-88cb-4258-9331-a0016a5b03fb.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ece25fad-850a-4119-a75e-701af44c0184.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a72d9667-cd34-4cc4-b941-4e83a71f479c.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/654c8363-576e-4f3a-b4df-eb1d8b511f26.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/c396085e-f152-4020-8aa2-100f8f35840f.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/17bdc6e5-3b1f-4281-a58e-1e2ec75fa20f.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/700e1507-d108-4702-8db1-2c4d99ec5c38.jpg"
+        }
+      ],
+      "catalog_id": "5d00f245-fbc3-40c6-93b2-2fac7597992e",
+      "id": "curated-006",
+      "preview_url": "/curated-designs.html#curated-006"
+    },
+    {
+      "rank": 14,
+      "catalog_index": 8,
+      "name": "米色品牌·斜向有机裁切",
+      "category": "品牌编辑",
+      "use": "排版主库",
+      "reason": "温暖中性色和斜向图片轮廓让品牌页保持统一又不呆板。",
+      "caution": "复杂蒙版会裁掉关键主体。",
+      "adaptation_proposal": "按人像或产品主体调整蒙版位置，必要时切回矩形图片。",
+      "sourceId": "www.canva.cn:templates:EAHMP0DYB5Y",
+      "source": "canva",
+      "original_title": "米咖色高级简约风品牌介绍演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAHMP0DYB5Y/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/1161879b-d32e-4330-b4a8-7952beace20f.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/aa7f329f-b3fe-4a8d-9e4f-dd90e6e6e880.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/59a83c44-050b-4e86-a8fd-19e43404291f.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a89962b4-68b0-4051-9213-03f2307f2428.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/497d9bda-69c4-413f-b8f9-e8f94a1e9df8.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a01311f4-fac5-4d78-8a2e-34b3f9861ea8.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ea9f2c52-ad38-4cf1-a27d-7ec546e097a0.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/9de69e19-3083-44ee-be27-f14e1789cf10.jpg"
+        }
+      ],
+      "catalog_id": "25384201-3243-40ce-b41c-31fa73a95a6c",
+      "id": "curated-008",
+      "preview_url": "/curated-designs.html#curated-008"
+    },
+    {
+      "rank": 15,
+      "catalog_index": 13,
+      "name": "棕色珠宝·细线叙事",
+      "category": "品牌编辑",
+      "use": "排版主库",
+      "reason": "暖棕摄影、细线轨迹与错落图片适合讲品牌和工艺。",
+      "caution": "细线与小标注在小屏下较弱。",
+      "adaptation_proposal": "保留线条作为引导，工艺步骤用真实顺序组织。",
+      "sourceId": "www.canva.cn:templates:EAHHX3PRrnI",
+      "source": "canva",
+      "original_title": "米棕色时尚简约风品牌介绍演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAHHX3PRrnI/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b189d5b8-4d17-407a-a031-cecd2ba5e05b.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/d936a794-4105-4530-9eaf-af26ed44c826.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/e331e66c-dae2-4536-9584-4172d61a9f93.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b9f562fd-e6d2-494e-a497-dba976e578ac.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b8303ceb-1c6f-4fdf-a05d-8b3b2b04ee9e.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/bc61743e-36cc-48e1-af81-42f1e0b68e4a.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/c2dac8e2-5c66-4695-be3f-72890697fe8d.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/4cfef54a-2888-44ed-bd06-d42b5876f88c.jpg"
+        }
+      ],
+      "catalog_id": "a56fe19c-d632-44e1-9971-c99dafcc9650",
+      "id": "curated-013",
+      "preview_url": "/curated-designs.html#curated-013"
+    },
+    {
+      "rank": 16,
+      "catalog_index": 14,
+      "name": "酒红色块·摄影品牌",
+      "category": "品牌编辑",
+      "use": "排版主库",
+      "reason": "酒红板块与摄影重叠，整套色彩约束明确，正文具有稳定锚点。",
+      "caution": "大面积深红不宜承载密集正文。",
+      "adaptation_proposal": "品牌色用于标题和章节，说明文字转为浅底深字。",
+      "sourceId": "www.canva.cn:templates:EAHN9Si1kKE",
+      "source": "canva",
+      "original_title": "红色时尚风品牌介绍汇报总结演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAHN9Si1kKE/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a815464d-8e15-46fd-911d-e0c9d38b1185.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/f1296c5b-7031-4eb7-9892-7af317e587c5.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/961ed3e4-c98e-4e89-ba7c-05876280dbc7.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b5f56ddb-3e68-4bb2-83c5-ac09b8fde95e.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b55a357c-d5ef-4953-b977-e9e9bca7902b.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/4378b03d-32d9-4ffd-b687-5de321e1b788.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/33feec1f-d00f-4052-90d0-6f46906eace3.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/edee0d7b-ba06-4a24-a68d-15ff903afd81.jpg"
+        }
+      ],
+      "catalog_id": "49072c1e-9a25-4209-bab6-54ecad248ca9",
+      "id": "curated-014",
+      "preview_url": "/curated-designs.html#curated-014"
+    },
+    {
+      "rank": 17,
+      "catalog_index": 18,
+      "name": "黑白摄影·粉色撕纸",
+      "category": "创意拼贴",
+      "use": "排版主库",
+      "reason": "高对比摄影和粉色撕纸带建立强烈视觉识别，信息层级直接。",
+      "caution": "撕纸和粗体过多会让所有信息同时抢眼。",
+      "adaptation_proposal": "每页只保留一个撕纸焦点，次要内容使用规则排版。",
+      "sourceId": "www.canva.cn:templates:EAHAz54tQAo",
+      "source": "canva",
+      "original_title": "黑粉色创意摄影作品集展示演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAHAz54tQAo/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/678adda5-c19c-43b7-a8af-66e17d5a3de0.webp"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/2645262b-a753-43db-adab-e916fbaee613.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/7000a247-8bcb-404b-b2d3-64b6a5c170a8.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/21f8c5b0-a8f3-4108-8b6b-cd24c9ac283d.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ae1a381a-7778-46c1-86cc-36e9321b9dab.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/71902dac-ae14-4c37-885f-3dbbf12be39c.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ab05cf2f-6a60-4757-affe-dd8ce72092f1.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/fbdb298c-ccdb-4bde-9801-8f8a60f0f6d4.jpg"
+        }
+      ],
+      "catalog_id": "b3c8bcf8-0322-4c8d-8875-e7012195feb6",
+      "id": "curated-018",
+      "preview_url": "/curated-designs.html#curated-018"
+    },
+    {
+      "rank": 18,
+      "catalog_index": 22,
+      "name": "像素电脑·古典雕塑",
+      "category": "创意拼贴",
+      "use": "视觉增强",
+      "reason": "复古界面、像素元素和雕塑剪贴形成鲜明反差，素材层次丰富。",
+      "caution": "风格限定明显，装饰不宜进入严肃数据页。",
+      "adaptation_proposal": "章节页保留拼贴，正文只延续颜色和窗口边框。",
+      "sourceId": "www.canva.cn:templates:EAHUyxfzcXs",
+      "source": "canva",
+      "original_title": "灰白红色像素风设计作品集演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAHUyxfzcXs/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/2647e45c-5dac-47b2-afc3-721a63bdc700.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/8408f9d5-79fb-41b4-a4f1-85b71675d4a6.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a96bf465-e1b8-4cca-9ae4-8ab0e5476afb.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b4255a30-6da5-44bf-9c62-1f1f40520d08.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/82a76358-adfc-4b00-9c3b-567611dce773.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/17daf8b4-da40-4911-a144-8817f94ca165.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/c0bdbb45-2be6-4680-b3f0-bba987bab0d0.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/81ff55f9-4d05-4140-9694-93c70ce4123d.jpg"
+        }
+      ],
+      "catalog_id": "7f067db6-21a0-4655-96a0-d0e8de47d867",
+      "id": "curated-022",
+      "preview_url": "/curated-designs.html#curated-022"
+    },
+    {
+      "rank": 19,
+      "catalog_index": 25,
+      "name": "白色折带·学术报告",
+      "category": "材质光影",
+      "use": "视觉增强",
+      "reason": "柔和折带提供立体背景，内容区仍有较稳定的学术报告结构。",
+      "caution": "灰字与浅底接近，正文编排较常规。",
+      "adaptation_proposal": "折带避开正文，研究结果按图表与结论重新组织。",
+      "sourceId": "www.canva.cn:templates:EAHEwpC44jI",
+      "source": "canva",
+      "original_title": "灰色简约风大学生开题报告毕业答辩演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAHEwpC44jI/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/83d5cfd2-8574-4c2c-a2d4-90cd93e23961.webp"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/0c0adbd9-95be-4c40-b722-060f6ac17e48.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/931eb94c-b32a-4e30-8b00-b629c8548aa5.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/9b113ca4-2889-4b37-8a60-639dc79f2f73.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/920c32a7-7a10-427a-8860-93a19a4097a6.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/292ddec6-bda4-4568-b4be-f9709b9c0c49.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6f9016fa-9ba8-44dc-9017-addec412b0f2.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/073176fe-5c99-4874-9ba3-107d25325ef1.jpg"
+        }
+      ],
+      "catalog_id": "c54499b1-d4e3-4465-804a-915418c2acb4",
+      "id": "curated-025",
+      "preview_url": "/curated-designs.html#curated-025"
+    },
+    {
+      "rank": 20,
+      "catalog_index": 42,
+      "name": "黑色液态铬·科技主视觉",
+      "category": "材质光影",
+      "use": "视觉增强",
+      "reason": "金属反射在黑底上具有明确体积，浅色信息页缓解整套压迫感。",
+      "caution": "金属漂亮不代表正文丰富，不能每页重复大主视觉。",
+      "adaptation_proposal": "金属用于关键页，其余页面继承黑白配色和标题系统。",
+      "sourceId": "www.canva.cn:templates:EAHJoOnfEGQ",
+      "source": "canva",
+      "original_title": "银黑色酸性简约风设计作品集演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAHJoOnfEGQ/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ea9d0dc2-720a-4fbd-98f2-1462772e29c4.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/058d0b66-8b4b-4998-9668-97e3e521a6c8.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/8ef65777-9f22-4b50-8375-1d66183d44f8.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/34adb598-37cb-421f-b545-ef92e9740ce4.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/2b6d4d7c-6e39-4e79-bc0b-72eb145c75d4.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/0f74fd9a-93d3-4d84-b31d-9f557776d697.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5c4ee944-48b1-4154-bc15-46e7ca359bc6.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/14400930-8057-4614-9bba-7030b19cd65d.jpg"
+        }
+      ],
+      "catalog_id": "c1ad8167-1431-432d-b3ac-29a5849f21eb",
+      "id": "curated-042",
+      "preview_url": "/curated-designs.html#curated-042"
+    },
+    {
+      "rank": 21,
+      "catalog_index": 55,
+      "name": "粉绿条纹·艺术编辑",
+      "category": "品牌编辑",
+      "use": "排版主库",
+      "reason": "粉色与深绿搭配有辨识度，条纹、摄影和留白形成编辑节奏。",
+      "caution": "条纹可能干扰小字，不适合所有商务题材。",
+      "adaptation_proposal": "条纹限于页边与分隔，作品数量变化时重排图片网格。",
+      "sourceId": "www.canva.cn:templates:EAG6meH2JMY",
+      "source": "canva",
+      "original_title": "灰粉墨绿色清新招聘文化艺术演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAG6meH2JMY/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/f1120b0f-698a-4987-bc52-0174c67c208b.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/d6db3594-5eb6-420d-b33c-b4e1a11195dd.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/e684c3a8-c228-4a38-aec4-c8acf9c00313.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/0094de94-95a0-4c31-bb9b-bfafb115ce75.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/06d6aca1-1ff6-4668-8cef-687bdc7685d1.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/fd6737a9-8fd1-43c1-8634-6904995c0c8f.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6e78171d-3d66-4212-ba04-6f039838fb1e.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/1396c2ae-d43b-4bfc-b6d2-d55409918246.jpg"
+        }
+      ],
+      "catalog_id": "c6b9eddb-e4c4-48a3-aa53-8a947cd046f6",
+      "id": "curated-055",
+      "preview_url": "/curated-designs.html#curated-055"
+    },
+    {
+      "rank": 22,
+      "catalog_index": 64,
+      "name": "深绿植物·明暗章节",
+      "category": "品牌编辑",
+      "use": "排版主库",
+      "reason": "深色植物章节与白底正文交替，有清楚的阅读节奏。",
+      "caution": "若正文全用同一栏数，节奏会重新变得单一。",
+      "adaptation_proposal": "深色用于章节，白底正文按论点、比较、数据选择布局。",
+      "sourceId": "www.canva.cn:templates:EAGLk3ZVz48",
+      "source": "canva",
+      "original_title": "小清新风格市场调研幻灯片模板",
+      "source_url": "https://www.canva.cn/templates/EAGLk3ZVz48/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/9bc389f0-e990-4d8c-903c-7d12e1380970.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/7a88a000-d07f-45ab-9724-7674ac11034c.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5c0bd893-b048-4227-91ec-8ec1cfafc043.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/2e241335-e2ed-48b8-807a-7054566d384e.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a40c53f5-d092-4f87-bc57-8922385c8e7f.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/353eefbd-76b7-4459-b65a-43a8bf17bb3b.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/0f360167-8147-412f-94c5-a09cfe75814c.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5a038b98-7857-4e66-8a34-6b22cdd34846.jpg"
+        }
+      ],
+      "catalog_id": "2bbe3bdb-2880-4967-bbb0-bfb954c7454d",
+      "id": "curated-064",
+      "preview_url": "/curated-designs.html#curated-064"
+    },
+    {
+      "rank": 23,
+      "catalog_index": 67,
+      "name": "古物纸色·历史叙事",
+      "category": "文化叙事",
+      "use": "排版主库",
+      "reason": "文物图像、纸色底和时间关系相互呼应，适合文化内容。",
+      "caution": "文物、年代和说明必须与新内容核对。",
+      "adaptation_proposal": "先建立真实时间线，再组织器物比较与说明位置。",
+      "sourceId": "www.canva.cn:templates:EAHTco0cV8E",
+      "source": "canva",
+      "original_title": "黑金色中国风文物文化演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAHTco0cV8E/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/1bcf9912-9999-40ff-84d2-c5a6fe6b3722.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/9d04aa8a-1560-474d-967f-5baf337c62e3.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5d18df8f-2c45-4c4e-ad89-042377579a31.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/65f48f22-323c-4c9e-b54f-44c39abc329a.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/3d3a864c-7046-486f-8964-b1d5fa255f8b.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/4404e361-0d31-4565-87a1-c240bfe84950.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/263f070c-8520-481a-8721-c1b43a03a7c5.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5bc69697-52d5-4940-b37d-0b761913f9e8.jpg"
+        }
+      ],
+      "catalog_id": "6e354354-3ec0-47ad-94e5-4c7c57ddde75",
+      "id": "curated-067",
+      "preview_url": "/curated-designs.html#curated-067"
+    },
+    {
+      "rank": 24,
+      "catalog_index": 73,
+      "name": "荧光绿·大字品牌",
+      "category": "品牌编辑",
+      "use": "排版主库",
+      "reason": "黑白底与荧光绿强调形成明确节奏，大标题能建立传播力度。",
+      "caution": "荧光绿配白色的小字容易失去可读性。",
+      "adaptation_proposal": "只让核心结论占据大字区，正文回到深浅对比充足的组合。",
+      "sourceId": "www.canva.cn:templates:EAHVJweUrlE",
+      "source": "canva",
+      "original_title": "黑绿色杂志风品牌策划方案演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAHVJweUrlE/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/004586bb-f0e4-4fd2-9072-a9410706d226.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/afd2c7c6-4258-479a-b008-77890ae49bab.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b7a220bd-4192-4c30-8ec3-cefaa370a6b1.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/4de6a4c0-662d-4845-a9f8-b33011e4d55b.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/48f68695-98d7-47a8-a79a-d459d653c3b4.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b085b718-e7fd-4c27-8ef7-c56a2c486075.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a4910ea5-dc7a-4d29-8a87-80a12c70ef2e.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/e6deec0c-6c53-4adf-8071-7feda44f9bdf.jpg"
+        }
+      ],
+      "catalog_id": "1be0ce18-acb5-4b75-a8bc-39c30e79a92b",
+      "id": "curated-073",
+      "preview_url": "/curated-designs.html#curated-073"
+    },
+    {
+      "rank": 25,
+      "catalog_index": 77,
+      "name": "粉色网点·剪贴活动",
+      "category": "创意拼贴",
+      "use": "视觉增强",
+      "reason": "网点、人物剪贴和贴纸创造多种边缘层次，适合活动与创意表达。",
+      "caution": "小装饰偏多，文字被拆开后可能影响理解。",
+      "adaptation_proposal": "保留一个人物主体与一条主信息，长标题完整呈现。",
+      "sourceId": "www.canva.cn:templates:EAG01BCVUmM",
+      "source": "canva",
+      "original_title": "粉色半色调艺术拼贴风通用PPT演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAG01BCVUmM/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/7826f12a-3d10-4aeb-8e78-7736aeb365e6.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/53028b1e-fcd6-4de6-92d2-0b3db5e5bcce.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/fedbec48-8021-467a-841f-4a4d08e42e26.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6366affc-ddff-4ffa-8297-61473f5b15e4.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/76be7660-e8c6-411c-843e-5229e12908d0.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/f23d7350-bef1-45d4-a0f6-d3d0896c025c.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/81ec627c-e793-4d77-b153-607ce6942d76.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6ae69a53-9d77-4b25-8d66-b447034517c0.jpg"
+        }
+      ],
+      "catalog_id": "c81ac2ff-9e44-4f22-894a-5b9e357776a3",
+      "id": "curated-077",
+      "preview_url": "/curated-designs.html#curated-077"
+    },
+    {
+      "rank": 26,
+      "catalog_index": 85,
+      "name": "乳白织物·柔性边缘",
+      "category": "材质光影",
+      "use": "视觉增强",
+      "reason": "半透明织物感与柔软轮廓让背景有轻盈层次，图文卡片相对克制。",
+      "caution": "透明感是视觉判断，无法从截图确认对象透明度。",
+      "adaptation_proposal": "柔性材质靠边，核心文字使用稳定实色底。",
+      "sourceId": "www.canva.cn:templates:EAGpSkA9ZgQ",
+      "source": "canva",
+      "original_title": "棕白灰色艺术个人作品集自我介绍通用演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAGpSkA9ZgQ/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/0ecfe55a-38e0-4044-a60e-dbe863c31386.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/43a88ca8-5c77-4e3a-a568-9471ba867ddc.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/0e3ad74c-dcc2-4644-8edd-c0454beeaee5.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/d81abd6a-0b73-4ca7-8b26-dfe253b7b3fe.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6c058dcc-fb7b-446d-96eb-e86b1531166a.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/9f872fb9-1b15-4fb8-b950-e16b4454bbb5.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/1b0474bd-201e-4741-a9a9-c587d25613cd.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b5908ce8-fa4c-45fc-91ea-f54b2f450c4a.jpg"
+        }
+      ],
+      "catalog_id": "82a2e79a-2459-4ff9-9438-90e8da0121d9",
+      "id": "curated-085",
+      "preview_url": "/curated-designs.html#curated-085"
+    },
+    {
+      "rank": 27,
+      "catalog_index": 88,
+      "name": "红色窄体·皱纸网格",
+      "category": "创意拼贴",
+      "use": "排版主库",
+      "reason": "红色窄体标题、纸张纹理与网格构成统一而有力度的语言。",
+      "caution": "纹理、细网格和小装饰叠加时显得碎。",
+      "adaptation_proposal": "保留标题与网格关系，正文密集时减弱纸纹。",
+      "sourceId": "www.canva.cn:templates:EAG_5qzMPow",
+      "source": "canva",
+      "original_title": "红色系简约品牌介绍汇报演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAG_5qzMPow/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a52a9f04-75d0-4b77-b3f7-4c16df9b59df.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/12cbce3b-7687-4d35-8dbc-41f6b3d55d1b.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/171bc4bc-5367-4bb4-9844-f020c62b5d79.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/7334a0d5-7fe3-4b3c-9c0b-7c28539f7ccc.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/3e627627-2f14-41b5-81d2-e85a9e4d37ab.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a2817a67-14e9-4b41-b776-d76f59d153d6.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b5b3bc8a-ba36-4556-8b99-b7fab093c9b1.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/613027db-5c47-453c-9488-37b50e18bf19.jpg"
+        }
+      ],
+      "catalog_id": "c27d5c17-7b21-43b0-b055-9a439c9a4af8",
+      "id": "curated-088",
+      "preview_url": "/curated-designs.html#curated-088"
+    },
+    {
+      "rank": 28,
+      "catalog_index": 117,
+      "name": "青蓝水彩·透明面板",
+      "category": "材质光影",
+      "use": "视觉增强",
+      "reason": "水彩边缘与浅色面板带来温和的前后层次，适合安静的汇报。",
+      "caution": "正文多栏结构偏常规，浅色字有对比风险。",
+      "adaptation_proposal": "色彩铺在外围，信息分组由文案语义决定。",
+      "sourceId": "www.canva.cn:templates:EAGKuUV2zEA",
+      "source": "canva",
+      "original_title": "蓝白色清新简约风季度工作汇报个人年中总结ppt演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAGKuUV2zEA/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/f2291588-04d0-4907-ba69-c21c8432cfe2.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/bfa35598-9d5c-4e96-a61d-6b198cfc4b45.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/e0244107-d0d3-4aa7-a921-bc02dac00dd1.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ff4fac3c-0542-4a0b-bed5-e7302ec1c67d.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/afdfbb2d-e672-4a73-8471-3ad6dda6706a.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/8ebab26d-b521-4b9e-9a32-90e28b18f2da.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6ab1c865-a54c-4c18-bca2-7f984d2e160e.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ac548965-4aa3-4bab-8630-9d4e703e899d.jpg"
+        }
+      ],
+      "catalog_id": "b85d1346-abfb-449c-82d7-7b55360076a3",
+      "id": "curated-117",
+      "preview_url": "/curated-designs.html#curated-117"
+    },
+    {
+      "rank": 29,
+      "catalog_index": 143,
+      "name": "黑色耳机·产品故事",
+      "category": "产品场景",
+      "use": "排版主库",
+      "reason": "产品主图、应用场景和数据页围绕同一对象展开，叙事比单纯装饰完整。",
+      "caution": "替换产品后需要重做主图裁切与光照匹配。",
+      "adaptation_proposal": "按产品价值、证据、场景分配页面，再匹配新产品素材。",
+      "sourceId": "www.canva.cn:templates:EAGxClWoclY",
+      "source": "canva",
+      "original_title": "黑白色简约风数码产品介绍演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAGxClWoclY/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/c607ebbe-5cbb-4f64-a091-8e0e59a7a739.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/d6957727-2db2-4527-859a-020e47f20376.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5ffef547-4d05-4b9f-8c69-947e1b07f891.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ca930c28-6ffb-4baf-903a-c03a1e1554cb.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/424cb21c-15d2-462f-afcc-483f6bf1d049.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/95a080ec-00fa-43b3-a218-451faf2dbada.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/589d6782-a90f-47d8-9af3-8bdf8383ae03.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/1679f22f-9958-43b9-a810-ff25bacb2b73.jpg"
+        }
+      ],
+      "catalog_id": "61508b2d-107f-4ef3-be65-b627bdf2e169",
+      "id": "curated-143",
+      "preview_url": "/curated-designs.html#curated-143"
+    },
+    {
+      "rank": 30,
+      "catalog_index": 145,
+      "name": "暗色压纹·白页编辑",
+      "category": "材质光影",
+      "use": "视觉增强",
+      "reason": "深色压纹带来触感，与干净浅色内页形成对照。",
+      "caution": "如果整套都使用暗纹，细节和文字容易混在一起。",
+      "adaptation_proposal": "暗纹限定在关键页，正文延续字号和间距秩序。",
+      "sourceId": "www.canva.cn:templates:EAG01edWd6w",
+      "source": "canva",
+      "original_title": "灰黑白色简约风个人作品集演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAG01edWd6w/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/fcccdf1e-36e6-4208-93dc-16e055e56ff1.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6a3a01b3-e906-4f59-ad7c-c6cccaede920.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/53bea254-a20e-46c7-92a6-9752b6978a66.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/fdc606a8-46c4-40fa-84f5-263342084b44.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/66be4167-c07b-4310-8abb-ac4ef9674eb6.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/d4fac2fa-f3f0-4dcb-b2a6-5a9f3ee202a5.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/3aed29f4-4b96-496d-8f67-373921495c61.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5907de3c-e822-4c50-a766-2538cd670b45.jpg"
+        }
+      ],
+      "catalog_id": "ea2ab871-84d7-449e-ad21-aced81ffb9c2",
+      "id": "curated-145",
+      "preview_url": "/curated-designs.html#curated-145"
+    },
+    {
+      "rank": 31,
+      "catalog_index": 159,
+      "name": "陶器特写·工艺叙事",
+      "category": "文化叙事",
+      "use": "排版主库",
+      "reason": "陶器近景、书写感标题和过程信息有题材关联，图像承担了叙事。",
+      "caution": "书法字体不适合长句，原有历史工艺信息不能照搬。",
+      "adaptation_proposal": "短标题保留书写气质，工艺流程按真实步骤重新排。",
+      "sourceId": "www.canva.cn:templates:EAHMYyVmklM",
+      "source": "canva",
+      "original_title": "黑白色中国风非遗文化介绍演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAHMYyVmklM/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/e3c53bff-7ce4-43ab-a2d9-f4b3f08cd24b.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/0d8e43b5-fa51-48f6-a511-856c5d806118.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/9a4494da-0d97-441b-8eb4-557e743e5d95.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/1a9f875b-8c4d-4fa5-aece-cf27e3654d92.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/59f57240-8ee5-4058-91fd-df6c27c5128e.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/7b53dec0-c1d6-4cfe-8372-375fb2e6cd1a.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/40d252b2-b45b-48fd-9112-a7caad3c2d1d.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ccccc2a0-6732-48a2-8c40-4609708d5b92.jpg"
+        }
+      ],
+      "catalog_id": "3c34d51d-fff7-4af4-a8f9-3fa1597f82af",
+      "id": "curated-159",
+      "preview_url": "/curated-designs.html#curated-159"
+    },
+    {
+      "rank": 32,
+      "catalog_index": 172,
+      "name": "荧绿雾面·艺术面板",
+      "category": "材质光影",
+      "use": "视觉增强",
+      "reason": "颗粒渐变和细边面板有前后差异，画作展示保留了呼吸感。",
+      "caution": "浅底浅字和细线需要重新检查对比。",
+      "adaptation_proposal": "雾面背景保持低细节，作品说明放入明确内容区。",
+      "sourceId": "www.canva.cn:templates:EAHFH00GOEg",
+      "source": "canva",
+      "original_title": "绿色简约风个人作品集演示文稿（16:9）",
+      "source_url": "https://www.canva.cn/templates/EAHFH00GOEg/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/12a0344f-921b-4fbc-a625-b46ae10909da.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/3c9b9735-a29f-47f3-ac39-7c5dc4545fed.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/cf53b94a-727f-4166-b0d3-cb3c62a44d09.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/dc6cfffb-129c-47a3-ba77-d3d85491f642.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/00de9077-c50c-46eb-89e6-8a85db1485fa.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/eaef1c93-9e54-4c95-b66a-ce8f433ee03f.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/35aa8c70-ebbb-41c3-adc4-cb65b62a4fa2.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/d0475c3c-ddd7-4b1b-ab73-672a312ebf0f.jpg"
+        }
+      ],
+      "catalog_id": "feab8f07-87fb-4aa4-9860-bbf4f8a960d1",
+      "id": "curated-172",
+      "preview_url": "/curated-designs.html#curated-172"
+    },
+    {
+      "rank": 33,
+      "catalog_index": 189,
+      "name": "蓝色山景·白板报告",
+      "category": "产品场景",
+      "use": "排版主库",
+      "reason": "山景退后、白板向前，深浅对比直接建立空间与阅读区。",
+      "caution": "白板结构容易重复，摄影题材不能与内容无关。",
+      "adaptation_proposal": "保持前后层次，根据内容调整白板为左右分区或整宽。",
+      "sourceId": "www.canva.cn:templates:EAGDOIvA1Tw",
+      "source": "canva",
+      "original_title": "蓝白色简洁大学生开题报告毕业论文答辩ppt演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAGDOIvA1Tw/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/8246b70a-4d3a-4c82-9744-7e64aa0f0e2f.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a38a4997-378f-438a-a476-aefafb0fc530.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/e74be138-e525-4f3e-a30e-fcab321c7eb7.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/1ca854b4-31ff-47f5-8bda-8da584913ff5.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/10e8129f-593b-43ba-a8f6-bb7f932b525d.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/f5b8a000-f67f-455f-a4c1-820956345c46.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/008de3be-4ac9-4016-802c-bc0f6fe4c8fe.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a9872e26-9ae5-49ad-ab7f-8a4a07b2cbff.jpg"
+        }
+      ],
+      "catalog_id": "b768a1b6-d794-4780-9645-a23692cb0969",
+      "id": "curated-189",
+      "preview_url": "/curated-designs.html#curated-189"
+    },
+    {
+      "rank": 34,
+      "catalog_index": 191,
+      "name": "蓝色胶囊·圆形静物",
+      "category": "几何秩序",
+      "use": "视觉增强",
+      "reason": "竖向胶囊与圆形静物有统一的圆润语言，封面与内页能呼应。",
+      "caution": "圆环与数字邻接时可能被误读为统计编码。",
+      "adaptation_proposal": "装饰圆形与数据图分离，内容区宽度随正文量调整。",
+      "sourceId": "www.canva.cn:templates:EAGDUQk_FyE",
+      "source": "canva",
+      "original_title": "蓝白色学术风理科类专业开题报告毕业答辩通用ppt演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAGDUQk_FyE/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/25ce23e8-4e3e-432e-aa81-002ed3197668.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/746ccff8-f4f0-46d1-ab17-3b24226c38e5.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5791bc42-0908-4018-89d1-691c64f46bd9.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/db89a707-91db-49be-abec-733f3b74a75c.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/118871c6-2ea2-470a-9865-9b89f86e4467.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/03726656-e71c-49be-9c36-1170687836ad.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/4ff4415f-2f96-458c-85af-a11c5c8f9d55.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a61fc3e8-5c27-4e06-9a77-b0201048fb8c.jpg"
+        }
+      ],
+      "catalog_id": "544dcbb0-65f9-49b2-ba57-d9a3e0425d3a",
+      "id": "curated-191",
+      "preview_url": "/curated-designs.html#curated-191"
+    },
+    {
+      "rank": 35,
+      "catalog_index": 197,
+      "name": "青绿雪山·旅行叙事",
+      "category": "产品场景",
+      "use": "排版主库",
+      "reason": "大幅山景与白底内容交替，弧形裁切和深色页建立旅行氛围。",
+      "caution": "大景图适配性依赖题材，圆弧裁切会损失主体。",
+      "adaptation_proposal": "保留摄影与说明的交替，路线信息按真实行程重排。",
+      "sourceId": "www.canva.cn:templates:EAF4tg44SYw",
+      "source": "canva",
+      "original_title": "绿色简约山海主题旅游公司产品介绍通用ppt演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAF4tg44SYw/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/18d70ca8-eaa7-4e30-a1db-130e051a8d01.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/92a72857-0214-4985-b4fd-c1b8fbeee0f1.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/0c9effef-56ef-45a2-935a-5dd4a390529f.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/7b733ea7-84ba-4e7f-8269-67b3aae80286.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/2b12768b-fe56-4f66-9251-b2d6faba0144.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/2c89dbdf-af9a-4e85-aa0b-c451684e6099.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/9e48efca-13a0-4ff0-b34a-28732a5896e0.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/c50d13a5-ff46-4583-b19f-d2bfa8ad011d.jpg"
+        }
+      ],
+      "catalog_id": "5802e99f-3e20-4786-946b-dbdd526b7d86",
+      "id": "curated-197",
+      "preview_url": "/curated-designs.html#curated-197"
+    },
+    {
+      "rank": 36,
+      "catalog_index": 202,
+      "name": "森林绿·竖幅风景",
+      "category": "产品场景",
+      "use": "排版主库",
+      "reason": "竖向风景切片与深绿配色构成清爽秩序，适合自然主题汇报。",
+      "caution": "连续窄裁切不适合完整产品或复杂场景。",
+      "adaptation_proposal": "主体必须完整时改为宽图，保留绿白配色与对齐规则。",
+      "sourceId": "www.canva.cn:templates:EAF9UItJIkE",
+      "source": "canva",
+      "original_title": "绿色简约杂志风工作汇报PPT模板",
+      "source_url": "https://www.canva.cn/templates/EAF9UItJIkE/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5f6ab196-0979-45a4-b998-7fcb4968c5d2.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a6574334-bb7b-40c4-a272-6224e1634bb6.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/24583009-2d62-4e49-a144-28f688ff6c3e.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/9f6aed37-6e4b-4bb6-8f17-f73e4fce8057.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6c75d867-d92e-4536-8857-9b3ef4c08ceb.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/7befaaf2-3ce6-426c-83c3-5a645c0b9df8.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/eb7e0aa6-82de-4df4-95b2-b72ac4f09b64.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/36114c91-6f8b-42ad-ad7f-87342dd21f27.jpg"
+        }
+      ],
+      "catalog_id": "49694833-4b30-4aed-a189-74cd5482f8ee",
+      "id": "curated-202",
+      "preview_url": "/curated-designs.html#curated-202"
+    },
+    {
+      "rank": 37,
+      "catalog_index": 209,
+      "name": "粉色角色·课堂白板",
+      "category": "创意拼贴",
+      "use": "视觉增强",
+      "reason": "立体角色和花朵围绕白板形成前景，课堂内容区较清楚。",
+      "caution": "装饰框占用空间，长文放进去会拥挤。",
+      "adaptation_proposal": "角色退到角落，知识点较多时扩大白板并拆页。",
+      "sourceId": "www.canva.cn:templates:EAGVlv8CoOw",
+      "source": "canva",
+      "original_title": "粉紫色活力多巴胺风格校园汇报演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAGVlv8CoOw/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/9d35fbbc-48e3-4d83-bfb4-085daacba761.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/69854483-0072-48a9-8820-c6e59d77953b.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/f224c6f9-865a-43ef-b54d-6c3559e18260.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/271f2aa6-7a80-4d4e-9706-850d94bed11e.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/1dbf56ba-8925-415b-8181-88abf8463ecb.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/7a12e1b3-e6f8-423f-b124-feb2768115c7.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a9fb00e6-b1f9-41f9-ae04-185e45e9cc49.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/192b2e9d-0445-4220-8992-b67ced899315.jpg"
+        }
+      ],
+      "catalog_id": "b562b263-0883-4003-b5d5-6d9076e20ec4",
+      "id": "curated-209",
+      "preview_url": "/curated-designs.html#curated-209"
+    },
+    {
+      "rank": 38,
+      "catalog_index": 218,
+      "name": "蓝色虹彩环·透光白板",
+      "category": "材质光影",
+      "use": "视觉增强",
+      "reason": "虹彩环与浅色板叠置，能示范透明、遮挡与反射同时出现。",
+      "caution": "正文结构相对常规，过多透光元素会削弱主次。",
+      "adaptation_proposal": "每页只使用一个材质焦点，正文面板保持足够不透明。",
+      "sourceId": "www.canva.cn:templates:EAGbzABXjlg",
+      "source": "canva",
+      "original_title": "蓝色立体玻璃风个人年终工作总结汇报演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAGbzABXjlg/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/d5eff715-6486-45ce-9e82-6841537c92a9.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/bbc0b3d9-6436-45a3-b60f-50097301a898.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/877a08c5-3f0b-4422-9938-1281c57a32df.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/1f270c56-40d3-4aef-ab3d-b19faeda4ef4.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/f837ad39-5e2f-457e-98e6-4eeb4316884e.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/20c87396-2e9f-4ee0-93ec-86462e08784a.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6f18a7c9-23fd-48fb-bef0-4e4eaf9d6326.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/c6026178-164a-42e6-983b-fc1aa41b7314.jpg"
+        }
+      ],
+      "catalog_id": "eb3b415a-4ee2-4940-88ee-059e4bfefefb",
+      "id": "curated-218",
+      "preview_url": "/curated-designs.html#curated-218"
+    },
+    {
+      "rank": 39,
+      "catalog_index": 223,
+      "name": "撕纸胶带·办公拼贴",
+      "category": "创意拼贴",
+      "use": "视觉增强",
+      "reason": "胶带、纸边和小角色让不同平面出现前后关系，语气轻松。",
+      "caution": "网格、贴纸、人物同时出现容易拥挤。",
+      "adaptation_proposal": "根据文案量删减道具，只保留最能解释主题的一个。",
+      "sourceId": "www.canva.cn:templates:EAGWawUOF1A",
+      "source": "canva",
+      "original_title": "白蓝色拼贴风3D卡通趣味工作汇报工作总结演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAGWawUOF1A/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/f44fc391-f240-4180-9d50-176a642e52f6.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/2ce0f887-c35f-402e-950a-92c219692dcf.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/221a7f7e-bd7c-40d7-912b-f3278c04d4d4.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ba6809f9-0636-4026-9a05-45a13a2e0427.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/7ec2f9d6-14fc-40fc-a7c1-3448452be588.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6b3d0498-1633-4621-af67-54db27be94d9.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/2c8f5490-f951-4967-be79-040c4c4f2f22.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/bae2825a-0c26-43c7-a711-527530e1c3dc.jpg"
+        }
+      ],
+      "catalog_id": "40802b95-50bc-43a7-aad1-d55c47d4c999",
+      "id": "curated-223",
+      "preview_url": "/curated-designs.html#curated-223"
+    },
+    {
+      "rank": 40,
+      "catalog_index": 230,
+      "name": "橄榄绿·复古桌面",
+      "category": "创意拼贴",
+      "use": "排版主库",
+      "reason": "电脑、倾斜纸张与桌面物件形成实体感，正文仍能延续配色。",
+      "caution": "倾斜容器不能直接套用到需要精确比较的数据图。",
+      "adaptation_proposal": "纸张用于说明和案例，比较图表保持水平基线。",
+      "sourceId": "www.canva.cn:templates:EAHFBO1UOdY",
+      "source": "canva",
+      "original_title": "绿白色创意3d季度工作汇报演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAHFBO1UOdY/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/64c54d34-ba9a-4adb-9ac5-54407f1c4008.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/8c92f2d8-6cb2-44b1-8f3c-28c06d6f4d73.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/92915c17-96a5-4ff5-9289-7e5f6c3b5faf.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/e1e4452f-cf47-4267-bfe2-e87981bbba05.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/feb92bae-f787-4e76-8afb-bf9ed60f2ff3.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/f9af9356-e789-4a45-a180-241f64627c20.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/82444153-02f1-43f8-a40b-1063a80c568d.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/388b9566-26b7-4fcd-92ca-e113c68cd6f9.jpg"
+        }
+      ],
+      "catalog_id": "b6ae0e56-4555-4cd2-945b-af3489cf0c1b",
+      "id": "curated-230",
+      "preview_url": "/curated-designs.html#curated-230"
+    },
+    {
+      "rank": 41,
+      "catalog_index": 246,
+      "name": "蓝底棱彩·折面几何",
+      "category": "几何秩序",
+      "use": "视觉增强",
+      "reason": "彩色折面的侧面与亮暗关系明确，厚度来自几何结构。",
+      "caution": "内页内容板较常规，不能只复用封面折面。",
+      "adaptation_proposal": "折面用于封面与章节，正文继承配色但按语义换布局。",
+      "sourceId": "www.canva.cn:templates:EAFrOHx7Xlk",
+      "source": "canva",
+      "original_title": "美术作品集演示文稿",
+      "source_url": "https://www.canva.cn/templates/EAFrOHx7Xlk/",
+      "previews": [
+        {
+          "position": 1,
+          "width": 1600,
+          "height": 900,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/7f5f0c73-a57d-40f4-b82d-ab67930ff017.jpg"
+        },
+        {
+          "position": 2,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ea34b29f-1b65-4f71-81a8-3102e3e6827c.jpg"
+        },
+        {
+          "position": 3,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/2cc02ebb-b9a2-4645-a9bd-1f408ea40427.jpg"
+        },
+        {
+          "position": 4,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/bdef348c-e262-42fd-adc4-c1fe478c8c03.jpg"
+        },
+        {
+          "position": 5,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/c9a8f47a-a50d-4ce2-961d-9acd7b750db8.jpg"
+        },
+        {
+          "position": 6,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6699cd70-b971-4330-acce-d09695e47b6c.jpg"
+        },
+        {
+          "position": 7,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/bc0710ad-c343-48c5-bf35-f2b403370372.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/db54f24c-293e-45b8-9486-b536ca603d9c.jpg"
+        }
+      ],
+      "catalog_id": "53262fed-20fe-408d-98a2-a41aab46ae00",
+      "id": "curated-246",
+      "preview_url": "/curated-designs.html#curated-246"
+    },
+    {
+      "rank": 42,
+      "catalog_index": 294,
+      "name": "暗金磨砂·漂浮玻璃",
+      "category": "材质光影",
+      "use": "视觉增强",
+      "reason": "玻璃板与漂浮球的遮挡和高光提供明确景深。",
+      "caution": "元素和小字偏密，深底金色不等于内容高级。",
+      "adaptation_proposal": "减少漂浮物，将数据和正文放到对比清楚的面板。",
+      "sourceId": "www.chuangkit.com:templates:467956",
+      "source": "chuangkit",
+      "original_title": "黑金风员工转正述职报告PPT模板",
+      "source_url": "https://www.chuangkit.com/odyssey/createDesign?t=467956",
+      "previews": [
+        {
+          "position": 1,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/69ccda0e-c146-4153-aa99-670607d9d64d.jpg"
+        },
+        {
+          "position": 2,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5c6cd371-37f6-43eb-9437-47231c4a7e37.jpg"
+        },
+        {
+          "position": 3,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ec89f43b-8a01-4a05-8457-e8c3b7e74398.jpg"
+        },
+        {
+          "position": 4,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/418b76c7-30bf-400c-bcb1-21f5d0c6bcf1.jpg"
+        },
+        {
+          "position": 5,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/4aae0317-d39f-48aa-b076-e9fdaabfe825.jpg"
+        },
+        {
+          "position": 6,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/f83bcf2f-6ce3-4bb4-abdd-62b4e4faf2a8.jpg"
+        },
+        {
+          "position": 7,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/4f2ac9e3-7ce3-49ff-89e7-766587221961.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/1a199253-ee37-4323-9333-2bb59e35f803.jpg"
+        }
+      ],
+      "catalog_id": "f1db0cf2-a092-40a4-9ada-8cb81e87a615",
+      "id": "curated-294",
+      "preview_url": "/curated-designs.html#curated-294"
+    },
+    {
+      "rank": 43,
+      "catalog_index": 342,
+      "name": "桃色人像·时尚发布",
+      "category": "品牌编辑",
+      "use": "排版主库",
+      "reason": "人物剪影跨越色块边界，图片、标题和底板之间有明确层级。",
+      "caution": "人像切边质量与姿态会决定重排后的效果。",
+      "adaptation_proposal": "按人物朝向留出标题空间，必要时取消跨边剪贴。",
+      "sourceId": "www.chuangkit.com:templates:484094",
+      "source": "chuangkit",
+      "original_title": "撞色服装新品发布会图文风PPT模板",
+      "source_url": "https://www.chuangkit.com/odyssey/createDesign?t=484094",
+      "previews": [
+        {
+          "position": 1,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a2d9af98-f6a6-403e-9253-fa5e24893835.jpg"
+        },
+        {
+          "position": 2,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/21f8aace-566b-485e-87e0-8f479c811c48.jpg"
+        },
+        {
+          "position": 3,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/e7d50a7a-6b93-4994-b0d4-3be1b311ad24.jpg"
+        },
+        {
+          "position": 4,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/afe58ee6-1980-4094-b7a1-94a774de96d9.jpg"
+        },
+        {
+          "position": 5,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/df7f0f4b-3124-435a-b859-24b86b718417.jpg"
+        },
+        {
+          "position": 6,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/7277ee82-bf72-43f6-9c28-82c697054ba4.jpg"
+        },
+        {
+          "position": 7,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5dd4ce41-b046-4b23-a3d3-b05cd692ecc4.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/5b0562ec-f3fe-44fd-b2a0-6e583a25b842.jpg"
+        }
+      ],
+      "catalog_id": "94cf3eb6-3d2e-4dfa-b776-bebd669f0560",
+      "id": "curated-342",
+      "preview_url": "/curated-designs.html#curated-342"
+    },
+    {
+      "rank": 44,
+      "catalog_index": 357,
+      "name": "翡翠圆环·浮雕层叠",
+      "category": "材质光影",
+      "use": "视觉增强",
+      "reason": "同心圆的明暗边缘有浮雕深度，深绿贯穿卡片和章节。",
+      "caution": "深色长文与细边框易失去区分。",
+      "adaptation_proposal": "浮雕作为背景焦点，正文卡片增加明度差并减少字量。",
+      "sourceId": "www.chuangkit.com:templates:441790",
+      "source": "chuangkit",
+      "original_title": "图文风工作总结演示PPT模板",
+      "source_url": "https://www.chuangkit.com/odyssey/createDesign?t=441790",
+      "previews": [
+        {
+          "position": 1,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/3d52a1c6-adb2-4722-ace9-ed2307404e2a.jpg"
+        },
+        {
+          "position": 2,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ad456545-43c6-4632-ac21-1e14f966f1c8.jpg"
+        },
+        {
+          "position": 3,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/618be5f9-7480-41b1-9abe-3ee1419b3105.jpg"
+        },
+        {
+          "position": 4,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/36092d12-f30a-48dc-8ce9-f6daa80412af.jpg"
+        },
+        {
+          "position": 5,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/3edd5581-bd9f-45a5-aac0-702610b2961c.jpg"
+        },
+        {
+          "position": 6,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/020a6859-1ff9-4c73-9c1d-f3f4972ea4e2.jpg"
+        },
+        {
+          "position": 7,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/e457c441-535d-42b2-8402-be2a2d4b5363.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ca323037-8ff3-43e5-bf21-f81a7665cad1.jpg"
+        }
+      ],
+      "catalog_id": "aa9b04e6-abad-46c5-a101-1353183556ed",
+      "id": "curated-357",
+      "preview_url": "/curated-designs.html#curated-357"
+    },
+    {
+      "rank": 45,
+      "catalog_index": 373,
+      "name": "炭灰黄·商务秩序",
+      "category": "几何秩序",
+      "use": "排版主库",
+      "reason": "克制的圆形压纹与黄色提示形成层级，图表和照片页有实用变化。",
+      "caution": "高密度正文仍需缩减，黄块不宜承载白色细字。",
+      "adaptation_proposal": "用黄色标出结论，按比较、流程、证据选择不同结构。",
+      "sourceId": "www.chuangkit.com:templates:58266",
+      "source": "chuangkit",
+      "original_title": "商务营销工作汇报简约风PPT",
+      "source_url": "https://www.chuangkit.com/odyssey/createDesign?t=58266",
+      "previews": [
+        {
+          "position": 1,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6e681ab7-f24e-4d9e-b5e8-31aa804be12d.jpg"
+        },
+        {
+          "position": 2,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/3f28d70f-0fd5-4b15-a441-da2831296cd8.jpg"
+        },
+        {
+          "position": 3,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/bfba32cc-469e-4186-a65d-c053cf5be7c6.jpg"
+        },
+        {
+          "position": 4,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/385c2fe5-1596-493d-a080-ab53b07d6064.jpg"
+        },
+        {
+          "position": 5,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/77dac05e-bd17-47ee-a144-aae52a7fc242.jpg"
+        },
+        {
+          "position": 6,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6cdd81bd-04f8-4c61-8904-e5b82404569c.jpg"
+        },
+        {
+          "position": 7,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/1899bcdb-60f6-49b4-b0c3-82bd7ca89128.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/356bf105-2c84-47b8-b535-3c1cca548164.jpg"
+        }
+      ],
+      "catalog_id": "3fe1cb63-4453-4997-9f9a-c3048b7702ed",
+      "id": "curated-373",
+      "preview_url": "/curated-designs.html#curated-373"
+    },
+    {
+      "rank": 46,
+      "catalog_index": 410,
+      "name": "橙白建筑·商务叙事",
+      "category": "产品场景",
+      "use": "排版主库",
+      "reason": "建筑摄影与橙色板块形成清楚的图文边界，图表页有延展空间。",
+      "caution": "素材较通用，需要换成与业务有关的实际图片。",
+      "adaptation_proposal": "保留橙色锚点，图片方向与内容分组共同决定栏宽。",
+      "sourceId": "www.chuangkit.com:templates:363379",
+      "source": "chuangkit",
+      "original_title": "简约风商业融资计划书PPT模板",
+      "source_url": "https://www.chuangkit.com/odyssey/createDesign?t=363379",
+      "previews": [
+        {
+          "position": 1,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/febd88dc-aeb2-46ce-8b71-9bc7055269a2.jpg"
+        },
+        {
+          "position": 2,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/6f8febce-dae0-43fd-8ec6-29f779ee8578.jpg"
+        },
+        {
+          "position": 3,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/02174da9-f25d-4de3-9f8b-a7a6fc3574df.jpg"
+        },
+        {
+          "position": 4,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/c1b2bfc3-d9d0-4794-808f-c99bcb284d09.jpg"
+        },
+        {
+          "position": 5,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/cd937533-9955-4111-8945-86b983024b29.jpg"
+        },
+        {
+          "position": 6,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/2f470633-2ea0-4d4b-84f0-14725c4a794c.jpg"
+        },
+        {
+          "position": 7,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/0ae8ac27-2176-4d5a-98b7-3ceccc6c0c73.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/81217b0b-0283-4383-8e9b-352e3cfc60f9.jpg"
+        }
+      ],
+      "catalog_id": "da057a1a-33c2-473c-85e2-d81a9ffc79a2",
+      "id": "curated-410",
+      "preview_url": "/curated-designs.html#curated-410"
+    },
+    {
+      "rank": 47,
+      "catalog_index": 481,
+      "name": "蓝黄橙·模块几何",
+      "category": "几何秩序",
+      "use": "排版主库",
+      "reason": "圆、四分之一圆与色块形成可复用模块，正文流程能延续秩序。",
+      "caution": "本身偏平面，价值是几何组织而非真实材质。",
+      "adaptation_proposal": "按信息组数重组模块，不为追求立体给所有块加阴影。",
+      "sourceId": "www.chuangkit.com:templates:535085",
+      "source": "chuangkit",
+      "original_title": "蓝色简约几何风工作汇报PPT模板",
+      "source_url": "https://www.chuangkit.com/odyssey/createDesign?t=535085",
+      "previews": [
+        {
+          "position": 1,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/ed497e53-6ab0-4132-a1f0-1bbc5f282de1.jpg"
+        },
+        {
+          "position": 2,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/49dd4833-d7a5-45a2-9c38-acf323d21a0f.jpg"
+        },
+        {
+          "position": 3,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/8cf6c01d-094f-4cb7-b717-35c852b11cda.jpg"
+        },
+        {
+          "position": 4,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/cb9c7c5c-a9ab-4fce-bcd5-22bae5a7fa7d.jpg"
+        },
+        {
+          "position": 5,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/bbf9c480-f7e5-4a04-8946-5b8fa4e8fd89.jpg"
+        },
+        {
+          "position": 6,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/f9b18b25-52e8-41e2-862f-1944f50420f5.jpg"
+        },
+        {
+          "position": 7,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/c0542f68-aece-4073-aa63-9f659c937d25.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/1b651039-76ef-45aa-a6cd-adf922f47dcf.jpg"
+        }
+      ],
+      "catalog_id": "7dda15ed-e076-4e0d-b3ff-12666e562d36",
+      "id": "curated-481",
+      "preview_url": "/curated-designs.html#curated-481"
+    },
+    {
+      "rank": 48,
+      "catalog_index": 514,
+      "name": "蓝白错位·摄影面板",
+      "category": "产品场景",
+      "use": "排版主库",
+      "reason": "照片与蓝白面板错位但对齐关系清楚，留白适合常规汇报。",
+      "caution": "风格辨识度不如实验性模板，需靠好图片支撑。",
+      "adaptation_proposal": "保留错位关系，根据图文比调整面板面积。",
+      "sourceId": "www.chuangkit.com:templates:221608",
+      "source": "chuangkit",
+      "original_title": "蓝色时尚商务年中工作汇报总结PPT模板",
+      "source_url": "https://www.chuangkit.com/odyssey/createDesign?t=221608",
+      "previews": [
+        {
+          "position": 1,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/e4a71b3d-4806-400c-b6fd-cbc545a6cf10.jpg"
+        },
+        {
+          "position": 2,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a4c715cb-8e82-48f4-a1cd-d29c29a4fafd.jpg"
+        },
+        {
+          "position": 3,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/370ff0ac-ee1d-4765-b5fd-5c73c62697a3.jpg"
+        },
+        {
+          "position": 4,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/410eeea3-5cef-442b-a52b-6a5b9075763f.jpg"
+        },
+        {
+          "position": 5,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/e236bbe8-673e-4ff8-b15e-04f1c6b1fd66.jpg"
+        },
+        {
+          "position": 6,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/dade55c8-80f3-4baa-8583-2652dccd309c.jpg"
+        },
+        {
+          "position": 7,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/04da4698-b567-4e7c-9d35-29f8a15466d4.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/f738b343-8ba2-4ef1-b5a1-d84f2c8e3dad.jpg"
+        }
+      ],
+      "catalog_id": "01e566c9-cf58-43e9-9be3-5c85b96e0bfe",
+      "id": "curated-514",
+      "preview_url": "/curated-designs.html#curated-514"
+    },
+    {
+      "rank": 49,
+      "catalog_index": 587,
+      "name": "橙红渐变·玻璃融资",
+      "category": "材质光影",
+      "use": "视觉增强",
+      "reason": "封面半透明板与模糊色球有层次，内页以橙红色块连接摄影。",
+      "caution": "主视觉与正文质感有落差，年份和英文占位需要清理。",
+      "adaptation_proposal": "玻璃语言只用于关键页，商业证据页采用清楚的实色布局。",
+      "sourceId": "www.chuangkit.com:templates:499538",
+      "source": "chuangkit",
+      "original_title": "招商融资计划书PPT模板",
+      "source_url": "https://www.chuangkit.com/odyssey/createDesign?t=499538",
+      "previews": [
+        {
+          "position": 1,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/8fa9acb9-ecff-42e6-ba48-ff39b5395b7a.jpg"
+        },
+        {
+          "position": 2,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b8c47ab0-4d70-43cf-a92a-21befccaa3c8.jpg"
+        },
+        {
+          "position": 3,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/beb5c024-d945-4a81-968e-6801cbfcc96d.jpg"
+        },
+        {
+          "position": 4,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/78f37e44-0a7a-4a54-8eed-fd074a7f7ebe.jpg"
+        },
+        {
+          "position": 5,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/07e529d2-a7c7-4229-8b13-ec943982aed0.jpg"
+        },
+        {
+          "position": 6,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a5309c67-1cf8-4c26-aa1c-d9f8d26ccb65.jpg"
+        },
+        {
+          "position": 7,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/3e7a1a8b-3186-48f5-afa2-f6cd6b3caf72.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/0cc9dce6-0988-42bf-ae16-482c21d2f3ca.jpg"
+        }
+      ],
+      "catalog_id": "6a3f4f7f-9971-4dff-b251-537b4d2b45df",
+      "id": "curated-587",
+      "preview_url": "/curated-designs.html#curated-587"
+    },
+    {
+      "rank": 50,
+      "catalog_index": 644,
+      "name": "青橙复古·运营计划",
+      "category": "创意拼贴",
+      "use": "排版主库",
+      "reason": "青橙配色、贴纸手势与正文图表具有一致语气，内页有较多实用结构。",
+      "caution": "贴纸、棋盘格和标签同时出现时装饰偏多。",
+      "adaptation_proposal": "保留青橙色与一个标识，运营数据按真实指标重建图表。",
+      "sourceId": "www.chuangkit.com:templates:565116",
+      "source": "chuangkit",
+      "original_title": "手绘风运营计划PPT",
+      "source_url": "https://www.chuangkit.com/odyssey/createDesign?t=565116",
+      "previews": [
+        {
+          "position": 1,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/06b7a86c-bef1-428b-a634-2e8e88fe6ca5.jpg"
+        },
+        {
+          "position": 2,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/80a47246-785b-4208-9c73-0181df7aaf02.jpg"
+        },
+        {
+          "position": 3,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/a0f002f5-ffad-436e-9040-84cee7f38ac4.jpg"
+        },
+        {
+          "position": 4,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/2bc3c119-2849-4c26-ad23-32051a202bf5.jpg"
+        },
+        {
+          "position": 5,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/b7b5a76a-4d5b-4c75-8230-f2a3f97698e2.jpg"
+        },
+        {
+          "position": 6,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/83e4d497-fd4d-4514-8cb7-332533cb931e.jpg"
+        },
+        {
+          "position": 7,
+          "width": 395,
+          "height": 222,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/9607329d-6658-4811-a859-6bda6809c0aa.jpg"
+        },
+        {
+          "position": 8,
+          "width": 800,
+          "height": 450,
+          "asset_url": "https://pptreview.cloudwaveai.cn/api/assets/4961e1b9-a7b7-45c0-aa77-99c59e4cf4a7.jpg"
+        }
+      ],
+      "catalog_id": "b4e80268-2c53-4a85-a73c-a7c091fab673",
+      "id": "curated-644",
+      "preview_url": "/curated-designs.html#curated-644"
+    }
+  ],
+  "schema_version": 1
+}

@@ -195,7 +195,7 @@ class TemplateTests(unittest.TestCase):
         second_scene = self.studio.get_scene(second)["scene"]["templateId"]
         context = self.studio.context({"slideId": second})
         self.assertEqual(context["currentSceneTemplateId"], second_scene)
-        self.assertEqual(context["selectedTemplateId"], "editorial")
+        self.assertIsNone(context["selectedTemplateId"])
 
     def test_manual_edit_updates_binding_invalidates_review_without_ai_round(self):
         self.studio.demo()
@@ -231,7 +231,7 @@ class TemplateTests(unittest.TestCase):
         edited = self.studio.edit_scene(sid, applied["sceneRevision"], [
             {"objectId": "title", "properties": {"text": "更新标题"}}])
         self.assertFalse(edited["stale"])
-        self.assertEqual(self.studio.context({"slideId": sid})["selectedTemplateId"], "editorial")
+        self.assertIsNone(self.studio.context({"slideId": sid})["selectedTemplateId"])
         self.assertIn("MATERIAL_UNAVAILABLE", {i["code"] for i in self.studio.wb.get_slide("visual", sid)["integrityIssues"]})
         self.assertFalse(self.studio.wb.gate("visual")["ready"])
         self.assert_code("RELEASE_GATE_FAILED", self.studio.wb.release_manifest, "visual")

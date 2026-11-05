@@ -92,3 +92,4 @@
 .pack-card{padding:18px 0;border-top:1px solid #e1e4e8}.pack-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}.pack-heading h3{margin:0;font-size:18px}
 .pack-previews{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.pack-previews figure{margin:0;min-width:0}.pack-previews iframe{display:block;width:100%;aspect-ratio:16/9;border:1px solid #d9dde3;border-radius:4px;pointer-events:none}.pack-previews figcaption{font-size:13px;margin-top:7px;color:#586274}
 @media(max-width:600px){.packs-dialog{padding:14px}.pack-previews{grid-template-columns:1fr}.pack-heading{align-items:flex-start}.pack-heading .button{font-size:13px}}
+@media(max-width:760px){.ribbon{overflow:hidden}.templates-dialog .template-grid{grid-template-columns:1fr}}
