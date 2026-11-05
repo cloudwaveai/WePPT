@@ -77,15 +77,15 @@ class CuratedDesignTests(unittest.TestCase):
         self.assertTrue(all(r['use'] == '视觉增强' for r in hero['references']))
         self.assertEqual(page, original)
 
-    def test_explicit_pack_choice_keeps_original_route(self):
+    def test_retired_pack_preference_does_not_bind_new_deck(self):
         template_packs.select(self.studio, template_packs.DEFAULT, self.studio.state()['projectRevision'])
         ctx = self.studio.context()
-        self.assertEqual(ctx['templateContract']['selectedPack'], template_packs.DEFAULT)
+        self.assertIsNone(ctx['templateContract'])
         plan = deck_plan()
         plan['strategy']['curatedReferenceId'] = 'curated-129'
         self.studio.create_deck(plan, '明确采用固定套系')
         job = self.studio.next_job()
-        self.assertTrue(template_packs.is_local_job(self.studio, job['job']['payload']))
+        self.assertFalse(template_packs.is_local_job(self.studio, job['job']['payload']))
 
     def test_historical_bound_plan_without_preference_keeps_contract(self):
         plan = deck_plan()

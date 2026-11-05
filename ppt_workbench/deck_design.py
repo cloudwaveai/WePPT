@@ -260,15 +260,9 @@ def review_plan(studio, job, proposal, context, mode, runner):
 def generation_context(studio, deck, page_index):
     """Carry design decisions and actual preceding geometry, without image bytes."""
     import json
-    from .templates import recommend_templates
     plan = json.loads(deck['plan'])
     pages = plan['pages']
     page = pages[page_index]
-    from .reference_templates import visual_guidance
-    from .templates import catalog
-    references = recommend_templates(page['role'], page={**page,
-        'keyPoints': '\n'.join(b['heading'] + '\n' + b['body']
-            for b in page.get('composition', {}).get('blocks', []))}, limit=3)
     recent = []
     with studio.wb._connection() as db:
         rows = db.execute('SELECT slide_id FROM studio_deck_pages WHERE deck_id=? AND page_index<? '
@@ -288,7 +282,7 @@ def generation_context(studio, deck, page_index):
             'designRoster': [{'index': i + 1, 'title': p['title'],
                               'designBrief': p.get('designBrief')} for i, p in enumerate(pages)],
             'previousPageDesigns': recent,
-            'designReferences': [visual_guidance(t['id'], catalog()) for t in references],
+            'designReferences': [],
             'designExemplar': for_page(page, previous),
             'curatedDesignReferences': curated_for_page(page, plan.get('strategy')),
             'designInstruction': '按内容选择表达方式；参考库提供构图原则。结合相邻页安排节奏，'

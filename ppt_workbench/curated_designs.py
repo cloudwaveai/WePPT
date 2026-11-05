@@ -26,6 +26,37 @@ def catalog():
     return copy.deepcopy(_library()['templates'])
 
 
+def cards():
+    """The only built-in product library: references, never applyable masters."""
+    return [dict(id=r['id'], name=r['name'], title=r['name'], reference=True,
+                 referenceOnly=True, current=True, legacy=False, archived=False,
+                 roles=['cover', 'toc', 'chapter', 'content', 'ending', 'appendix'],
+                 browseCategory='cover' if r['use'] == '视觉增强' else 'content',
+                 browseCategoryName=r['use'], browseCategoryOrder=0,
+                 description=r['reason'], use=r['adaptation_proposal'],
+                 source=r['source_url'], sourceLabel='精选设计案例 · ' + r['category'],
+                 capacityLabel='8张代表图 · 按文案重新排版',
+                 checks=[r['caution']], tags=[r['category'], r['use']],
+                 detailUrl=r['preview_url'],
+                 previewUrl='/api/curated-designs/cover?id=' + r['id'],
+                 referencePreviewUrl='/api/curated-designs/cover?id=' + r['id'])
+            for r in _library()['templates']]
+
+
+def cover(reference_id):
+    record = get(reference_id)
+    return (Path(__file__).parent / 'web/curated-covers' / (record['id'] + '.jpg')).read_bytes()
+
+
+def public_catalog():
+    return {'templates': cards(), 'customAllowed': True, 'mode': 'reference-only'}
+
+
+def public_detail(reference_id):
+    record = get(reference_id)
+    return {'template': record, 'referenceOnly': True, 'instruction': INSTRUCTION}
+
+
 def get(reference_id):
     record = next((r for r in _library()['templates'] if r['id'] == reference_id), None)
     if record is None:
@@ -70,8 +101,8 @@ def template_contract(studio, payload):
     """New unbound projects use adaptive authoring; explicit/legacy packs retain it."""
     from . import template_packs
     contract = template_packs.contract(studio)
-    if not contract or contract.get('selectedPack'):
-        return contract
+    if not contract:
+        return None
     with studio.wb._connection() as db:
         deck = studio._deck_row(db)
     if deck and any(template_packs.split(p.get('template_id')) for p in json.loads(deck['plan'])['pages']):

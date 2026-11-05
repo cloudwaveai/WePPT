@@ -64,14 +64,18 @@ class TemplatePacksTests(unittest.TestCase):
     def test_select_revision_and_whole_deck_preference(self):
         rev=self.studio.state()['projectRevision']
         packs.select(self.studio,'forest-editorial-v1',rev)
-        plan={'title':'示例','execution':'agent','strategy':copy.deepcopy(STRATEGY),'pages':[page('cover',count=1),page()]}
+        plan={'title':'示例','execution':'agent','strategy':copy.deepcopy(STRATEGY),'pages':[
+            dict(page('cover',count=1),template_id='forest-editorial-v1:cover'),
+            dict(page(),template_id='forest-editorial-v1:body-columns')]}
         self.studio.create_deck(plan,'原始内容')
         with self.studio.wb._connection() as db:stored=json.loads(self.studio._deck_row(db)['plan'])
         self.assertTrue(all(p['template_id'].startswith('forest-editorial-v1:') for p in stored['pages']))
         with self.assertRaises(EngineError):packs.select(self.studio,'crimson-grid-v1',rev)
     def test_template_pages_compile_locally_without_runner(self):
         packs.select(self.studio,packs.DEFAULT,self.studio.state()['projectRevision'])
-        self.studio.create_deck({'title':'两页','pages':[page('cover',count=1),page()]},'源内容')
+        self.studio.create_deck({'title':'两页','pages':[
+            dict(page('cover',count=1),template_id=packs.DEFAULT+':cover'),
+            dict(page(),template_id=packs.DEFAULT+':body-columns')]},'历史绑定任务')
         with patch('ppt_workbench.agent_bridge.run_turn',side_effect=AssertionError('no page model call')), \
              patch('ppt_workbench.design_review.render_candidate',return_value=(Path('/unused'),{'overflow':[],'imageFailures':[],'fontsReady':True})):
             self.assertTrue(self.studio.run_pending());self.assertTrue(self.studio.run_pending())
@@ -79,7 +83,7 @@ class TemplatePacksTests(unittest.TestCase):
         self.assertEqual(self.studio.deck_state()['status'],'complete')
     def test_attachment_must_belong_to_project(self):
         packs.select(self.studio,packs.DEFAULT,self.studio.state()['projectRevision'])
-        p=page();p['template_images']=['A-not-owned']
+        p=page();p['template_images']=['A-not-owned'];p['template_id']=packs.DEFAULT+':body-columns'
         with self.assertRaises(EngineError) as e:self.studio.create_deck({'title':'两页','pages':[p,page()]},'源内容')
         self.assertEqual(e.exception.code,'ASSET_NOT_FOUND')
         self.assertIsNone(self.studio.deck_state())
@@ -96,7 +100,9 @@ class TemplatePacksTests(unittest.TestCase):
 
     def test_template_change_and_external_redraw_rejected(self):
         packs.select(self.studio,packs.DEFAULT,self.studio.state()['projectRevision'])
-        self.studio.create_deck({'title':'两页','pages':[page('cover',count=1),page()]},'源内容')
+        self.studio.create_deck({'title':'两页','pages':[
+            dict(page('cover',count=1),template_id=packs.DEFAULT+':cover'),
+            dict(page(),template_id=packs.DEFAULT+':body-columns')]},'历史绑定任务')
         with self.studio.wb._connection() as db:
             row=db.execute('SELECT id,payload FROM studio_jobs WHERE project_id=? ORDER BY created_at',(self.studio.project_id,)).fetchone()
         payload=json.loads(row['payload'])

@@ -233,7 +233,10 @@ Use contentCapacity as advisory evidence, not a mandatory layout. It estimates
 the risk of narrow equal columns; actual fonts and line breaks need rendering.
 Allocate width to longer explanations and keep connectors in separate channels.
 For unbound new decks, context.curatedDesignLibrary contains 50 reviewed design
-references. Discuss and confirm the user's content before generating as required
+references. The previous built-in template library is retired: do not recommend
+or select old template IDs, original-POTX pages or template-pack masters for a new deck.
+Existing saved template-bound jobs retain their internal rendering contract only.
+Discuss and confirm the user's content before generating as required
 by creationContract. Choose one suitable reference (honour a named user choice),
 store its exact id in strategy.curatedReferenceId, and explain its visual rationale.
 References are visual vocabulary, not mandatory page slots. Recompose each page for

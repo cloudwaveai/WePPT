@@ -322,6 +322,14 @@ class StudioHandler(BaseHTTPRequestHandler):
         try:
             project_id = self.headers.get("X-WePPT-Project") or query.get("project", [None])[0]
             studio = self._project_studio(project_id, path)
+            if path in {'/guide.html', '/reference-library.html'}:
+                self._send(b'', 'text/plain', 303, {'Location': '/curated-designs.html'})
+                return
+            if path in REFERENCE_ASSETS or path in {'/reference-library.js', '/reference-library.css',
+                    '/guide.js', '/guide.css', '/guide-experience.json', '/api/templates/preview',
+                    '/api/template-packs/preview'}:
+                self._json({'error': {'code': 'TEMPLATE_RETIRED', 'message': '旧模板库已移除，请使用精选设计案例。'}}, 410)
+                return
             if path == "/api/projects":
                 from .background_tasks import project_activity
                 projects = [{**p, "activity": project_activity(studio.wb, p["projectId"])} for p in owners.list_projects(studio.wb)]
@@ -371,8 +379,7 @@ class StudioHandler(BaseHTTPRequestHandler):
                 from .derived import mapping
                 self._json(mapping(studio))
             elif path == "/api/template-packs":
-                from .template_packs import cards
-                self._json(cards(studio))
+                self._json({"packs": [], "selectedPack": None, "defaultPack": None})
             elif path == "/api/template-packs/preview":
                 from .template_packs import preview
                 scene = preview(query.get('pack', [None])[0], query.get('role', ['content'])[0])
@@ -389,9 +396,16 @@ class StudioHandler(BaseHTTPRequestHandler):
                     self._send(file.read_bytes(), "image/png",
                                headers={"Cache-Control": "private, max-age=31536000, immutable"})
             elif path == "/api/templates":
-                self._json({"templates": catalog()})
+                from .curated_designs import cards
+                self._json({"templates": cards()})
+            elif path == "/api/curated-designs/cover":
+                from .curated_designs import cover
+                self._send(cover(query.get('id', [None])[0]), 'image/jpeg')
             elif path == "/api/templates/recommendations":
-                self._json(studio.template_recommendations(query.get("slideId", [None])[0]))
+                from .curated_designs import cards
+                result = studio.template_recommendations(query.get("slideId", [None])[0])
+                result.update(smartAvailable=False, recommendations=cards()[:12])
+                self._json(result)
             elif path == "/api/templates/preview":
                 revision = query.get("sceneRevision", [None])[0]
                 if revision is not None and not revision.isdecimal():
@@ -468,6 +482,20 @@ class StudioHandler(BaseHTTPRequestHandler):
             project_id = self.headers.get("X-WePPT-Project") or query.get("project", [None])[0]
             studio = self._project_studio(project_id)
             path = parsed.path
+            if path in {'/api/template', '/api/template-packs/select', '/api/template-packs/apply',
+                        '/api/templates/match', '/api/templates/recommendations'}:
+                self._json({'error': {'code': 'TEMPLATE_RETIRED', 'message': '旧模板库已移除，请使用精选设计案例。'}}, 410)
+                return
+            if path == '/api/templates/adapt' and not str(body.get('templateId', '')).startswith(('user-', 'style-')):
+                self._json({'error': {'code': 'TEMPLATE_RETIRED', 'message': '请在对话中指定精选案例并按内容生成。'}}, 410)
+                return
+            if path == '/api/templates/apply':
+                with studio.wb._connection() as db:
+                    previous = db.execute('SELECT template_id FROM studio_template_proposals WHERE id=? AND project_id=?',
+                                          (body.get('proposalId'), studio.project_id)).fetchone()
+                if previous and not str(previous['template_id']).startswith(('user-', 'style-')):
+                    self._json({'error': {'code': 'TEMPLATE_RETIRED', 'message': '这份预览来自已移除的旧模板，请重新生成。'}}, 410)
+                    return
             if path == "/api/projects":
                 title = body.get("title")
                 if not isinstance(title, str) or not title.strip() or len(title.strip()) > 120:
