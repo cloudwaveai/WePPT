@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "packages": [
+    {
+      "id": "frontend-slides",
+      "repository": "https://github.com/zarazhangrui/frontend-slides",
+      "commit": "9906a34d640d2111f724544cbc50f7f130569ae1",
+      "sourceDirectory": "plugins/frontend-slides/skills/frontend-slides/",
+      "archive": "frontend-slides.zip",
+      "sha256": "032db11b7fbb49ef2145497873bdd1ddf05ed3aa89c30eb689200d25f394152f",
+      "files": 80,
+      "bytes": 607587,
+      "license": "MIT",
+      "status": "packaged"
+    },
+    {
+      "id": "pptagent",
+      "repository": "https://github.com/icip-cas/PPTAgent",
+      "commit": "acf703e28be98f57b7351a2fddf48325f579f252",
+      "sourceDirectory": "skills/pptagent/",
+      "archive": "pptagent.zip",
+      "sha256": "d0fbfef9e8c178fb25aa90b91dc3a718710cb13ff1f781f7c611d224635c44c1",
+      "files": 23,
+      "bytes": 42392,
+      "license": "MIT",
+      "status": "packaged"
+    },
+    {
+      "id": "ppt-master",
+      "repository": "https://github.com/hugohe3/ppt-master",
+      "commit": "f3633771fe699d327f02ae86393831bbcf5169f7",
+      "sourceDirectory": "skills/ppt-master/",
+      "archive": "ppt-master.zip",
+      "sha256": "de989f47304239c2d0717a8222d991cbdb0b6b459ce7460c5a3623c8578e3ce6",
+      "files": 13055,
+      "bytes": 21742785,
+      "license": "MIT",
+      "status": "packaged"
+    },
+    {
+      "id": "cc-slidev",
+      "repository": "https://github.com/rhuss/cc-slidev",
+      "commit": "ec3841264c4f0ec45dc9a4f9e9a6e2fafa61819b",
+      "sourceDirectory": "",
+      "archive": "cc-slidev.zip",
+      "sha256": "62869b53cddf2d9ec318eef0f42ae5b324bdca72ac57b5014d4babe8e52319fd",
+      "files": 193,
+      "bytes": 1002057,
+      "license": "MIT",
+      "status": "packaged"
+    }
+  ]
+}

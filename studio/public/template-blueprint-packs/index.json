@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "packs": [
+    {
+      "themeId": "curated-001",
+      "href": "/template-blueprint-packs/curated-001.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "db309efc5425829022687709c11085dad95c0f6ebd94f018a48957d6868d1a91"
+    },
+    {
+      "themeId": "curated-147",
+      "href": "/template-blueprint-packs/curated-147.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "ba19641110c8f65594ff99a5d3b6360cf0a3cd75c86c7a8d5931c2b1a633c6a7"
+    },
+    {
+      "themeId": "curated-157",
+      "href": "/template-blueprint-packs/curated-157.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "712cee14d1d0a4cc1468c433c51fd02ec89273c9614a9707a5f73e55d4461d7f"
+    },
+    {
+      "themeId": "curated-005",
+      "href": "/template-blueprint-packs/curated-005.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "310a841d3b99331e9e6c609cb93b92ea3b024efa702e9e49b41d97f5ebe40dfe"
+    },
+    {
+      "themeId": "curated-129",
+      "href": "/template-blueprint-packs/curated-129.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "374ac0c71bfccf40b2e538487f7b47bc1b4f80c78f0c0b09532549a8ea8fe87c"
+    },
+    {
+      "themeId": "curated-155",
+      "href": "/template-blueprint-packs/curated-155.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "371dcf7172f77dd3ac639456d66955724653bf7bc7ee205f6b810fe7ab501188"
+    },
+    {
+      "themeId": "curated-228",
+      "href": "/template-blueprint-packs/curated-228.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "f27f1c9d7c363fde9aa24a5e0931296612fd8593c5c5126ffee212c2c00240aa"
+    },
+    {
+      "themeId": "curated-068",
+      "href": "/template-blueprint-packs/curated-068.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "23711d9358c3dba3005680993fba0c70c7e1574271fffdb3b3851fee19c0d344"
+    },
+    {
+      "themeId": "curated-091",
+      "href": "/template-blueprint-packs/curated-091.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "89c00211ccabe57ab6afb87c6f670799a3713b930f10ec8a31d17083f009d669"
+    },
+    {
+      "themeId": "curated-501",
+      "href": "/template-blueprint-packs/curated-501.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "7f50002d467f863c4a68704247feb5351f41027e8d97313bc80e4cde14e0e381"
+    },
+    {
+      "themeId": "curated-139",
+      "href": "/template-blueprint-packs/curated-139.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "57e7476250cfb84f18e743f6d2f7cf5dce52607ea35bec9742a81d3e958054eb"
+    },
+    {
+      "themeId": "curated-008",
+      "href": "/template-blueprint-packs/curated-008.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "3f72409a4a390155b9ab179389727528126b39e80f75ca052c7a4ea52db8eaea"
+    },
+    {
+      "themeId": "curated-064",
+      "href": "/template-blueprint-packs/curated-064.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "1d233b2fc5ae7782aa8ed7b0388929bce6cc83d5b92fab32bc9c2429d572259d"
+    },
+    {
+      "themeId": "curated-085",
+      "href": "/template-blueprint-packs/curated-085.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "2083a51c54d50d82ee13897b159feeb8623daf8c81a238d58a4bec293c1a0677"
+    },
+    {
+      "themeId": "curated-006",
+      "href": "/template-blueprint-packs/curated-006.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "22f0cee54a6cd47aa72be57f0d1acc9847eca5f30ae022e0464d9a5c5d08bd0d"
+    },
+    {
+      "themeId": "curated-014",
+      "href": "/template-blueprint-packs/curated-014.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "30c80dd461e4e527442f69ee2b484b86ce53b114756270c2b268b1cdcb14df61"
+    },
+    {
+      "themeId": "curated-018",
+      "href": "/template-blueprint-packs/curated-018.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "70b028cc589ebc70f28691438cf6ded8b8f59fc47e2c45334e9ea79ab2bc6aac"
+    },
+    {
+      "themeId": "curated-022",
+      "href": "/template-blueprint-packs/curated-022.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "a877cb41a166945e0e1b09f3186ad75ef5ca2c94cf2f434c91cfb9d0d6200be9"
+    },
+    {
+      "themeId": "curated-042",
+      "href": "/template-blueprint-packs/curated-042.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "0cbb83850aa5ede356650555a13827e84f8c3f0535137efd224a0fd598a7976f"
+    },
+    {
+      "themeId": "curated-073",
+      "href": "/template-blueprint-packs/curated-073.json",
+      "validatedPageCount": 30,
+      "sourceFingerprint": "9a90bbbfb2bad87fb2deccb3c456e685354e7cf213a773a4a00fc91824108296"
+    }
+  ]
+}

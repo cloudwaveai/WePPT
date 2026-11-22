@@ -1,0 +1,21 @@
+{
+  "title": "Squares - 3",
+  "slug": "squares-3",
+  "mode": "stroke",
+  "colors": 2,
+  "maxStroke": 8,
+  "maxScale": 16,
+  "maxSpacing": [
+    0,
+    0
+  ],
+  "width": 40,
+  "height": 40,
+  "vHeight": 0,
+  "tags": [
+    "squares",
+    "lines"
+  ],
+  "path": "<path d='M12.47 0H0v12.47h12.47Zm0 0v12.47l9.18 9.18V0ZM0 21.65v9.18h30.83l-9.18-9.18zm21.65 0-9.18-9.18H0v9.18zm0 0 9.18 9.18V0h-9.18ZM30.83 0v30.83L40 40V0ZM0 30.83V40h40l-9.17-9.17z'/>",
+  "creationDate": "2023-06-02T00:00:00.000Z"
+}

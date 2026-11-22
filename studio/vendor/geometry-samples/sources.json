@@ -1,0 +1,83 @@
+[
+  {
+    "id": "bands",
+    "name": "扇形圆弧",
+    "use": "封面右下角、章节页角标",
+    "library": "flowshape",
+    "source": "https://github.com/Jossifresben/flowshape/blob/main/public/thumbs/bands.svg",
+    "license": "MIT",
+    "changes": "移除背景（如有），调整蓝色配色，保留原几何路径"
+  },
+  {
+    "id": "villarceau",
+    "name": "线构圆环",
+    "use": "封面右侧、章节页视觉中心",
+    "library": "flowshape",
+    "source": "https://github.com/Jossifresben/flowshape/blob/main/public/thumbs/villarceau.svg",
+    "license": "MIT",
+    "changes": "移除背景（如有），调整蓝色配色，保留原几何路径"
+  },
+  {
+    "id": "voxel",
+    "name": "立方体组合",
+    "use": "科技类章节页右侧，宜放大使用",
+    "library": "flowshape",
+    "source": "https://github.com/Jossifresben/flowshape/blob/main/public/thumbs/voxel.svg",
+    "license": "MIT",
+    "changes": "移除背景（如有），调整蓝色配色，保留原几何路径"
+  },
+  {
+    "id": "tilt-opacity",
+    "name": "斜切叠层",
+    "use": "页底或右侧，标题放在留白处",
+    "library": "dividers",
+    "source": "https://github.com/andraswebcode/shape-dividers/blob/master/svg/tilt-opacity.svg",
+    "license": "CC0-1.0",
+    "changes": "移除背景（如有），调整蓝色配色，保留原几何路径"
+  },
+  {
+    "id": "curve-asymmetrical-opacity",
+    "name": "弧形叠层",
+    "use": "页底弧形底板，上方留给文字",
+    "library": "dividers",
+    "source": "https://github.com/andraswebcode/shape-dividers/blob/master/svg/curve-asymmetrical-opacity.svg",
+    "license": "CC0-1.0",
+    "changes": "移除背景（如有），调整蓝色配色，保留原几何路径"
+  },
+  {
+    "id": "fan-opacity",
+    "name": "折面叠层",
+    "use": "封面下沿、章节分隔",
+    "library": "dividers",
+    "source": "https://github.com/andraswebcode/shape-dividers/blob/master/svg/fan-opacity.svg",
+    "license": "CC0-1.0",
+    "changes": "移除背景（如有），调整蓝色配色，保留原几何路径"
+  },
+  {
+    "id": "squares-3",
+    "name": "方形折线纹理",
+    "use": "侧边窄条、图片背板，避免铺满正文",
+    "library": "pattern",
+    "source": "https://github.com/catchspider2002/svelte-svg-patterns/blob/master/src/routes/_index.js",
+    "license": "MIT",
+    "changes": "保留仓库路径数据，增加重复平铺、蓝色线条和SVG包装"
+  },
+  {
+    "id": "squares-4",
+    "name": "圆角方框纹理",
+    "use": "低透明度背景、局部装饰",
+    "library": "pattern",
+    "source": "https://github.com/catchspider2002/svelte-svg-patterns/blob/master/src/routes/_index.js",
+    "license": "MIT",
+    "changes": "保留仓库路径数据，增加重复平铺、蓝色线条和SVG包装"
+  },
+  {
+    "id": "waves-1",
+    "name": "平行波浪线",
+    "use": "页底细纹、分隔区域",
+    "library": "pattern",
+    "source": "https://github.com/catchspider2002/svelte-svg-patterns/blob/master/src/routes/_index.js",
+    "license": "MIT",
+    "changes": "保留仓库路径数据，增加重复平铺、蓝色线条和SVG包装"
+  }
+]

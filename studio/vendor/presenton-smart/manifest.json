@@ -1,0 +1,21 @@
+{
+  "repository": "https://github.com/presenton/presenton",
+  "commit": "9af2b47dda31060d3d5070e020a0825b15c94b32",
+  "files": [
+    {
+      "path": "generate_smart_presentation.py",
+      "sha256": "4df2a9dfefd6267cfe226061b6d6bcbff9678bb5e6b266093777def457d1682a",
+      "bytes": 39012
+    },
+    {
+      "path": "smart_slide_layout.py",
+      "sha256": "6ca2c698bae1dc039ee2b2a72a1c7e5038f5f81c823ec9b98aea61ee5ebb3b1b",
+      "bytes": 9878
+    },
+    {
+      "path": "LICENSE",
+      "sha256": "23d6fd64bfcbd46b331098ed89454717fd1719faccbf632f8234b962aa43ed1a",
+      "bytes": 11340
+    }
+  ]
+}

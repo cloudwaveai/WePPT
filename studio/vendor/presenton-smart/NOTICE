@@ -1,0 +1,8 @@
+Presenton Smart source excerpts (unmodified complete files)
+Source: https://github.com/presenton/presenton
+Commit: 9af2b47dda31060d3d5070e020a0825b15c94b32
+License: Apache-2.0, retained in LICENSE.
+Original files:
+servers/fastapi/utils/llm_calls/generate_smart_presentation.py
+servers/fastapi/utils/smart_slide_layout.py
+WePPT reuses public visual planning rules and checkpoint/continuation coordination concepts. It does not run or claim the complete Presenton engine. Reference-image analysis, image generation, editable text reconstruction and PPTX export remain WePPT implementations. No export-core runtime is included.

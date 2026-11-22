@@ -1,0 +1,81 @@
+{
+  "packages": [
+    {
+      "id": "doc-coauthoring",
+      "repo": "anthropics/skills",
+      "commit": "2c5958ecac7cee2b583967a2c4981d0f4a75c579",
+      "files": [
+        {
+          "path": "skills/doc-coauthoring/SKILL.md",
+          "sha256": "2e47d78846faeea4a56e9809c52700087a15a2155a3f293a3efbaded81398ef4"
+        },
+        {
+          "path": "README.md",
+          "sha256": "1fca448ca17ccf901bd068c661209b15300bc5be3f039ba1a616c3a13a374ccb"
+        }
+      ]
+    },
+    {
+      "id": "copywriting",
+      "repo": "coreyhaines31/marketingskills",
+      "commit": "96798cf38736ecdba015a1d2b0521b0c8f8f41dd",
+      "files": [
+        {
+          "path": "LICENSE",
+          "sha256": "b70d71e24e40fce5da8f4b6f9cd862096a048e433db7f3c8cac5e348e6d34591"
+        },
+        {
+          "path": "skills/copywriting/SKILL.md",
+          "sha256": "02f0ab1ddd41d95b3c230d4bcff3de6578c8f2e45776c8ef2e4b931636af5bee"
+        },
+        {
+          "path": "skills/copywriting/evals/evals.json",
+          "sha256": "ccec86052a0edd8646d0e50e63c08e0e971f443d8f6e9178843a1629f79efdb0"
+        },
+        {
+          "path": "skills/copywriting/references/ai-tells.md",
+          "sha256": "b98c3a19b3a75c714d69e80a0076e4c07244b0e833c2ce81ff2631224fb7f7b2"
+        },
+        {
+          "path": "skills/copywriting/references/copy-frameworks.md",
+          "sha256": "4db06c481a904be3e4571ad8f671532c97ec186ddf0fb8aee3e3a56ef8e3d441"
+        },
+        {
+          "path": "skills/copywriting/references/natural-transitions.md",
+          "sha256": "9bd61b0de5be2c4de4ce130c68236b4f290b12737823827a458bb2b4c8584683"
+        }
+      ]
+    },
+    {
+      "id": "copy-editing",
+      "repo": "coreyhaines31/marketingskills",
+      "commit": "96798cf38736ecdba015a1d2b0521b0c8f8f41dd",
+      "files": [
+        {
+          "path": "LICENSE",
+          "sha256": "b70d71e24e40fce5da8f4b6f9cd862096a048e433db7f3c8cac5e348e6d34591"
+        },
+        {
+          "path": "skills/copy-editing/SKILL.md",
+          "sha256": "cec5a771ce37ade292f7f1f6b418e8a6ce6ec3f50163fa5e664afbcb03e085fc"
+        },
+        {
+          "path": "skills/copy-editing/evals/evals.json",
+          "sha256": "cc18c9f51094058759267d465cfcc50da65f248f66b923326781aa642d622ca7"
+        },
+        {
+          "path": "skills/copy-editing/references/checklist.md",
+          "sha256": "4cf94c922286223681fc53721fcc65ae7299f1e36e797e7397d369d674580c60"
+        },
+        {
+          "path": "skills/copy-editing/references/content-refresh.md",
+          "sha256": "ba73cdf278fe6b552eee27eb1452494f11f9d17ef67d720657e0982f76fb961b"
+        },
+        {
+          "path": "skills/copy-editing/references/plain-english-alternatives.md",
+          "sha256": "df4f820d4c63ae8a517c64a243c101658352cd07d002355bf3c97de0a00f3775"
+        }
+      ]
+    }
+  ]
+}
