@@ -10,14 +10,14 @@ export function createStageScheduler(limits=STAGE_LIMITS,{sharedStages=[],shared
  const shared=new Set(sharedStages);let sharedActive=0,sharedCursor=0;
  const lanes=new Map(Object.entries(limits).map(([stage,limit])=>{
   if(!Number.isInteger(limit)||limit<1||limit>8)throw new RangeError('Invalid stage capacity');
-  return [stage,{limit,active:0,pending:[]}];
+  return [stage,{limit,active:0,pending:[],lastWasPreferred:false}];
  }));
- function run(stage,work,{signal,onEvent=async()=>{}}={}){
+ function run(stage,work,{signal,onEvent=async()=>{},prefer=false}={}){
   const lane=lanes.get(stage);if(!lane)return Promise.reject(new Error('Unknown pipeline stage: '+stage));
   const queuedAt=Date.now();
   return new Promise((resolve,reject)=>{
    if(signal?.aborted){reject(signal.reason);return;}
-   const item={work,signal,onEvent,resolve,reject,queuedAt,abort:null};
+   const item={work,signal,onEvent,prefer,resolve,reject,queuedAt,abort:null};
    item.abort=()=>{const i=lane.pending.indexOf(item);if(i>=0){lane.pending.splice(i,1);reject(signal.reason);}};
    // Persist queued state before the item becomes runnable.
    signal?.addEventListener('abort',item.abort,{once:true});
@@ -27,13 +27,21 @@ export function createStageScheduler(limits=STAGE_LIMITS,{sharedStages=[],shared
    },error=>{signal?.removeEventListener('abort',item.abort);if(error&&typeof error==='object')error.pipelineStage=stage;reject(error);});
   });
  }
+ // Within each stage, alternate classes when both are waiting. FIFO within each
+ // class keeps other decks moving even under a continuous stream of new work.
+ function takeNext(lane){
+  const index=lane.pending.findIndex(item=>item.prefer!==lane.lastWasPreferred);
+  const item=index>0?lane.pending.splice(index,1)[0]:lane.pending.shift();
+  lane.lastWasPreferred=item.prefer;
+  return item;
+ }
  function pump(){
   for(const [stage,lane] of lanes){
    if(shared.has(stage))continue;
-   while(lane.active<lane.limit&&lane.pending.length)start(stage,lane,lane.pending.shift());
+   while(lane.active<lane.limit&&lane.pending.length)start(stage,lane,takeNext(lane));
   }
   // Borrow every free downstream permit; rotate between waiting professions.
-  // FIFO remains local to each profession, with no fixed reservation left idle.
+  // A stage with no waiting work leaves its share available to the others.
   while(sharedActive<sharedLimit){
    let selected=null;
    for(let n=0;n<sharedStages.length;n++){
@@ -42,7 +50,7 @@ export function createStageScheduler(limits=STAGE_LIMITS,{sharedStages=[],shared
    }
    if(!selected)break;
    sharedCursor=(selected.index+1)%sharedStages.length;
-   start(selected.stage,selected.lane,selected.lane.pending.shift());
+   start(selected.stage,selected.lane,takeNext(selected.lane));
   }
  }
  function start(stage,lane,item){

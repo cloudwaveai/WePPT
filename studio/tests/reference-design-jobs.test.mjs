@@ -179,3 +179,40 @@ test('repeated text findings preserve composition and re-review each bounded rep
  const jobs=jobsFor({dataDir,plan:(input,options)=>planCompositions(input,{...options,structuredAI:async({prompt})=>{plans++;return {pages:batchInput(prompt).targetPageIds.map(uniqueComposition)};}}),generate:async input=>{const result=output(input);result.pages[0].objects[0].x=++generated;return result;},review:async input=>{reviews++;return {issues:[{pageId:'p1',severity:'error',kind:'readability',message:'相同反馈仍未解决'}],summary:'needs repair',reviewEvidence:{status:'fail',checkedPageIds:input.project.pages.map(p=>p.id)}};}});
  const started=await jobs.start({project:project()}),result=await finish(jobs,started.id);assert.equal(result.status,'partial');assert.equal(result.designReview.repairRounds,2);assert.equal(plans,1);assert.equal(reviews,3);assert.equal(generated,6);assert.doesNotMatch(result.message,/断点已过期/);
 }));
+
+test('staged jobs expedite the first target and cached fallback drawing, then perform the full review', async t => fixture(async dataDir => {
+  const {stageScheduler} = await import('../stage-pipeline.mjs');
+  const observed = [];
+  const firstInspection = Promise.withResolvers();
+  const run = stageScheduler.run;
+  t.mock.method(stageScheduler, 'run', async (stage, work, options) => {
+    const result = await run(stage, work, options);
+    if (result?.testPage) observed.push([result.testPage, stage, options.prefer]);
+    return result;
+  });
+
+  const source = project();
+  source.pages = source.pages.slice(0, 2);
+  const jobs = jobsFor({
+    dataDir, sharedStyleFirst: true, stagePipeline: true, artworkFallbackEnabled: true,
+    generate: async (input, options) => {
+      const id = input.targetPageIds[0];
+      if (id === 'p0') await firstInspection.promise;
+      if (id === 'p0' && !options.artworkFallback) {
+        throw Object.assign(Error('fixture requests source-image fallback'), {code: 'EDITABLE_ARTWORK_INVALID'});
+      }
+      await options.runStage('drawing', () => ({testPage: id}), options.signal);
+      await options.runStage('inspection', () => ({testPage: id}), options.signal);
+      if (id === 'p1') firstInspection.resolve();
+      return output(input);
+    },
+  });
+  // A selected range can start with a page other than the first in the document.
+  const started = await jobs.start({project: source, targetPageIds: ['p1', 'p0']});
+  const result = await finish(jobs, started.id);
+  assert.equal(result.status, 'completed');
+  assert.equal(result.designReview.reviewEvidence.status, 'pass');
+  assert.deepEqual(result.pages.map(p => p.id), ['p1', 'p0']);
+  assert.deepEqual(observed.filter(x => x[0] === 'p1'), [['p1','drawing',true], ['p1','inspection',true]]);
+  assert.deepEqual(observed.filter(x => x[0] === 'p0'), [['p0','drawing',true], ['p0','inspection',false]]);
+}));

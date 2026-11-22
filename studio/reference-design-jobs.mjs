@@ -157,7 +157,11 @@ export function createReferenceJobs({dataDir,artworkFallbackEnabled=process.env.
     const anchors=[job.pages.find(p=>p.role==='cover'),job.pages.find(p=>p.role!=='cover')].filter(Boolean);if(!anchors.length&&job.pages.length)anchors.push(job.pages[0]);
     job.pageInputs[pageId]={...(job.textSpacePreflightVersion===1?{textSpacePreflight:true}:{}),...(job.editableArtworkVersion===1?{editableArtwork:true}:{}),project,themeId:job.input.themeId,targetPageIds:[pageId],instruction:job.input.instruction,repairFeedback:'',singlePass:true,referenceMode:true,styleAnchorIds:anchors.map(p=>p.id).slice(0,2)};
    }
-   const pageStage=(name,work,stageSignal)=>stageScheduler.run(name,work,{signal:stageSignal,onEvent:async event=>{state.stage=name;state.stageStatus=event.status;state.stageEvents=[...(state.stageEvents||[]),event].slice(-80);if(event.endedAt){state.stageTimings ||= {};const stats=state.stageTimings[name] ||= {runs:0,waitMs:0,runMs:0};stats.runs++;stats.waitMs+=event.waitMs;stats.runMs+=event.runMs;}job.updatedAt=now();await persist(job);}});
+   const pageStage=(name,work,stageSignal)=>stageScheduler.run(name,work,{signal:stageSignal,
+    // Expedite the first target until a page is ready. A fallback drawing stage
+    // only reopens a verified background and cannot request another image.
+    prefer:(!job.pages.length&&pageId===job.input.targetPageIds[0])||(name==='drawing'&&Boolean(state.artworkFallback)),
+    onEvent:async event=>{state.stage=name;state.stageStatus=event.status;state.stageEvents=[...(state.stageEvents||[]),event].slice(-80);if(event.endedAt){state.stageTimings ||= {};const stats=state.stageTimings[name] ||= {runs:0,waitMs:0,runMs:0};stats.runs++;stats.waitMs+=event.waitMs;stats.runMs+=event.runMs;}job.updatedAt=now();await persist(job);}});
    for(let attempt=0;attempt<2&&!pageSignal.aborted;attempt++){
     let checkpointed=false;
     try{
