@@ -6,7 +6,8 @@ import {EDITOR_SYSTEM_RULES} from './public/editor-contract.js';
 import {buildSkillContext} from './skill-runtime.mjs';
 import {explicitDesignAction} from './assistant-routing.mjs';
 import {DESIGN_ACTION_SCHEMA,validateDesignAction,adviceOnly} from './public/assistant-actions.js';
-import {spawn, execFileSync} from 'node:child_process';
+import {runGatewayProcess} from './gateway-process.mjs';
+import {execFileSync} from 'node:child_process';
 import {existsSync, readdirSync, readFileSync} from 'node:fs';
 import {mkdir, writeFile, readFile, rm, appendFile} from 'node:fs/promises';
 import {join, resolve} from 'node:path';
@@ -276,21 +277,21 @@ export async function runAI(input,{dataDir=join(root,'data'),signal,onProgress=(
   if(input.action==='draft')prompt=prompt.replace('\nINPUT_JSON:\n','\n'+draftChapterInstructionsFor(input)+'\nINPUT_JSON:\n');
   preparedAt=Date.now();
   onProgress({phase:'requesting',label:'正在等待 GPT-6.1 Sol 返回结果'});
-    await new Promise((resolveRun,reject)=>{
+    await runGatewayProcess(exe,args,{cwd:directory,windowsHide:true,stdio:['pipe','pipe','pipe'],env:{...process.env,...provider.env}},{signal},child=>new Promise((resolveRun,reject)=>{
       modelStartedAt=Date.now();
-      const child=spawn(exe,args,{cwd:directory,windowsHide:true,stdio:['pipe','pipe','pipe'],env:{...process.env,...provider.env}});
-      let log='',settled=false;
+      let log='',settled=false,stopTimer,terminalError;
       const fail=(error)=>{if(settled)return;settled=true;clearTimeout(timer);signal?.removeEventListener('abort',abort);reject(error);};
-      const abort=()=>{child.kill();fail(Error('AI 请求已取消。'));};
-      const timer=setTimeout(()=>{child.kill();fail(Error('AI 响应超时，文稿没有被修改，请稍后重试。'));},MODEL_TIMEOUT_MS);
+      const terminate=error=>{if(terminalError)return;terminalError=error;child.kill();stopTimer=setTimeout(()=>child.kill('SIGKILL'),1000);};
+      const abort=()=>terminate(Error('AI 请求已取消。'));
+      const timer=setTimeout(()=>terminate(Error('AI 响应超时，文稿没有被修改，请稍后重试。')),MODEL_TIMEOUT_MS);
       signal?.addEventListener('abort',abort,{once:true});
       child.stdout.on('data',()=>{});child.stderr.on('data',chunk=>{log=(log+chunk.toString()).slice(-8000);});
       child.on('error',()=>fail(Error('AI 程序启动失败，请检查本机 Codex 安装。')));
-      child.on('close',code=>{if(settled)return;if(code!==0){const failure=providerFailure(log,code);failureDiagnostic=failure.diagnostic;fail(failure);return;}settled=true;clearTimeout(timer);signal?.removeEventListener('abort',abort);resolveRun();});
+      child.on('close',code=>{clearTimeout(stopTimer);if(settled)return;if(terminalError){fail(terminalError);return;}if(code!==0){const failure=providerFailure(log,code);failureDiagnostic=failure.diagnostic;fail(failure);return;}settled=true;clearTimeout(timer);signal?.removeEventListener('abort',abort);resolveRun();});
       child.stdin.on('error',()=>{});
       if(signal?.aborted){abort();return;}
       child.stdin.end(prompt);
-    });
+    }));
     modelEndedAt=Date.now();active--;ownsModelPermit=false;signal?.throwIfAborted();
     onProgress({phase:'validating',label:'正在检查修改范围和内容'});
     const rawResult=JSON.parse(await readFile(answerPath,'utf8'));
@@ -304,7 +305,7 @@ export async function runAI(input,{dataDir=join(root,'data'),signal,onProgress=(
     validated.skillTrace={ids:skills.ids,version:skills.version,upstream:skills.upstream,visualEvidence:images.length>0};success=true;return validated;
   }finally{
     if(ownsModelPermit)active--;
-    await recordTiming(dataDir,{route:'model',model:MODEL,effort:reasoningEffortFor(input),action:input.action,scope:input.scope||'deck',contextChars:context.length,prepareMs:preparedAt-startedAt,modelMs:modelStartedAt===null?0:(modelEndedAt??Date.now())-modelStartedAt,totalMs:Date.now()-startedAt,success,...(failureDiagnostic?{failure:failureDiagnostic}:{})}).catch(()=>{});
+    await recordTiming(dataDir,{route:'model',model:MODEL,effort:reasoningEffortFor(input),action:input.action,scope:input.scope||'deck',contextChars:context.length,prepareMs:preparedAt-startedAt,...(modelStartedAt===null?{}:{gatewayWaitMs:modelStartedAt-preparedAt}),modelMs:modelStartedAt===null?0:(modelEndedAt??Date.now())-modelStartedAt,totalMs:Date.now()-startedAt,success,...(failureDiagnostic?{failure:failureDiagnostic}:{})}).catch(()=>{});
     await rm(directory,{recursive:true,force:true}).catch(()=>{});
   }
 }
@@ -334,8 +335,8 @@ export async function runStructuredAI({prompt,schema:outputSchema,images=[],effo
     for(const path of images)args.push('--image',resolve(path));
     for(const setting of [`model_reasoning_effort="${effort}"`,'project_doc_max_bytes=0','default_permissions="ppt_copy"','permissions.ppt_copy.filesystem={":root"="deny",":minimal"="read",":workspace_roots"={"."="read"}}','permissions.ppt_copy.network.enabled=false','approval_policy="never"','features.shell_tool=false','features.apps=false','agents.enabled=false','web_search="disabled"','memories.use_memories=false','memories.generate_memories=false','mcp_servers={}','plugins={}'])args.push('-c',setting);
     if(fastCompletion)args.push('--json');args.push('-');preparedAt=Date.now();onProgress({phase:'requesting',label:action==='design-review'?'正在审看实际页面与参考图':'正在规划逐页构图'});
-    await new Promise((resolveRun,reject)=>{
-      modelStartedAt=Date.now();const child=spawn(exe,args,{cwd:directory,windowsHide:true,stdio:['pipe','pipe','pipe'],env:{...process.env,...provider.env}});
+    await runGatewayProcess(exe,args,{cwd:directory,windowsHide:true,stdio:['pipe','pipe','pipe'],env:{...process.env,...provider.env}},{signal,background},child=>new Promise((resolveRun,reject)=>{
+      modelStartedAt=Date.now();
       let log='',settled=false,eventBuffer='',lastMessage,stopTimer,terminalError;
       const finish=error=>{if(settled)return;settled=true;clearTimeout(timer);clearTimeout(stopTimer);signal?.removeEventListener('abort',abort);error?reject(error):resolveRun();};
       const terminate=error=>{if(settled)return;if(error)terminalError=error;child.kill();if(!stopTimer)stopTimer=setTimeout(()=>child.kill('SIGKILL'),1000);};
@@ -345,11 +346,11 @@ export async function runStructuredAI({prompt,schema:outputSchema,images=[],effo
       child.on('error',()=>finish(Error('AI 程序启动失败，请检查本机 Codex 安装。')));
       child.on('close',code=>{if(terminalError){finish(terminalError);return;}if(code===0||completedJson){finish();return;}const failure=providerFailure(log,code);failureDiagnostic=failure.diagnostic;finish(failure);});
       child.stdin.on('error',()=>{});if(signal?.aborted){abort();return;}child.stdin.end(prompt);
-    });
+    }));
     if(signal?.aborted)throw structuredAbortError(signal);
     const result=completedJson??JSON.parse(await readFile(answerPath,'utf8'));success=true;return result;
   }finally{
-    active--;await recordTiming(dataDir,{route:'model',model:MODEL,effort,action,contextChars:prompt.length,imageCount:images.length,prepareMs:preparedAt-startedAt,modelMs:modelStartedAt===null?0:Date.now()-modelStartedAt,totalMs:Date.now()-startedAt,success,...(failureDiagnostic?{failure:failureDiagnostic}:{})}).catch(()=>{});
+    active--;await recordTiming(dataDir,{route:'model',model:MODEL,effort,action,contextChars:prompt.length,imageCount:images.length,prepareMs:preparedAt-startedAt,...(modelStartedAt===null?{}:{gatewayWaitMs:modelStartedAt-preparedAt}),modelMs:modelStartedAt===null?0:Date.now()-modelStartedAt,totalMs:Date.now()-startedAt,success,...(failureDiagnostic?{failure:failureDiagnostic}:{})}).catch(()=>{});
     await rm(directory,{recursive:true,force:true}).catch(()=>{});
   }
 }

@@ -24,3 +24,7 @@ python3 scripts/summarize-timings.py data/ai-timings.jsonl
 ```
 
 要判断用户要等多久才能看到第一页，还需要结合对应任务的 `createdAt`、`pipelineTimings.firstDrawingStartedAt` 和 `pipelineTimings.firstPageReadyAt`。多页任务的阶段可能同时运行，不能将每次调用时长相加当作用户等待时间。
+
+单个工作台进程默认同时运行最多 4 个模型子进程。编辑、规划、审查和生图共用名额，等待期间可取消。部署方可以用 `WEPPT_GATEWAY_CONCURRENCY` 设为 1～4。若有多个工作台实例或其他应用共用网关，应按实际配额分配各进程的上限。该设置只控制在运行的子进程数量，每分钟请求数和 token 数由网关计量。
+
+新版文字模型计时中的 `gatewayWaitMs` 记录本地等待模型名额到子进程启动的耗时，`modelMs` 记录启动后的模型阶段。旧记录及未启动子进程的调用没有 `gatewayWaitMs`。
