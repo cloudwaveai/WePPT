@@ -1,0 +1,31 @@
+{
+  "name": "weppt-new",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "test:backend": "node --test tests/backend.test.mjs",
+    "setup:skills": "python -X utf8 scripts/setup-upstream-skills.py",
+    "skills:status": "node scripts/skill-tools.mjs status",
+    "skills:convert-svg": "node scripts/skill-tools.mjs convert-svg",
+    "setup:slidev": "node scripts/setup-slidev-runtime.mjs",
+    "setup:pptagent": "python -X utf8 scripts/setup-pptagent-runtime.py --install",
+    "test:engines": "node --test tests/svg-engine.test.mjs tests/native-chart-edit.test.mjs tests/svg-copy.test.mjs",
+    "assets:build": "node scripts/build-asset-library.mjs",
+    "test:assets": "node --test tests/asset-library-catalog.test.mjs"
+  },
+  "dependencies": {
+    "@tabler/icons": "3.50.0",
+    "blobshape": "1.0.0",
+    "geopattern": "1.2.3",
+    "jszip": "3.10.1",
+    "pptxgenjs": "4.0.1"
+  },
+  "devDependencies": {
+    "coolshapes-react": "1.0.1",
+    "playwright-core": "1.64.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
+  }
+}

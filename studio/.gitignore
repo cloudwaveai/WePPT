@@ -1,0 +1,10 @@
+/data/
+/data-*/
+/runtime-codex/
+/runtime-config/
+/outputs/
+/work/
+/public/assets/templates/
+/public/assets/theme-previews/*
+!/public/assets/theme-previews/index.json
+/vendor/template-source-originals/

@@ -1,0 +1,48 @@
+FROM node:22-bookworm-slim
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1
+
+ARG APT_MIRROR=deb.debian.org
+RUN sed -i "s/deb.debian.org/${APT_MIRROR}/g" /etc/apt/sources.list.d/debian.sources \
+    && apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=30 update && apt-get install -y --no-install-recommends \
+    python3 python3-venv chromium fonts-noto-cjk fonts-liberation \
+    ca-certificates tini libcairo2 libpango-1.0-0 libpangocairo-1.0-0 \
+    && rm -rf /var/lib/apt/lists/* \
+    && python3 -m venv /opt/venv
+
+ARG PIP_INDEX_URL=https://pypi.org/simple
+RUN /opt/venv/bin/pip install --no-cache-dir --timeout 30 \
+       PyMuPDF python-pptx XlsxWriter skia-pathops uharfbuzz Pillow PyYAML cairosvg
+
+ARG NPM_REGISTRY=https://registry.npmjs.org
+RUN npm config set registry "$NPM_REGISTRY" && npm install -g @openai/codex@0.166.0
+
+ENV PATH=/opt/venv/bin:$PATH \
+    PYTHON=/opt/venv/bin/python \
+    HOST=0.0.0.0 \
+    PORT=8788 \
+    WEPPT_DATA_DIR=/app/data \
+    WEPPT_BROWSER_PATH=/usr/bin/chromium \
+    CODEX_HOME=/app/runtime-codex
+
+WORKDIR /app
+COPY package.json package-lock.json ./
+# playwright-core is required at server import time, so retain development dependencies.
+RUN npm ci --include=dev --no-audit --no-fund && npm cache clean --force
+COPY . .
+RUN mkdir -p /app/data/projects /app/data/uploads /app/runtime-codex \
+    && python scripts/setup-upstream-skills.py \
+    && node scripts/setup-slidev-runtime.mjs \
+    && python scripts/setup-pptagent-runtime.py --install \
+    && chown -R node:node /app
+
+USER node
+EXPOSE 8788
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s --retries=3 \
+    CMD node -e "fetch('http://127.0.0.1:8788/api/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+ENTRYPOINT ["/usr/bin/tini", "--"]
+# A persistent data volume may predate the current pinned skill distributions.
+CMD ["sh", "-c", "python scripts/setup-upstream-skills.py && exec node server.mjs"]

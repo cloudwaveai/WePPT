@@ -1,0 +1,97 @@
+{
+  "packages": [
+    {
+      "id": "thinking-model-router",
+      "repo": "tjboudreaux/cc-thinking-skills",
+      "commit": "7b8fece345dfaa11773be7152ccd194589cb5437",
+      "files": [
+        {
+          "path": "LICENSE",
+          "sha256": "41f47abf7be896c870173738e108e902b49497807a2c8b040c8144bf7128f01c"
+        },
+        {
+          "path": "README.md",
+          "sha256": "14d73b2bdd49a453da91569ef55195bba6756bb1b80a2aa11b46f7dd24a41a7a"
+        },
+        {
+          "path": "skills/thinking-model-router/SKILL.md",
+          "sha256": "b230ab2d3dd4e44d04b031b1a33b1bca3415500b0ba142ff4bbe1cda27422411"
+        }
+      ]
+    },
+    {
+      "id": "thinking-first-principles",
+      "repo": "tjboudreaux/cc-thinking-skills",
+      "commit": "7b8fece345dfaa11773be7152ccd194589cb5437",
+      "files": [
+        {
+          "path": "LICENSE",
+          "sha256": "41f47abf7be896c870173738e108e902b49497807a2c8b040c8144bf7128f01c"
+        },
+        {
+          "path": "README.md",
+          "sha256": "14d73b2bdd49a453da91569ef55195bba6756bb1b80a2aa11b46f7dd24a41a7a"
+        },
+        {
+          "path": "skills/thinking-first-principles/SKILL.md",
+          "sha256": "a3fd307e169b420a9eebce847849a6778435fe83cf8e1d130d59e98453e617cb"
+        }
+      ]
+    },
+    {
+      "id": "critical-thinking",
+      "repo": "tronghieu/agent-skills",
+      "commit": "831d1ae5c686a81b10f9c5b9cca04a7b8b97303d",
+      "files": [
+        {
+          "path": "LICENSE",
+          "sha256": "b20d2a70d88ab17d1b2d168bb70cf29819419def44d819d65a0a715211448c23"
+        },
+        {
+          "path": "README.md",
+          "sha256": "ac60e249cabee09ac1282bc4bf6223bfc37a6455bbc1cb9eb7c7ce1a9a025603"
+        },
+        {
+          "path": "skills/critical-thinking/README.md",
+          "sha256": "23b5d19c0195aa78137da5ff1bd398c0c9e0cb937f27f49289cd3ac5dd179c34"
+        },
+        {
+          "path": "skills/critical-thinking/README.vi.md",
+          "sha256": "904bb56827e4327ffe23da3073bbf8e6f7d4273610537acb66e0a1105e1272ef"
+        },
+        {
+          "path": "skills/critical-thinking/README.zh.md",
+          "sha256": "f41bb1b319ea07f79e1b66e7aaaf81fcd3ac02f1b611e166d95b8348542b5068"
+        },
+        {
+          "path": "skills/critical-thinking/SKILL.md",
+          "sha256": "acc60b70f3d7f9b616c7c3f4a495a9f39e7201d264ee0abd529577200a7b22b5"
+        },
+        {
+          "path": "skills/critical-thinking/references/argument-anatomy.md",
+          "sha256": "3e3a56ba46b5bee355a59c431c2bbfe29e7d63e22ada1e829025e64cc05c9558"
+        },
+        {
+          "path": "skills/critical-thinking/references/audit-report.md",
+          "sha256": "46347c5a3a58ff03763200633ad50217649e70d93125edfa590d3943677147f4"
+        },
+        {
+          "path": "skills/critical-thinking/references/coaching.md",
+          "sha256": "70555ee9c771d1ec76036638a7ede18798be85f24ff45e6682dac52bf1d32034"
+        },
+        {
+          "path": "skills/critical-thinking/references/fallacies-biases.md",
+          "sha256": "8a9fb37f66fef3fd230b87938f2b7dfc4879514bb0324299aecedee0f09f7d05"
+        },
+        {
+          "path": "skills/critical-thinking/references/rubric.md",
+          "sha256": "01bcd592b92c34799d8c33804d6b7ee91e5cb0d2b042fa731d991b095668d18e"
+        },
+        {
+          "path": "skills/critical-thinking/scripts/init-workspace.sh",
+          "sha256": "a090bf6923a8ec01512e432c7fa5780f3669373303756cf44935ab581089d395"
+        }
+      ]
+    }
+  ]
+}

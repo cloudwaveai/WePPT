@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {generationProgressSummary} from '../public/generation-progress.js';
+test('reviewing with all delivered pages does not claim completion',()=>{const summary=generationProgressSummary({state:'running',phase:'reviewing',completed:41,total:41,startedAt:1000},5000);assert.equal(summary.status,'正在检查生成结果');assert.equal(summary.count,'41 / 41 页');assert.equal(summary.time,'00:04');});
+test('elapsed time advances only for a running task and freezes on terminal state',()=>{assert.equal(generationProgressSummary({state:'running',elapsedMs:48000,updatedAt:1000},3000).time,'00:50');for(const state of ['complete','stopped','failed','interrupted'])assert.equal(generationProgressSummary({state,elapsedMs:48000,updatedAt:1000},3000).time,'00:48');assert.equal(generationProgressSummary({state:'stopped',startedAt:1000,updatedAt:61000},999999).time,'01:00');});
+test('unknown count is not fabricated and completion state does not invent delivered pages',()=>{assert.equal(generationProgressSummary({state:'running'}).count,'正在确认页数');const s=generationProgressSummary({state:'complete',completed:3,total:10});assert.equal(s.completed,3);assert.equal(s.ratio,.3);assert.equal(generationProgressSummary({completed:30,total:10}).completed,10);});
+test('ISO timestamps and multi-hour elapsed counts remain valid',()=>{assert.equal(generationProgressSummary({state:'running',startedAt:'2026-11-09T00:00:00Z'},Date.parse('2026-11-09T02:03:04Z')).time,'123:04');});
